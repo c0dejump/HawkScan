@@ -19,7 +19,7 @@ This script use the sublist3r lib to check subdomains.
  - [x] Subdomain Checker
 
 # TODO
- - [ ] Automatic virtual environement to execute the script
+ - [ ] Automatic virtual environment to execute the script
  - [ ] Best backup files analyse
  - [ ] Testing params of website
  - [ ] Get certificate (crypto keys...)
