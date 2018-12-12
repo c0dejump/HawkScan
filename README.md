@@ -30,6 +30,7 @@ This script use the sublist3r lib to check subdomains.
  - [ ] mutli website scan
  
  # Usage
+ > pip install -r requirements.txt
  > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT]
  
  > optional arguments: 
