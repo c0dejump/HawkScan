@@ -17,9 +17,10 @@ This script use the sublist3r lib to check subdomains.
  - [x] Check @mail in the website and check if @mails leaked
  - [x] CMS detection + version and vulns
  - [x] Subdomain Checker
- - [x] Best backup files analyse
 
 # TODO
+ - [ ] Automatic virtual environement to execute the script
+ - [ ] Best backup files analyse
  - [ ] Testing params of website
  - [ ] Get certificate (crypto keys...)
  - [ ] Recursif dir/file
