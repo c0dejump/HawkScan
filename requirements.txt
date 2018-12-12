@@ -1,0 +1,9 @@
+requests
+pyopenssl
+pprint
+queuelib
+fake_useragent
+whois
+argparse
+bs4
+dnspython
