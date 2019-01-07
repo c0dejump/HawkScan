@@ -4,8 +4,6 @@
 
 Security Tool for Reconnaissance and Information Gathering on a website. (python 2.7)
 
-This script use the sublist3r lib to check subdomains.
-
 # Features
  - [x] URL fuzzing and dir/file detection
  - [x] Check header information
