@@ -15,6 +15,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [x] Check @mail in the website and check if @mails leaked
  - [x] CMS detection + version and vulns
  - [x] Subdomain Checker
+ - [x] backup system (if the script stopped, it take again in same place)
 
 # TODO
  - [ ] Automatic virtual environment to execute the script
@@ -23,9 +24,9 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] Get certificate (crypto keys...)
  - [ ] Recursif dir/file
  - [ ] Anonymous routing through Tor
- - [ ] backup system (if the script stopped, it take again in same place)
  - [ ] check github & pastebin
  - [ ] mutli website scan
+ - [ ] Check passwords in directory listing or web page
  
  # Usage
  > pip install -r requirements.txt
