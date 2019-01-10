@@ -24,7 +24,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] Get certificate (crypto keys...)
  - [ ] Recursif dir/file
  - [ ] Anonymous routing through Tor
- - [ ] check github & pastebin
+ - [ ] Check github & pastebin
  - [ ] Mutli website scan
  
  # Usage
