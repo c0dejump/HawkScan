@@ -20,13 +20,12 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 # TODO
  - [ ] Automatic virtual environment to execute the script
  - [ ] Best backup files analyse
- - [ ] Testing params of website
+ - [ ] Testing website paramaters
  - [ ] Get certificate (crypto keys...)
  - [ ] Recursif dir/file
  - [ ] Anonymous routing through Tor
  - [ ] check github & pastebin
  - [ ] mutli website scan
- - [ ] Check passwords in directory listing or web page
  
  # Usage
  > pip install -r requirements.txt
