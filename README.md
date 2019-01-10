@@ -10,22 +10,22 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [x] Check DNS information
  - [x] Check whois information
  - [x] User-agent random or personal
- - [x] Extract robots.txt & sitemap.xml
+ - [x] Extract files
  - [x] Keep a trace of the scan
  - [x] Check @mail in the website and check if @mails leaked
  - [x] CMS detection + version and vulns
  - [x] Subdomain Checker
- - [x] backup system (if the script stopped, it take again in same place)
+ - [x] Backup system (if the script stopped, it take again in same place)
 
 # TODO
  - [ ] Automatic virtual environment to execute the script
  - [ ] Best backup files analyse
- - [ ] Testing website paramaters
+ - [ ] Testing website paramaters (attack, so no passive scan)
  - [ ] Get certificate (crypto keys...)
  - [ ] Recursif dir/file
  - [ ] Anonymous routing through Tor
  - [ ] check github & pastebin
- - [ ] mutli website scan
+ - [ ] Mutli website scan
  
  # Usage
  > pip install -r requirements.txt
