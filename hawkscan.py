@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+#system libs
 import requests
 import sys, os, re
 import time
@@ -34,7 +35,6 @@ https://github.com/c0dejump/HawkScan
 
 
 enclosure_queue = Queue()
-
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
@@ -70,12 +70,6 @@ def subdomain(directory, subdomains, thread):
         file.write(str(sub))
     print LINE
 
-#robots.txt, check lib logger
-def robot(req, directory):
-    soup = BeautifulSoup(req.text, "html.parser")
-    with open(directory + '/robots.csv', 'w+') as file:
-        file.write(str(soup).replace('/','\n'))
-
 #sitemap.xml
 def sitemap(req, directory):
     soup = BeautifulSoup(req.text, "html.parser")
@@ -84,25 +78,28 @@ def sitemap(req, directory):
 
 #cms detect use whatcms
 def detect_cms(url):
-    req = requests.get("https://whatcms.org/?s={}".format(url))
+    req = requests.get("https://whatcms.org/?gpreq=json&jsoncallback=jQuery112403214808239716169_1547132696502&s={}&na=&nb=nqjqmyp7c2ipab0lkt1f8hokhd1sy4k2pny0e3j5mwwx9xdkuudew2wg93986yu&verified=&_=1547132696503".format(url))
     if "Sorry" in req.text:
         print "{} this website does not seem to use a CMS \n".format(LESS)
         print LINE
     else:
+        print req.text
         soup = BeautifulSoup(req.text, "html.parser")
-        result = soup.find('a', {"class": "nowrap"})
-        result = result.get('title')
+        result = soup.find('a', {"class": '\\"nowrap\\"'})
+        result = result.get('title').replace('\\"','')
         try:
-            version = soup.find_all('span', {"class":"nowrap"})
-            v = ""
-            for v in version[1]:
-                v = str(v)
+            version = soup.find_all('span', {"class": '\\"nowrap\\"'})
+            #print version
+            result_v = []
+            reg = re.compile(r"[0-9-.]")
+            search = re.findall(reg, version)
             print "{} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v)
             cve_cms(result, v)
             print LINE + "\n"
         except:
             print "{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result)
             print LINE
+    sys.exit()
 
 #CVE CMS
 def cve_cms(result, v):
@@ -148,6 +145,26 @@ def who_is(url, directory):
 
 #satut of URL
 def status(stat, directory, u_agent):
+    check_b = check_backup(directory)
+    #check backup before start scan
+    if check_b == True:
+        with open(directory + "/backup.txt", "r") as word:
+            for ligne in word.readlines():
+                print "{}{}{}".format(PLUS, url, ligne.replace("\n",""))
+                lignes = ligne.split("\n")
+                #take the last line in file
+                last_line = lignes[-2]
+            with open(wordlist, "r") as f:
+                for nLine, line in enumerate(f):
+                    line = line.replace("\n","")
+                    if line == last_line:
+                        print LINE
+                        forced = False
+                        check_words(url, wordlist, directory, u_agent, forced, nLine)
+    elif check_b == False:
+        os.remove(directory + "/backup.txt")
+        print "restart scan..."
+        print LINE
     if stat == 200:
         check_words(url, wordlist, directory, u_agent)
     elif stat == 301:
@@ -195,6 +212,50 @@ def get_dns(url, directory):
     else:
         pass
 
+#check if the backup file exist
+def check_backup(directory):
+    if os.path.exists(directory + "/backup.txt"):
+        bp = raw_input("A backup file exist, do you want to continue or restart ? (C:R)\n")
+        if bp == 'C' or bp == 'c':
+            print "restart from last save in backup.txt ..."
+            print LINE
+            return True
+        else:
+            print LINE
+            return False
+    else:
+        pass
+
+#creat backup file
+def backup(res, directory):
+    with open(directory + "/backup.txt", "a+") as words:
+        #delete url to keep just file or dir
+        anti_sl = res.split("/")
+        rep = anti_sl[3:]
+        result = str(rep)
+        result = result.replace("['","").replace("']","").replace("',", "/").replace(" '","")
+        words.write(result + "\n")
+
+# download files and calcul size
+def dl(res, req, directory):
+    soup = BeautifulSoup(req.text, "html.parser")
+    extensions = ['.txt', '.html', '.jsp', '.xml', '.php', '.aspx', '.zip', '.old', '.bak', '.sql', '.js', '.asp', '.ini', '.log', '.rar', '.dat']
+    d_files = directory + "/files/"
+    if not os.path.exists(d_files):
+        os.makedirs(d_files)
+    anti_sl = res.split("/")
+    rep = anti_sl[3:]
+    result = str(rep)
+    result = result.replace("['","").replace("']","").replace("',", "/").replace(" '","")
+    p_file = d_files + result
+    texte = req.text
+    for exts in extensions:
+        if exts in result:
+            with open(p_file, 'w+') as fichier:
+                fichier.write(str(soup))
+            # get size of file (in bytes)
+            size_bytes = os.path.getsize(p_file)
+            return size_bytes
 
 #bf wordlist
 def tryUrl(i, q, directory, u_agent, forced=False):
@@ -213,10 +274,16 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 sys.stdout.write("...\r")
                 sys.stdout.flush()
                 if status_link == 200:
-                    print PLUS + res
+                    #check backup
+                    backup(res, directory)
+                    # dl files and calcul size
+                    size = dl(res, req, directory)
+                    #get mail
                     mail(req, directory, all_mail)
-                    if 'robots.txt' in res:
-                        robot(req, directory)
+                    if size:
+                        print "{}{} ({} bytes)".format(PLUS, res, size)
+                    else:
+                        print "{}{}".format(PLUS, res)
                     if 'sitemap.xml' in res:
                         sitemap(req, directory)
                 if status_link == 403:
@@ -236,26 +303,36 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 pass
                 #print "{}{} on {}".format(INFO, e, res)
             q.task_done()
-        except KeyboardInterrupt:
-            print('Interrupted')
-            sys.exit()
         except:
             #print "{} error threads".format(INFO)
             pass
+    os.remove(directory + "/backup.txt")
 
 #multi threading
-def check_words(url, wordlist, directory, u_agent, forced=False):
+def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
     link_url = []
-    with open(wordlist, "r") as payload:
-        links = payload.read().splitlines()
-    for i in range(thread):
-        worker = Thread(target=tryUrl, args=(i, enclosure_queue, directory, u_agent, forced))
-        worker.setDaemon(True)
-        worker.start()
-    for link in links:
-        link_url = url + link
-        enclosure_queue.put(link_url)
-    enclosure_queue.join()
+    if nLine:
+        with open(wordlist, "r") as payload:
+            links = payload.read().splitlines()
+        for i in range(thread):
+            worker = Thread(target=tryUrl, args=(i, enclosure_queue, directory, u_agent, forced))
+            worker.setDaemon(True)
+            worker.start()
+        for link in links[nLine:]:
+            link_url = url + link
+            enclosure_queue.put(link_url)
+        enclosure_queue.join()
+    else:
+        with open(wordlist, "r") as payload:
+            links = payload.read().splitlines()
+        for i in range(thread):
+            worker = Thread(target=tryUrl, args=(i, enclosure_queue, directory, u_agent, forced))
+            worker.setDaemon(True)
+            worker.start()
+        for link in links:
+            link_url = url + link
+            enclosure_queue.put(link_url)
+        enclosure_queue.join()
 
 # create all files
 def create_file(url, stat, u_agent, thread, subdomains):
@@ -269,7 +346,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
         directory = "sites/" + directory
     # if the directory don't exist, create it
     if not os.path.exists(directory):
-        os.makedirs(directory)
+        os.makedirs(directory) # creat the dir
         if subdomains:
             subdomain(directory, subdomains, thread)
         get_header(url, directory)
@@ -299,9 +376,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", help="URL to scan [required]", dest='url')
     parser.add_argument("-w", help="Wordlist used for URL Fuzzing [required]", dest='wordlist')
-    parser.add_argument("-s", help="subdomain tester", dest='subdomains', required=False)
+    parser.add_argument("-s", help="Subdomain tester", dest='subdomains', required=False)
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5)
-    parser.add_argument("-a", help="choice user-agent", dest='user_agent', required=False)
+    parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
+    parser.add_argument("-r", help="Number of recursive dir.", required=False, dest="recursif", type=int)
     results = parser.parse_args()
                                      
     url = results.url
@@ -309,6 +387,8 @@ if __name__ == '__main__':
     thread = results.thread
     u_agent = results.user_agent
     subdomains = results.subdomains 
+    recur = results.recursif
+    # TODO implement recursive scan
 
     banner()
     r = requests.get(url, allow_redirects=False, verify=False)
