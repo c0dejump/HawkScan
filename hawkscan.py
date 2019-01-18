@@ -91,6 +91,7 @@ def detect_cms(url):
             print "{} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v)
             cve_cms(result, v)
             print LINE + "\n"
+            cve_cms(result, v)
         else:
             print "{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result)
             print LINE
