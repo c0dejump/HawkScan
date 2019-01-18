@@ -26,6 +26,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] Anonymous routing through Tor
  - [ ] Check github & pastebin
  - [ ] Mutli website scan
+ - [ ] Auto keys every month for whatcms
  
  # Usage
  > pip install -r requirements.txt
