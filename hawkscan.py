@@ -11,6 +11,7 @@ import pprint
 import whois
 import argparse
 from bs4 import BeautifulSoup
+import json
 #personal libs
 from config import PLUS, WARNING, INFO, LESS, LINE, FORBI
 from Queue import Queue
@@ -78,28 +79,21 @@ def sitemap(req, directory):
 
 #cms detect use whatcms
 def detect_cms(url):
-    req = requests.get("https://whatcms.org/?gpreq=json&jsoncallback=jQuery112403214808239716169_1547132696502&s={}&na=&nb=nqjqmyp7c2ipab0lkt1f8hokhd1sy4k2pny0e3j5mwwx9xdkuudew2wg93986yu&verified=&_=1547132696503".format(url))
-    if "Sorry" in req.text:
+    req = requests.get("https://whatcms.org/APIEndpoint/Detect?key=1481ff2f874c4942a734d9c499c22b6d8533007dd1f7005c586ea04efab2a3277cc8f2&url={}".format(url))
+    if "Not Found" in req.text:
         print "{} this website does not seem to use a CMS \n".format(LESS)
         print LINE
     else:
-        print req.text
-        soup = BeautifulSoup(req.text, "html.parser")
-        result = soup.find('a', {"class": '\\"nowrap\\"'})
-        result = result.get('title').replace('\\"','')
-        try:
-            version = soup.find_all('span', {"class": '\\"nowrap\\"'})
-            #print version
-            result_v = []
-            reg = re.compile(r"[0-9-.]")
-            search = re.findall(reg, version)
+        reqt = json.loads(req.text)
+        result = reqt["result"].get("name")
+        v = reqt["result"].get("version")
+        if v:
             print "{} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v)
             cve_cms(result, v)
             print LINE + "\n"
-        except:
+        else:
             print "{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result)
             print LINE
-    sys.exit()
 
 #CVE CMS
 def cve_cms(result, v):
@@ -239,7 +233,7 @@ def backup(res, directory):
 # download files and calcul size
 def dl(res, req, directory):
     soup = BeautifulSoup(req.text, "html.parser")
-    extensions = ['.txt', '.html', '.jsp', '.xml', '.php', '.aspx', '.zip', '.old', '.bak', '.sql', '.js', '.asp', '.ini', '.log', '.rar', '.dat']
+    extensions = ['.txt', '.html', '.jsp', '.xml', '.php', '.log', '.aspx', '.zip', '.old', '.bak', '.sql', '.js', '.asp', '.ini', '.log', '.rar', '.dat', '.log', '.backup', '.dll', '.save', '.BAK', '.inc']
     d_files = directory + "/files/"
     if not os.path.exists(d_files):
         os.makedirs(d_files)
@@ -273,7 +267,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 status_link = req.status_code
                 sys.stdout.write("...\r")
                 sys.stdout.flush()
-                if status_link == 200:
+                if status_link == 200 and "Not Found" not in req.text:
                     #check backup
                     backup(res, directory)
                     # dl files and calcul size
