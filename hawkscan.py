@@ -91,28 +91,33 @@ def detect_cms(url):
             print "{} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v)
             cve_cms(result, v)
             print LINE + "\n"
-            cve_cms(result, v)
         else:
             print "{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result)
             print LINE
+    sys.exit()
 
 #CVE CMS
 def cve_cms(result, v):
     url_comp = "https://www.cvedetails.com/version-search.php?vendor={}&product=&version={}".format(result, v)
     req = requests.get(url_comp, allow_redirects=True, verify=False)
-    if "matches" in req.text:
-        print "{} Nothing CVE found \n".format(LESS)
-        if 'WordPress' in req.text:
-            version =  v.replace('.','')
-            req = requests.get("https://wpvulndb.com/wordpresses/{}".format(version))
-            soup = BeautifulSoup(req.text, "html.parser")
-            search = soup.find('tr')
-            if search:
-                print search
-            else:
-                print "{} Nothing wpvunldb found \n".format(LESS)
+    if not "matches" in req.text:
+        print "{}CVE found ! \n{}{}\n".format(WARNING, WARNING, url_comp)
+    elif 'WordPress' in req.text:
+        version =  v.replace('.','')
+        site = "https://wpvulndb.com/wordpresses/{}".format(version)
+        req = requests.get(site)
+        soup = BeautifulSoup(req.text, "html.parser")
+        search = soup.find_all('tr')
+        if search:
+            print "{}CVE found ! \n{}{}\n".format(WARNING, WARNING, site)
+            for p in search:
+                dates = p.find("td").text.strip()
+                detail = p.find("a").text.strip()
+                print "{}{} : {}".format(WARNING, dates, detail)
+        else:
+            print "{} Nothing wpvunldb found \n".format(LESS)
     else:
-        print "{} CVE found ! \n{}{}\n".format(WARNING, WARNING, url_comp)
+        print "{} Nothing CVE found \n".format(LESS)
 
 #header
 def get_header(url, directory):
