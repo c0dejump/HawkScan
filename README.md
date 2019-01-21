@@ -19,7 +19,6 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
 # TODO
  - [ ] Automatic virtual environment to execute the script
- - [ ] Best backup files analyse
  - [ ] Testing website paramaters (attack, so no passive scan)
  - [ ] Get certificate (crypto keys...)
  - [ ] Recursif dir/file
