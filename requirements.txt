@@ -3,7 +3,7 @@ pyopenssl
 pprint
 queuelib
 fake_useragent
-whois
+python-whois
 argparse
 bs4
 dnspython
