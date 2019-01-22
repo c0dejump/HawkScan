@@ -13,7 +13,7 @@ import argparse
 from bs4 import BeautifulSoup
 import json
 #personal libs
-from config import PLUS, WARNING, INFO, LESS, LINE, FORBI
+from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
 from Queue import Queue
 from threading import Thread
 from fake_useragent import UserAgent
@@ -79,6 +79,8 @@ def sitemap(req, directory):
 
 #cms detect use whatcms
 def detect_cms(url):
+    print INFO + "CMS"
+    print LINE
     req = requests.get("https://whatcms.org/APIEndpoint/Detect?key=1481ff2f874c4942a734d9c499c22b6d8533007dd1f7005c586ea04efab2a3277cc8f2&url={}".format(url))
     if "Not Found" in req.text:
         print "{} this website does not seem to use a CMS \n".format(LESS)
@@ -101,6 +103,19 @@ def cve_cms(result, v):
     req = requests.get(url_comp, allow_redirects=True, verify=False)
     if not "matches" in req.text:
         print "{}CVE found ! \n{}{}\n".format(WARNING, WARNING, url_comp)
+        if 'WordPress' in req.text:
+            version =  v.replace('.','')
+            site = "https://wpvulndb.com/wordpresses/{}".format(version)
+            req = requests.get(site)
+            soup = BeautifulSoup(req.text, "html.parser")
+            search = soup.find_all('tr')
+            if search:
+                for p in search:
+                    dates = p.find("td").text.strip()
+                    detail = p.find("a").text.strip()
+                    print "{}{} : {}".format(WARNING, dates, detail)
+            else:
+                print "{} Nothing wpvunldb found \n".format(LESS)
     elif 'WordPress' in req.text:
         version =  v.replace('.','')
         site = "https://wpvulndb.com/wordpresses/{}".format(version)
@@ -134,13 +149,20 @@ def who_is(url, directory):
     print LINE
     try:
         who_is = whois.whois(url)
-        pprint.pprint(who_is)
-        with open(directory + '/whois.csv', 'w+') as file:
-            file.write(str(who_is))
+        #pprint.pprint(who_is) + "\n"
+        for k, w in who_is.iteritems():
+            is_who = "{} : {}-".format(k, w)
+            print is_who
+            with open(directory + '/whois.csv', 'a+') as file:
+                file.write(is_who.replace("-","\n"))
     except:
-        print "{} whois not found".format(INFO)
-    print LINE
-    print "\n"
+        erreur = sys.exc_info()
+        typerr = u"%s" % (erreur[0])
+        typerr = typerr[typerr.find("'")+1:typerr.rfind("'")]
+        print typerr
+        msgerr = u"%s" % (erreur[1])
+        print msgerr
+    print "\n" + LINE
 
 #satut of URL
 def status(stat, directory, u_agent):
@@ -149,7 +171,7 @@ def status(stat, directory, u_agent):
     if check_b == True:
         with open(directory + "/backup.txt", "r") as word:
             for ligne in word.readlines():
-                print "{}{}{}".format(PLUS, url, ligne.replace("\n",""))
+                print "{}{}{}".format(BACK, url, ligne.replace("\n",""))
                 lignes = ligne.split("\n")
                 #take the last line in file
                 last_line = lignes[-2]
@@ -194,22 +216,34 @@ def status(stat, directory, u_agent):
 
 # information DNS
 def get_dns(url, directory):
-    if "https" in url:
-        url = url.replace('https://','').replace('/','')
-        context = ssl.create_default_context()
-        conn = context.wrap_socket(socket.socket(socket.AF_INET),server_hostname=url)
-        conn.connect((url, 443))
-        cert = conn.getpeercert()
+    try:
+        if "https" in url:
+            url = url.replace('https://','').replace('/','')
+            context = ssl.create_default_context()
+            conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=url)
+            conn.connect((url, 443))
+            cert = conn.getpeercert()
+            print INFO + "DNS information"
+            print LINE
+            pprint.pprint(str(cert['subject']).replace(',','').replace('((','').replace('))',''))
+            pprint.pprint(cert['subjectAltName'])
+            print ''
+            conn.close()
+            print LINE
+            with open(directory + '/dns_info.csv', 'w+') as file:
+                file.write(str(cert).replace(',','\n').replace('((','').replace('))',''))
+        else:
+            pass
+    except:
         print INFO + "DNS information"
         print LINE
-        pprint.pprint(str(cert['subject']).replace(',','').replace('((','').replace('))',''))
-        pprint.pprint(cert['subjectAltName'])
-        print ''
-        conn.close()
-        with open(directory + '/dns_info.csv', 'w+') as file:
-            file.write(str(cert).replace(',','\n').replace('((','').replace('))',''))
-    else:
-        pass
+        erreur = sys.exc_info()
+        typerr = u"%s" % (erreur[0])
+        typerr = typerr[typerr.find("'")+1:typerr.rfind("'")]
+        print typerr
+        msgerr = u"%s" % (erreur[1])
+        print msgerr + "\n"
+        print LINE
 
 #check if the backup file exist
 def check_backup(directory):
@@ -226,14 +260,17 @@ def check_backup(directory):
         pass
 
 #creat backup file
-def backup(res, directory):
+def backup(res, directory, forbi):
     with open(directory + "/backup.txt", "a+") as words:
         #delete url to keep just file or dir
         anti_sl = res.split("/")
         rep = anti_sl[3:]
         result = str(rep)
         result = result.replace("['","").replace("']","").replace("',", "/").replace(" '","")
-        words.write(result + "\n")
+        if forbi:
+            words.write(result + " Forbidden\n")
+        else:
+            words.write(result + "\n")
 
 # download files and calcul size
 def dl(res, req, directory):
@@ -268,13 +305,14 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 user_agent = {'User-agent': ua.random} #for a user-agent random
             res = q.get()
             try:
+                forbi = False
                 req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
                 status_link = req.status_code
                 sys.stdout.write("...\r")
                 sys.stdout.flush()
                 if status_link == 200 and "Not Found" not in req.text:
                     #check backup
-                    backup(res, directory)
+                    backup(res, directory, forbi)
                     # dl files and calcul size
                     size = dl(res, req, directory)
                     #get mail
@@ -287,7 +325,9 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                         sitemap(req, directory)
                 if status_link == 403:
                     if not forced:
+                        forbi = True
                         print FORBI + res + "\033[31m Forbidden \033[0m"
+                        backup(res, directory, forbi)
                     else:
                         pass
                 if status_link == 404:
@@ -378,7 +418,7 @@ if __name__ == '__main__':
     parser.add_argument("-s", help="Subdomain tester", dest='subdomains', required=False)
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5)
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
-    parser.add_argument("-r", help="Number of recursive dir.", required=False, dest="recursif", type=int)
+    parser.add_argument("-r", help="Number of recursive dir. ex: -r 2: two under directory", required=False, dest="recursif", type=int)
     results = parser.parse_args()
                                      
     url = results.url
