@@ -30,7 +30,6 @@ wp-admin/js/
 wp-admin/includes/
 wp-content/uploads/db-backup
 wp-admin.php
-wp-login/
 wp-login.php
 wp-includes/
 wp-content/
@@ -316,6 +315,7 @@ profil/
 99999999/
 @/
 A/
+aes.js
 About/
 AboutUs/
 Admin/
@@ -1477,7 +1477,6 @@ detail/
 details/
 detroit/
 deutsch/
-dev/
 dev60cgi/
 devel/
 develop/
@@ -4374,7 +4373,6 @@ widget/
 widgets/
 wormwood/
 wp/
-wp-login/
 wp-register/
 wp-rss2/
 wqsb/
@@ -8536,6 +8534,7 @@ moinmail
 monitor/
 monitoring/
 moodle
+moodle/
 more
 movies
 moving.page
