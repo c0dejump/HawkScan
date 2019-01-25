@@ -24,9 +24,9 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check github & pastebin
  - [ ] Mutli website subdomain scan
- - [ ] spider link in website
+ - [ ] Spider link in website
  - [ ] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
- - [ ] best subdomain found and analyze
+ - [ ] Best subdomain found and analyze
  
  # Usage
  > pip install -r requirements.txt
