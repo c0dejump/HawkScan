@@ -18,13 +18,14 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [x] Backup system (if the script stopped, it take again in same place)
 
 # TODO
- - [ ] Automatic virtual environment to execute the script
  - [ ] Testing website paramaters (attack, so no passive scan)
  - [ ] Get certificate (crypto keys...)
  - [ ] Recursif dir/file
- - [ ] Anonymous routing through Tor
+ - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check github & pastebin
- - [ ] Mutli website scan
+ - [ ] Mutli website sub-domain scan
+ - [ ] spider link in website
+ - [ ] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
  
  # Usage
  > pip install -r requirements.txt
