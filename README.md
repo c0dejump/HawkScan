@@ -6,6 +6,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
 # Features
  - [x] URL fuzzing and dir/file detection
+ - [x] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
  - [x] Check header information
  - [x] Check DNS information
  - [x] Check whois information
@@ -25,7 +26,6 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] Check github & pastebin
  - [ ] Mutli website subdomain scan
  - [ ] Spider link in website
- - [ ] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
  - [ ] Best subdomain found and analyze
  
  # Usage
