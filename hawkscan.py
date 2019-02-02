@@ -63,10 +63,10 @@ def mail(req, directory, all_mail):
             file.write(str(all_mail))
 
 #check subdomains
-def subdomain(directory, subdomains, thread):
+def subdomain(directory, subdomains):
     print "search subdomains:\n"
     sub_wordlist = "sublist/names.txt"
-    sub = sublist.main(subdomains, sub_wordlist, thread, directory)
+    sub = sublist.main(subdomains, sub_wordlist, directory)
     with open(directory + "/subdomains.txt", "w+") as file:
         file.write(str(sub))
     print LINE
@@ -194,6 +194,8 @@ def status(stat, directory, u_agent):
     elif stat == 302:
         print PLUS + " 302 Moved Temporarily\n"
         check_words(url, wordlist, directory, u_agent)
+    elif stat == 304:
+        pass
     elif stat == 404:
         a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
         if a == "y":
@@ -281,8 +283,7 @@ def dl(res, req, directory):
         os.makedirs(d_files)
     anti_sl = res.split("/")
     rep = anti_sl[3:]
-    result = str(rep)
-    result = result.replace("['","").replace("']","").replace("',", "/").replace(" '","")
+    result = rep[-1]
     p_file = d_files + result
     texte = req.text
     for exts in extensions:
@@ -293,6 +294,25 @@ def dl(res, req, directory):
             size_bytes = os.path.getsize(p_file)
             return size_bytes
 
+#check all backup files
+def file_backup(res, directory):
+    ext_b = ['.bak', '.old', '.backup', '.BAK', '.save', '.zip', '.rar', '~', '_old', '_backup', '_bak']
+    d_files = directory + "/files/"
+    for exton in ext_b:
+        res_b = res + exton
+        anti_sl = res_b.split("/")
+        rep = anti_sl[3:]
+        result = rep[-1]
+        r_files = d_files + result
+        req_b = requests.get(res_b)
+        soup = BeautifulSoup(req_b.text, "html.parser")
+        if req_b.status_code == 200:
+            with open(r_files, 'w+') as fichier_bak:
+                fichier_bak.write(str(soup))
+            size_bytes = os.path.getsize(r_files)
+            return res_b, size_bytes
+        else:
+            pass
 #bf wordlist
 def tryUrl(i, q, directory, u_agent, forced=False):
     all_mail = []
@@ -310,17 +330,23 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 status_link = req.status_code
                 sys.stdout.write("...\r")
                 sys.stdout.flush()
-                if status_link == 200 and "Not Found" not in req.text:
+                if status_link == 200:
                     #check backup
                     backup(res, directory, forbi)
                     # dl files and calcul size
                     size = dl(res, req, directory)
-                    #get mail
-                    mail(req, directory, all_mail)
                     if size:
                         print "{}{} ({} bytes)".format(PLUS, res, size)
                     else:
                         print "{}{}".format(PLUS, res)
+                    #check backup files
+                    f_bak, size_bytes = file_backup(res, directory)
+                    if f_bak:
+                        print "{}{} ({} bytes)".format(PLUS, f_bak, size_bytes)
+                    else:
+                        print "{}{}".format(PLUS, res)
+                    #get mail
+                    mail(req, directory, all_mail)
                     if 'sitemap.xml' in res:
                         sitemap(req, directory)
                 if status_link == 403:
@@ -330,14 +356,19 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                         backup(res, directory, forbi)
                     else:
                         pass
-                if status_link == 404:
+                elif status_link == 404:
                     pass
-                if status_link == 301:
+                elif status_link == 301:
                     pass
                     #print "\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m"
+                elif status_link == 304:
+                    pass
                 elif status_link == 302:
                     pass
                     #print "\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m"
+                elif status_link == 400:
+                    pass
+                    #print "bad request"
             except requests.exceptions.Timeout as e:
                 pass
                 #print "{}{} on {}".format(INFO, e, res)
@@ -387,7 +418,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
     if not os.path.exists(directory):
         os.makedirs(directory) # creat the dir
         if subdomains:
-            subdomain(directory, subdomains, thread)
+            subdomain(directory, subdomains)
         get_header(url, directory)
         get_dns(url, directory)
         who_is(url, directory)
@@ -401,7 +432,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
             directory = directory + '_2'
             os.makedirs(directory)
             if subdomains:
-                subdomain(directory, subdomains, thread)
+                subdomain(directory, subdomains)
             get_header(url, directory)
             get_dns(url, directory)
             who_is(url, directory)
