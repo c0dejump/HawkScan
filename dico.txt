@@ -3423,7 +3423,6 @@ references/
 reg/
 reginternal/
 regional/
-register/
 registered/
 registration/
 registre/
@@ -3759,7 +3758,6 @@ snowball/
 snowman/
 snp/
 snuffy/
-soap/
 soapdocs/
 soccer/
 soccer1/
