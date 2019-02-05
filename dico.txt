@@ -224,6 +224,7 @@ functions.inc.php
 config/
 accueil/
 usercontrols/
+beta_access.php
 ~/
 ~adm/
 ~admin/
