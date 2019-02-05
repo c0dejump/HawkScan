@@ -28,12 +28,12 @@ def trySub(i, q, directory, subs):
 
 
 #multi threading
-def main(domain, wordlist, thread, directory):
+def main(domain, wordlist, directory):
     subs = []
     link_url = []
     with open(wordlist, "r") as payload:
         links = payload.read().splitlines()
-    for i in range(thread):
+    for i in range(20):
         worker = Thread(target=trySub, args=(i, enclosure_queue, directory, subs))
         worker.setDaemon(True)
         worker.start()
@@ -45,4 +45,4 @@ def main(domain, wordlist, thread, directory):
 
 
 if __name__ == '__main__':
-    main(domain, wordlist, thread, directory)
+    main(domain, wordlist, directory)
