@@ -14,6 +14,7 @@ contact.php
 include.php
 includes.php
 contact.html
+beta_access.php
 vision/
 annonce/
 annonces/
@@ -224,7 +225,6 @@ functions.inc.php
 config/
 accueil/
 usercontrols/
-beta_access.php
 ~/
 ~adm/
 ~admin/
@@ -10165,7 +10165,6 @@ uploadify.php
 uploadify/
 uploads
 uploads.php
-uploads/
 uploads_admin
 upstream_conf
 ur-admin
