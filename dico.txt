@@ -14,7 +14,6 @@ contact.php
 include.php
 includes.php
 contact.html
-beta_access.php
 vision/
 annonce/
 annonces/
@@ -742,7 +741,6 @@ aspadmin/
 aspen/
 aspnet_client/
 ass/
-assets/
 asshole/
 asterix/
 at/
@@ -1224,7 +1222,6 @@ cluster/
 clusters/
 cm/
 cmd/
-cms/
 cn/
 cnt/
 cobra/
@@ -3424,6 +3421,7 @@ references/
 reg/
 reginternal/
 regional/
+register/
 registered/
 registration/
 registre/
@@ -3759,6 +3757,7 @@ snowball/
 snowman/
 snp/
 snuffy/
+soap/
 soapdocs/
 soccer/
 soccer1/
@@ -5187,6 +5186,7 @@ _superadmin
 _temp/
 _test
 _tests
+tests
 _tmp_war
 _tmp_war_DefaultWebApp
 _vti_adm
@@ -9978,7 +9978,6 @@ test.mdb
 test.php
 test.sqlite
 test.txt
-test/
 test0
 test0.php
 test1
@@ -10000,8 +9999,6 @@ testadmin
 testimonials
 testing
 testproxy.php
-tests
-tests/
 tests/phpunit_report.xml
 testweb
 text
@@ -10165,6 +10162,7 @@ uploadify.php
 uploadify/
 uploads
 uploads.php
+uploads/
 uploads_admin
 upstream_conf
 ur-admin
