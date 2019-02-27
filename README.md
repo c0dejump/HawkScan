@@ -28,7 +28,6 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] Spider link in website
  - [ ] Best subdomain found and analyze
  - [ ] Check if it's an user or a page
- - [ ] Try ZIP on direcory (directory.zip)
  
  # Usage
  > pip install -r requirements.txt
