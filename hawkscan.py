@@ -312,10 +312,16 @@ def file_backup(res, directory):
             pass
 def hidden_dir(q, user_agent):
     pars = q.get().split("/")
-    hidd = "{}~{}/".format(url, pars[3])
-    req = requests.get(hidd, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
-    status_link = req.status_code
-    return status_link, hidd
+    hidd_d = "{}~{}/".format(url, pars[3])
+    hidd_f = "{}~{}".format(url, pars[3])
+    req_d = requests.get(hidd_d, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+    req_f = requests.get(hidd_f, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+    sk_d = req_d.status_code
+    sk_f = req_f.status_code
+    if sk_d == 200:
+        print "{}{}".format(PLUS, hidd_d)
+    elif sk_f == 200:
+        print "{}{}".format(PLUS, hidd_f)
 
 #bf wordlist
 def tryUrl(i, q, directory, u_agent, forced=False):
@@ -331,10 +337,8 @@ def tryUrl(i, q, directory, u_agent, forced=False):
             try:
                 forbi = False
                 req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
-                h= hidden_dir(q, user_agent)
-                if h[0] == 200:
-                    print "{}{}".format(PLUS, h[1])
                 status_link = req.status_code
+                h = hidden_dir(q, user_agent)
                 sys.stdout.write("...\r")
                 sys.stdout.flush()
                 if status_link == 200:
@@ -379,6 +383,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
             except requests.exceptions.Timeout as e:
                 pass
                 #print "{}{} on {}".format(INFO, e, res)
+            h = hidden_dir(q, user_agent)
             q.task_done()
         except:
             #print "{} error threads".format(INFO)
