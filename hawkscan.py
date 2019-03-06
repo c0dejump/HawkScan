@@ -310,14 +310,12 @@ def file_backup(res, directory):
             return res_b, size_bytes
         else:
             pass
-def hidden_dir(pars, user_agent):
+def hidden_dir(q, user_agent):
+    pars = q.get().split("/")
     hidd = "{}~{}/".format(url, pars[3])
     req = requests.get(hidd, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
     status_link = req.status_code
-    if status_link == 200:
-        print "{}{}".format(PLUS, hidd)
-    else:
-        pass
+    return status_link, hidd
 
 #bf wordlist
 def tryUrl(i, q, directory, u_agent, forced=False):
@@ -330,11 +328,12 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 ua = UserAgent()
                 user_agent = {'User-agent': ua.random} #for a user-agent random
             res = q.get()
-            pars = q.get().split("/")
             try:
                 forbi = False
                 req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
-                hidden_dir(pars, user_agent)
+                h= hidden_dir(q, user_agent)
+                if h[0] == 200:
+                    print "{}{}".format(PLUS, h[1])
                 status_link = req.status_code
                 sys.stdout.write("...\r")
                 sys.stdout.flush()
