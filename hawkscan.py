@@ -310,8 +310,8 @@ def file_backup(res, directory):
             return res_b, size_bytes
         else:
             pass
-def hidden_dir(q, user_agent):
-    pars = q.get().split("/")
+def hidden_dir(res, user_agent):
+    pars = res.split("/")
     hidd_d = "{}~{}/".format(url, pars[3])
     hidd_f = "{}~{}".format(url, pars[3])
     req_d = requests.get(hidd_d, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
@@ -338,7 +338,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 forbi = False
                 req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
                 status_link = req.status_code
-                h = hidden_dir(q, user_agent)
+                h = hidden_dir(res, user_agent)
                 sys.stdout.write("...\r")
                 sys.stdout.flush()
                 if status_link == 200:
@@ -360,7 +360,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     mail(req, directory, all_mail)
                     if 'sitemap.xml' in res:
                         sitemap(req, directory)
-                if status_link == 403:
+                elif status_link == 403:
                     if not forced:
                         forbi = True
                         print FORBI + res + "\033[31m Forbidden \033[0m"
@@ -383,7 +383,6 @@ def tryUrl(i, q, directory, u_agent, forced=False):
             except requests.exceptions.Timeout as e:
                 pass
                 #print "{}{} on {}".format(INFO, e, res)
-            h = hidden_dir(q, user_agent)
             q.task_done()
         except:
             #print "{} error threads".format(INFO)
