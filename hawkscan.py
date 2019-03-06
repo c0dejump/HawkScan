@@ -314,7 +314,6 @@ def hidden_dir(pars, user_agent):
     hidd = "{}~{}/".format(url, pars[3])
     req = requests.get(hidd, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
     status_link = req.status_code
-    print hidd
     if status_link == 200:
         print "{}{}".format(PLUS, hidd)
     else:
