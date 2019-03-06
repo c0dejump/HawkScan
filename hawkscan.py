@@ -269,10 +269,7 @@ def backup(res, directory, forbi):
         rep = anti_sl[3:]
         result = str(rep)
         result = result.replace("['","").replace("']","").replace("',", "/").replace(" '","")
-        if forbi:
-            words.write(result + " Forbidden\n")
-        else:
-            words.write(result + "\n")
+        words.write(result + "\n")
 
 # download files and calcul size
 def dl(res, req, directory):
@@ -294,7 +291,7 @@ def dl(res, req, directory):
             size_bytes = os.path.getsize(p_file)
             return size_bytes
 
-#check all backup files
+#check all backup files in website
 def file_backup(res, directory):
     ext_b = ['.bak', '.old', '.backup', '.BAK', '.save', '.zip', '.rar', '~', '_old', '_backup', '_bak']
     d_files = directory + "/files/"
@@ -313,6 +310,16 @@ def file_backup(res, directory):
             return res_b, size_bytes
         else:
             pass
+def hidden_dir(pars, user_agent):
+    hidd = "{}~{}/".format(url, pars[3])
+    req = requests.get(hidd, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+    status_link = req.status_code
+    print hidd
+    if status_link == 200:
+        print "{}{}".format(PLUS, hidd)
+    else:
+        pass
+
 #bf wordlist
 def tryUrl(i, q, directory, u_agent, forced=False):
     all_mail = []
@@ -324,9 +331,11 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 ua = UserAgent()
                 user_agent = {'User-agent': ua.random} #for a user-agent random
             res = q.get()
+            pars = q.get().split("/")
             try:
                 forbi = False
                 req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+                hidden_dir(pars, user_agent)
                 status_link = req.status_code
                 sys.stdout.write("...\r")
                 sys.stdout.flush()
@@ -381,6 +390,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
 #multi threading
 def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
     link_url = []
+    hiddend = []
     if nLine:
         with open(wordlist, "r") as payload:
             links = payload.read().splitlines()
