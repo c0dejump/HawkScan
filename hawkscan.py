@@ -39,7 +39,10 @@ enclosure_queue = Queue()
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
-#check mail
+"""
+Mail:
+get mail adresse in web page during the scan and check if the mail leaked
+"""
 def mail(req, directory, all_mail):
     mails = req.text
     # for all @mail
@@ -62,7 +65,12 @@ def mail(req, directory, all_mail):
         if all_mail is not None and all_mail != [] and all_mail not in file:
             file.write(str(all_mail))
 
-#check subdomains
+"""
+Subdomains:
+Check subdomains with the option -s (-s google.fr)
+script in 'sublist'
+# TODO Upgrade the script for better scan like "subbrute" 
+"""
 def subdomain(directory, subdomains):
     print "search subdomains:\n"
     sub_wordlist = "sublist/names.txt"
@@ -71,13 +79,16 @@ def subdomain(directory, subdomains):
         file.write(str(sub))
     print LINE
 
-#sitemap.xml
+""" Get sitemap.xml of website"""
 def sitemap(req, directory):
     soup = BeautifulSoup(req.text, "html.parser")
     with open(directory + '/sitemap.xml', 'w+') as file:
         file.write(str(soup).replace(' ','\n'))
 
-#cms detect use whatcms
+"""
+CMS:
+Detect if the website use a CMS
+"""
 def detect_cms(url):
     print INFO + "CMS"
     print LINE
@@ -97,7 +108,10 @@ def detect_cms(url):
             print "{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result)
             print LINE
 
-#CVE CMS
+"""
+CVE_CMS:
+Check CVE with cms and version detected by the function 'detect_cms'.
+"""
 def cve_cms(result, v):
     url_comp = "https://www.cvedetails.com/version-search.php?vendor={}&product=&version={}".format(result, v)
     req = requests.get(url_comp, allow_redirects=True, verify=False)
@@ -133,7 +147,7 @@ def cve_cms(result, v):
     else:
         print "{} Nothing CVE found \n".format(LESS)
 
-#header
+"""Get header of website (cookie, link, etc...)"""
 def get_header(url, directory):
     head = r.headers
     print INFO + "HEADER"
@@ -143,7 +157,7 @@ def get_header(url, directory):
     with open(directory + '/header.csv', 'w+') as file:
         file.write(str(head).replace(',','\n'))
 
-#whois
+"""Get whois of website"""
 def who_is(url, directory):
     print INFO + "WHOIS"
     print LINE
@@ -164,7 +178,12 @@ def who_is(url, directory):
         print msgerr
     print "\n" + LINE
 
-#satut of URL
+"""
+Status:
+ - Get response status of the website (200, 302, 404...).
+ - Check if a backup exist before to start the scan.
+ If exist it restart scan from to the last line of backup.
+"""
 def status(stat, directory, u_agent):
     check_b = check_backup(directory)
     #check backup before start scan
@@ -216,7 +235,21 @@ def status(stat, directory, u_agent):
         else:
             sys.exit()
 
-# information DNS
+"""Check if a backup file exist from function 'Status' """
+def check_backup(directory):
+    if os.path.exists(directory + "/backup.txt"):
+        bp = raw_input("A backup file exist, do you want to continue or restart ? (C:R)\n")
+        if bp == 'C' or bp == 'c':
+            print "restart from last save in backup.txt ..."
+            print LINE
+            return True
+        else:
+            print LINE
+            return False
+    else:
+        pass
+
+"""Get DNS informations"""
 def get_dns(url, directory):
     try:
         if "https" in url:
@@ -247,21 +280,8 @@ def get_dns(url, directory):
         print msgerr + "\n"
         print LINE
 
-#check if the backup file exist
-def check_backup(directory):
-    if os.path.exists(directory + "/backup.txt"):
-        bp = raw_input("A backup file exist, do you want to continue or restart ? (C:R)\n")
-        if bp == 'C' or bp == 'c':
-            print "restart from last save in backup.txt ..."
-            print LINE
-            return True
-        else:
-            print LINE
-            return False
-    else:
-        pass
 
-#creat backup file
+"""Create backup file"""
 def backup(res, directory, forbi):
     with open(directory + "/backup.txt", "a+") as words:
         #delete url to keep just file or dir
@@ -271,7 +291,7 @@ def backup(res, directory, forbi):
         result = result.replace("['","").replace("']","").replace("',", "/").replace(" '","")
         words.write(result + "\n")
 
-# download files and calcul size
+""" Download files and calcul size """
 def dl(res, req, directory):
     soup = BeautifulSoup(req.text, "html.parser")
     extensions = ['.txt', '.html', '.jsp', '.xml', '.php', '.log', '.aspx', '.zip', '.old', '.bak', '.sql', '.js', '.asp', '.ini', '.log', '.rar', '.dat', '.log', '.backup', '.dll', '.save', '.BAK', '.inc']
@@ -291,7 +311,10 @@ def dl(res, req, directory):
             size_bytes = os.path.getsize(p_file)
             return size_bytes
 
-#check all backup files in website
+"""
+file_backup:
+During the scan, check if a backup file or dir exist.
+"""
 def file_backup(res, directory):
     ext_b = ['.bak', '.old', '.backup', '.BAK', '.save', '.zip', '.rar', '~', '_old', '_backup', '_bak']
     d_files = directory + "/files/"
@@ -310,6 +333,11 @@ def file_backup(res, directory):
             return res_b, size_bytes
         else:
             pass
+
+"""
+hidden_dir:
+Like the function 'file_backup' but check if the type backup dir like '~articles/' exist.
+"""
 def hidden_dir(res, user_agent):
     pars = res.split("/")
     hidd_d = "{}~{}/".format(url, pars[3])
@@ -323,73 +351,85 @@ def hidden_dir(res, user_agent):
     elif sk_f == 200:
         print "{}{}".format(PLUS, hidd_f)
 
-#bf wordlist
+"""
+tryUrl:
+Test all URL contains in the dictionnary with multi-threading.
+This script run functions:
+- backup()
+- dl()
+- file_backup()
+- mail()
+"""
 def tryUrl(i, q, directory, u_agent, forced=False):
     all_mail = []
     while True:
-        try:
-            if u_agent:
-                user_agent = {'User-agent': u_agent}
-            else:
-                ua = UserAgent()
-                user_agent = {'User-agent': ua.random} #for a user-agent random
-            res = q.get()
+        for t in range(len_w):
             try:
-                forbi = False
-                req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
-                status_link = req.status_code
-                h = hidden_dir(res, user_agent)
-                sys.stdout.write("...\r")
-                sys.stdout.flush()
-                if status_link == 200:
-                    #check backup
-                    backup(res, directory, forbi)
-                    # dl files and calcul size
-                    size = dl(res, req, directory)
-                    if size:
-                        print "{}{} ({} bytes)".format(PLUS, res, size)
-                    else:
-                        print "{}{}".format(PLUS, res)
-                    #check backup files
-                    f_bak, size_bytes = file_backup(res, directory)
-                    if f_bak:
-                        print "{}{} ({} bytes)".format(PLUS, f_bak, size_bytes)
-                    else:
-                        print "{}{}".format(PLUS, res)
-                    #get mail
-                    mail(req, directory, all_mail)
-                    if 'sitemap.xml' in res:
-                        sitemap(req, directory)
-                elif status_link == 403:
-                    if not forced:
-                        forbi = True
-                        print FORBI + res + "\033[31m Forbidden \033[0m"
+                if u_agent:
+                    user_agent = {'User-agent': u_agent}
+                else:
+                    ua = UserAgent()
+                    user_agent = {'User-agent': ua.random} #for a user-agent random
+                res = q.get()
+                try:
+                    forbi = False
+                    req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+                    status_link = req.status_code
+                    if status_link == 200:
+                        #check backup
                         backup(res, directory, forbi)
-                    else:
+                        # dl files and calcul size
+                        size = dl(res, req, directory)
+                        if size:
+                            print "{}{} ({} bytes)".format(PLUS, res, size)
+                        else:
+                            print "{}{}".format(PLUS, res)
+                        #check backup files
+                        f_bak, size_bytes = file_backup(res, directory)
+                        if f_bak:
+                            print "{}{} ({} bytes)".format(PLUS, f_bak, size_bytes)
+                        else:
+                            print "{}{}".format(PLUS, res)
+                        #get mail
+                        mail(req, directory, all_mail)
+                        if 'sitemap.xml' in res:
+                            sitemap(req, directory)
+                    if status_link == 403:
+                        if not forced:
+                            forbi = True
+                            print FORBI + res + "\033[31m Forbidden \033[0m"
+                            backup(res, directory, forbi)
+                        else:
+                            #print FORBI + res + "\033[31m Forbidden \033[0m"
+                            pass
+                    elif status_link == 404:
                         pass
-                elif status_link == 404:
+                    elif status_link == 301:
+                        pass
+                        #print "\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m"
+                    elif status_link == 304:
+                        pass
+                    elif status_link == 302:
+                        pass
+                        #print "\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m"
+                    elif status_link == 400:
+                        pass
+                        #print "bad request"
+                except requests.exceptions.Timeout as e:
                     pass
-                elif status_link == 301:
-                    pass
-                    #print "\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m"
-                elif status_link == 304:
-                    pass
-                elif status_link == 302:
-                    pass
-                    #print "\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m"
-                elif status_link == 400:
-                    pass
-                    #print "bad request"
-            except requests.exceptions.Timeout as e:
+                    #print "{}{} on {}".format(INFO, e, res)
+                q.task_done()
+            except:
+                #print "{} error threads".format(INFO)
                 pass
-                #print "{}{} on {}".format(INFO, e, res)
-            q.task_done()
-        except:
-            #print "{} error threads".format(INFO)
-            pass
+            sys.stdout.write("\033[34m[i] [scan... %d/%d]\033[0m\r" % (t, len_w))
+            sys.stdout.flush()
     os.remove(directory + "/backup.txt")
 
-#multi threading
+"""
+check_words:
+Functions wich manage multi-threading
+"""
 def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
     link_url = []
     hiddend = []
@@ -416,7 +456,10 @@ def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
             enclosure_queue.put(link_url)
         enclosure_queue.join()
 
-# create all files
+"""
+create_file:
+Create directory with the website name to keep a scan backup. 
+"""
 def create_file(url, stat, u_agent, thread, subdomains):
     if 'www' in url:
         direct = url.split('.')
@@ -438,7 +481,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
         status(stat, directory, u_agent)
     # or else ask the question
     else:
-        new_file = raw_input('this file exist, do you want to create another file ? (y:n)\n')
+        new_file = raw_input('this directory exist, do you want to create another file ? (y:n)\n')
         if new_file == 'y':
             print LINE
             directory = directory + '_2'
@@ -473,6 +516,10 @@ if __name__ == '__main__':
     # TODO implement recursive scan
 
     banner()
+    len_w = 0
+    #calcul wordlist size
+    with open(wordlist, 'r') as words:
+        len_w = len(words.read())
     r = requests.get(url, allow_redirects=False, verify=False)
     stat = r.status_code
     print "\n \033[32m url " + url + " found \033[0m\n"
