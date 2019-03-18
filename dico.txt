@@ -7,6 +7,7 @@ koolix
 admin/
 admin.php
 index.php
+index.html
 index/
 ;index.jsp
 contact/
@@ -25,6 +26,7 @@ secret.php
 .htpasswd/
 .htaccess/
 Login.aspx
+login
 wp-admin/
 wp-admin/js/
 wp-admin/includes/
@@ -34,6 +36,16 @@ wp-login.php
 wp-includes/
 wp-content/
 wp-json/
+wp-config.php
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/wp-cache-config.php
+wp-content/plugins/hello.php
 wp-includes/vars.php
 wp-includes/update.php
 wp-includes/theme.php
@@ -5187,6 +5199,10 @@ _temp/
 _test
 _tests
 tests
+l10n/
+I10n/
+l10n
+I10n
 _tmp_war
 _tmp_war_DefaultWebApp
 _vti_adm
@@ -6805,6 +6821,7 @@ click
 client
 client_admin
 ClientAccessPolicy.xml
+clientaccesspolicy.xml
 clientadmin
 cliente/downloads/h4xor.php
 clients
@@ -7052,6 +7069,7 @@ cron_sku.log
 crond/logs/
 cronlog.txt
 crossdomain.xml
+p3p.xml
 crownadmin
 cs
 cs-admin
@@ -7901,7 +7919,6 @@ index.class
 index.cs
 index.gz
 index.htm
-index.html
 index.inc
 index.java
 index.jsp
@@ -8228,7 +8245,6 @@ Logfiles/
 LogfileSearch
 LogfileTail
 logi.php
-login
 Login
 login-redirect/
 login-us/
