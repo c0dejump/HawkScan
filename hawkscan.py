@@ -508,7 +508,7 @@ if __name__ == '__main__':
     parser.add_argument("-s", help="Subdomain tester", dest='subdomains', required=False)
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5)
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
-    parser.add_argument("--redirect", help="For scan wit response (302;301)", dest='redirect', required=False, action='store_true')
+    parser.add_argument("--redirect", help="For scan with redirect response (302;301)", dest='redirect', required=False, action='store_true')
     parser.add_argument("-r", help="Number of recursive dir. ex: -r 2: two under directory", required=False, dest="recursif", type=int)
     results = parser.parse_args()
                                      
