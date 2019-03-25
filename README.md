@@ -40,5 +40,6 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
   > -u URL         URL to scan [required]                                                                              
   > -w WORDLIST    Wordlist used for URL Fuzzing [required]                                                            
   > -s SUBDOMAINS  subdomain tester                                                                                    
-  > -t THREAD      Number of threads to use for URL Fuzzing. Default: 5                                                
+  > -t THREAD      Number of threads to use for URL Fuzzing. Default: 5  
+  > --redirect     For scan wit response (302;301)
   > -a USER_AGENT  choice user-agent 
