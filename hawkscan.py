@@ -405,13 +405,17 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     elif status_link == 404:
                         pass
                     elif status_link == 301:
-                        pass
-                        #print "\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m"
+                        if redirect:
+                            print "\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m"
+                        else:
+                            pass
                     elif status_link == 304:
                         pass
                     elif status_link == 302:
-                        pass
-                        #print "\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m"
+                        if redirect:
+                            print "\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m"
+                        else:
+                            pass
                     elif status_link == 400:
                         pass
                         #print "bad request"
@@ -504,6 +508,7 @@ if __name__ == '__main__':
     parser.add_argument("-s", help="Subdomain tester", dest='subdomains', required=False)
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5)
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
+    parser.add_argument("--redirect", help="For scan wit response (302;301)", dest='redirect', required=False, action='store_true')
     parser.add_argument("-r", help="Number of recursive dir. ex: -r 2: two under directory", required=False, dest="recursif", type=int)
     results = parser.parse_args()
                                      
@@ -511,7 +516,8 @@ if __name__ == '__main__':
     wordlist = results.wordlist
     thread = results.thread
     u_agent = results.user_agent
-    subdomains = results.subdomains 
+    subdomains = results.subdomains
+    redirect = results.redirect
     recur = results.recursif
     # TODO implement recursive scan
 
