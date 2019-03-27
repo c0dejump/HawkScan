@@ -29,6 +29,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] Best subdomain found and analyze
  - [ ] Check if it's an user or a page
  - [ ] Backup file csv of scan
+ - [ ] WAF detection
  
  # Usage
  > pip install -r requirements.txt
@@ -41,5 +42,5 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
   > -w WORDLIST    Wordlist used for URL Fuzzing [required]                                                            
   > -s SUBDOMAINS  subdomain tester                                                                                    
   > -t THREAD      Number of threads to use for URL Fuzzing. Default: 5  
-  > --redirect     For scan with redirect response (302;301)
+  > --redirect     For scan with redirect response (301/302)
   > -a USER_AGENT  choice user-agent 
