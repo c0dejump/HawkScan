@@ -197,6 +197,7 @@ scripts/
 assets/
 upload/
 mail/
+xmlrpc.php
 .git/
 .git
 .git-rewrite/
@@ -10468,7 +10469,6 @@ xlogin/
 xls/
 xml/_common.xml
 xml/common.xml
-xmlrpc.php
 xmlrpc_server.php
 xphperrors.log
 xphpMyAdmin/
