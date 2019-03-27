@@ -4,6 +4,8 @@
 
 Security Tool for Reconnaissance and Information Gathering on a website. (python 2.7)
 
+This script use "WafW00f" to detect WAF
+
 # Features
  - [x] URL fuzzing and dir/file detection
  - [x] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
