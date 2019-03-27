@@ -19,6 +19,7 @@ from Queue import Queue
 from threading import Thread
 from fake_useragent import UserAgent
 from sublist import sublist
+import wafw00f
 
 
 def banner():
@@ -87,6 +88,30 @@ def sitemap(req, directory):
         file.write(str(soup).replace(' ','\n'))
 
 """
+WAF:
+Detect if the website use a WAF with tools "wafw00f"
+"""
+def detect_waf(url, directory):
+    detect = False
+    message = ""
+    os.system("wafw00f {} > {}/waf.txt".format(url, directory))
+    with open(directory + "/waf.txt", "r+") as waf:
+        for w in waf:
+            if "behind" in w:
+                detect = True
+                message = w
+            else:
+                pass
+        print INFO + "WAF"
+        print LINE
+        if detect == True:
+            print "{}{}".format(PLUS, message)
+            print LINE
+        else:
+            print "{}This website dos not use WAF".format(LESS)
+            print LINE
+
+"""
 CMS:
 Detect if the website use a CMS
 """
@@ -104,7 +129,7 @@ def detect_cms(url):
         if v:
             print "{} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v)
             cve_cms(result, v)
-            print LINE + "\n"
+            print LINE
         else:
             print "{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result)
             print LINE
@@ -486,6 +511,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
         get_dns(url, directory)
         who_is(url, directory)
         detect_cms(url)
+        detect_waf(url, directory)
         status(stat, directory, u_agent)
     # or else ask the question
     else:
