@@ -19,6 +19,7 @@ This script use "WafW00f" to detect WAF
  - [x] CMS detection + version and vulns
  - [x] Subdomain Checker
  - [x] Backup system (if the script stopped, it take again in same place)
+ - [x] WAF detection
 
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
@@ -31,7 +32,6 @@ This script use "WafW00f" to detect WAF
  - [ ] Best subdomain found and analyze
  - [ ] Check if it's an user or a page
  - [ ] Backup file csv of scan
- - [ ] WAF detection
  
  # Usage
  > pip install -r requirements.txt
