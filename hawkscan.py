@@ -105,7 +105,7 @@ def detect_waf(url, directory):
         print INFO + "WAF"
         print LINE
         if detect == True:
-            print "{}{}".format(PLUS, message)
+            print "{}{}".format(WARNING, message)
             print LINE
         else:
             print "{}This website dos not use WAF".format(LESS)
