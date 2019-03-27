@@ -12,6 +12,7 @@ import whois
 import argparse
 from bs4 import BeautifulSoup
 import json
+import traceback
 #personal libs
 from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
 from Queue import Queue
@@ -362,73 +363,75 @@ This script run functions:
 """
 def tryUrl(i, q, directory, u_agent, forced=False):
     all_mail = []
-    while True:
-        for t in range(len_w):
+    for t in range(len_w):
+        res = q.get()
+        try:
+            if u_agent:
+                user_agent = {'User-agent': u_agent}
+            else:
+                ua = UserAgent()
+                user_agent = {'User-agent': ua.random} #for a user-agent random
             try:
-                if u_agent:
-                    user_agent = {'User-agent': u_agent}
-                else:
-                    ua = UserAgent()
-                    user_agent = {'User-agent': ua.random} #for a user-agent random
-                res = q.get()
-                try:
-                    forbi = False
-                    req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
-                    status_link = req.status_code
-                    if status_link == 200:
-                        #check backup
+                forbi = False
+                req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+                status_link = req.status_code
+                if status_link == 200:
+                    #check backup
+                    backup(res, directory, forbi)
+                    # dl files and calcul size
+                    size = dl(res, req, directory)
+                    if size:
+                        print "{}{} ({} bytes)".format(PLUS, res, size)
+                    else:
+                        print "{}{}".format(PLUS, res)
+                    #check backup files
+                    f_bak, size_bytes = file_backup(res, directory)
+                    if f_bak:
+                        print "{}{} ({} bytes)".format(PLUS, f_bak, size_bytes)
+                    else:
+                        print "{}{}".format(PLUS, res)
+                    #get mail
+                    mail(req, directory, all_mail)
+                    if 'sitemap.xml' in res:
+                        sitemap(req, directory)
+                if status_link == 403:
+                    if not forced:
+                        forbi = True
+                        print FORBI + res + "\033[31m Forbidden \033[0m"
                         backup(res, directory, forbi)
-                        # dl files and calcul size
-                        size = dl(res, req, directory)
-                        if size:
-                            print "{}{} ({} bytes)".format(PLUS, res, size)
-                        else:
-                            print "{}{}".format(PLUS, res)
-                        #check backup files
-                        f_bak, size_bytes = file_backup(res, directory)
-                        if f_bak:
-                            print "{}{} ({} bytes)".format(PLUS, f_bak, size_bytes)
-                        else:
-                            print "{}{}".format(PLUS, res)
-                        #get mail
-                        mail(req, directory, all_mail)
-                        if 'sitemap.xml' in res:
-                            sitemap(req, directory)
-                    if status_link == 403:
-                        if not forced:
-                            forbi = True
-                            print FORBI + res + "\033[31m Forbidden \033[0m"
-                            backup(res, directory, forbi)
-                        else:
-                            #print FORBI + res + "\033[31m Forbidden \033[0m"
-                            pass
-                    elif status_link == 404:
+                    else:
+                        #print FORBI + res + "\033[31m Forbidden \033[0m"
                         pass
-                    elif status_link == 301:
-                        if redirect:
-                            print "\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m"
-                        else:
-                            pass
-                    elif status_link == 304:
-                        pass
-                    elif status_link == 302:
-                        if redirect:
-                            print "\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m"
-                        else:
-                            pass
-                    elif status_link == 400:
-                        pass
-                        #print "bad request"
-                except requests.exceptions.Timeout as e:
+                elif status_link == 404:
                     pass
-                    #print "{}{} on {}".format(INFO, e, res)
-                q.task_done()
-            except:
-                #print "{} error threads".format(INFO)
+                elif status_link == 301:
+                    if redirect:
+                        print "\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m"
+                    else:
+                        pass
+                elif status_link == 304:
+                    pass
+                elif status_link == 302:
+                    if redirect:
+                        print "\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m"
+                    else:
+                        pass
+                elif status_link == 400:
+                    pass
+                    #print "bad request"
+            except Exception:
                 pass
-            sys.stdout.write("\033[34m[i] [scan... %d/%d]\033[0m\r" % (t, len_w))
-            sys.stdout.flush()
-    os.remove(directory + "/backup.txt")
+                #traceback.print_exc()
+            q.task_done()
+        except Exception:
+            #traceback.print_exc()
+            pass
+        sys.stdout.write("\033[34m[i] [scan... %d/%d]\033[0m\r" % (t*thread, len_w))
+        sys.stdout.flush()
+    try:
+        os.remove(directory + "/backup.txt")
+    except:
+        print("backup.txt not found")
 
 """
 check_words:
@@ -525,7 +528,8 @@ if __name__ == '__main__':
     len_w = 0
     #calcul wordlist size
     with open(wordlist, 'r') as words:
-        len_w = len(words.read())
+        for l in words:
+            len_w += 1
     r = requests.get(url, allow_redirects=False, verify=False)
     stat = r.status_code
     print "\n \033[32m url " + url + " found \033[0m\n"
