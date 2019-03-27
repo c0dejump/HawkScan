@@ -43,4 +43,5 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
   > -s SUBDOMAINS  subdomain tester                                                                                    
   > -t THREAD      Number of threads to use for URL Fuzzing. Default: 5  
   > --redirect     For scan with redirect response (301/302)
+  
   > -a USER_AGENT  choice user-agent 
