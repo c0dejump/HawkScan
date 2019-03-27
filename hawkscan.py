@@ -317,21 +317,25 @@ file_backup:
 During the scan, check if a backup file or dir exist.
 """
 def file_backup(res, directory):
-    ext_b = ['.bak', '.old', '.backup', '.BAK', '.save', '.zip', '.rar', '~', '_old', '_backup', '_bak']
+    ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak']
     d_files = directory + "/files/"
     for exton in ext_b:
         res_b = res + exton
+        #print res_b
         anti_sl = res_b.split("/")
         rep = anti_sl[3:]
         result = rep[-1]
         r_files = d_files + result
-        req_b = requests.get(res_b)
+        req_b = requests.get(res_b, allow_redirects=False, verify=False)
         soup = BeautifulSoup(req_b.text, "html.parser")
         if req_b.status_code == 200:
             with open(r_files, 'w+') as fichier_bak:
                 fichier_bak.write(str(soup))
             size_bytes = os.path.getsize(r_files)
-            return res_b, size_bytes
+            if size_bytes:
+                print "{}{}  ({} bytes)".format(PLUS, res_b, size_bytes)
+            else:
+                print "{}{}".format(PLUS, res_b)
         else:
             pass
 
@@ -374,6 +378,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
             try:
                 forbi = False
                 req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+                hidden_dir(res, user_agent)
                 status_link = req.status_code
                 if status_link == 200:
                     #check backup
@@ -385,11 +390,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     else:
                         print "{}{}".format(PLUS, res)
                     #check backup files
-                    f_bak, size_bytes = file_backup(res, directory)
-                    if f_bak:
-                        print "{}{} ({} bytes)".format(PLUS, f_bak, size_bytes)
-                    else:
-                        print "{}{}".format(PLUS, res)
+                    file_backup(res, directory)
                     #get mail
                     mail(req, directory, all_mail)
                     if 'sitemap.xml' in res:
@@ -511,7 +512,7 @@ if __name__ == '__main__':
     parser.add_argument("-s", help="Subdomain tester", dest='subdomains', required=False)
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5)
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
-    parser.add_argument("--redirect", help="For scan with redirect response (302;301)", dest='redirect', required=False, action='store_true')
+    parser.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
     parser.add_argument("-r", help="Number of recursive dir. ex: -r 2: two under directory", required=False, dest="recursif", type=int)
     results = parser.parse_args()
                                      
