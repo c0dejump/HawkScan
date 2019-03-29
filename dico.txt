@@ -10407,6 +10407,8 @@ wp-config.php~
 wp-content/backup-db/
 wp-content/backups/
 wp-content/debug.log
+wp-content/plugins/
+wp-content/plugins/w3tc
 wp-content/plugins/akismet/admin.php
 wp-content/plugins/akismet/akismet.php
 wp-content/plugins/count-per-day/js/yc/d00.php
