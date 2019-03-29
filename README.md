@@ -32,11 +32,12 @@ This script use "WafW00f" to detect WAF
  - [ ] Best subdomain found and analyze
  - [ ] Check if it's an user or a page
  - [ ] Backup file csv of scan
+ - [ ] Add personal prefix
  
  # Usage
  > pip install -r requirements.txt
  
- > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT]
+ > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect]
  
  > optional arguments: 
   > -h, --help     show this help message and exit                                                                     
