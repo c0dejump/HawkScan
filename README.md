@@ -46,5 +46,5 @@ This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/w
   > -s SUBDOMAINS  subdomain tester                                                                                    
   > -t THREAD      Number of threads to use for URL Fuzzing. Default: 5  
   > -a USER_AGENT  choice user-agent     
-  > --redirect     For scan with redirect response like 301,302
+  > --redirect     For scan with redirect response like 301,302      
   > -p PREFIX      add prefix in wordlist to scan
