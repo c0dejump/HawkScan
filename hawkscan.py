@@ -394,6 +394,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
     all_mail = []
     for t in range(len_w):
         res = q.get()
+        print res
         try:
             if u_agent:
                 user_agent = {'User-agent': u_agent}
@@ -474,7 +475,10 @@ def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
             worker.setDaemon(True)
             worker.start()
         for link in links[nLine:]:
-            link_url = url + link
+            if prefix:
+                link_url = url + prefix + link
+            else:
+                link_url = url + link
             enclosure_queue.put(link_url)
         enclosure_queue.join()
     else:
@@ -485,7 +489,10 @@ def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
             worker.setDaemon(True)
             worker.start()
         for link in links:
-            link_url = url + link
+            if prefix:
+                link_url = url + prefix + link
+            else:
+                link_url = url + link
             enclosure_queue.put(link_url)
         enclosure_queue.join()
 
@@ -540,6 +547,7 @@ if __name__ == '__main__':
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
     parser.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
     parser.add_argument("-r", help="Number of recursive dir. ex: -r 2: two under directory", required=False, dest="recursif", type=int)
+    parser.add_argument("-p", help="add prefix in wordlist to scan", required=False, dest="prefix")
     results = parser.parse_args()
                                      
     url = results.url
@@ -548,6 +556,7 @@ if __name__ == '__main__':
     u_agent = results.user_agent
     subdomains = results.subdomains
     redirect = results.redirect
+    prefix = results.prefix
     recur = results.recursif
     # TODO implement recursive scan
 
