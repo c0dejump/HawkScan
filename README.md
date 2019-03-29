@@ -20,6 +20,7 @@ This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/w
  - [x] Subdomain Checker
  - [x] Backup system (if the script stopped, it take again in same place)
  - [x] WAF detection
+ - [x] Add personal prefix
 
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
@@ -32,12 +33,11 @@ This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/w
  - [ ] Best subdomain found and analyze
  - [ ] Check if it's an user or a page
  - [ ] Backup file csv of scan
- - [ ] Add personal prefix
  
  # Usage
  > pip install -r requirements.txt
  
- > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect]
+ > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-p PREFIX]
  
  > optional arguments: 
   > -h, --help     show this help message and exit                                                                     
@@ -47,3 +47,4 @@ This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/w
   > -t THREAD      Number of threads to use for URL Fuzzing. Default: 5  
   > -a USER_AGENT  choice user-agent     
   > --redirect     For scan with redirect response like 301,302
+  > -p PREFIX      add prefix in wordlist to scan
