@@ -4,7 +4,7 @@
 
 Security Tool for Reconnaissance and Information Gathering on a website. (python 2.7)
 
-This script use "WafW00f" to detect WAF
+This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/wafw00f)
 
 # Features
  - [x] URL fuzzing and dir/file detection
