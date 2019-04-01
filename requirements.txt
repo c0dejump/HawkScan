@@ -8,3 +8,4 @@ argparse
 bs4
 dnspython
 wafw00f
+python-whois
