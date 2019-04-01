@@ -394,7 +394,6 @@ def tryUrl(i, q, directory, u_agent, forced=False):
     all_mail = []
     for t in range(len_w):
         res = q.get()
-        print res
         try:
             if u_agent:
                 user_agent = {'User-agent': u_agent}
