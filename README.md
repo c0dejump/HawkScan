@@ -34,6 +34,7 @@ This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/w
  - [ ] Check if it's an user or a page
  - [ ] Backup file csv of scan
  - [ ] Work it with py2 and py3
+ - [ ] add option "-o" to backup file in directory of your choice
  
  # Usage
  > pip install -r requirements.txt
