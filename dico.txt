@@ -27,6 +27,8 @@ secret.php
 .htaccess/
 Login.aspx
 login
+error_docs/
+error_docs
 wp-admin/
 wp-admin/js/
 wp-admin/includes/
@@ -187,6 +189,11 @@ wp-admin/includes/class-ftp-pure.php
 wp-admin/includes/admin.php
 wp-admin/admin-functions.php
 login.php
+anon_ftpstat/
+ftpstat/
+webstat-ssl/
+webstat/
+plesk-stat/
 page/
 pages/
 page.php
