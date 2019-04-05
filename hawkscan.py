@@ -13,6 +13,7 @@ import argparse
 from bs4 import BeautifulSoup
 import json
 import traceback
+import csv
 #personal libs
 from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
 from Queue import Queue
@@ -40,6 +41,18 @@ https://github.com/c0dejump/HawkScan
 enclosure_queue = Queue()
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
+
+"""
+auto_update: for update the tool
+"""
+def auto_update():
+    au = raw_input("Do you want update it ? (y/n)")
+    if au == "y":
+        os.system("cd ../ && rm -rf HawkScan/ && git clone https://github.com/c0dejump/HawkScan.git")
+        sys.exit()
+    else:
+        pass
 
 """
 Mail:
@@ -69,7 +82,6 @@ def mail(req, directory, all_mail):
             for r in all_mail:
                 r = r.split(":")
                 writer.writerow(r)
-
 """
 Subdomains:
 Check subdomains with the option -s (-s google.fr)
@@ -565,6 +577,7 @@ if __name__ == '__main__':
     banner()
     len_w = 0
     #calcul wordlist size
+    auto_update()
     with open(wordlist, 'r') as words:
         for l in words:
             len_w += 1
