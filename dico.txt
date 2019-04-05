@@ -6446,6 +6446,7 @@ awstats
 awstats.conf
 awstats.pl
 awstats/
+axis2
 axis1/axis1-admin/
 axis2/axis2-admin/
 azureadmin/
@@ -7758,6 +7759,7 @@ home.tar
 home.tar.gz
 home.zip
 homepage
+host-manager
 host-manager/html
 hostadmin
 hosts
@@ -8367,6 +8369,7 @@ mailadmin
 mailform.%EXT%
 mailman
 mailman/listinfo
+mailman/admin/
 main
 main.%EXT%
 main.mdb
