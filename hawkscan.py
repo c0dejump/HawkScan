@@ -56,16 +56,19 @@ def mail(req, directory, all_mail):
             datas = { "act" : mail, "accounthide" : "test", "submit" : "Submit" }
             req_ino = requests.post("https://www.inoitsu.com/", data=datas)
             if "DETECTED" in req_ino.text:
-                pwnd = "{} pwned ! ".format(mail)
+                pwnd = "{}: pwned ! ".format(mail)
                 if pwnd not in all_mail:
                     all_mail.append(pwnd)
             else:
-                no_pwned = "{} no pwned ".format(mail)
+                no_pwned = "{}: no pwned ".format(mail)
                 if no_pwned not in all_mail:
                     all_mail.append(no_pwned)
-    with open(directory + '/mail.txt', 'a+') as file:
-        if all_mail is not None and all_mail != [] and all_mail not in file:
-            file.write(str(all_mail))
+    with open(directory + '/mail.csv', 'a+') as file:
+        if all_mail is not None and all_mail != []:
+            writer = csv.writer(file)
+            for r in all_mail:
+                r = r.split(":")
+                writer.writerow(r)
 
 """
 Subdomains:
