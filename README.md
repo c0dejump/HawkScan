@@ -21,6 +21,7 @@ This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/w
  - [x] Backup system (if the script stopped, it take again in same place)
  - [x] WAF detection
  - [x] Add personal prefix
+ - [x] auto update script
 
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
@@ -35,7 +36,6 @@ This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/w
  - [ ] Backup file csv of scan
  - [ ] Work it with py2 and py3
  - [ ] add option "-o" to backup file in directory of your choice
- - [ ] auto update script
  
  # Usage
  > pip install -r requirements.txt
