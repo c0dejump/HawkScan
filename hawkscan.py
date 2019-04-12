@@ -50,7 +50,7 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 auto_update: for update the tool
 """
 def auto_update():
-    au = raw_input("Do you want update it ? (y/n)")
+    au = raw_input("Do you want update it ? (y/n): ")
     if au == "y":
         os.system("cd ../ && rm -rf HawkScan/ && git clone https://github.com/c0dejump/HawkScan.git")
         sys.exit()
@@ -92,9 +92,10 @@ script use sublit3r to scan subdomain (it's a basic scan)
 """
 def subdomain(subdomains):
     print "search subdomains:\n"
-    sub_file = subdomains + ".txt"
+    sub_file = "sublist/" + subdomains + ".txt"
     sub = sublist3r.main(subdomains, 40, sub_file, ports= None, silent=False, verbose= False, enable_bruteforce= False, engines=None)
     print LINE
+    time.sleep(2)
 
 """ Get sitemap.xml of website"""
 def sitemap(req, directory):
@@ -592,3 +593,4 @@ if __name__ == '__main__':
     print "\n \033[32m url " + url + " found \033[0m\n"
     print LINE
     create_file(url, stat, u_agent, thread, subdomains)
+    
