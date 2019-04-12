@@ -19,8 +19,11 @@ from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
 from Queue import Queue
 from threading import Thread
 from fake_useragent import UserAgent
-from sublist import sublist
 import wafw00f
+try:
+    from Sublist3r import sublist3r
+except Exception:
+    traceback.print_exc()
 
 
 def banner():
@@ -85,15 +88,13 @@ def mail(req, directory, all_mail):
 """
 Subdomains:
 Check subdomains with the option -s (-s google.fr)
-script in 'sublist'
-# TODO Upgrade the script for better scan like "subbrute" 
+script use sublit3r to scan subdomain (it's a basic scan)
 """
 def subdomain(directory, subdomains):
     print "search subdomains:\n"
-    sub_wordlist = "sublist/names.txt"
-    sub = sublist.main(subdomains, sub_wordlist, directory)
-    with open(directory + "/subdomains.txt", "w+") as file:
-        file.write(str(sub))
+    subdir = directory + "/sublist/"
+    sub_file = subdomains + ".txt"
+    sub = sublist3r.main(subdomains, 40, subdir + sub_file, ports= None, silent=False, verbose= False, enable_bruteforce= False, engines=None)
     print LINE
 
 """ Get sitemap.xml of website"""
@@ -407,6 +408,7 @@ This script run functions:
 """
 def tryUrl(i, q, directory, u_agent, forced=False):
     all_mail = []
+    rec_list = []
     for t in range(len_w):
         res = q.get()
         try:
@@ -435,6 +437,10 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     mail(req, directory, all_mail)
                     if 'sitemap.xml' in res:
                         sitemap(req, directory)
+                    #for recursif scan
+                    """if res[-1] == "/" and recur:
+                        with open(directory + "/" + "dir.txt") as dirty:
+                            dirty.write(res.split("/")[-2])"""
                 if status_link == 403:
                     if not forced:
                         forbi = True
@@ -509,6 +515,7 @@ def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
                 link_url = url + link
             enclosure_queue.put(link_url)
         enclosure_queue.join()
+    print "plop"
 
 """
 create_file:
@@ -560,7 +567,7 @@ if __name__ == '__main__':
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5)
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
     parser.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
-    parser.add_argument("-r", help="Number of recursive dir. ex: -r 2: two under directory", required=False, dest="recursif", type=int)
+    parser.add_argument("-r", help="recursive dir", required=False, dest="recursif", action='store_true')
     parser.add_argument("-p", help="add prefix in wordlist to scan", required=False, dest="prefix")
     results = parser.parse_args()
                                      
