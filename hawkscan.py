@@ -437,10 +437,6 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     mail(req, directory, all_mail)
                     if 'sitemap.xml' in res:
                         sitemap(req, directory)
-                    #for recursif scan
-                    """if res[-1] == "/" and recur:
-                        with open(directory + "/" + "dir.txt") as dirty:
-                            dirty.write(res.split("/")[-2])"""
                 if status_link == 403:
                     if not forced:
                         forbi = True
@@ -515,7 +511,6 @@ def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
                 link_url = url + link
             enclosure_queue.put(link_url)
         enclosure_queue.join()
-    print "plop"
 
 """
 create_file:
