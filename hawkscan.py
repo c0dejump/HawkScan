@@ -52,7 +52,7 @@ auto_update: for update the tool
 def auto_update():
     au = raw_input("Do you want update it ? (y/n): ")
     if au == "y":
-        os.system("cd ../ && rm -rf HawkScan/ && git clone https://github.com/c0dejump/HawkScan.git")
+        os.system("cd ../ && rm -rf HawkScan/ && git clone https://github.com/c0dejump/HawkScan.git && cd ../HawkScan")
         sys.exit()
     else:
         pass
