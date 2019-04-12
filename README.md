@@ -6,6 +6,8 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
 This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/wafw00f)
 
+This script use "Sublist3r to scan subdomains (https://github.com/aboul3la/Sublist3r)
+
 # Features
  - [x] URL fuzzing and dir/file detection
  - [x] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
@@ -31,7 +33,6 @@ This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/w
  - [ ] Check github & pastebin
  - [ ] Mutli website subdomain scan
  - [ ] Spider link in website
- - [ ] Best subdomain found and analyze
  - [ ] Check if it's an user or a page
  - [ ] Backup file csv of scan
  - [ ] Work it with py2 and py3
