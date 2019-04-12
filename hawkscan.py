@@ -90,11 +90,10 @@ Subdomains:
 Check subdomains with the option -s (-s google.fr)
 script use sublit3r to scan subdomain (it's a basic scan)
 """
-def subdomain(directory, subdomains):
+def subdomain(subdomains):
     print "search subdomains:\n"
-    subdir = directory + "/sublist/"
     sub_file = subdomains + ".txt"
-    sub = sublist3r.main(subdomains, 40, subdir + sub_file, ports= None, silent=False, verbose= False, enable_bruteforce= False, engines=None)
+    sub = sublist3r.main(subdomains, 40, sub_file, ports= None, silent=False, verbose= False, enable_bruteforce= False, engines=None)
     print LINE
 
 """ Get sitemap.xml of website"""
@@ -534,7 +533,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
     if not os.path.exists(directory):
         os.makedirs(directory) # creat the dir
         if subdomains:
-            subdomain(directory, subdomains)
+            subdomain(subdomains)
         get_header(url, directory)
         get_dns(url, directory)
         who_is(url, directory)
@@ -549,7 +548,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
             directory = directory + '_2'
             os.makedirs(directory)
             if subdomains:
-                subdomain(directory, subdomains)
+                subdomain(subdomains)
             get_header(url, directory)
             get_dns(url, directory)
             who_is(url, directory)
