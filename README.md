@@ -36,6 +36,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Backup file csv of scan
  - [ ] Work it with py2 and py3
  - [ ] add option "-o" to backup file in directory of your choice
+ - [ ] add option rate-limit if app is unstable
  
  # Usage
  > pip install -r requirements.txt
