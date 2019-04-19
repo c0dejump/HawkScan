@@ -589,7 +589,7 @@ if __name__ == '__main__':
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5)
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
     parser.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
-    parser.add_argument("-r", help="recursive dir", required=False, dest="recursif", action='store_true')
+    parser.add_argument("-r", help="recursive dir #TODO not implement for the moment", required=False, dest="recursif", action='store_true')
     parser.add_argument("-p", help="add prefix in wordlist to scan", required=False, dest="prefix")
     parser.add_argument("-o", help="output to site_scan.txt (default in website directory)", required=False, dest="output")
     results = parser.parse_args()
