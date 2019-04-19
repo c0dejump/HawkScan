@@ -42,7 +42,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  # Usage
  > pip install -r requirements.txt
  
- > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-p PREFIX]
+ > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT]
  
  > optional arguments: 
   > -h, --help     show this help message and exit                                                                     
@@ -52,4 +52,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
   > -t THREAD      Number of threads to use for URL Fuzzing. Default: 5  
   > -a USER_AGENT  choice user-agent     
   > --redirect     For scan with redirect response like 301,302      
-  > -p PREFIX      add prefix in wordlist to scan
+  > -p PREFIX      add prefix in wordlist to scan    
+  > -o OUTPUT      output to site_scan.txt (default in website directory)  
+  > -r             recursive dir #TODO not implement for the moment     
+  
