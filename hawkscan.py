@@ -374,8 +374,10 @@ def file_backup(res, directory):
             size_bytes = os.path.getsize(r_files)
             if size_bytes:
                 print "{}{}  ({} bytes)".format(PLUS, res_b, size_bytes)
+                outpt(directory, res_b, forb=False)
             else:
                 print "{}{}".format(PLUS, res_b)
+                outpt(directory, res_b, forb=False)
         else:
             pass
 
@@ -393,8 +395,29 @@ def hidden_dir(res, user_agent):
     sk_f = req_f.status_code
     if sk_d == 200:
         print "{}{}".format(PLUS, hidd_d)
+        outpt(directory, hidd_d, forb=False)
     elif sk_f == 200:
         print "{}{}".format(PLUS, hidd_f)
+        outpt(directory, hidd_f, forb=False)
+
+"""
+outpt:
+Output to scan
+"""
+def outpt(directory, res, forb):
+    if output:
+        with open(output + "/scan.txt", "a+") as op:
+            if forb == True:
+                op.write(str(res+" Forbidden\n"))
+            else:
+                op.write(str(res+"\n"))
+    else:
+        with open(directory + "/scan.txt", "a+") as op:
+            if forb == True:
+                op.write(str(res+" Forbidden\n"))
+            else:
+                op.write(str(res+"\n"))
+
 
 """
 tryUrl:
@@ -428,8 +451,10 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     size = dl(res, req, directory)
                     if size:
                         print "{}{} ({} bytes)".format(PLUS, res, size)
+                        outpt(directory, res, forb=False)
                     else:
                         print "{}{}".format(PLUS, res)
+                        outpt(directory, res, forb=False)
                     #check backup files
                     file_backup(res, directory)
                     #get mail
@@ -441,6 +466,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                         forbi = True
                         print FORBI + res + "\033[31m Forbidden \033[0m"
                         backup(res, directory, forbi)
+                        outpt(directory, res, forb=True)
                     else:
                         #print FORBI + res + "\033[31m Forbidden \033[0m"
                         pass
@@ -449,6 +475,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 elif status_link == 301:
                     if redirect:
                         print "\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m"
+                        outpt(directory, res, forb=False)
                     else:
                         pass
                 elif status_link == 304:
@@ -456,6 +483,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 elif status_link == 302:
                     if redirect:
                         print "\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m"
+                        outpt(directory, res, forb=False)
                     else:
                         pass
                 elif status_link == 400:
@@ -563,6 +591,7 @@ if __name__ == '__main__':
     parser.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
     parser.add_argument("-r", help="recursive dir", required=False, dest="recursif", action='store_true')
     parser.add_argument("-p", help="add prefix in wordlist to scan", required=False, dest="prefix")
+    parser.add_argument("-o", help="output to site_scan.txt (default in website directory)", required=False, dest="output")
     results = parser.parse_args()
                                      
     url = results.url
@@ -572,6 +601,7 @@ if __name__ == '__main__':
     subdomains = results.subdomains
     redirect = results.redirect
     prefix = results.prefix
+    output = results.output
     recur = results.recursif
     # TODO implement recursive scan
 
