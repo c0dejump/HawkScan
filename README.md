@@ -24,7 +24,8 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [x] WAF detection
  - [x] Add personal prefix
  - [x] auto update script
-
+ - [x] auto or personal output of scan (scan.txt)
+ 
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
  - [ ] Get certificate (crypto keys...)
@@ -35,8 +36,8 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Check if it's an user or a page
  - [ ] Backup file csv of scan
  - [ ] Work it with py2 and py3
- - [ ] add option "-o" to backup file in directory of your choice
  - [ ] add option rate-limit if app is unstable
+ - [ ] display the changes of update
  
  # Usage
  > pip install -r requirements.txt
