@@ -408,15 +408,15 @@ def outpt(directory, res, forb):
     if output:
         with open(output + "/scan.txt", "a+") as op:
             if forb == True:
-                op.write(str(res+" Forbidden\n"))
+                op.write(str("[x] " + res + " Forbidden\n"))
             else:
-                op.write(str(res+"\n"))
+                op.write(str("[+] " + res + "\n"))
     else:
         with open(directory + "/scan.txt", "a+") as op:
             if forb == True:
-                op.write(str(res+" Forbidden\n"))
+                op.write(str("[x] " + res + " Forbidden\n"))
             else:
-                op.write(str(res+"\n"))
+                op.write(str("[+] " + res + "\n"))
 
 
 """
@@ -444,7 +444,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
                 hidden_dir(res, user_agent)
                 status_link = req.status_code
-                if status_link == 200:
+                if status_link == 200 and "Bad url" not in req.text:
                     #check backup
                     backup(res, directory, forbi)
                     # dl files and calcul size
