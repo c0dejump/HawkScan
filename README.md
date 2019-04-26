@@ -38,6 +38,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Work it with py2 and py3
  - [ ] add option rate-limit if app is unstable
  - [ ] display the changes of update
+ - [ ] Detect famous honeypot
  
  # Usage
  > pip install -r requirements.txt
