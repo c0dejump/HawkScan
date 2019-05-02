@@ -39,6 +39,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] add option rate-limit if app is unstable
  - [ ] display the changes of update
  - [ ] Detect famous honeypot
+ - [ ] Response error to WAF
  
  # Usage
  > pip install -r requirements.txt
