@@ -5470,6 +5470,7 @@ Admin.shtml
 admin.shtml
 admin.srf
 admin.woa
+.config
 admin/
 admin/.config
 admin/.htaccess
