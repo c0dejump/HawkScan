@@ -40,6 +40,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] display the changes of update
  - [ ] Detect famous honeypot
  - [ ] Response error to WAF
+ - [ ] Scan with an auth
  
  # Usage
  > pip install -r requirements.txt
