@@ -23,15 +23,16 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [x] Backup system (if the script stopped, it take again in same place)
  - [x] WAF detection
  - [x] Add personal prefix
- - [x] auto update script
- - [x] auto or personal output of scan (scan.txt)
+ - [x] Auto update script
+ - [x] Auto or personal output of scan (scan.txt)
+ - [x] Check Github
  
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
  - [ ] Get certificate (crypto keys...)
  - [ ] Recursif dir/file
  - [ ] Anonymous routing through some proxy (http/s proxy list)
- - [ ] Check github & pastebin
+ - [ ] Check pastebin
  - [ ] Spider link in website
  - [ ] Check if it's an user or a page
  - [ ] Backup file csv of scan
