@@ -55,7 +55,28 @@ def auto_update():
         os.system("git pull origin master")
     else:
         pass
-
+"""
+Github: check github informations
+Pastebin: check pastebin information #TODO
+"""
+def gitpast(url):
+    print("{}Check in Github".format(INFO))
+    print(LINE)
+    url = url.split(".")[1]
+    url = "@{}".format(url)
+    print("search: {}\n".format(url))
+    types = ["Commits", "Issues", "Code", "Repositories", "Marketplace", "Topics", "Wikis", "Users"]
+    for t in types:
+        github = "https://github.com/search?q={}&type={}".format(url, t)
+        req = requests.get(github, verify=False)
+        soup = BeautifulSoup(req.text, "html.parser")
+        search = soup.find('a', {"class":"menu-item selected"})
+        if search:
+            for s in search.find("span"):
+                print("{}{}: {}".format(INFO, t, s))
+        else:
+            print("{}{}: not found".format(INFO, t))
+    print(LINE)
 """
 Mail:
 get mail adresse in web page during the scan and check if the mail leaked
@@ -90,10 +111,10 @@ Check subdomains with the option -s (-s google.fr)
 script use sublit3r to scan subdomain (it's a basic scan)
 """
 def subdomain(subdomains):
-    print "search subdomains:\n"
+    print("search subdomains:\n")
     sub_file = "sublist/" + subdomains + ".txt"
     sub = sublist3r.main(subdomains, 40, sub_file, ports= None, silent=False, verbose= False, enable_bruteforce= False, engines=None)
-    print LINE
+    print(LINE)
     time.sleep(2)
 
 """ Get sitemap.xml of website"""
@@ -117,37 +138,37 @@ def detect_waf(url, directory):
                 message = w
             else:
                 pass
-        print INFO + "WAF"
-        print LINE
+        print(INFO + "WAF")
+        print(LINE)
         if detect == True:
-            print "{}{}".format(WARNING, message)
-            print LINE
+            print("{}{}".format(WARNING, message))
+            print(LINE)
         else:
-            print "{}This website dos not use WAF".format(LESS)
-            print LINE
+            print("{}This website dos not use WAF".format(LESS))
+            print(LINE)
 
 """
 CMS:
 Detect if the website use a CMS
 """
 def detect_cms(url):
-    print INFO + "CMS"
-    print LINE
+    print(INFO + "CMS")
+    print(LINE)
     req = requests.get("https://whatcms.org/APIEndpoint/Detect?key=1481ff2f874c4942a734d9c499c22b6d8533007dd1f7005c586ea04efab2a3277cc8f2&url={}".format(url))
     if "Not Found" in req.text:
-        print "{} this website does not seem to use a CMS \n".format(LESS)
-        print LINE
+        print("{} this website does not seem to use a CMS \n".format(LESS))
+        print(LINE)
     else:
         reqt = json.loads(req.text)
         result = reqt["result"].get("name")
         v = reqt["result"].get("version")
         if v:
-            print "{} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v)
+            print("{} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v))
             cve_cms(result, v)
-            print LINE
+            print(LINE)
         else:
-            print "{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result)
-            print LINE
+            print("{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result))
+            print(LINE)
 
 """
 CVE_CMS:
@@ -157,7 +178,7 @@ def cve_cms(result, v):
     url_comp = "https://www.cvedetails.com/version-search.php?vendor={}&product=&version={}".format(result, v)
     req = requests.get(url_comp, allow_redirects=True, verify=False)
     if not "matches" in req.text:
-        print "{}CVE found ! \n{}{}\n".format(WARNING, WARNING, url_comp)
+        print("{}CVE found ! \n{}{}\n".format(WARNING, WARNING, url_comp))
         if 'WordPress' in req.text:
             version =  v.replace('.','')
             site = "https://wpvulndb.com/wordpresses/{}".format(version)
@@ -168,9 +189,9 @@ def cve_cms(result, v):
                 for p in search:
                     dates = p.find("td").text.strip()
                     detail = p.find("a").text.strip()
-                    print "{}{} : {}".format(WARNING, dates, detail)
+                    print("{}{} : {}".format(WARNING, dates, detail))
             else:
-                print "{} Nothing wpvunldb found \n".format(LESS)
+                print("{} Nothing wpvunldb found \n".format(LESS))
     elif 'WordPress' in req.text:
         version =  v.replace('.','')
         site = "https://wpvulndb.com/wordpresses/{}".format(version)
@@ -178,46 +199,46 @@ def cve_cms(result, v):
         soup = BeautifulSoup(req.text, "html.parser")
         search = soup.find_all('tr')
         if search:
-            print "{}CVE found ! \n{}{}\n".format(WARNING, WARNING, site)
+            print("{}CVE found ! \n{}{}\n".format(WARNING, WARNING, site))
             for p in search:
                 dates = p.find("td").text.strip()
                 detail = p.find("a").text.strip()
-                print "{}{} : {}".format(WARNING, dates, detail)
+                print("{}{} : {}".format(WARNING, dates, detail))
         else:
-            print "{} Nothing wpvunldb found \n".format(LESS)
+            print("{} Nothing wpvunldb found \n".format(LESS))
     else:
-        print "{} Nothing CVE found \n".format(LESS)
+        print("{} Nothing CVE found \n".format(LESS))
 
 """Get header of website (cookie, link, etc...)"""
 def get_header(url, directory):
     head = r.headers
-    print INFO + "HEADER"
-    print LINE
-    print " {} \n".format(head).replace(',','\n')
-    print LINE
+    print(INFO + "HEADER")
+    print(LINE)
+    print(" {} \n".format(head).replace(',','\n'))
+    print(LINE)
     with open(directory + '/header.csv', 'w+') as file:
         file.write(str(head).replace(',','\n'))
 
 """Get whois of website"""
 def who_is(url, directory):
-    print INFO + "WHOIS"
-    print LINE
+    print(INFO + "WHOIS")
+    print(LINE)
     try:
         who_is = whois.whois(url)
-        #pprint.pprint(who_is) + "\n"
+        #pprint.pprint(who_is + "\n")
         for k, w in who_is.iteritems():
             is_who = "{} : {}-".format(k, w)
-            print is_who
+            print(is_who)
             with open(directory + '/whois.csv', 'a+') as file:
                 file.write(is_who.replace("-","\n"))
     except:
         erreur = sys.exc_info()
         typerr = u"%s" % (erreur[0])
         typerr = typerr[typerr.find("'")+1:typerr.rfind("'")]
-        print typerr
+        print(typerr)
         msgerr = u"%s" % (erreur[1])
-        print msgerr
-    print "\n" + LINE
+        print(msgerr)
+    print("\n" + LINE)
 
 """
 Status:
@@ -231,7 +252,7 @@ def status(stat, directory, u_agent):
     if check_b == True:
         with open(directory + "/backup.txt", "r") as word:
             for ligne in word.readlines():
-                print "{}{}{}".format(BACK, url, ligne.replace("\n",""))
+                print("{}{}{}".format(BACK, url, ligne.replace("\n","")))
                 lignes = ligne.split("\n")
                 #take the last line in file
                 last_line = lignes[-2]
@@ -239,20 +260,20 @@ def status(stat, directory, u_agent):
                 for nLine, line in enumerate(f):
                     line = line.replace("\n","")
                     if line == last_line:
-                        print LINE
+                        print(LINE)
                         forced = False
                         check_words(url, wordlist, directory, u_agent, forced, nLine)
     elif check_b == False:
         os.remove(directory + "/backup.txt")
-        print "restart scan..."
-        print LINE
+        print("restart scan...")
+        print(LINE)
     if stat == 200:
         check_words(url, wordlist, directory, u_agent)
     elif stat == 301:
-        print PLUS + " 301 Moved Permanently\n"
+        print(PLUS + " 301 Moved Permanently\n")
         check_words(url, wordlist, directory, u_agent)
     elif stat == 302:
-        print PLUS + " 302 Moved Temporarily\n"
+        print(PLUS + " 302 Moved Temporarily\n")
         check_words(url, wordlist, directory, u_agent)
     elif stat == 304:
         pass
@@ -281,11 +302,11 @@ def check_backup(directory):
     if os.path.exists(directory + "/backup.txt"):
         bp = raw_input("A backup file exist, do you want to continue or restart ? (C:R)\n")
         if bp == 'C' or bp == 'c':
-            print "restart from last save in backup.txt ..."
-            print LINE
+            print("restart from last save in backup.txt ...")
+            print(LINE)
             return True
         else:
-            print LINE
+            print(LINE)
             return False
     else:
         pass
@@ -299,27 +320,27 @@ def get_dns(url, directory):
             conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=url)
             conn.connect((url, 443))
             cert = conn.getpeercert()
-            print INFO + "DNS information"
-            print LINE
+            print(INFO + "DNS information")
+            print(LINE)
             pprint.pprint(str(cert['subject']).replace(',','').replace('((','').replace('))',''))
             pprint.pprint(cert['subjectAltName'])
-            print ''
+            print('')
             conn.close()
-            print LINE
+            print(LINE)
             with open(directory + '/dns_info.csv', 'w+') as file:
                 file.write(str(cert).replace(',','\n').replace('((','').replace('))',''))
         else:
             pass
     except:
-        print INFO + "DNS information"
-        print LINE
+        print(INFO + "DNS information")
+        print(LINE)
         erreur = sys.exc_info()
         typerr = u"%s" % (erreur[0])
         typerr = typerr[typerr.find("'")+1:typerr.rfind("'")]
-        print typerr
+        print(typerr)
         msgerr = u"%s" % (erreur[1])
-        print msgerr + "\n"
-        print LINE
+        print(msgerr + "\n")
+        print(LINE)
 
 
 """Create backup file"""
@@ -361,11 +382,12 @@ def file_backup(res, directory):
     d_files = directory + "/files/"
     for exton in ext_b:
         res_b = res + exton
-        #print res_b
+        #print(res_b)
         anti_sl = res_b.split("/")
         rep = anti_sl[3:]
         result = rep[-1]
         r_files = d_files + result
+        #time.sleep(1)
         req_b = requests.get(res_b, allow_redirects=False, verify=False)
         soup = BeautifulSoup(req_b.text, "html.parser")
         if req_b.status_code == 200:
@@ -373,10 +395,10 @@ def file_backup(res, directory):
                 fichier_bak.write(str(soup))
             size_bytes = os.path.getsize(r_files)
             if size_bytes:
-                print "{}{}  ({} bytes)".format(PLUS, res_b, size_bytes)
+                print("{}{}  ({} bytes)".format(PLUS, res_b, size_bytes))
                 outpt(directory, res_b, forb=False)
             else:
-                print "{}{}".format(PLUS, res_b)
+                print("{}{}".format(PLUS, res_b))
                 outpt(directory, res_b, forb=False)
         else:
             pass
@@ -394,10 +416,10 @@ def hidden_dir(res, user_agent):
     sk_d = req_d.status_code
     sk_f = req_f.status_code
     if sk_d == 200:
-        print "{}{}".format(PLUS, hidd_d)
+        print("{}{}".format(PLUS, hidd_d))
         outpt(directory, hidd_d, forb=False)
     elif sk_f == 200:
-        print "{}{}".format(PLUS, hidd_f)
+        print("{}{}".format(PLUS, hidd_f))
         outpt(directory, hidd_f, forb=False)
 
 """
@@ -441,19 +463,20 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 user_agent = {'User-agent': ua.random} #for a user-agent random
             try:
                 forbi = False
+                #time.sleep(1)
                 req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
                 hidden_dir(res, user_agent)
                 status_link = req.status_code
-                if status_link == 200 and "Bad url" not in req.text:
+                if status_link == 200:
                     #check backup
                     backup(res, directory, forbi)
                     # dl files and calcul size
                     size = dl(res, req, directory)
                     if size:
-                        print "{}{} ({} bytes)".format(PLUS, res, size)
+                        print("{}{} ({} bytes)".format(PLUS, res, size))
                         outpt(directory, res, forb=False)
                     else:
-                        print "{}{}".format(PLUS, res)
+                        print("{}{}".format(PLUS, res))
                         outpt(directory, res, forb=False)
                     #check backup files
                     file_backup(res, directory)
@@ -464,17 +487,17 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 if status_link == 403:
                     if not forced:
                         forbi = True
-                        print FORBI + res + "\033[31m Forbidden \033[0m"
+                        print(FORBI + res + "\033[31m Forbidden \033[0m")
                         backup(res, directory, forbi)
                         outpt(directory, res, forb=True)
                     else:
-                        #print FORBI + res + "\033[31m Forbidden \033[0m"
+                        #print(FORBI + res + "\033[31m Forbidden \033[0m")
                         pass
                 elif status_link == 404:
                     pass
                 elif status_link == 301:
                     if redirect:
-                        print "\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m"
+                        print("\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m")
                         outpt(directory, res, forb=False)
                     else:
                         pass
@@ -482,13 +505,15 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     pass
                 elif status_link == 302:
                     if redirect:
-                        print "\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m"
+                        print("\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m")
                         outpt(directory, res, forb=False)
                     else:
                         pass
                 elif status_link == 400:
                     pass
-                    #print "bad request"
+                    #print("bad request")
+                elif status_link == 401:
+                    print(LESS + res + "\033[33m401 Unauthorized\033[0m")
             except Exception:
                 pass
                 #traceback.print_exc()
@@ -562,12 +587,13 @@ def create_file(url, stat, u_agent, thread, subdomains):
         who_is(url, directory)
         detect_cms(url)
         detect_waf(url, directory)
+        gitpast(url)
         status(stat, directory, u_agent)
     # or else ask the question
     else:
         new_file = raw_input('this directory exist, do you want to create another file ? (y:n)\n')
         if new_file == 'y':
-            print LINE
+            print(LINE)
             directory = directory + '_2'
             os.makedirs(directory)
             if subdomains:
@@ -614,7 +640,7 @@ if __name__ == '__main__':
             len_w += 1
     r = requests.get(url, allow_redirects=False, verify=False)
     stat = r.status_code
-    print "\n \033[32m url " + url + " found \033[0m\n"
-    print LINE
+    print("\n \033[32m url " + url + " found \033[0m\n")
+    print(LINE)
     create_file(url, stat, u_agent, thread, subdomains)
     
