@@ -45,6 +45,8 @@ enclosure_queue = Queue()
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
+#list to append url and then recursif scan
+rec_list = []
 
 """
 auto_update: for update the tool
@@ -52,7 +54,7 @@ auto_update: for update the tool
 def auto_update():
     au = raw_input("Do you want update it ? (y/n): ")
     if au == "y":
-        os.system("git pull origin master")
+        os.system("git status && git pull origin master")
     else:
         pass
 """
@@ -62,7 +64,10 @@ Pastebin: check pastebin information #TODO
 def gitpast(url):
     print("{}Check in Github".format(INFO))
     print(LINE)
-    url = url.split(".")[1]
+    if "www" in url:
+        url = url.split(".")[1]
+    else:
+        url = url.split("/")[2]
     url = "@{}".format(url)
     print("search: {}\n".format(url))
     types = ["Commits", "Issues", "Code", "Repositories", "Marketplace", "Topics", "Wikis", "Users"]
@@ -452,7 +457,6 @@ This script run functions:
 """
 def tryUrl(i, q, directory, u_agent, forced=False):
     all_mail = []
-    rec_list = []
     for t in range(len_w):
         res = q.get()
         try:
@@ -468,6 +472,11 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 hidden_dir(res, user_agent)
                 status_link = req.status_code
                 if status_link == 200:
+                    #add directory for recursif scan
+                    if res[-1] == "/" and recur:
+                        spl = res.split("/")[3:]
+                        result = "/".join(spl)
+                        rec_list.append(result)
                     #check backup
                     backup(res, directory, forbi)
                     # dl files and calcul size
@@ -485,6 +494,13 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     if 'sitemap.xml' in res:
                         sitemap(req, directory)
                 if status_link == 403:
+                    if res[-1] == "/" and recur:
+                        if ".htaccess" in res or ".htpasswd" in res:
+                            pass
+                        else:
+                            spl = res.split("/")[3:]
+                            result = "/".join(spl)
+                            rec_list.append(result)
                     if not forced:
                         forbi = True
                         print(FORBI + res + "\033[31m Forbidden \033[0m")
@@ -523,10 +539,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
             pass
         sys.stdout.write("\033[34m[i] [scan... %d/%d]\033[0m\r" % (t*thread, len_w))
         sys.stdout.flush()
-    try:
-        os.remove(directory + "/backup.txt")
-    except:
-        print("backup.txt not found")
+
 
 """
 check_words:
@@ -563,6 +576,38 @@ def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
                 link_url = url + link
             enclosure_queue.put(link_url)
         enclosure_queue.join()
+    """
+        Recursif: For recursif scan
+    """
+    if rec_list != []:
+        print(LINE)
+        size_rec_list = len(rec_list)
+        i_r = 0
+        while i_r < size_rec_list:
+            url_rec = url + rec_list[i_r]
+            print("{}Entering in directory: {}".format(INFO, rec_list[i_r]))
+            print(LINE)
+            with open(wordlist, "r") as payload:
+                links = payload.read().splitlines()
+                for i in range(thread):
+                    worker = Thread(target=tryUrl, args=(i, enclosure_queue, directory, u_agent, forced))
+                    worker.setDaemon(True)
+                    worker.start()
+                for link in links:
+                    if prefix:
+                        link_url = url_rec + prefix + link
+                    else:
+                        link_url = url_rec + link
+                    enclosure_queue.put(link_url)
+                enclosure_queue.join()
+                i_r = i_r + 1
+            print(LINE)
+    else:
+        print("{}not other directory to scan".format(INFO))
+    try:
+        os.remove(directory + "/backup.txt")
+    except:
+        print("backup.txt not found")
 
 """
 create_file:
