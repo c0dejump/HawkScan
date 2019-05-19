@@ -26,11 +26,11 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [x] Auto update script
  - [x] Auto or personal output of scan (scan.txt)
  - [x] Check Github
+ - [x] Recursif dir/file
  
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
  - [ ] Get certificate (crypto keys...)
- - [ ] Recursif dir/file
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check pastebin
  - [ ] Spider link in website
@@ -58,5 +58,4 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
   > --redirect     For scan with redirect response like 301,302      
   > -p PREFIX      add prefix in wordlist to scan    
   > -o OUTPUT      output to site_scan.txt (default in website directory)  
-  > -r             recursive dir #TODO not implement for the moment     
-  
+  > -r             recursive dir/files
