@@ -275,7 +275,6 @@ _db_.sql.zip
 old/
 .old
 users/
-search/
 login/
 password/
 register/
@@ -4891,6 +4890,7 @@ zxcvbnm/
 .svn/text-base/index.php.svn-base
 .svn/tmp/
 .svnignore
+.bzr/
 .sw
 .swf
 .swo
@@ -9411,11 +9411,7 @@ schema.sql
 schema.yml
 science
 screenshots
-script
 script/jqueryplugins/dataTables/extras/TableTools/media/swf/ZeroClipboard.swf
-scripts
-Scripts
-scripts/
 scripts/cgimail.exe
 scripts/ckeditor/ckfinder/core/connector/asp/connector.asp
 scripts/ckeditor/ckfinder/core/connector/aspx/connector.aspx
@@ -9720,6 +9716,7 @@ sql.tgz
 sql.txt
 sql.zip
 sql/
+link/links%23.asa
 sql/index.php
 sql/myadmin/
 sql/php-myadmin/
@@ -9847,6 +9844,7 @@ superman
 superman/
 supermanage.php
 supermanager
+Manage_backup.asp
 superuse.php
 superuser
 superuser.php
