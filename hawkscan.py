@@ -68,7 +68,7 @@ def gitpast(url):
         url = url.split(".")[1]
     else:
         url = url.split("/")[2]
-    url = "@{}".format(url)
+    url = "{}".format(url)
     print("search: {}\n".format(url))
     types = ["Commits", "Issues", "Code", "Repositories", "Marketplace", "Topics", "Wikis", "Users"]
     for t in types:
@@ -270,7 +270,7 @@ def status(stat, directory, u_agent):
                         check_words(url, wordlist, directory, u_agent, forced, nLine)
     elif check_b == False:
         os.remove(directory + "/backup.txt")
-        print("restart scan...")
+        print("restarting scan...")
         print(LINE)
     if stat == 200:
         check_words(url, wordlist, directory, u_agent)
@@ -361,7 +361,7 @@ def backup(res, directory, forbi):
 """ Download files and calcul size """
 def dl(res, req, directory):
     soup = BeautifulSoup(req.text, "html.parser")
-    extensions = ['.txt', '.html', '.jsp', '.xml', '.php', '.log', '.aspx', '.zip', '.old', '.bak', '.sql', '.js', '.asp', '.ini', '.log', '.rar', '.dat', '.log', '.backup', '.dll', '.save', '.BAK', '.inc']
+    extensions = ['.txt', '.html', '.jsp', '.xml', '.php', '.log', '.aspx', '.zip', '.old', '.bak', '.sql', '.js', '.asp', '.ini', '.log', '.rar', '.dat', '.log', '.backup', '.dll', '.save', '.BAK', '.inc', '.php?-s']
     d_files = directory + "/files/"
     if not os.path.exists(d_files):
         os.makedirs(d_files)
@@ -383,7 +383,7 @@ file_backup:
 During the scan, check if a backup file or dir exist.
 """
 def file_backup(res, directory):
-    ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak']
+    ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak', '?-s']
     d_files = directory + "/files/"
     for exton in ext_b:
         res_b = res + exton
@@ -474,9 +474,12 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 if status_link == 200:
                     #add directory for recursif scan
                     if res[-1] == "/" and recur:
-                        spl = res.split("/")[3:]
-                        result = "/".join(spl)
-                        rec_list.append(result)
+                        if ".git" in res:
+                            pass
+                        else:
+                            spl = res.split("/")[3:]
+                            result = "/".join(spl)
+                            rec_list.append(result)
                     #check backup
                     backup(res, directory, forbi)
                     # dl files and calcul size
@@ -494,8 +497,9 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     if 'sitemap.xml' in res:
                         sitemap(req, directory)
                 if status_link == 403:
+                    #pass
                     if res[-1] == "/" and recur:
-                        if ".htaccess" in res or ".htpasswd" in res:
+                        if ".htaccess" in res or ".htpasswd" in res or ".git" in res or "wp" in res:
                             pass
                         else:
                             spl = res.split("/")[3:]
@@ -526,10 +530,15 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     else:
                         pass
                 elif status_link == 400:
-                    pass
-                    #print("bad request")
+                    if "Server Error" in req.text:
+                        print("{}{} \033[31m400 Server Error\033[0m").format(WARNING, res)
+                    else:
+                        pass
+                        #print("{}{} \033[33m400 bad request\033[0m").format(LESS, res)
+                elif status_link == 422 or status_link == 423 or status_link == 424 or status_link == 425:
+                    print("{}{} \033[33mError WebDAV\033[0m").format(LESS, res)
                 elif status_link == 401:
-                    print(LESS + res + "\033[33m401 Unauthorized\033[0m")
+                    print("{}{} \033[33m401 Unauthorized\033[0m").format(LESS, res)
             except Exception:
                 pass
                 #traceback.print_exc()
@@ -583,6 +592,7 @@ def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
         print(LINE)
         size_rec_list = len(rec_list)
         i_r = 0
+        forced = True
         while i_r < size_rec_list:
             url_rec = url + rec_list[i_r]
             print("{}Entering in directory: {}".format(INFO, rec_list[i_r]))
@@ -649,6 +659,8 @@ def create_file(url, stat, u_agent, thread, subdomains):
             detect_cms(url)
             status(stat, directory, u_agent)
         else:
+            if subdomains:
+                subdomain(subdomains)
             status(stat, directory, u_agent)
 
 if __name__ == '__main__':
@@ -660,7 +672,7 @@ if __name__ == '__main__':
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5)
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
     parser.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
-    parser.add_argument("-r", help="recursive dir #TODO not implement for the moment", required=False, dest="recursif", action='store_true')
+    parser.add_argument("-r", help="recursive dir/files", required=False, dest="recursif", action='store_true')
     parser.add_argument("-p", help="add prefix in wordlist to scan", required=False, dest="prefix")
     parser.add_argument("-o", help="output to site_scan.txt (default in website directory)", required=False, dest="output")
     results = parser.parse_args()
