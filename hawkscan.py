@@ -567,12 +567,12 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 elif status_link == 304:
                     pass
                 elif status_link == 302:
-                    """if redirect:
+                    if redirect:
                         print("\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m")
                         outpt(directory, res, forb=False)
                     else:
-                        pass"""
-                    pass
+                        pass
+                    #pass
                 elif status_link == 400:
                     if "Server Error" in req.text:
                         print("{}{} \033[31m400 Server Error\033[0m").format(WARNING, res)
