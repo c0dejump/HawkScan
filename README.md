@@ -27,6 +27,8 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [x] Auto or personal output of scan (scan.txt)
  - [x] Check Github
  - [x] Recursif dir/file
+ - [x] Scan with an authenfication cookie
+ - [x] Option --profil to pass profil page during the scan
  
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan) / IA to detect vulns ?
@@ -34,19 +36,18 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check pastebin
  - [ ] Spider link in website
- - [ ] Check if it's an user or a page
  - [ ] Backup file csv of scan
  - [ ] Work it with py2 and py3
  - [ ] add option rate-limit if app is unstable
  - [ ] display the changes of update
  - [ ] Detect famous honeypot
  - [ ] Response error to WAF + bypass it
- - [ ] Scan with an auth
  
  # Usage
  > pip install -r requirements.txt
  
- > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT]
+ > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD]
+[-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--profil PROFIL]
  
  > optional arguments: 
   > -h, --help     show this help message and exit                                                                     
@@ -58,4 +59,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
   > --redirect     For scan with redirect response like 301,302      
   > -p PREFIX      add prefix in wordlist to scan    
   > -o OUTPUT      output to site_scan.txt (default in website directory)  
-  > -r             recursive dir/files
+  > -r             recursive dir/files 
+  >--cookie COOKIE_  Scan with an authentification cookie
+  >--profil PROFIL   To define a profil page to pass during scan
+  
