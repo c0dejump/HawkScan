@@ -31,7 +31,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [x] Option --profil to pass profil page during the scan
  
 # TODO
- - [ ] Testing website paramaters (attack, so no passive scan) / IA to detect vulns ?
+ - [ ] Testing website paramaters (attack, so no passive scan)
  - [ ] Get certificate (crypto keys...)
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check pastebin
