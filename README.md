@@ -59,7 +59,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
   > --redirect     For scan with redirect response like 301,302      
   > -p PREFIX      add prefix in wordlist to scan    
   > -o OUTPUT      output to site_scan.txt (default in website directory)  
-  > -r             recursive dir/files 
-  >--cookie COOKIE_  Scan with an authentification cookie
-  >--profil PROFIL   To define a profil page to pass during scan
+  > -r             recursive dir/files       
+  >--cookie COOKIE_  Scan with an authentification cookie   
+  >--profil PROFIL   To define a profil page to pass during scan     
   
