@@ -1160,6 +1160,8 @@ cgibin/
 cgis/
 cgj/
 ch/
+saml/
+saml
 challenge/
 Challenge/
 champion/
