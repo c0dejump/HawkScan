@@ -48,6 +48,9 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 #list to append url and then recursif scan
 rec_list = []
 
+#for profil option
+req_p = u""
+
 """
 auto_update: for update the tool
 """
@@ -383,7 +386,7 @@ file_backup:
 During the scan, check if a backup file or dir exist.
 """
 def file_backup(res, directory):
-    ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak', '?-s']
+    ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak']
     d_files = directory + "/files/"
     for exton in ext_b:
         res_b = res + exton
@@ -393,7 +396,10 @@ def file_backup(res, directory):
         result = rep[-1]
         r_files = d_files + result
         #time.sleep(1)
-        req_b = requests.get(res_b, allow_redirects=False, verify=False)
+        if cookie_auth:
+            req_b = requests.get(res_b, allow_redirects=False, verify=False, cookies=cookie_auth)
+        else:
+            req_b = requests.get(res_b, allow_redirects=False, verify=False)
         soup = BeautifulSoup(req_b.text, "html.parser")
         if req_b.status_code == 200:
             with open(r_files, 'w+') as fichier_bak:
@@ -416,8 +422,12 @@ def hidden_dir(res, user_agent):
     pars = res.split("/")
     hidd_d = "{}~{}/".format(url, pars[3])
     hidd_f = "{}~{}".format(url, pars[3])
-    req_d = requests.get(hidd_d, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
-    req_f = requests.get(hidd_f, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+    if cookie_auth:
+        req_d = requests.get(hidd_d, headers=user_agent, allow_redirects=False, verify=False, timeout=5, cookies=cookie_auth)
+        req_f = requests.get(hidd_f, headers=user_agent, allow_redirects=False, verify=False, timeout=5, cookies=cookie_auth)
+    else:
+        req_d = requests.get(hidd_d, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+        req_f = requests.get(hidd_f, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
     sk_d = req_d.status_code
     sk_f = req_f.status_code
     if sk_d == 200:
@@ -445,6 +455,33 @@ def outpt(directory, res, forb):
             else:
                 op.write(str("[+] " + res + "\n"))
 
+"""
+Check_profil_page: 
+If scan blog, or social network etc.. you can activate this option to pass profil pages.
+for use this option you do defined a profil page base, ex: 
+    --profil url.com/profil/codejump
+"""
+def check_profil_page(req, res, directory, forbi):
+    scoring = 0
+    words = req_p
+    for w in words.split("\n"):
+        if w in req.text:
+            scoring += 1
+        else:
+            pass
+    len_w = [lines for lines in words.split("\n")] #to avoid to do line per line
+    perc = 100 * float(scoring) / len(len_w) #to do a percentage
+    if perc >= 75:
+        pass
+    elif perc >= 50 and pec < 75:
+        print("{}{} potential profil page").format(LESS, res)
+    else:
+        print("{}{}").format(PLUS, res)
+        #check backup
+        backup(res, directory, forbi)
+        #check backup files
+        file_backup(res, directory)
+
 
 """
 tryUrl:
@@ -468,10 +505,28 @@ def tryUrl(i, q, directory, u_agent, forced=False):
             try:
                 forbi = False
                 #time.sleep(1)
-                req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+                if cookie_auth:
+                    req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5, cookies=cookie_auth)
+                else:
+                    req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
                 hidden_dir(res, user_agent)
                 status_link = req.status_code
                 if status_link == 200:
+                    if profil:
+                        check_profil_page(req, res, directory, forbi)
+                    else:
+                        # dl files and calcul size
+                        size = dl(res, req, directory)
+                        if size:
+                            print("{}{} ({} bytes)".format(PLUS, res, size))
+                            outpt(directory, res, forb=False)
+                        else:
+                            print("{}{}".format(PLUS, res))
+                            outpt(directory, res, forb=False)
+                        #check backup
+                        backup(res, directory, forbi)
+                        #check backup files
+                        file_backup(res, directory)
                     #add directory for recursif scan
                     if res[-1] == "/" and recur:
                         if ".git" in res:
@@ -480,18 +535,6 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                             spl = res.split("/")[3:]
                             result = "/".join(spl)
                             rec_list.append(result)
-                    #check backup
-                    backup(res, directory, forbi)
-                    # dl files and calcul size
-                    size = dl(res, req, directory)
-                    if size:
-                        print("{}{} ({} bytes)".format(PLUS, res, size))
-                        outpt(directory, res, forb=False)
-                    else:
-                        print("{}{}".format(PLUS, res))
-                        outpt(directory, res, forb=False)
-                    #check backup files
-                    file_backup(res, directory)
                     #get mail
                     mail(req, directory, all_mail)
                     if 'sitemap.xml' in res:
@@ -524,11 +567,12 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 elif status_link == 304:
                     pass
                 elif status_link == 302:
-                    if redirect:
+                    """if redirect:
                         print("\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m")
                         outpt(directory, res, forb=False)
                     else:
-                        pass
+                        pass"""
+                    pass
                 elif status_link == 400:
                     if "Server Error" in req.text:
                         print("{}{} \033[31m400 Server Error\033[0m").format(WARNING, res)
@@ -671,10 +715,12 @@ if __name__ == '__main__':
     parser.add_argument("-s", help="Subdomain tester", dest='subdomains', required=False)
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5)
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
-    parser.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
+    parser.add_argument("--redirect", help="For sacn with redirect response (301/302)", dest='redirect', required=False, action='store_true')
     parser.add_argument("-r", help="recursive dir/files", required=False, dest="recursif", action='store_true')
     parser.add_argument("-p", help="add prefix in wordlist to scan", required=False, dest="prefix")
     parser.add_argument("-o", help="output to site_scan.txt (default in website directory)", required=False, dest="output")
+    parser.add_argument("--cookie", help="to scan with an authentification cookie", required=False, dest="cookie_", type=str)
+    parser.add_argument("--profil", help="To define a profil page", required=False, dest="profil")
     results = parser.parse_args()
                                      
     url = results.url
@@ -686,15 +732,24 @@ if __name__ == '__main__':
     prefix = results.prefix
     output = results.output
     recur = results.recursif
-    # TODO implement recursive scan
+    cookie_ = results.cookie_
+    profil = results.profil
 
     banner()
-    len_w = 0
-    #calcul wordlist size
+    len_w = 0 #calcul wordlist size
     auto_update()
+    cookie_auth = {}
+    if cookie_:
+        s = cookie_.split(";")
+        for c in s:
+            c = c.split("=", 1)
+            cookie_auth.update([(c[0],c[1])])
     with open(wordlist, 'r') as words:
         for l in words:
             len_w += 1
+    if profil:
+        req_profil = requests.get(profil)
+        req_p = req_profil.text
     r = requests.get(url, allow_redirects=False, verify=False)
     stat = r.status_code
     print("\n \033[32m url " + url + " found \033[0m\n")
