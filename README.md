@@ -36,10 +36,9 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check pastebin
  - [ ] Spider link in website
- - [ ] Backup file csv of scan
+ - [ ] Report.html
  - [ ] Work it with py2 and py3
  - [ ] add option rate-limit if app is unstable
- - [ ] display the changes of update
  - [ ] Detect famous honeypot
  - [ ] Response error to WAF + bypass it
  
