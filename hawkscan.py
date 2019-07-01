@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 import json
 import traceback
 import csv
+from datetime import datetime
 #personal libs
 from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
 from Queue import Queue
@@ -418,7 +419,7 @@ def file_backup(res, directory):
 hidden_dir:
 Like the function 'file_backup' but check if the type backup dir like '~articles/' exist.
 """
-def hidden_dir(res, user_agent):
+def hidden_dir(res, user_agent, directory, forbi):
     pars = res.split("/")
     hidd_d = "{}~{}/".format(url, pars[3])
     hidd_f = "{}~{}".format(url, pars[3])
@@ -431,17 +432,23 @@ def hidden_dir(res, user_agent):
     sk_d = req_d.status_code
     sk_f = req_f.status_code
     if sk_d == 200:
-        print("{}{}".format(PLUS, hidd_d))
-        outpt(directory, hidd_d, forb=False)
+        if profil:
+            check_profil_page(req_d, res, directory, forbi)
+        else:
+            print("{}{}".format(PLUS, hidd_d))
+            outpt(directory, hidd_d, forb=False)
     elif sk_f == 200:
-        print("{}{}".format(PLUS, hidd_f))
-        outpt(directory, hidd_f, forb=False)
+        if profil:
+            check_profil_page(req_f, res, directory, forbi)
+        else:
+            print("{}{}".format(PLUS, hidd_f))
+            outpt(directory, hidd_f, forb=False)
 
 """
 outpt:
 Output to scan
 """
-def outpt(directory, res, forb):
+def outpt(directory, res, stats, forb):
     if output:
         with open(output + "/scan.txt", "a+") as op:
             if forb == True:
@@ -452,6 +459,10 @@ def outpt(directory, res, forb):
         with open(directory + "/scan.txt", "a+") as op:
             if forb == True:
                 op.write(str("[x] " + res + " Forbidden\n"))
+            elif stats == 301:
+                op.write(str("[+] " + res + " 301\n"))
+            elif stats == 302:
+                op.write(str("[+] " + res + " 302\n"))
             else:
                 op.write(str("[+] " + res + "\n"))
 
@@ -509,7 +520,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5, cookies=cookie_auth)
                 else:
                     req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
-                hidden_dir(res, user_agent)
+                hidden_dir(res, user_agent, directory, forbi)
                 status_link = req.status_code
                 if status_link == 200:
                     if profil:
@@ -519,10 +530,10 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                         size = dl(res, req, directory)
                         if size:
                             print("{}{} ({} bytes)".format(PLUS, res, size))
-                            outpt(directory, res, forb=False)
+                            outpt(directory, res, stats=0, forb=False)
                         else:
                             print("{}{}".format(PLUS, res))
-                            outpt(directory, res, forb=False)
+                            outpt(directory, res, stats=0, forb=False)
                         #check backup
                         backup(res, directory, forbi)
                         #check backup files
@@ -552,7 +563,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                         forbi = True
                         print(FORBI + res + "\033[31m Forbidden \033[0m")
                         backup(res, directory, forbi)
-                        outpt(directory, res, forb=True)
+                        outpt(directory, res, stat=0, forb=True)
                     else:
                         #print(FORBI + res + "\033[31m Forbidden \033[0m")
                         pass
@@ -561,7 +572,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 elif status_link == 301:
                     if redirect:
                         print("\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m")
-                        outpt(directory, res, forb=False)
+                        outpt(directory, res, stats=301, forb=False)
                     else:
                         pass
                 elif status_link == 304:
@@ -569,10 +580,9 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 elif status_link == 302:
                     if redirect:
                         print("\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m")
-                        outpt(directory, res, forb=False)
+                        outpt(directory, res, stats=302, forb=False)
                     else:
                         pass
-                    #pass
                 elif status_link == 400:
                     if "Server Error" in req.text:
                         print("{}{} \033[31m400 Server Error\033[0m").format(WARNING, res)
@@ -688,6 +698,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
         detect_waf(url, directory)
         gitpast(url)
         status(stat, directory, u_agent)
+        create_report(directory)
     # or else ask the question
     else:
         new_file = raw_input('this directory exist, do you want to create another file ? (y:n)\n')
@@ -702,10 +713,143 @@ def create_file(url, stat, u_agent, thread, subdomains):
             who_is(url, directory)
             detect_cms(url)
             status(stat, directory, u_agent)
+            create_report(directory)
         else:
             if subdomains:
                 subdomain(subdomains)
             status(stat, directory, u_agent)
+            create_report(directory)
+
+"""
+Create_report: make a html report with url, waf, and email
+"""
+def create_report(directory):
+    urls = ""
+    waf = ""
+    mails = ""
+    nowdate = datetime.now()
+    nowdate = "{}-{}-{}".format(nowdate.day, nowdate.month, nowdate.year)
+    with open(directory + "/report.html", "a+") as test:
+        with open(directory + "/scan.txt", "r") as scan:
+            for s in scan.read().splitlines():
+                s = s.split(" ")
+                s0 = s[0]
+                s1 = s[1]
+                if s0 == "[+]":
+                    if "301" in s or "302" in s:
+                        if s[2] == "301":
+                            s0 = s0.replace("[+]", "301")
+                        elif s[2] == "302":
+                            s0 = s0.replace("[+]", "302")
+                        urls += """
+                            <tr>
+                            <td style="width: 120px; color: orange; padding: 3px;">{}</td>
+                            <td style="width: 230px; color: orange; padding: 3px;"><a href="{}">{}</a></td>
+                            <td style="width: 20px; color: orange; padding: 3px;">{}</td>
+                            </tr>
+                            """.format(nowdate, s1, s1, s0)
+                    else:
+                        s0 = s0.replace("[+]", "200")
+                        urls += """
+                        <tr>
+                        <td style="width: 120px; color: green; padding: 3px;">{}</td>
+                        <td style="width: 230px; color: green; padding: 3px;"><a href="{}">{}</td>
+                        <td style="width: 20px; color: green; padding: 3px;">{}</td>
+                        </tr>
+                        """.format(nowdate, s1, s1, s0)
+                elif s0 == "[x]":
+                    s0 = s0.replace("[x]", "403")
+                    urls += """
+                        <tr>
+                        <td style="width: 120px; color: red; padding: 3px;">{}</td>
+                        <td style="width: 230px; color: red; padding: 3px;"><a href="{}">{}</a></td>
+                        <td style="width: 20px; color: red; padding: 3px;">{}</td>
+                        </tr>
+                        """.format(nowdate, s1, s1, s0)
+        with open(directory + "/waf.txt", "r") as waff:
+            for w in waff.read().splitlines():
+                if "The site" in w:
+                    waf += """
+                    <tr>
+                    <td style="width: 120px;">{}</td>
+                    </tr>
+                    """.format(w)
+                else:
+                    waf = """<tr>
+                    <td style="width: 120px;"This site dosn't use a waf</td>
+                    </tr>"""
+        try:
+            with open(directory + "/mail.csv", "r") as csvFile:
+                reader = csv.reader(csvFile)
+                for row in reader:
+                    mail = row[0]
+                    stat = row[1]
+                    if "no" in stat:
+                        mails += """
+                            <tr>
+                            <td style="width: 120px; color: green; padding: 3px;">{}</td>
+                            <td style="width: 20px; color: green; padding: 3px;">{}</td>
+                            </tr>
+                            """.format(mail, stat)
+                    else:
+                        mails += """
+                            <tr>
+                            <td style="width: 120px; color: red; padding: 3px;">{}</td>
+                            <td style="width: 20px; color: red; padding: 3px;">{}</td>
+                            </tr>
+                            """.format(mail, stat)
+        except:
+            mails = "<tr><td><b> No emails found </b></td></tr>"
+        test.write('''
+                <!DOCTYPE html>
+                <html>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                <head>
+                <style>
+                body{{
+                    font-family: "Arial";
+                }}
+                h1 {{
+                    font-size: 15;
+                }}
+                </style>
+                <title>Hawkscan Report</title>
+                </head>
+                <body>
+                <center>
+                <h1>Hawkscan Report </h1></br>
+                <hr></br>
+                <b>WAF</b> </br>
+                <p style="color: red;>{}</p>
+                <br>
+                <hr>
+                <br>
+                <table style="width: 800px; border-color: black; height: 1px;" border="1" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td style="width: 120px;"><b>Date</b></td>
+                <td style="width: 230px;"><b>URL</b></td>
+                <td style="width: 20px;"><b>Status</b></td>
+                {}
+                </tbody>
+                </table>
+                <br>
+                <hr>
+                <br>
+                <b>Check Mails</b><br><br>
+                <table style="width: 400px; border-color: black; height: 1px;" border="1" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td style="width: 120px;"><b>Mails</b></td>
+                <td style="width: 20px;"><b>Status</b></td>
+                {}
+                </tbody>
+                </table>
+                </br>
+                </center>
+                </body>
+                </html>'''.format(waf, urls, mails))
+
 
 if __name__ == '__main__':
     #arguments
@@ -716,11 +860,11 @@ if __name__ == '__main__':
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5)
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
     parser.add_argument("--redirect", help="For sacn with redirect response (301/302)", dest='redirect', required=False, action='store_true')
-    parser.add_argument("-r", help="recursive dir/files", required=False, dest="recursif", action='store_true')
-    parser.add_argument("-p", help="add prefix in wordlist to scan", required=False, dest="prefix")
-    parser.add_argument("-o", help="output to site_scan.txt (default in website directory)", required=False, dest="output")
-    parser.add_argument("--cookie", help="to scan with an authentification cookie", required=False, dest="cookie_", type=str)
-    parser.add_argument("--profil", help="To define a profil page", required=False, dest="profil")
+    parser.add_argument("-r", help="Recursive dir/files", required=False, dest="recursif", action='store_true')
+    parser.add_argument("-p", help="Add prefix in wordlist to scan", required=False, dest="prefix")
+    parser.add_argument("-o", help="Output to site_scan.txt (default in website directory)", required=False, dest="output")
+    parser.add_argument("--cookie", help="Scan with an authentification cookie", required=False, dest="cookie_", type=str)
+    parser.add_argument("--profil", help="To define a profil page to pass during scan", required=False, dest="profil")
     results = parser.parse_args()
                                      
     url = results.url
@@ -755,4 +899,3 @@ if __name__ == '__main__':
     print("\n \033[32m url " + url + " found \033[0m\n")
     print(LINE)
     create_file(url, stat, u_agent, thread, subdomains)
-    
