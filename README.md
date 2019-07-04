@@ -60,6 +60,6 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
   > -p PREFIX      add prefix in wordlist to scan    
   > -o OUTPUT      output to site_scan.txt (default in website directory)  
   > -r             recursive dir/files       
-  >--cookie COOKIE_  Scan with an authentification cookie   
+  >--cookie COOKIE  Scan with an authentification cookie   
   >--profil PROFIL   To define a profil page to pass during scan     
   
