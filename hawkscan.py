@@ -583,7 +583,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 elif status_link == 301:
                     if redirect:
                         print("\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m")
-                        outpt(directory, res, stats=301, forb=False)
+                        outpt(directory, res, stats=301)
                     else:
                         pass
                 elif status_link == 304:
@@ -591,7 +591,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 elif status_link == 302:
                     if redirect:
                         print("\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m")
-                        outpt(directory, res, stats=302, forb=False)
+                        outpt(directory, res, stats=302)
                     else:
                         pass
                 elif status_link == 400:
