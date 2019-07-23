@@ -448,16 +448,16 @@ def hidden_dir(res, user_agent, directory, forbi):
 outpt:
 Output to scan
 """
-def outpt(directory, res, stats, forb):
+def outpt(directory, res, stats):
     if output:
         with open(output + "/scan.txt", "a+") as op:
-            if forb == True:
+            if stats == 403:
                 op.write(str("[x] " + res + " Forbidden\n"))
             else:
                 op.write(str("[+] " + res + "\n"))
     else:
         with open(directory + "/scan.txt", "a+") as op:
-            if forb == True:
+            if stats == 403:
                 op.write(str("[x] " + res + " Forbidden\n"))
             elif stats == 301:
                 op.write(str("[+] " + res + " 301\n"))
@@ -470,7 +470,7 @@ def outpt(directory, res, stats, forb):
 Check_profil_page: 
 If scan blog, or social network etc.. you can activate this option to pass profil pages.
 for use this option you do defined a profil page base, ex: 
-    --profil url.com/profil/codejump
+    --exclude url.com/profil/codejump
 """
 def check_profil_page(req, res, directory, forbi):
     scoring = 0
@@ -482,16 +482,26 @@ def check_profil_page(req, res, directory, forbi):
             pass
     len_w = [lines for lines in words.split("\n")] #to avoid to do line per line
     perc = 100 * float(scoring) / len(len_w) #to do a percentage
-    if perc >= 75:
+    if perc >= 80:
         pass
-    elif perc >= 50 and pec < 75:
-        print("{}{} potential profil page").format(LESS, res)
+    elif perc >= 50 and pec < 80:
+        print("{}{} potential exclude page").format(LESS, res)
     else:
         print("{}{}").format(PLUS, res)
         #check backup
         backup(res, directory, forbi)
         #check backup files
         file_backup(res, directory)
+        #output scan.txt
+        outpt(directory, res, stats=0)
+        if res[-1] == "/" and recur:
+            if ".git" in res:
+                pass
+            else:
+                spl = res.split("/")[3:]
+                result = "/".join(spl)
+                rec_list.append(result)
+                outpt(directory, res, stats=0)
 
 
 """
@@ -530,22 +540,22 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                         size = dl(res, req, directory)
                         if size:
                             print("{}{} ({} bytes)".format(PLUS, res, size))
-                            outpt(directory, res, stats=0, forb=False)
+                            outpt(directory, res, stats=0)
                         else:
                             print("{}{}".format(PLUS, res))
-                            outpt(directory, res, stats=0, forb=False)
+                            outpt(directory, res, stats=0)
                         #check backup
                         backup(res, directory, forbi)
-                        #check backup files
+                        #test backup files
                         file_backup(res, directory)
-                    #add directory for recursif scan
-                    if res[-1] == "/" and recur:
-                        if ".git" in res:
-                            pass
-                        else:
-                            spl = res.split("/")[3:]
-                            result = "/".join(spl)
-                            rec_list.append(result)
+                        #add directory for recursif scan
+                        if res[-1] == "/" and recur:
+                            if ".git" in res:
+                                pass
+                            else:
+                                spl = res.split("/")[3:]
+                                result = "/".join(spl)
+                                rec_list.append(result)
                     #get mail
                     mail(req, directory, all_mail)
                     if 'sitemap.xml' in res:
@@ -554,16 +564,17 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     #pass
                     if res[-1] == "/" and recur:
                         if ".htaccess" in res or ".htpasswd" in res or ".git" in res or "wp" in res:
-                            pass
+                            outpt(directory, res, stats=403)
                         else:
                             spl = res.split("/")[3:]
                             result = "/".join(spl)
                             rec_list.append(result)
+                            outpt(directory, res, stats=403)
                     if not forced:
                         forbi = True
                         print(FORBI + res + "\033[31m Forbidden \033[0m")
                         backup(res, directory, forbi)
-                        outpt(directory, res, stat=0, forb=True)
+                        outpt(directory, res, stats=403)
                     else:
                         #print(FORBI + res + "\033[31m Forbidden \033[0m")
                         pass
@@ -776,7 +787,7 @@ def create_report(directory):
                     """.format(w)
                 else:
                     waf = """<tr>
-                    <td style="width: 120px;"This site dosn't use a waf</td>
+                    <td style="width: 120px;>"This site dosn't use a waf</td>
                     </tr>"""
         try:
             with open(directory + "/mail.csv", "r") as csvFile:
@@ -824,6 +835,10 @@ def create_report(directory):
                 <br>
                 <hr>
                 <br>
+                <b> CMS </b>
+                <p></p>
+                <br>
+                <hr>
                 <table style="width: 800px; border-color: black; height: 1px;" border="1" cellspacing="0" cellpadding="0">
                 <tbody>
                 <tr>
@@ -864,7 +879,7 @@ if __name__ == '__main__':
     parser.add_argument("-p", help="Add prefix in wordlist to scan", required=False, dest="prefix")
     parser.add_argument("-o", help="Output to site_scan.txt (default in website directory)", required=False, dest="output")
     parser.add_argument("--cookie", help="Scan with an authentification cookie", required=False, dest="cookie_", type=str)
-    parser.add_argument("--profil", help="To define a profil page to pass during scan", required=False, dest="profil")
+    parser.add_argument("--exclude", help="To define a page type to exclude during scan", required=False, dest="exclude")
     results = parser.parse_args()
                                      
     url = results.url
@@ -877,7 +892,7 @@ if __name__ == '__main__':
     output = results.output
     recur = results.recursif
     cookie_ = results.cookie_
-    profil = results.profil
+    profil = results.exclude    
 
     banner()
     len_w = 0 #calcul wordlist size
