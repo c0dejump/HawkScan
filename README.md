@@ -42,6 +42,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Detect famous honeypot
  - [ ] Response error to WAF + bypass it
  - [ ] Best html report and On-the-fly writing report
+ - [ ] Access token
  
  # Usage
  > pip install -r requirements.txt
