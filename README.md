@@ -2,7 +2,7 @@
 
 ![alt tag](https://user-images.githubusercontent.com/29504335/43905037-75a2a9ea-9bf0-11e8-8d6b-2de51318be98.jpg)
 
-Security Tool for Reconnaissance and Information Gathering on a website. (python 2.7)
+Security Tool for Reconnaissance and Information Gathering on a website. (python 2.x & 3.x)
 
 This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/wafw00f)
 
