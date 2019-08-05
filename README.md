@@ -50,7 +50,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  > sudo python3 -m pip install -r requirements.txt
  
  > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD]
-[-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--profil PROFIL]
+[-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE]
  
  > optional arguments: 
   > -h, --help     show this help message and exit                                                                     
@@ -64,5 +64,5 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
   > -o OUTPUT      output to site_scan.txt (default in website directory)  
   > -r             recursive dir/files       
   >--cookie COOKIE  Scan with an authentification cookie   
-  >--profil PROFIL   To define a profil page to pass during scan     
+  >--exclude EXCLUDE  To define a page type to exclude during scan    
   
