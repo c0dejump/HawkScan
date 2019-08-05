@@ -30,6 +30,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [x] Scan with an authenfication cookie
  - [x] Option --profil to pass profil page during the scan
  - [x] Html report
+ - [x] Work it with py2 and py3
  
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
@@ -37,7 +38,6 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check pastebin
  - [ ] Spider link in website
- - [ ] Work it with py2 and py3
  - [ ] add option rate-limit if app is unstable
  - [ ] Detect famous honeypot
  - [ ] Response error to WAF + bypass it
@@ -45,7 +45,9 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Access token
  
  # Usage
- > pip install -r requirements.txt
+ > pip(3) install -r requirements.txt
+ If problem with pip3: 
+ > sudo python3 -m pip install -r requirements.txt
  
  > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD]
 [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--profil PROFIL]
