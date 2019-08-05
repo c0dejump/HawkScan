@@ -15,7 +15,8 @@ import json
 import traceback
 import csv
 from datetime import datetime
-#personal libs
+
+# external modules
 from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
 try:
     from Queue import Queue
@@ -27,7 +28,9 @@ import wafw00f
 try:
     from Sublist3r import sublist3r
 except Exception:
-    traceback.print_exc()
+    if sys.version > '3':
+        print("\n{}subbrute doesn't work with this script on py3 version for the moment sorry".format(INFO))
+    pass    
 
 
 def banner():
