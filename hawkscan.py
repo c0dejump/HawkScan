@@ -17,7 +17,10 @@ import csv
 from datetime import datetime
 #personal libs
 from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
-from Queue import Queue
+try:
+    from Queue import Queue
+except:
+    import queue as Queue
 from threading import Thread
 from fake_useragent import UserAgent
 import wafw00f
@@ -41,22 +44,27 @@ https://github.com/c0dejump/HawkScan
 -------------------------------------------------------------------
     """)
 
-
-enclosure_queue = Queue()
+try:
+    enclosure_queue = Queue()
+except:
+    enclosure_queue = Queue.Queue()
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 #list to append url and then recursif scan
 rec_list = []
 
-#for profil option
+#for exclude option
 req_p = u""
 
 """
 auto_update: for update the tool
 """
 def auto_update():
-    au = raw_input("Do you want update it ? (y/n): ")
+    try:
+        au = raw_input("Do you want update it ? (y/n): ")
+    except:
+        au = input("Do you want update it ? (y/n): ")
     if au == "y":
         os.system("git status && git pull origin master")
     else:
@@ -287,20 +295,29 @@ def status(stat, directory, u_agent):
     elif stat == 304:
         pass
     elif stat == 404:
-        a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
+        try:
+            a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
+        except:
+            a = input("{} not found/ forced ?(y:n)".format(LESS))
         if a == "y":
             check_words(url, wordlist, directory, u_agent)
         else:
             sys.exit()
     elif stat == 403:
-        a = raw_input(FORBI + " forbidden/ forced ?(y:n)")
+        try:
+            a = raw_input(FORBI + " forbidden/ forced ?(y:n)")
+        except:
+            a = raw_input(FORBI + " forbidden/ forced ?(y:n)")
         if a == "y":
             forced = True
             check_words(url, wordlist, directory, u_agent, forced)
         else:
             sys.exit()
     else:
-        a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
+        try:
+            a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
+        except:
+            a = input("{} not found/ forced ?(y:n)".format(LESS))
         if a == "y":
             check_words(url, wordlist, directory, u_agent)
         else:
@@ -309,7 +326,10 @@ def status(stat, directory, u_agent):
 """Check if a backup file exist from function 'Status' """
 def check_backup(directory):
     if os.path.exists(directory + "/backup.txt"):
-        bp = raw_input("A backup file exist, do you want to continue or restart ? (C:R)\n")
+        try:
+            bp = raw_input("A backup file exist, do you want to continue or restart ? (C:R)\n")
+        except:
+            bp = input("A backup file exist, do you want to continue or restart ? (C:R)\n")
         if bp == 'C' or bp == 'c':
             print("restart from last save in backup.txt ...")
             print(LINE)
@@ -432,13 +452,13 @@ def hidden_dir(res, user_agent, directory, forbi):
     sk_d = req_d.status_code
     sk_f = req_f.status_code
     if sk_d == 200:
-        if profil:
+        if exclude:
             check_profil_page(req_d, res, directory, forbi)
         else:
             print("{}{}".format(PLUS, hidd_d))
             outpt(directory, hidd_d, forb=False)
     elif sk_f == 200:
-        if profil:
+        if exclude:
             check_profil_page(req_f, res, directory, forbi)
         else:
             print("{}{}".format(PLUS, hidd_f))
@@ -468,8 +488,8 @@ def outpt(directory, res, stats):
 
 """
 Check_profil_page: 
-If scan blog, or social network etc.. you can activate this option to pass profil pages.
-for use this option you do defined a profil page base, ex: 
+If scan blog, or social network etc.. you can activate this option to pass profil/false positive pages.
+for use this option you do defined a profil/false positive page base, ex: 
     --exclude url.com/profil/codejump
 """
 def check_profil_page(req, res, directory, forbi):
@@ -533,7 +553,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 hidden_dir(res, user_agent, directory, forbi)
                 status_link = req.status_code
                 if status_link == 200:
-                    if profil:
+                    if exclude:
                         check_profil_page(req, res, directory, forbi)
                     else:
                         # dl files and calcul size
@@ -712,7 +732,10 @@ def create_file(url, stat, u_agent, thread, subdomains):
         create_report(directory)
     # or else ask the question
     else:
-        new_file = raw_input('this directory exist, do you want to create another file ? (y:n)\n')
+        try:
+            new_file = raw_input('this directory exist, do you want to create another file ? (y:n)\n')
+        except:
+            new_file = input('this directory exist, do you want to create another file ? (y:n)\n')
         if new_file == 'y':
             print(LINE)
             directory = directory + '_2'
@@ -740,6 +763,10 @@ def create_report(directory):
     mails = ""
     nowdate = datetime.now()
     nowdate = "{}-{}-{}".format(nowdate.day, nowdate.month, nowdate.year)
+    if cookie_:
+        auth_stat = "Authenticated"
+    else:
+        auth_stat = "No Authenticated"
     with open(directory + "/report.html", "a+") as test:
         with open(directory + "/scan.txt", "r") as scan:
             for s in scan.read().splitlines():
@@ -787,7 +814,7 @@ def create_report(directory):
                     """.format(w)
                 else:
                     waf = """<tr>
-                    <td style="width: 120px;>"This site dosn't use a waf</td>
+                    <td style="width: 120px;">This site dosn't use a waf</td>
                     </tr>"""
         try:
             with open(directory + "/mail.csv", "r") as csvFile:
@@ -830,8 +857,10 @@ def create_report(directory):
                 <center>
                 <h1>Hawkscan Report </h1></br>
                 <hr></br>
+                <b>Status : <p style="color: blue;">{}<b><br>
+                <hr>
                 <b>WAF</b> </br>
-                <p style="color: red;>{}</p>
+                <p style="color: red;">{}</p>
                 <br>
                 <hr>
                 <br>
@@ -863,7 +892,7 @@ def create_report(directory):
                 </br>
                 </center>
                 </body>
-                </html>'''.format(waf, urls, mails))
+                </html>'''.format(auth_stat, waf, urls, mails))
 
 
 if __name__ == '__main__':
@@ -892,7 +921,7 @@ if __name__ == '__main__':
     output = results.output
     recur = results.recursif
     cookie_ = results.cookie_
-    profil = results.exclude    
+    exclude = results.exclude    
 
     banner()
     len_w = 0 #calcul wordlist size
@@ -906,9 +935,9 @@ if __name__ == '__main__':
     with open(wordlist, 'r') as words:
         for l in words:
             len_w += 1
-    if profil:
-        req_profil = requests.get(profil)
-        req_p = req_profil.text
+    if exclude:
+        req_exclude = requests.get(exclude)
+        req_p = req_exclude.text
     r = requests.get(url, allow_redirects=False, verify=False)
     stat = r.status_code
     print("\n \033[32m url " + url + " found \033[0m\n")
