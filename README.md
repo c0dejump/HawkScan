@@ -45,8 +45,10 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Access token
  
  # Usage
- > pip(3) install -r requirements.txt          
- If problem with pip3:                   
+ > pip(3) install -r requirements.txt 
+ 
+    If problem with pip3:      
+    
  > sudo python3 -m pip install -r requirements.txt
  
  > usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD]
