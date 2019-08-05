@@ -56,17 +56,19 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
      
     usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE]
  
- > optional arguments: 
-  > -h, --help     show this help message and exit                                                                     
-  > -u URL         URL to scan [required]                                                                              
-  > -w WORDLIST    Wordlist used for URL Fuzzing [required]                                                            
-  > -s SUBDOMAINS  subdomain tester                                                                                    
-  > -t THREAD      Number of threads to use for URL Fuzzing. Default: 5  
-  > -a USER_AGENT  choice user-agent     
-  > --redirect     For scan with redirect response like 301,302      
-  > -p PREFIX      add prefix in wordlist to scan    
-  > -o OUTPUT      output to site_scan.txt (default in website directory)  
-  > -r             recursive dir/files       
-  >--cookie COOKIE  Scan with an authentification cookie   
-  >--exclude EXCLUDE  To define a page type to exclude during scan    
+ > 
+ 
+    optional arguments: 
+      -h, --help     show this help message and exit                                                                     
+      -u URL         URL to scan [required]                                                                              
+      -w WORDLIST    Wordlist used for URL Fuzzing [required]                                                            
+      -s SUBDOMAINS  subdomain tester                                                                                    
+      -t THREAD      Number of threads to use for URL Fuzzing. Default: 5  
+      -a USER_AGENT  choice user-agent     
+      --redirect     For scan with redirect response like 301,302      
+      -p PREFIX      add prefix in wordlist to scan    
+      -o OUTPUT      output to site_scan.txt (default in website directory)  
+      -r             recursive dir/files       
+      --cookie COOKIE  Scan with an authentification cookie   
+      --exclude EXCLUDE  To define a page type to exclude during scan    
   
