@@ -43,6 +43,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Response error to WAF + bypass it
  - [ ] Best html report and On-the-fly writing report
  - [ ] Access token
+ - [ ] Clean script, to add class or split different function on a file ? (to see next)
  
  # Usage
  > 
