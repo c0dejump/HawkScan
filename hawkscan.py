@@ -930,7 +930,7 @@ if __name__ == '__main__':
     len_w = 0 #calcul wordlist size
     auto_update()
     cookie_auth = {}
-    if url.split("/")[-1] != "/":
+    if url.split("/")[-1] != "":
         url = url + "/"
     if cookie_:
         s = cookie_.split(";")
