@@ -310,7 +310,7 @@ def status(stat, directory, u_agent):
         try:
             a = raw_input(FORBI + " forbidden/ forced ?(y:n)")
         except:
-            a = raw_input(FORBI + " forbidden/ forced ?(y:n)")
+            a = input(FORBI + " forbidden/ forced ?(y:n)")
         if a == "y":
             forced = True
             check_words(url, wordlist, directory, u_agent, forced)
