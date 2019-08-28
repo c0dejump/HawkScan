@@ -631,6 +631,8 @@ W3SVC1/
 W3SVC2/
 W3SVC3/
 WEB-INF/
+WEB-INF/lib/
+META-INF/
 Windows/
 X/
 XML/
@@ -6867,6 +6869,10 @@ bea_wls_internal/iiop/ClientSend
 bea_wls_internal/psquare/x.jsp
 bea_wls_internal/WebServiceServlet
 bea_wls_internal/WLDummyInitJVMIDs
+wsi/dwr/webservice.pl
+wsys/cgi/webservice.pl
+cgi/webservice.pl
+webservice.pl
 beanManaged
 BeenThere
 behat.yml
@@ -8823,6 +8829,9 @@ mercurial.ini
 MessageDrivenBeans/docs/
 MessageDrivenBeans/docsservlet/
 messages
+StockWebservice/stockendpoint
+StockWebservice/
+webcontent/
 META-INF
 META-INF/context.xml
 meta_login/
@@ -9999,6 +10008,7 @@ snoop2
 SnoopServlet
 snp
 soap/
+soapdocs/webapps/
 soapdocs/webapps/soap/WEB-INF/config/soapConfig.xml
 soapserver/
 soft-admin
