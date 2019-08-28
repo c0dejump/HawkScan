@@ -486,6 +486,12 @@ def outpt(directory, res, stats):
                 op.write(str("[+] " + res + " 301\n"))
             elif stats == 302:
                 op.write(str("[+] " + res + " 302\n"))
+            elif stats == 401:
+                op.write(str("[-] " + res + " 401\n"))
+            elif stats == 400:
+                op.write(str("[!] " + res + " 400\n"))
+            elif stats == 500:
+                op.write(str("[!] " + res + " 500\n"))
             else:
                 op.write(str("[+] " + res + "\n"))
 
@@ -504,10 +510,12 @@ def check_profil_page(req, res, directory, forbi):
         else:
             pass
     len_w = [lines for lines in words.split("\n")] #to avoid to do line per line
-    perc = 100 * float(scoring) / len(len_w) #to do a percentage
-    if perc >= 80:
+    perc = round(100 * float(scoring) / len(len_w)) #to do a percentage
+    #print perc
+    #print res
+    if perc >= 85:
         pass
-    elif perc >= 50 and pec < 80:
+    elif perc >= 50 and pec < 85:
         print("{}{} potential exclude page").format(LESS, res)
     else:
         print("{}{}").format(PLUS, res)
@@ -617,16 +625,23 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                         outpt(directory, res, stats=302)
                     else:
                         pass
-                elif status_link == 400:
-                    if "Server Error" in req.text:
-                        print("{}{} \033[31m400 Server Error\033[0m").format(WARNING, res)
+                elif status_link == 400 or status_link == 500:
+                    if "Server Error" in req.text or "Erreur du serveur dans l'application" in req.text:
+                        if status_link == 400:
+                            print("{}{} \033[31m400 Server Error\033[0m").format(WARNING, res)
+                            outpt(directory, res, stats=400)
+                        elif status_link == 500:
+                            print("{}{} \033[31m500 Server Error\033[0m").format(WARNING, res)
+                            outpt(directory, res, stats=500)
                     else:
                         pass
-                        #print("{}{} \033[33m400 bad request\033[0m").format(LESS, res)
+                        #print("{}{} \033[33m400 bad request (potential info disclose)\033[0m").format(LESS, res)
                 elif status_link == 422 or status_link == 423 or status_link == 424 or status_link == 425:
                     print("{}{} \033[33mError WebDAV\033[0m").format(LESS, res)
                 elif status_link == 401:
                     print("{}{} \033[33m401 Unauthorized\033[0m").format(LESS, res)
+                    outpt(directory, res, stats=401)
+                    #pass
             except Exception:
                 pass
                 #traceback.print_exc()
@@ -804,11 +819,34 @@ def create_report(directory):
                         <tr>
                         <td style="width: 120px; color: red; padding: 3px;">{}</td>
                         <td style="width: 230px; color: red; padding: 3px;"><a href="{}">{}</a></td>
-                        <td style="width: 20px; color: red; padding: 3px;">{}</td>
+                        <td style="width: 20px; color: red; padding: 3px;">{}</td>-
                         </tr>
                         """.format(nowdate, s1, s1, s0)
+                elif s0 == "[-]":
+                    if "401" in s:
+                        if s[2] == "401":
+                            s0 = s0.replace("[-]","401")
+                        urls += """
+                            <tr>
+                            <td style="width: 120px; color: orange; padding: 3px;">{}</td>
+                            <td style="width: 230px; color: orange; padding: 3px;"><a href="{}">{}</a></td>
+                            <td style="width: 20px; color: orange; padding: 3px;">{}</td>
+                            </tr>
+                            """.format(nowdate, s1, s1, s0)
+                elif s0 == "[!]":
+                    if "400" in s:
+                        if s[2] == "400":
+                            s0 = s0.replace("[!]","400")
+                        urls += """
+                            <tr>
+                            <td style="width: 120px; color: red; padding: 3px;">{}</td>
+                            <td style="width: 230px; color: red; padding: 3px;"><a href="{}">{}</a></td>
+                            <td style="width: 20px; color: red; padding: 3px;">{}</td>
+                            </tr>
+                            """.format(nowdate, s1, s1, s0)
         with open(directory + "/waf.txt", "r") as waff:
             for w in waff.read().splitlines():
+                print w
                 if "The site" in w:
                     waf += """
                     <tr>
