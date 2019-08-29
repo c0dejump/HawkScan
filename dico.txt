@@ -56,6 +56,8 @@ routes.yaml
 editor.jsp
 error_docs/
 error_docs
+ansible/Vagrantfile
+ansible/roles/common/tasks/main.yml
 wp-admin/
 wp-admin/js/
 wp-admin/includes/
@@ -65,6 +67,8 @@ wp-login.php
 wp-includes/
 wp-content/
 wp-json/
+*.log
+.vagrant
 wp-config.php
 wp-content/advanced-cache.php
 wp-content/backup-db/
@@ -84,6 +88,7 @@ admin/home/collection/
 comments/%22slapd.conf/%22ftp:/ManyServers.htm
 AuthenticationEvents.php
 wp-content/plugins/hello.php
+wp-content/themes/.git/
 wp-includes/vars.php
 wp-includes/update.php
 wp-includes/theme.php
@@ -1518,6 +1523,7 @@ cowboys/
 coyote/
 cp/
 cpanel/
+hubtraffic/
 panel.php
 crack/
 cracker/
@@ -6439,6 +6445,7 @@ api/swagger.yml
 api-doc
 api-docs
 apibuild.pyc
+api/method
 api/users/profiles/
 api/users/profiles/1
 api/v1/secrets
@@ -9016,6 +9023,13 @@ nginx-ssl.error.log
 nginx-status/
 nginx.conf
 nginx_status
+rh/
+nginx/cache/
+monit/bin/monit
+monit/conf/
+monit/man/
+monit/COPYING
+monit/CHANGES
 nimda/
 nl
 node
@@ -9126,6 +9140,8 @@ p/m/a/
 p_/webdav/xmltools/minidom/xml/sax/saxutils/os/popen2?cmd=dir
 package
 package.json
+package/static-resource-server
+static-resource-server
 padmin
 page
 pages
@@ -10097,6 +10113,7 @@ start.html
 startServer.log
 stat/
 static
+static/..%252f..%252f..%252f..%252f..%252f..%252f..%252f..%252fetc/passwd
 statistics
 statistics.jsp
 statistics/
