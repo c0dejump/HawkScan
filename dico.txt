@@ -1596,6 +1596,11 @@ dat/
 data/
 database/
 databases/
+data/runtime/mtmp/system
+data/runtime/mtmp/lmdb/dataa/data.mdb
+data/runtime/mtmp/lmdb/dataa/lock.mdb
+data/runtime/mtmp/lmdb/randomVal/data.mdb
+data/runtime/mtmp/lmdb/randomVal/lock.mdb
 dataz/
 date/
 dating/
