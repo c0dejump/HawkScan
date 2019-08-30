@@ -846,17 +846,11 @@ def create_report(directory):
                             """.format(nowdate, s1, s1, s0)
         with open(directory + "/waf.txt", "r") as waff:
             for w in waff.read().splitlines():
-                print w
-                if "The site" in w:
-                    waf += """
+                waf += """
                     <tr>
                     <td style="width: 120px;">{}</td>
                     </tr>
-                    """.format(w)
-                else:
-                    waf = """<tr>
-                    <td style="width: 120px;">This site dosn't use a waf</td>
-                    </tr>"""
+                """.format(w)
         try:
             with open(directory + "/mail.csv", "r") as csvFile:
                 reader = csv.reader(csvFile)
