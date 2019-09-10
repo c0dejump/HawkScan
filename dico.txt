@@ -21,6 +21,8 @@ contact.html
 vision/
 annonce/
 role.php
+keys
+keys/
 annonces/
 annonce.php
 annonces.php
