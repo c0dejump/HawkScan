@@ -38,12 +38,13 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check pastebin
  - [ ] Spider link in website
- - [ ] add option rate-limit if app is unstable
+ - [ ] add option rate-limit if app is unstable (option --timesleep)
  - [ ] Detect famous honeypot
  - [ ] Response error to WAF + bypass it
  - [ ] Best html report and On-the-fly writing report
  - [ ] Access token
  - [ ] Clean script, to add class or split different function on a file ? (to see next)
+ - [ ] Auto archi of website
  
  # Usage
  > 
