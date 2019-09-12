@@ -419,7 +419,8 @@ def file_backup(res, directory):
         rep = anti_sl[3:]
         result = rep[-1]
         r_files = d_files + result
-        #time.sleep(1)
+        if ts:
+            time.sleep(ts)
         if cookie_auth:
             req_b = requests.get(res_b, allow_redirects=False, verify=False, cookies=cookie_auth)
         else:
@@ -556,7 +557,8 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 user_agent = {'User-agent': ua.random} #for a user-agent random
             try:
                 forbi = False
-                #time.sleep(1)
+                if ts:
+                    time.sleep(ts)
                 if cookie_auth:
                     req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5, cookies=cookie_auth)
                 else:
@@ -944,6 +946,7 @@ if __name__ == '__main__':
     parser.add_argument("-o", help="Output to site_scan.txt (default in website directory)", required=False, dest="output")
     parser.add_argument("--cookie", help="Scan with an authentification cookie", required=False, dest="cookie_", type=str)
     parser.add_argument("--exclude", help="To define a page type to exclude during scan", required=False, dest="exclude")
+    parser.add_argument("--timesleep", help="To define a timesleep/rate-limit if app is unstable during scan", required=False, dest="ts", type=int)
     results = parser.parse_args()
                                      
     url = results.url
@@ -956,7 +959,8 @@ if __name__ == '__main__':
     output = results.output
     recur = results.recursif
     cookie_ = results.cookie_
-    exclude = results.exclude    
+    exclude = results.exclude 
+    ts = results.ts   
 
     banner()
     len_w = 0 #calcul wordlist size
