@@ -31,6 +31,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [x] Option --profil to pass profil page during the scan
  - [x] Html report
  - [x] Work it with py2 and py3
+ - [x] add option rate-limit if app is unstable (option --timesleep)
  
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
@@ -38,7 +39,6 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check pastebin
  - [ ] Spider link in website
- - [ ] add option rate-limit if app is unstable (option --timesleep)
  - [ ] Detect famous honeypot
  - [ ] Response error to WAF + bypass it
  - [ ] Best html report and On-the-fly writing report
