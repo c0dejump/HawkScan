@@ -21,8 +21,6 @@ contact.html
 vision/
 annonce/
 role.php
-keys
-keys/
 annonces/
 annonce.php
 annonces.php
@@ -31,6 +29,7 @@ connexion.php
 secret.php
 .htpasswd/
 .htaccess/
+.json
 pkginfo/
 phpserver/
 Login.aspx
@@ -69,6 +68,8 @@ wp-login.php
 wp-includes/
 wp-content/
 wp-json/
+wp-json/wp/v2/users
+wp-json/wp/v2/posts
 *.log
 .vagrant
 wp-config.php
@@ -4305,6 +4306,7 @@ tracy/
 trademarks/
 traffic/
 trails/
+rails/
 training/
 trans/
 transactions/
@@ -4391,6 +4393,8 @@ usage/
 user/
 user1/
 users/
+users/api/
+users/api/v1/
 usr/
 ustats/
 usuari/
@@ -4877,6 +4881,8 @@ config.asp
 .jshintrc
 .keep
 .keys.yml
+keys/
+keys
 .kitchen.yml
 .komodotools
 .komodotools/
@@ -6570,6 +6576,7 @@ employee/distributions
 employee/distributions/saves
 employee/contingents
 business-lines/
+businessmanage/
 events/search
 events-types/
 events/save
@@ -6680,6 +6687,7 @@ application.log
 application.wadl
 application/cache/
 application/logs/
+profile_metrics.json
 ApplicationProfileSample
 ApplicationProfileSample/
 ApplicationProfileSample/docs/
@@ -7270,6 +7278,7 @@ config.ini
 config.ini.bak
 config.ini.old
 config.ini.txt
+config.js
 config.json
 config.json.cfm
 config.local
@@ -8757,6 +8766,7 @@ manual
 manual/index.html
 manuallogin/
 manuals
+map-data.json
 map
 map.%EXT%
 map_admin
