@@ -29,22 +29,23 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [x] Recursif dir/file
  - [x] Scan with an authenfication cookie
  - [x] Option --profil to pass profil page during the scan
- - [x] Html report
+ - [x] HTML report
  - [x] Work it with py2 and py3
- - [x] add option rate-limit if app is unstable (option --timesleep)
+ - [x] Add option rate-limit if app is unstable (--timesleep)
  
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
  - [ ] Get certificate (crypto keys...)
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check pastebin
- - [ ] Spider link in website
  - [ ] Detect famous honeypot
  - [ ] Response error to WAF + bypass it
- - [ ] Best html report and On-the-fly writing report
+ - [ ] Best HTML report and On-the-fly writing report
  - [ ] Access token
  - [ ] Clean script, to add class or split different function on a file ? (to see next)
- - [ ] Auto archi of website
+ - [ ] Check source code and verify leak or sentsitive data in the Github
+ - [ ] Add option "--analyse" to analyse code source of web site page (spider link, js code...)
+ - [ ] Check in waybackmachine
  
  # Usage
  > 
@@ -56,7 +57,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
   
  >
      
-    usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE]
+    usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE] [--timesleep TS]
  
  > 
  
@@ -73,4 +74,4 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
       -r             recursive dir/files       
       --cookie COOKIE  Scan with an authentification cookie   
       --exclude EXCLUDE  To define a page type to exclude during scan    
-  
+      --timesleep TS     To define a timesleep/rate-limit if app is unstable during scan 
