@@ -171,11 +171,13 @@ def detect_waf(url, directory):
 CMS:
 Detect if the website use a CMS
 """
-def detect_cms(url):
+def detect_cms(url, directory):
     print(INFO + "CMS")
     print(LINE)
     req = requests.get("https://whatcms.org/APIEndpoint/Detect?key=1481ff2f874c4942a734d9c499c22b6d8533007dd1f7005c586ea04efab2a3277cc8f2&url={}".format(url))
     if "Not Found" in req.text:
+        with open(directory + "/cms.txt", "w+") as cms_write:
+            cms_write.write("this website does not seem to use a CMS")
         print("{} this website does not seem to use a CMS \n".format(LESS))
         print(LINE)
     else:
@@ -183,10 +185,14 @@ def detect_cms(url):
         result = reqt["result"].get("name")
         v = reqt["result"].get("version")
         if v:
+            with open(directory + "/cms.txt", "w+") as cms_write:
+                cms_write.write("This website use {} {}".format(result, v))
             print("{} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v))
             cve_cms(result, v)
             print(LINE)
         else:
+            with open(directory + "/cms.txt", "w+") as cms_write:
+                cms_write.write("This website use {} but nothing version found".format(result))
             print("{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result))
             print(LINE)
 
@@ -432,10 +438,10 @@ def file_backup(res, directory):
             size_bytes = os.path.getsize(r_files)
             if size_bytes:
                 print("{}{}  ({} bytes)".format(PLUS, res_b, size_bytes))
-                outpt(directory, res_b, forb=False)
+                outpt(directory, res_b, 200)
             else:
                 print("{}{}".format(PLUS, res_b))
-                outpt(directory, res_b, forb=False)
+                outpt(directory, res_b, 200)
         else:
             pass
 
@@ -460,13 +466,13 @@ def hidden_dir(res, user_agent, directory, forbi):
             check_profil_page(req_d, res, directory, forbi)
         else:
             print("{}{}".format(PLUS, hidd_d))
-            outpt(directory, hidd_d, forb=False)
+            outpt(directory, hidd_d, 200)
     elif sk_f == 200:
         if exclude:
             check_profil_page(req_f, res, directory, forbi)
         else:
             print("{}{}".format(PLUS, hidd_f))
-            outpt(directory, hidd_f, forb=False)
+            outpt(directory, hidd_f, 200)
 
 """
 outpt:
@@ -724,6 +730,7 @@ def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
     except:
         print("backup.txt not found")
 
+
 """
 create_file:
 Create directory with the website name to keep a scan backup. 
@@ -745,7 +752,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
         get_header(url, directory)
         get_dns(url, directory)
         who_is(url, directory)
-        detect_cms(url)
+        detect_cms(url, directory)
         detect_waf(url, directory)
         gitpast(url)
         status(stat, directory, u_agent)
@@ -753,9 +760,9 @@ def create_file(url, stat, u_agent, thread, subdomains):
     # or else ask the question
     else:
         try:
-            new_file = raw_input('this directory exist, do you want to create another file ? (y:n)\n')
+            new_file = raw_input('this directory exist, do you want to create another directory ? (y:n)\n')
         except:
-            new_file = input('this directory exist, do you want to create another file ? (y:n)\n')
+            new_file = input('this directory exist, do you want to create another directory ? (y:n)\n')
         if new_file == 'y':
             print(LINE)
             directory = directory + '_2'
@@ -765,7 +772,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
             get_header(url, directory)
             get_dns(url, directory)
             who_is(url, directory)
-            detect_cms(url)
+            detect_cms(url, directory)
             status(stat, directory, u_agent)
             create_report(directory)
         else:
@@ -775,7 +782,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
             create_report(directory)
 
 """
-Create_report: make a html report with url, waf, and email
+Create_report: make a html report with url, waf, email...
 """
 def create_report(directory):
     urls = ""
@@ -821,7 +828,7 @@ def create_report(directory):
                         <tr>
                         <td style="width: 120px; color: red; padding: 3px;">{}</td>
                         <td style="width: 230px; color: red; padding: 3px;"><a href="{}">{}</a></td>
-                        <td style="width: 20px; color: red; padding: 3px;">{}</td>-
+                        <td style="width: 20px; color: red; padding: 3px;">{}</td>
                         </tr>
                         """.format(nowdate, s1, s1, s0)
                 elif s0 == "[-]":
@@ -847,10 +854,20 @@ def create_report(directory):
                             </tr>
                             """.format(nowdate, s1, s1, s0)
         with open(directory + "/waf.txt", "r") as waff:
+            waf_res = ""
             for w in waff.read().splitlines():
+                if "The site" in w:
+                    waf_res = w
+            if waf_res:
                 waf += """
                     <tr>
                     <td style="width: 120px;">{}</td>
+                    </tr>
+                """.format(waf_res)
+            else:
+                waf += """
+                    <tr>
+                    <td style="width: 120px;">This site dosn't seem to use a WAF</td>
                     </tr>
                 """.format(w)
         try:
@@ -875,6 +892,14 @@ def create_report(directory):
                             """.format(mail, stat)
         except:
             mails = "<tr><td><b> No emails found </b></td></tr>"
+        with open(directory + "/cms.txt","r") as cmsFile:
+            cms = ""
+            for cms_read in cmsFile.read().splitlines():
+                cms += """
+                    <tr>
+                    <td style="width: 120px; color: blue; padding: 3px;">{}</td>
+                    </tr>
+                    """.format(cms_read)
         test.write('''
                 <!DOCTYPE html>
                 <html>
@@ -894,7 +919,7 @@ def create_report(directory):
                 <center>
                 <h1>Hawkscan Report </h1></br>
                 <hr></br>
-                <b>Status : <p style="color: blue;">{}<b><br>
+                <b>Status : <p style="color: blue;">{}</b><br>
                 <hr>
                 <b>WAF</b> </br>
                 <p style="color: red;">{}</p>
@@ -902,15 +927,18 @@ def create_report(directory):
                 <hr>
                 <br>
                 <b> CMS </b>
-                <p></p>
+                <p style="color: blue;">{}</p>
                 <br>
                 <hr>
+                <br>
+                <b> URLS </b>
+                <br>
                 <table style="width: 800px; border-color: black; height: 1px;" border="1" cellspacing="0" cellpadding="0">
                 <tbody>
                 <tr>
-                <td style="width: 120px;"><b>Date</b></td>
-                <td style="width: 230px;"><b>URL</b></td>
-                <td style="width: 20px;"><b>Status</b></td>
+                <td style="width: 120px;">Date</td>
+                <td style="width: 230px;">URL</td>
+                <td style="width: 20px;">Status</td>
                 {}
                 </tbody>
                 </table>
@@ -929,7 +957,7 @@ def create_report(directory):
                 </br>
                 </center>
                 </body>
-                </html>'''.format(auth_stat, waf, urls, mails))
+                </html>'''.format(auth_stat, waf, cms, urls, mails))
 
 
 if __name__ == '__main__':
