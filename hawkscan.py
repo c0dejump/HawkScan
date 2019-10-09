@@ -267,6 +267,28 @@ def who_is(url, directory):
     print("\n" + LINE)
 
 """
+Wayback_check:
+Check in a wayback machine to found old file on the website or other things...
+Use "waybacktool"
+"""
+def wayback_check(url):
+    print("{}Wayback Check".format(INFO))
+    print(LINE)
+    print(url + "\n")
+    os.system('python waybacktool/waybacktool.py pull --host {} | grep -v -E "404|403" | python waybacktool/waybacktool.py check > wayback.txt'.format(url))
+    with open("wayback.txt", "r+") as wayback:
+        wb_read = wayback.read().splitlines()
+        for wb in wb_read:
+            wb_res = list(wb.split(","))
+            if wb_res[1] == " 200":
+                print("{}{}{}").format(PLUS, wb_res[0], wb_res[1])
+            elif wb_res[1] == " 301" or wb_res[1] == "302":
+                print("{}{}{}").format(LESS, wb_res[0], wb_res[1])
+            else:
+                print("{}{}{}").format(INFO, wb_res[0], wb_res[1])
+    print(LINE)
+
+"""
 Status:
  - Get response status of the website (200, 302, 404...).
  - Check if a backup exist before to start the scan.
@@ -503,12 +525,12 @@ def outpt(directory, res, stats):
                 op.write(str("[+] " + res + "\n"))
 
 """
-Check_profil_page: 
+Check_exclude_page: 
 If scan blog, or social network etc.. you can activate this option to pass profil/false positive pages.
 for use this option you do defined a profil/false positive page base, ex: 
     --exclude url.com/profil/codejump
 """
-def check_profil_page(req, res, directory, forbi):
+def check_exclude_page(req, res, directory, forbi):
     scoring = 0
     words = req_p
     for w in words.split("\n"):
@@ -573,7 +595,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 status_link = req.status_code
                 if status_link == 200:
                     if exclude:
-                        check_profil_page(req, res, directory, forbi)
+                        check_exclude_page(req, res, directory, forbi)
                     else:
                         # dl files and calcul size
                         size = dl(res, req, directory)
@@ -730,20 +752,22 @@ def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
     except:
         print("backup.txt not found")
 
-
 """
 create_file:
 Create directory with the website name to keep a scan backup. 
 """
 def create_file(url, stat, u_agent, thread, subdomains):
+    dire = ''
     if 'www' in url:
         direct = url.split('.')
-        directory = direct[1]
-        directory = "sites/" + directory
+        director = direct[1]
+        dire = "{}.{}".format(direct[1], direct[2].replace("/",""))
+        directory = "sites/" + director
     else:
         direct = url.split('/')
-        directory = direct[2]
-        directory = "sites/" + directory
+        director = direct[2]
+        dire = director
+        directory = "sites/" + director
     # if the directory don't exist, create it
     if not os.path.exists(directory):
         os.makedirs(directory) # creat the dir
@@ -754,6 +778,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
         who_is(url, directory)
         detect_cms(url, directory)
         detect_waf(url, directory)
+        wayback_check(dire)
         gitpast(url)
         status(stat, directory, u_agent)
         create_report(directory)
@@ -773,6 +798,9 @@ def create_file(url, stat, u_agent, thread, subdomains):
             get_dns(url, directory)
             who_is(url, directory)
             detect_cms(url, directory)
+            detect_waf(url, directory)
+            wayback_check(dire)
+            gitpast(url)
             status(stat, directory, u_agent)
             create_report(directory)
         else:
