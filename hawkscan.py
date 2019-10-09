@@ -271,21 +271,26 @@ Wayback_check:
 Check in a wayback machine to found old file on the website or other things...
 Use "waybacktool"
 """
-def wayback_check(url):
+def wayback_check(url, directory):
     print("{}Wayback Check".format(INFO))
     print(LINE)
     print(url + "\n")
-    os.system('python waybacktool/waybacktool.py pull --host {} | grep -v -E "404|403" | python waybacktool/waybacktool.py check > wayback.txt'.format(url))
-    with open("wayback.txt", "r+") as wayback:
+    os.system('python waybacktool/waybacktool.py pull --host {} | python waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
+    with open(directory + "/wayback.txt", "r+") as wayback:
         wb_read = wayback.read().splitlines()
         for wb in wb_read:
             wb_res = list(wb.split(","))
-            if wb_res[1] == " 200":
-                print("{}{}{}").format(PLUS, wb_res[0], wb_res[1])
-            elif wb_res[1] == " 301" or wb_res[1] == "302":
-                print("{}{}{}").format(LESS, wb_res[0], wb_res[1])
-            else:
-                print("{}{}{}").format(INFO, wb_res[0], wb_res[1])
+            try:
+                if wb_res[1] == " 200":
+                    print("{}{}{}").format(PLUS, wb_res[0], wb_res[1])
+                elif wb_res[1] == " 301" or wb_res[1] == " 302":
+                    print("{}{}{}").format(LESS, wb_res[0], wb_res[1])
+                elif wb_res[1] == " 404" or wb_res[1] == " 403":
+                    pass
+                else:
+                    print("{}{}{}").format(INFO, wb_res[0], wb_res[1])
+            except:
+                pass
     print(LINE)
 
 """
@@ -778,7 +783,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
         who_is(url, directory)
         detect_cms(url, directory)
         detect_waf(url, directory)
-        wayback_check(dire)
+        wayback_check(dire, directory)
         gitpast(url)
         status(stat, directory, u_agent)
         create_report(directory)
@@ -799,7 +804,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
             who_is(url, directory)
             detect_cms(url, directory)
             detect_waf(url, directory)
-            wayback_check(dire)
+            wayback_check(dire, directory)
             gitpast(url)
             status(stat, directory, u_agent)
             create_report(directory)
