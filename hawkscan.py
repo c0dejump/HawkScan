@@ -490,13 +490,13 @@ def hidden_dir(res, user_agent, directory, forbi):
     sk_f = req_f.status_code
     if sk_d == 200:
         if exclude:
-            check_profil_page(req_d, res, directory, forbi)
+            Check_exclude_page(req_d, res, directory, forbi)
         else:
             print("{}{}".format(PLUS, hidd_d))
             outpt(directory, hidd_d, 200)
     elif sk_f == 200:
         if exclude:
-            check_profil_page(req_f, res, directory, forbi)
+            check_exclude_page(req_f, res, directory, forbi)
         else:
             print("{}{}".format(PLUS, hidd_f))
             outpt(directory, hidd_f, 200)
