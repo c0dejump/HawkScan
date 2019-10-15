@@ -549,7 +549,7 @@ def check_exclude_page(req, res, directory, forbi):
     #print res
     if perc >= 85:
         pass
-    elif perc >= 50 and pec < 85:
+    elif perc >= 50 and perc < 85:
         print("{}{} potential exclude page").format(LESS, res)
     else:
         print("{}{}").format(PLUS, res)
