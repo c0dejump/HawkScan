@@ -2,6 +2,8 @@
 *
 :
 ?wsdl
+..%3B/
+..;/
 %3F.jsp
 robots.txt
 koolix/
@@ -30,6 +32,7 @@ secret.php
 .htpasswd/
 .htaccess/
 .json
+host.ashx
 pkginfo/
 phpserver/
 Login.aspx
@@ -10512,6 +10515,7 @@ ui
 ui/
 ujadmin
 uk
+umbraco/
 umbraco/webservices/codeEditorSave.asmx
 unattend.txt
 UniversityServlet
