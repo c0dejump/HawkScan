@@ -8,6 +8,8 @@ This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/w
 
 This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Sublist3r)
 
+This script use "waybacktool" to check in waybackmachine (https://github.com/Rhynorater/waybacktool)
+
 # Features
  - [x] URL fuzzing and dir/file detection
  - [x] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
@@ -32,6 +34,7 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [x] HTML report
  - [x] Work it with py2 and py3
  - [x] Add option rate-limit if app is unstable (--timesleep)
+ - [x] Check in waybackmachine
  
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
@@ -45,7 +48,6 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
  - [ ] Clean script, to add class or split different function on a file ? (to see next)
  - [ ] Check source code and verify leak or sentsitive data in the Github
  - [ ] Add option "--analyse" to analyse code source of web site page (spider link, js code...)
- - [ ] Check in waybackmachine
  
  # Usage
  > 
