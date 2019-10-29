@@ -1,0 +1,13 @@
+aspnet_client/
+bin/
+config/
+css/
+data/
+install/
+masterpages/
+python/
+scripts/
+umbraco/
+umbraco_client/
+usercontrols/
+xslt/

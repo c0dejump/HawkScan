@@ -14,7 +14,6 @@ from bs4 import BeautifulSoup
 import json
 import traceback
 import csv
-from datetime import datetime
 
 # external modules
 from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
@@ -31,6 +30,8 @@ except Exception:
     if sys.version > '3':
         print("\n{}subbrute doesn't work with this script on py3 version for the moment sorry".format(INFO))
     pass    
+from modules.creat_report import create_report
+from modules.detect_waf import verify_waf
 
 
 def banner():
@@ -60,10 +61,11 @@ rec_list = []
 #for exclude option
 req_p = u""
 
-"""
-auto_update: for update the tool
-"""
+
 def auto_update():
+    """
+    auto_update: for update the tool
+    """
     try:
         au = raw_input("Do you want update it ? (y/n): ")
     except:
@@ -72,11 +74,12 @@ def auto_update():
         os.system("git status && git pull origin master")
     else:
         pass
-"""
-Github: check github informations
-Pastebin: check pastebin information #TODO
-"""
+
 def gitpast(url):
+    """
+    Github: check github informations
+    Pastebin: check pastebin information #TODO
+    """
     print("{}Check in Github".format(INFO))
     print(LINE)
     if "www" in url:
@@ -97,11 +100,12 @@ def gitpast(url):
         else:
             print("{}{}: not found".format(INFO, t))
     print(LINE)
-"""
-Mail:
-get mail adresse in web page during the scan and check if the mail leaked
-"""
+
 def mail(req, directory, all_mail):
+    """
+    Mail:
+    get mail adresse in web page during the scan and check if the mail leaked
+    """
     mails = req.text
     # for all @mail
     reg = re.compile(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+")
@@ -125,29 +129,30 @@ def mail(req, directory, all_mail):
             for r in all_mail:
                 r = r.split(":")
                 writer.writerow(r)
-"""
-Subdomains:
-Check subdomains with the option -s (-s google.fr)
-script use sublit3r to scan subdomain (it's a basic scan)
-"""
+
 def subdomain(subdomains):
+    """
+    Subdomains:
+    Check subdomains with the option -s (-s google.fr)
+    script use sublit3r to scan subdomain (it's a basic scan)
+    """
     print("search subdomains:\n")
     sub_file = "sublist/" + subdomains + ".txt"
     sub = sublist3r.main(subdomains, 40, sub_file, ports= None, silent=False, verbose= False, enable_bruteforce= False, engines=None)
     print(LINE)
     time.sleep(2)
 
-""" Get sitemap.xml of website"""
 def sitemap(req, directory):
+    """ Get sitemap.xml of website"""
     soup = BeautifulSoup(req.text, "html.parser")
     with open(directory + '/sitemap.xml', 'w+') as file:
         file.write(str(soup).replace(' ','\n'))
 
-"""
-WAF:
-Detect if the website use a WAF with tools "wafw00f"
-"""
 def detect_waf(url, directory):
+    """
+    WAF:
+    Detect if the website use a WAF with tools "wafw00f"
+    """
     detect = False
     message = ""
     os.system("wafw00f {} > {}/waf.txt".format(url, directory))
@@ -167,11 +172,12 @@ def detect_waf(url, directory):
             print("{}This website dos not use WAF".format(LESS))
             print(LINE)
 
-"""
-CMS:
-Detect if the website use a CMS
-"""
+
 def detect_cms(url, directory):
+    """
+    CMS:
+    Detect if the website use a CMS
+    """
     print(INFO + "CMS")
     print(LINE)
     req = requests.get("https://whatcms.org/APIEndpoint/Detect?key=1481ff2f874c4942a734d9c499c22b6d8533007dd1f7005c586ea04efab2a3277cc8f2&url={}".format(url))
@@ -196,11 +202,12 @@ def detect_cms(url, directory):
             print("{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result))
             print(LINE)
 
-"""
-CVE_CMS:
-Check CVE with cms and version detected by the function 'detect_cms'.
-"""
+
 def cve_cms(result, v):
+    """
+    CVE_CMS:
+    Check CVE with cms and version detected by the function 'detect_cms'.
+    """
     url_comp = "https://www.cvedetails.com/version-search.php?vendor={}&product=&version={}".format(result, v)
     req = requests.get(url_comp, allow_redirects=True, verify=False)
     if not "matches" in req.text:
@@ -235,8 +242,9 @@ def cve_cms(result, v):
     else:
         print("{} Nothing CVE found \n".format(LESS))
 
-"""Get header of website (cookie, link, etc...)"""
+
 def get_header(url, directory):
+    """Get header of website (cookie, link, etc...)"""
     head = r.headers
     print(INFO + "HEADER")
     print(LINE)
@@ -245,8 +253,9 @@ def get_header(url, directory):
     with open(directory + '/header.csv', 'w+') as file:
         file.write(str(head).replace(',','\n'))
 
-"""Get whois of website"""
+
 def who_is(url, directory):
+    """Get whois of website"""
     print(INFO + "WHOIS")
     print(LINE)
     try:
@@ -266,13 +275,42 @@ def who_is(url, directory):
         print(msgerr)
     print("\n" + LINE)
 
-"""
-Status:
- - Get response status of the website (200, 302, 404...).
- - Check if a backup exist before to start the scan.
- If exist it restart scan from to the last line of backup.
-"""
+
+def wayback_check(url, directory):
+    """
+    Wayback_check:
+    Check in a wayback machine to found old file on the website or other things...
+    Use "waybacktool"
+    """
+    print("{}Wayback Check".format(INFO))
+    print(LINE)
+    print(url + "\n")
+    os.system('python waybacktool/waybacktool.py pull --host {} | python waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
+    with open(directory + "/wayback.txt", "r+") as wayback:
+        wb_read = wayback.read().splitlines()
+        for wb in wb_read:
+            wb_res = list(wb.split(","))
+            try:
+                if wb_res[1] == " 200":
+                    print("{}{}{}").format(PLUS, wb_res[0], wb_res[1])
+                elif wb_res[1] == " 301" or wb_res[1] == " 302":
+                    print("{}{}{}").format(LESS, wb_res[0], wb_res[1])
+                elif wb_res[1] == " 404" or wb_res[1] == " 403":
+                    pass
+                else:
+                    print("{}{}{}").format(INFO, wb_res[0], wb_res[1])
+            except:
+                pass
+    print(LINE)
+
+
 def status(stat, directory, u_agent):
+    """
+    Status:
+     - Get response status of the website (200, 302, 404...).
+     - Check if a backup exist before to start the scan.
+     If exist it restart scan from to the last line of backup.
+    """
     check_b = check_backup(directory)
     #check backup before start scan
     if check_b == True:
@@ -332,8 +370,9 @@ def status(stat, directory, u_agent):
         else:
             sys.exit()
 
-"""Check if a backup file exist from function 'Status' """
+
 def check_backup(directory):
+    """Check if a backup file exist from function 'Status' """
     if os.path.exists(directory + "/backup.txt"):
         try:
             bp = raw_input("A backup file exist, do you want to continue or restart ? (C:R)\n")
@@ -349,8 +388,9 @@ def check_backup(directory):
     else:
         pass
 
-"""Get DNS informations"""
+
 def get_dns(url, directory):
+    """Get DNS informations"""
     try:
         if "https" in url:
             url = url.replace('https://','').replace('/','')
@@ -381,8 +421,8 @@ def get_dns(url, directory):
         print(LINE)
 
 
-"""Create backup file"""
 def backup(res, directory, forbi):
+    """Create backup file"""
     with open(directory + "/backup.txt", "a+") as words:
         #delete url to keep just file or dir
         anti_sl = res.split("/")
@@ -391,8 +431,9 @@ def backup(res, directory, forbi):
         result = result.replace("['","").replace("']","").replace("',", "/").replace(" '","")
         words.write(result + "\n")
 
-""" Download files and calcul size """
+
 def dl(res, req, directory):
+    """ Download files and calcul size """
     soup = BeautifulSoup(req.text, "html.parser")
     extensions = ['.txt', '.html', '.jsp', '.xml', '.php', '.log', '.aspx', '.zip', '.old', '.bak', '.sql', '.js', '.asp', '.ini', '.log', '.rar', '.dat', '.log', '.backup', '.dll', '.save', '.BAK', '.inc', '.php?-s']
     d_files = directory + "/files/"
@@ -411,11 +452,12 @@ def dl(res, req, directory):
             size_bytes = os.path.getsize(p_file)
             return size_bytes
 
-"""
-file_backup:
-During the scan, check if a backup file or dir exist.
-"""
+
 def file_backup(res, directory):
+    """
+    file_backup:
+    During the scan, check if a backup file or dir exist.
+    """
     ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak']
     d_files = directory + "/files/"
     for exton in ext_b:
@@ -445,11 +487,12 @@ def file_backup(res, directory):
         else:
             pass
 
-"""
-hidden_dir:
-Like the function 'file_backup' but check if the type backup dir like '~articles/' exist.
-"""
+
 def hidden_dir(res, user_agent, directory, forbi):
+    """
+    hidden_dir:
+    Like the function 'file_backup' but check if the type backup dir like '~articles/' exist.
+    """
     pars = res.split("/")
     hidd_d = "{}~{}/".format(url, pars[3])
     hidd_f = "{}~{}".format(url, pars[3])
@@ -463,22 +506,23 @@ def hidden_dir(res, user_agent, directory, forbi):
     sk_f = req_f.status_code
     if sk_d == 200:
         if exclude:
-            check_profil_page(req_d, res, directory, forbi)
+            check_exclude_page(req_d, res, directory, forbi)
         else:
             print("{}{}".format(PLUS, hidd_d))
             outpt(directory, hidd_d, 200)
     elif sk_f == 200:
         if exclude:
-            check_profil_page(req_f, res, directory, forbi)
+            check_exclude_page(req_f, res, directory, forbi)
         else:
             print("{}{}".format(PLUS, hidd_f))
             outpt(directory, hidd_f, 200)
 
-"""
-outpt:
-Output to scan
-"""
+
 def outpt(directory, res, stats):
+    """
+    outpt:
+    Output to scan
+    """
     if output:
         with open(output + "/scan.txt", "a+") as op:
             if stats == 403:
@@ -502,13 +546,14 @@ def outpt(directory, res, stats):
             else:
                 op.write(str("[+] " + res + "\n"))
 
-"""
-Check_profil_page: 
-If scan blog, or social network etc.. you can activate this option to pass profil/false positive pages.
-for use this option you do defined a profil/false positive page base, ex: 
-    --exclude url.com/profil/codejump
-"""
-def check_profil_page(req, res, directory, forbi):
+
+def check_exclude_page(req, res, directory, forbi):
+    """
+    Check_exclude_page: 
+    If scan blog, or social network etc.. you can activate this option to pass profil/false positive pages.
+    for use this option you do defined a profil/false positive page base, ex: 
+        --exclude url.com/profil/codejump
+    """
     scoring = 0
     words = req_p
     for w in words.split("\n"):
@@ -522,7 +567,7 @@ def check_profil_page(req, res, directory, forbi):
     #print res
     if perc >= 85:
         pass
-    elif perc >= 50 and pec < 85:
+    elif perc >= 50 and perc < 85:
         print("{}{} potential exclude page").format(LESS, res)
     else:
         print("{}{}").format(PLUS, res)
@@ -542,18 +587,19 @@ def check_profil_page(req, res, directory, forbi):
                 outpt(directory, res, stats=0)
 
 
-"""
-tryUrl:
-Test all URL contains in the dictionnary with multi-threading.
-This script run functions:
-- backup()
-- dl()
-- file_backup()
-- mail()
-"""
 def tryUrl(i, q, directory, u_agent, forced=False):
+    """
+    tryUrl:
+    Test all URL contains in the dictionnary with multi-threading.
+    This script run functions:
+    - backup()
+    - dl()
+    - file_backup()
+    - mail()
+    """
     all_mail = []
-    for t in range(len_w):
+    waf_score = 0
+    for numbers in range(len_w):
         res = q.get()
         try:
             if u_agent:
@@ -569,11 +615,19 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5, cookies=cookie_auth)
                 else:
                     req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+                tests = 0
+                waf = verify_waf(req, res, user_agent, tests)
+                if waf == True:
+                    waf_score += 1
+                    if waf_score == 5:
+                        print("Auto-reconfig scan to prevent the WAF")
+                        '''TODO: auto reconfigure scan to prevent waf repop'''
+                    pass
                 hidden_dir(res, user_agent, directory, forbi)
                 status_link = req.status_code
                 if status_link == 200:
                     if exclude:
-                        check_profil_page(req, res, directory, forbi)
+                        check_exclude_page(req, res, directory, forbi)
                     else:
                         # dl files and calcul size
                         size = dl(res, req, directory)
@@ -657,15 +711,16 @@ def tryUrl(i, q, directory, u_agent, forced=False):
         except Exception:
             #traceback.print_exc()
             pass
-        sys.stdout.write("\033[34m[i] [scan... %d/%d]\033[0m\r" % (t*thread, len_w))
+        sys.stdout.write("\033[34m[i] [scan... %d/%d]\033[0m\r" % (numbers*thread, len_w))
         sys.stdout.flush()
 
 
-"""
-check_words:
-Functions wich manage multi-threading
-"""
+
 def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
+    """
+    check_words:
+    Functions wich manage multi-threading
+    """
     link_url = []
     hiddend = []
     if nLine:
@@ -731,19 +786,22 @@ def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
         print("backup.txt not found")
 
 
-"""
-create_file:
-Create directory with the website name to keep a scan backup. 
-"""
 def create_file(url, stat, u_agent, thread, subdomains):
+    """
+    create_file:
+    Create directory with the website name to keep a scan backup. 
+    """
+    dire = ''
     if 'www' in url:
         direct = url.split('.')
-        directory = direct[1]
-        directory = "sites/" + directory
+        director = direct[1]
+        dire = "{}.{}".format(direct[1], direct[2].replace("/",""))
+        directory = "sites/" + director
     else:
         direct = url.split('/')
-        directory = direct[2]
-        directory = "sites/" + directory
+        director = direct[2]
+        dire = director
+        directory = "sites/" + director
     # if the directory don't exist, create it
     if not os.path.exists(directory):
         os.makedirs(directory) # creat the dir
@@ -754,9 +812,10 @@ def create_file(url, stat, u_agent, thread, subdomains):
         who_is(url, directory)
         detect_cms(url, directory)
         detect_waf(url, directory)
+        wayback_check(dire, directory)
         gitpast(url)
         status(stat, directory, u_agent)
-        create_report(directory)
+        create_report(directory, cookie_)
     # or else ask the question
     else:
         try:
@@ -773,191 +832,16 @@ def create_file(url, stat, u_agent, thread, subdomains):
             get_dns(url, directory)
             who_is(url, directory)
             detect_cms(url, directory)
+            detect_waf(url, directory)
+            wayback_check(dire, directory)
+            gitpast(url)
             status(stat, directory, u_agent)
-            create_report(directory)
+            create_report(directory, cookie_)
         else:
             if subdomains:
                 subdomain(subdomains)
             status(stat, directory, u_agent)
-            create_report(directory)
-
-"""
-Create_report: make a html report with url, waf, email...
-"""
-def create_report(directory):
-    urls = ""
-    waf = ""
-    mails = ""
-    nowdate = datetime.now()
-    nowdate = "{}-{}-{}".format(nowdate.day, nowdate.month, nowdate.year)
-    if cookie_:
-        auth_stat = "Authenticated"
-    else:
-        auth_stat = "No Authenticated"
-    with open(directory + "/report.html", "a+") as test:
-        with open(directory + "/scan.txt", "r") as scan:
-            for s in scan.read().splitlines():
-                s = s.split(" ")
-                s0 = s[0]
-                s1 = s[1]
-                if s0 == "[+]":
-                    if "301" in s or "302" in s:
-                        if s[2] == "301":
-                            s0 = s0.replace("[+]", "301")
-                        elif s[2] == "302":
-                            s0 = s0.replace("[+]", "302")
-                        urls += """
-                            <tr>
-                            <td style="width: 120px; color: orange; padding: 3px;">{}</td>
-                            <td style="width: 230px; color: orange; padding: 3px;"><a href="{}">{}</a></td>
-                            <td style="width: 20px; color: orange; padding: 3px;">{}</td>
-                            </tr>
-                            """.format(nowdate, s1, s1, s0)
-                    else:
-                        s0 = s0.replace("[+]", "200")
-                        urls += """
-                        <tr>
-                        <td style="width: 120px; color: green; padding: 3px;">{}</td>
-                        <td style="width: 230px; color: green; padding: 3px;"><a href="{}">{}</td>
-                        <td style="width: 20px; color: green; padding: 3px;">{}</td>
-                        </tr>
-                        """.format(nowdate, s1, s1, s0)
-                elif s0 == "[x]":
-                    s0 = s0.replace("[x]", "403")
-                    urls += """
-                        <tr>
-                        <td style="width: 120px; color: red; padding: 3px;">{}</td>
-                        <td style="width: 230px; color: red; padding: 3px;"><a href="{}">{}</a></td>
-                        <td style="width: 20px; color: red; padding: 3px;">{}</td>
-                        </tr>
-                        """.format(nowdate, s1, s1, s0)
-                elif s0 == "[-]":
-                    if "401" in s:
-                        if s[2] == "401":
-                            s0 = s0.replace("[-]","401")
-                        urls += """
-                            <tr>
-                            <td style="width: 120px; color: orange; padding: 3px;">{}</td>
-                            <td style="width: 230px; color: orange; padding: 3px;"><a href="{}">{}</a></td>
-                            <td style="width: 20px; color: orange; padding: 3px;">{}</td>
-                            </tr>
-                            """.format(nowdate, s1, s1, s0)
-                elif s0 == "[!]":
-                    if "400" in s:
-                        if s[2] == "400":
-                            s0 = s0.replace("[!]","400")
-                        urls += """
-                            <tr>
-                            <td style="width: 120px; color: red; padding: 3px;">{}</td>
-                            <td style="width: 230px; color: red; padding: 3px;"><a href="{}">{}</a></td>
-                            <td style="width: 20px; color: red; padding: 3px;">{}</td>
-                            </tr>
-                            """.format(nowdate, s1, s1, s0)
-        with open(directory + "/waf.txt", "r") as waff:
-            waf_res = ""
-            for w in waff.read().splitlines():
-                if "The site" in w:
-                    waf_res = w
-            if waf_res:
-                waf += """
-                    <tr>
-                    <td style="width: 120px;">{}</td>
-                    </tr>
-                """.format(waf_res)
-            else:
-                waf += """
-                    <tr>
-                    <td style="width: 120px;">This site dosn't seem to use a WAF</td>
-                    </tr>
-                """.format(w)
-        try:
-            with open(directory + "/mail.csv", "r") as csvFile:
-                reader = csv.reader(csvFile)
-                for row in reader:
-                    mail = row[0]
-                    stat = row[1]
-                    if "no" in stat:
-                        mails += """
-                            <tr>
-                            <td style="width: 120px; color: green; padding: 3px;">{}</td>
-                            <td style="width: 20px; color: green; padding: 3px;">{}</td>
-                            </tr>
-                            """.format(mail, stat)
-                    else:
-                        mails += """
-                            <tr>
-                            <td style="width: 120px; color: red; padding: 3px;">{}</td>
-                            <td style="width: 20px; color: red; padding: 3px;">{}</td>
-                            </tr>
-                            """.format(mail, stat)
-        except:
-            mails = "<tr><td><b> No emails found </b></td></tr>"
-        with open(directory + "/cms.txt","r") as cmsFile:
-            cms = ""
-            for cms_read in cmsFile.read().splitlines():
-                cms += """
-                    <tr>
-                    <td style="width: 120px; color: blue; padding: 3px;">{}</td>
-                    </tr>
-                    """.format(cms_read)
-        test.write('''
-                <!DOCTYPE html>
-                <html>
-                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                <head>
-                <style>
-                body{{
-                    font-family: "Arial";
-                }}
-                h1 {{
-                    font-size: 15;
-                }}
-                </style>
-                <title>Hawkscan Report</title>
-                </head>
-                <body>
-                <center>
-                <h1>Hawkscan Report </h1></br>
-                <hr></br>
-                <b>Status : <p style="color: blue;">{}</b><br>
-                <hr>
-                <b>WAF</b> </br>
-                <p style="color: red;">{}</p>
-                <br>
-                <hr>
-                <br>
-                <b> CMS </b>
-                <p style="color: blue;">{}</p>
-                <br>
-                <hr>
-                <br>
-                <b> URLS </b>
-                <br>
-                <table style="width: 800px; border-color: black; height: 1px;" border="1" cellspacing="0" cellpadding="0">
-                <tbody>
-                <tr>
-                <td style="width: 120px;">Date</td>
-                <td style="width: 230px;">URL</td>
-                <td style="width: 20px;">Status</td>
-                {}
-                </tbody>
-                </table>
-                <br>
-                <hr>
-                <br>
-                <b>Check Mails</b><br><br>
-                <table style="width: 400px; border-color: black; height: 1px;" border="1" cellspacing="0" cellpadding="0">
-                <tbody>
-                <tr>
-                <td style="width: 120px;"><b>Mails</b></td>
-                <td style="width: 20px;"><b>Status</b></td>
-                {}
-                </tbody>
-                </table>
-                </br>
-                </center>
-                </body>
-                </html>'''.format(auth_stat, waf, cms, urls, mails))
+            create_report(directory, cookie_)
 
 
 if __name__ == '__main__':
