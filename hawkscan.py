@@ -304,7 +304,7 @@ def wayback_check(url, directory):
     print(LINE)
 
 
-def status(stat, directory, u_agent):
+def status(stat, directory, u_agent, thread):
     """
     Status:
      - Get response status of the website (200, 302, 404...).
@@ -326,19 +326,19 @@ def status(stat, directory, u_agent):
                     if line == last_line:
                         print(LINE)
                         forced = False
-                        check_words(url, wordlist, directory, u_agent, forced, nLine)
+                        check_words(url, wordlist, directory, u_agent, thread, forced, nLine)
     elif check_b == False:
         os.remove(directory + "/backup.txt")
         print("restarting scan...")
         print(LINE)
     if stat == 200:
-        check_words(url, wordlist, directory, u_agent)
+        check_words(url, wordlist, directory, u_agent, thread)
     elif stat == 301:
         print(PLUS + " 301 Moved Permanently\n")
-        check_words(url, wordlist, directory, u_agent)
+        check_words(url, wordlist, directory, u_agent, thread)
     elif stat == 302:
         print(PLUS + " 302 Moved Temporarily\n")
-        check_words(url, wordlist, directory, u_agent)
+        check_words(url, wordlist, directory, u_agent, thread)
     elif stat == 304:
         pass
     elif stat == 404:
@@ -347,7 +347,7 @@ def status(stat, directory, u_agent):
         except:
             a = input("{} not found/ forced ?(y:n)".format(LESS))
         if a == "y":
-            check_words(url, wordlist, directory, u_agent)
+            check_words(url, wordlist, directory, u_agent, thread)
         else:
             sys.exit()
     elif stat == 403:
@@ -357,7 +357,7 @@ def status(stat, directory, u_agent):
             a = input(FORBI + " forbidden/ forced ?(y:n)")
         if a == "y":
             forced = True
-            check_words(url, wordlist, directory, u_agent, forced)
+            check_words(url, wordlist, directory, u_agent, forced, thread)
         else:
             sys.exit()
     else:
@@ -366,7 +366,7 @@ def status(stat, directory, u_agent):
         except:
             a = input("{} not found/ forced ?(y:n)".format(LESS))
         if a == "y":
-            check_words(url, wordlist, directory, u_agent)
+            check_words(url, wordlist, directory, u_agent, thread)
         else:
             sys.exit()
 
@@ -617,11 +617,16 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
                 tests = 0
                 waf = verify_waf(req, res, user_agent, tests)
+                #print(waf)
+                #print("timesleep:{}".format(ts))
+                tmsleep = ts
                 if waf == True:
                     waf_score += 1
                     if waf_score == 5:
                         print("Auto-reconfig scan to prevent the WAF")
-                        '''TODO: auto reconfigure scan to prevent waf repop'''
+                        waf_score = 0
+                        '''TODO: auto reconfigure scan to prevent waf repop
+                            use TOR (apt install tor, pip install torrequest)'''
                     pass
                 hidden_dir(res, user_agent, directory, forbi)
                 status_link = req.status_code
@@ -716,7 +721,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
 
 
 
-def check_words(url, wordlist, directory, u_agent, forced=False, nLine=False):
+def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):
     """
     check_words:
     Functions wich manage multi-threading
@@ -814,7 +819,7 @@ def create_file(url, stat, u_agent, thread, subdomains):
         detect_waf(url, directory)
         wayback_check(dire, directory)
         gitpast(url)
-        status(stat, directory, u_agent)
+        status(stat, directory, u_agent, thread)
         create_report(directory, cookie_)
     # or else ask the question
     else:
@@ -835,12 +840,12 @@ def create_file(url, stat, u_agent, thread, subdomains):
             detect_waf(url, directory)
             wayback_check(dire, directory)
             gitpast(url)
-            status(stat, directory, u_agent)
+            status(stat, directory, u_agent, thread)
             create_report(directory, cookie_)
         else:
             if subdomains:
                 subdomain(subdomains)
-            status(stat, directory, u_agent)
+            status(stat, directory, u_agent, thread)
             create_report(directory, cookie_)
 
 
@@ -858,7 +863,7 @@ if __name__ == '__main__':
     parser.add_argument("-o", help="Output to site_scan.txt (default in website directory)", required=False, dest="output")
     parser.add_argument("--cookie", help="Scan with an authentification cookie", required=False, dest="cookie_", type=str)
     parser.add_argument("--exclude", help="To define a page type to exclude during scan", required=False, dest="exclude")
-    parser.add_argument("--timesleep", help="To define a timesleep/rate-limit if app is unstable during scan", required=False, dest="ts", type=int)
+    parser.add_argument("--timesleep", help="To define a timesleep/rate-limit if app is unstable during scan", required=False, dest="ts", type=int, default=0)
     results = parser.parse_args()
                                      
     url = results.url
