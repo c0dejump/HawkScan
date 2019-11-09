@@ -563,8 +563,8 @@ def check_exclude_page(req, res, directory, forbi):
             pass
     len_w = [lines for lines in words.split("\n")] #to avoid to do line per line
     perc = round(100 * float(scoring) / len(len_w)) #to do a percentage
-    #print perc
-    #print res
+    #print(perc)
+    #print(res)
     if perc >= 85:
         pass
     elif perc >= 50 and perc < 85:
@@ -616,7 +616,8 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 else:
                     req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
                 tests = 0
-                waf = verify_waf(req, res, user_agent, tests)
+                if not "git" in res:
+                    waf = verify_waf(req, res, user_agent, tests)
                 #print(waf)
                 #print("timesleep:{}".format(ts))
                 tmsleep = ts
@@ -685,7 +686,10 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     else:
                         pass
                 elif status_link == 304:
-                    pass
+                    if redirect:
+                        print("\033[33m[+] \033[0m" + res + "\033[33m 304 Not modified \033[0m")
+                    else:
+                        pass
                 elif status_link == 302:
                     if redirect:
                         print("\033[33m[+] \033[0m" + res + "\033[33m 302 Moved Temporarily \033[0m")
