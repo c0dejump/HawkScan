@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
+import sys
+import requests
 from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
 
 def verify_waf(req, res, user_agent, tests):
@@ -73,7 +75,7 @@ def verify_waf(req, res, user_agent, tests):
         return True
     #AWS ELB 
     elif "Access Denied" in req.text and "AWSALB" in req.headers or "X-AMZ-ID" in req.headers or "X-AMZ-REQUEST-ID" in req.headers:
-        print ("AWS ELB WAF detected with this payload : {} \nwait...".format(INFO, res))
+        print ("{}AWS ELB WAF detected with this payload : {} \nwait...".format(INFO, res))
         time.sleep(180)
         return True
     #Barikode 
@@ -136,7 +138,7 @@ def verify_waf(req, res, user_agent, tests):
         time.sleep(180)
         return True
     #Cloudflare
-    elif "Cloudflare Ray ID:" in req.text or "Attention Required!" in req.text and "cf-ray" in req.headers:
+    elif "Cloudflare Ray ID:" in req.text:
         print("{}Cloudflare WAF detected with this payload : {} \nplease wait...".format(INFO, res))
         time.sleep(180)
         return True
@@ -610,5 +612,14 @@ def verify_waf(req, res, user_agent, tests):
         print("{}ZScaler WAF detected with this payload : {} \nplease wait...".format(INFO, res))
         time.sleep(180)
         return True
+    if "Access Denied" in req.text:
+        url_base = res.split("/")[:3]
+        url_send = '/'.join(url_base)+"/"
+        req_test = requests.get(url_send, headers=user_agent, allow_redirects=True, verify=False)
+        if req_test.status_code == 401 or req_test.status_code == 403:
+            print("{}{} Unknown WAF detected with this payload : {} \nplease wait...".format(INFO, req_test.status_code, res))
+            time.sleep(200)
+        else:
+            pass
     else:
         return False
