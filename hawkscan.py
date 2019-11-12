@@ -732,34 +732,20 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
     """
     link_url = []
     hiddend = []
-    if nLine:
-        with open(wordlist, "r") as payload:
-            links = payload.read().splitlines()
-        for i in range(thread):
-            worker = Thread(target=tryUrl, args=(i, enclosure_queue, directory, u_agent, forced))
-            worker.setDaemon(True)
-            worker.start()
-        for link in links[nLine:]:
-            if prefix:
-                link_url = url + prefix + link
-            else:
-                link_url = url + link
-            enclosure_queue.put(link_url)
-        enclosure_queue.join()
-    else:
-        with open(wordlist, "r") as payload:
-            links = payload.read().splitlines()
-        for i in range(thread):
-            worker = Thread(target=tryUrl, args=(i, enclosure_queue, directory, u_agent, forced))
-            worker.setDaemon(True)
-            worker.start()
-        for link in links:
-            if prefix:
-                link_url = url + prefix + link
-            else:
-                link_url = url + link
-            enclosure_queue.put(link_url)
-        enclosure_queue.join()
+    with open(wordlist, "r") as payload:
+        links = payload.read().splitlines()
+    for i in range(thread):
+        worker = Thread(target=tryUrl, args=(i, enclosure_queue, directory, u_agent, forced))
+        worker.setDaemon(True)
+        worker.start()
+    state = links[nLine:] if nLine else links
+    for link in state:
+        if prefix:
+            link_url = url + prefix + link
+        else:
+            link_url = url + link
+        enclosure_queue.put(link_url)
+    enclosure_queue.join()
     """
         Recursif: For recursif scan
     """
