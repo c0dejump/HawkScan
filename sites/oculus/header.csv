@@ -1,0 +1,21 @@
+{'X-XSS-Protection': '0'
+ 'X-Content-Type-Options': 'nosniff'
+ 'Content-Encoding': 'gzip'
+ 'Transfer-Encoding': 'chunked'
+ 'Set-Cookie': 'locale=en_US; expires=Wed
+ 27-Nov-2019 13:56:12 GMT; Max-Age=604800; path=/; domain=.oculus.com; secure'
+ 'Strict-Transport-Security': 'max-age=31536000; preload; includeSubDomains'
+ 'Vary': 'Accept-Encoding'
+ 'X-FB-Debug': 'I0WF2/93knqTGuD0PIjZ48y8n3tA24o8U+7HVIVd3+RjDLZwTNo+tp+Yl2kjMJGGlZRF0BAdnvyv1mEFWwjWaw=='
+ 'Connection': 'keep-alive'
+ 'Pragma': 'no-cache'
+ 'Cache-Control': 'private
+ no-cache
+ no-store
+ must-revalidate'
+ 'Date': 'Wed
+ 20 Nov 2019 13:56:13 GMT'
+ 'X-Frame-Options': 'DENY'
+ 'Content-Type': 'text/html; charset="utf-8"'
+ 'Expires': 'Sat
+ 01 Jan 2000 00:00:00 GMT'}

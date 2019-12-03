@@ -1,0 +1,16 @@
+{'X-XSS-Protection': '1; mode=block'
+ 'X-Content-Type-Options': 'nosniff'
+ 'Content-Encoding': 'gzip'
+ 'Transfer-Encoding': 'chunked'
+ 'Set-Cookie': 'SNODE=67faaf1ba24f0e4aed830bd22c053e75; expires=Sun
+ 29-Dec-19 13:38:08 GMT; max-age=2592000; domain=sovest.ru; path=/'
+ 'Vary': 'Accept-Encoding'
+ 'Server': 'nginx'
+ 'Last-Modified': 'Thu
+ 28 Nov 2019 16:05:47 GMT'
+ 'Connection': 'keep-alive'
+ 'ETag': 'W/"5ddff05b-4009"'
+ 'Date': 'Fri
+ 29 Nov 2019 13:38:08 GMT'
+ 'Referrer-Policy': 'no-referrer-when-downgrade'
+ 'Content-Type': 'text/html; charset=utf-8'}

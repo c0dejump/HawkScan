@@ -1,0 +1,245 @@
+<!DOCTYPE doctype html>
+
+<html>
+<head>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-15492939-15"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-15492939-14');
+    gtag('config', 'UA-15492939-15');
+  </script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+<meta content="Venmo, Payments, Social Payments, Mobile Payments, Mobile Payment App, Friends, Pay Your Friends, Startup, Fun, Free, Simple, Split Bill, Split Check, Split Dinner, iPhone App, Android App, New York City, NYC" name="keywords"/>
+<meta content="origin" name="referrer"/>
+<meta content="Venmo is a digital wallet that lets you make and share payments with friends. You can easily split the bill, cab fare, or much more. Download the iOS or Android app or sign up on Venmo.com today." name="description"/>
+<meta content="app-id=351727428 app-argument=venmo://appBanner" name="apple-itunes-app"/>
+<meta content="company" property="og:type"/>
+<meta content="Venmo" property="og:title"/>
+<meta content="http://facebook.com/venmo" property="og:url"/>
+<meta content="https://s3.amazonaws.com/venmo/venmo100x100.jpg" property="og:image"/>
+<meta content="Venmo.com" property="og:site_name"/>
+<meta content="Just got Venmo. It's like my phone and my wallet had a beautiful baby!" property="og:description"/>
+<meta content="180347063770" property="og:app_id"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="https://venmo.com" name="twitter:url"/>
+<meta content="Venmo" name="twitter:title"/>
+<meta content="Just got Venmo. It's like my phone and my wallet had a beautiful baby!" name="twitter:description"/>
+<meta content="https://s3.amazonaws.com/venmo/venmo100x100.jpg" name="twitter:image"/>
+<meta content="cUTeFWHxoKiRisX23uNU5J2GVd-EnbiJstjQRV6GQDY" name="google-site-verification">
+<title>
+    Venmo - Share Payments
+  </title>
+<link href="https://cdn1.venmo.com/production/stylesheets/auth-legacy.compiled.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn1.venmo.com/production/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<link href="https://d1v6x81qdeozhc.cloudfront.net/static/images/logo/apple-touch-icon-1a10ee4b947b728d54265ac8c5084f78.png" rel="apple-touch-icon"/>
+</meta></head>
+<body class="preload">
+<header class="">
+<div class="container">
+<div class="global-margin">
+<div class="row">
+<div class="col-md-12">
+<a class="venmo asset-venmo-logo-blue" href="/"></a>
+<ul class="hide-mobile">
+<li><a href="/about/product/">How Venmo Works</a></li>
+<li><a href="/business">Business</a></li>
+<li><a href="/card/">Card</a></li>
+<li><a href="/about/security/">Security</a></li>
+<li><a class="contact-us-nav" href="/contact-us/">Contact Us</a></li>
+</ul>
+<div class="hide-mobile sign-in-container">
+<div class="sign-in">
+<a class="sign-in" href="/account/sign-in">Sign In</a>
+</div>
+</div>
+<div class="get-the-app">
+<a class="btn blue" href="https://itunes.apple.com/us/app/venmo/id351727428?mt=8">Get the app</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="wrapper">
+<div class="home">
+<div class="container">
+<div class="hero row">
+<figure class="android">
+<img src="https://cdn1.venmo.com/production/images/devices/nexus-marketing-site@1x.png"/>
+</figure>
+<div class="social-proof-wrapper hide-mobile col-md-6 col-sm-6">
+<img class="iphone" src="https://cdn1.venmo.com/production/images/devices/iphone6-marketing-site@1x.png"/>
+<img class="iphone-header" src="https://cdn1.venmo.com/production/images/devices/iphone-action-bar.png"/>
+<div class="iphone-feed">
+<div class="iphone-feed-container">
+<ul class="feed">
+<div class="spinner-container" data-reactid=".6.0">
+<div class="spinner" role="progressbar" style="position: absolute; width: 0px; z-index: 2000000000; left: 50%; top: 50%;">
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-0-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(0deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-1-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(30deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-2-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(60deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-3-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(90deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-4-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(120deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-5-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(150deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-6-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(180deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-7-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(210deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-8-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(240deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-9-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(270deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-10-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(300deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+<div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-100-25-11-12 1s linear infinite;">
+<div style="position: absolute; width: 7px; height: 2px; -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(330deg) translate(5px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background: rgb(255, 255, 255);"></div>
+</div>
+</div>
+</div>
+</ul>
+</div>
+</div>
+</div>
+<div class="signup-wrapper-home col-md-6 col-sm-6">
+<!-- bootstrap page with current header, this will be replaced when react boots up -->
+<div class="announcement-signup-form-wrapper" data-reactid=".0.0.0">
+<div class="headline" data-reactid=".0.0.0.0">
+<h1 data-reactid=".0.0.0.0.0">Send money and <br/> make purchases at <br/> approved merchants</h1>
+<h3 class="caption" data-reactid=".0.0.0.0.1"></h3>
+</div>
+<div class="signup-choices caption row" data-reactid=".0.0.0.1">
+<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2" data-reactid=".0.0.0.1.0"><button class="ladda-button facebook button blue outline large" data-reactid=".0.0.0.1.0.0" data-style="slide-right"><span class="ladda-label" data-reactid=".0.0.0.1.0.0.0">Sign Up with Facebook</span></button>
+<div class="button-caption" data-reactid=".0.0.0.1.0.1">We'll never post without your permission.</div>
+<div data-reactid=".0.0.0.1.0.2"><span data-reactid=".0.0.0.1.0.2.0">or with your </span><a data-reactid=".0.0.0.1.0.2.1" href="/signup"><span class="use-email" data-reactid=".0.0.0.1.0.2.1.0">email address</span></a></div>
+</div>
+</div>
+</div>
+</div>
+<div class="announcement-mobile">
+<h1>Send money and make purchases at approved merchants</h1>
+<h3></h3>
+</div>
+<div class="get-the-app container"></div>
+</div>
+</div>
+<footer>
+<div class="bottom large-screen">
+<div class="container">
+<div class="global-margin">
+<div class="row">
+<div class="section col-sm-2">
+<h4>Learn more</h4>
+<ul>
+<li><a href="/about/product/">How it works</a></li>
+<li><a href="/about/fees/">Our Fees</a></li>
+<li><a href="/business">Business</a></li>
+<li><a href="/card/">Card</a></li>
+<li><a href="/about/security/">Security</a></li>
+<li><a href="/contact-us/">Contact Us</a></li>
+</ul>
+</div>
+<div class="section col-sm-2">
+<h4>Company</h4>
+<ul>
+<li><a href="/team/">Our Team</a></li>
+<li><a href="/jobs/">Jobs</a></li>
+</ul>
+</div>
+<div class="section col-sm-2">
+<h4>Community</h4>
+<ul>
+<li><a href="http://blog.venmo.com" target="_blank">Blog</a></li>
+<li><a href="https://help.venmo.com/hc/en-us" target="_blank">Help Center</a></li>
+<li><a href="https://developer.venmo.com" target="_blank">Developer</a></li>
+</ul>
+</div>
+<div class="section col-sm-2">
+<h4>Terms</h4>
+<ul>
+<li><a href="/legal/us-user-agreement/">Legal</a></li>
+<li><a href="/legal/us-privacy-policy/">Privacy</a></li>
+</ul>
+</div>
+<div class="section col-sm-2">
+<a href="https://itunes.apple.com/us/app/venmo/id351727428?mt=8">
+<img class="download-links" src="https://cdn1.venmo.com/production/images/AppStore.png"/>
+</a>
+</div>
+<div class="section col-sm-2">
+<a href="https://play.google.com/store/apps/details?id=com.venmo">
+<img class="download-links" src="https://cdn1.venmo.com/production/images/PlayStore.png"/>
+</a>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-11 copyright">
+<p>Venmo is a service of PayPal, Inc., a licensed provider of money transfer services (NMLS ID: 910457). All money transmission is provided by PayPal, Inc. pursuant to <a href="/legal/us-licenses/">PayPal, Inc.’s licenses.</a> © 2019 PayPal, Inc.</p>
+</div>
+<div class="col-sm-1 lucas">
+<img src="https://cdn1.venmo.com/production/images/LucasCircular.png"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bottom small-screen">
+<p>Copyright © Venmo.</p>
+<ul class="section">
+<li><a href="https://help.venmo.com/hc/en-us">Help</a></li>
+<li><a href="/about/security/">Security</a></li>
+</ul>
+</div>
+</footer>
+</div>
+</div>
+<script src="https://cdn1.venmo.com/production/js/auth-legacy.min.js"></script>
+<script>
+  (function (apiKey) {
+    window.mParticle = window.mParticle || {};
+    window.mParticle.isIOS=/Venmo.*(iPhone|iPad|iPod)/i.test(navigator.userAgent);
+    window.mParticle.config = window.mParticle.config || {};
+    window.mParticle.config.rq = [];
+    window.mParticle.ready = function (f) {
+      window.mParticle.config.rq.push(f);
+    };
+    var mp = document.createElement('script');
+    mp.type = 'text/javascript';
+    mp.async = true;
+    mp.src = ('https:' == document.location.protocol ? 'https://jssdkcdns' : 'http://jssdkcdn') + '.mparticle.com/js/v2/' + apiKey + '/mparticle.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(mp, s);
+  })('40433222e815b743853a4bb6b7a86058');
+</script>
+<div id="fb-root"></div>
+<script>
+  (function(d){
+    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); js.id = id; js.async = true;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    ref.parentNode.insertBefore(js, ref);
+  }(document));
+</script>
+</body>
+</html>

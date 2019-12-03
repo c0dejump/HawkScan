@@ -1,0 +1,127 @@
+[+] https://www.goldmansachs.com/?
+[+] https://www.goldmansachs.com/?.save
+[+] https://www.goldmansachs.com/?.old
+[+] https://www.goldmansachs.com/?.backup
+[+] https://www.goldmansachs.com/?wsdl
+[+] https://www.goldmansachs.com/?.BAK
+[+] https://www.goldmansachs.com/?wsdl.save
+[+] https://www.goldmansachs.com/?.bak
+[+] https://www.goldmansachs.com/?wsdl.old
+[+] https://www.goldmansachs.com/?.zip
+[+] https://www.goldmansachs.com/?wsdl.backup
+[+] https://www.goldmansachs.com/?.rar
+[+] https://www.goldmansachs.com/?wsdl.BAK
+[+] https://www.goldmansachs.com/?~
+[+] https://www.goldmansachs.com/?wsdl.bak
+[+] https://www.goldmansachs.com/?_old
+[+] https://www.goldmansachs.com/?wsdl.zip
+[+] https://www.goldmansachs.com/?_backup
+[+] https://www.goldmansachs.com/?wsdl.rar
+[+] https://www.goldmansachs.com/?_bak
+[+] https://www.goldmansachs.com/?wsdl~
+[+] https://www.goldmansachs.com/?wsdl_old
+[+] https://www.goldmansachs.com/?wsdl_backup
+[+] https://www.goldmansachs.com/?wsdl_bak
+[+] https://www.goldmansachs.com/robots.txt
+[+] https://www.goldmansachs.com/index.html
+[x] https://www.goldmansachs.com/.htpasswd/ Forbidden
+[x] https://www.goldmansachs.com/.htaccess/ Forbidden
+[x] https://www.goldmansachs.com/images/ Forbidden
+[+] https://www.goldmansachs.com/login/
+[+] https://www.goldmansachs.com/Music/
+[x] https://www.goldmansachs.com/a/ Forbidden
+[x] https://www.goldmansachs.com/art/ Forbidden
+[+] https://www.goldmansachs.com/awards/
+[+] https://www.goldmansachs.com/careers/
+[x] https://www.goldmansachs.com/cgi-bin/ Forbidden
+[x] https://www.goldmansachs.com/compliance/ Forbidden
+[x] https://www.goldmansachs.com/css/ Forbidden
+[+] https://www.goldmansachs.com/disclaimer/
+[+] https://www.goldmansachs.com/email/
+[+] https://www.goldmansachs.com/environment/
+[x] https://www.goldmansachs.com/error/ Forbidden
+[+] https://www.goldmansachs.com/europe/
+[x] https://www.goldmansachs.com/family/ Forbidden
+[+] https://www.goldmansachs.com/feedback/
+[+] https://www.goldmansachs.com/france/
+[x] https://www.goldmansachs.com/global/ Forbidden
+[+] https://www.goldmansachs.com/guidelines/
+[x] https://www.goldmansachs.com/homepage/ Forbidden
+[x] https://www.goldmansachs.com/icons/ Forbidden
+[+] https://www.goldmansachs.com/italy/
+[+] https://www.goldmansachs.com/japan/
+[x] https://www.goldmansachs.com/js/ Forbidden
+[+] https://www.goldmansachs.com/live/
+[x] https://www.goldmansachs.com/mailer/ Forbidden
+[+] https://www.goldmansachs.com/mexico/
+[+] https://www.goldmansachs.com/music/
+[x] https://www.goldmansachs.com/navigation/ Forbidden
+[+] https://www.goldmansachs.com/news/
+[+] https://www.goldmansachs.com/pl/
+[+] https://www.goldmansachs.com/podcast/
+[x] https://www.goldmansachs.com/portal/ Forbidden
+[+] https://www.goldmansachs.com/privacy/
+[+] https://www.goldmansachs.com/privacy_policy/
+[+] https://www.goldmansachs.com/pt/
+[+] https://www.goldmansachs.com/s/
+[+] https://www.goldmansachs.com/search/
+[+] https://www.goldmansachs.com/security/
+[+] https://www.goldmansachs.com/sitemap/
+[+] https://www.goldmansachs.com/spain/
+[+] https://www.goldmansachs.com/uk/
+[x] https://www.goldmansachs.com/video/ Forbidden
+[+] https://www.goldmansachs.com/worldwide/
+[x] https://www.goldmansachs.com/.ht_wsr.txt Forbidden
+[x] https://www.goldmansachs.com/.hta Forbidden
+[x] https://www.goldmansachs.com/.htaccess Forbidden
+[x] https://www.goldmansachs.com/.htaccess-dev Forbidden
+[x] https://www.goldmansachs.com/.htaccess-local Forbidden
+[x] https://www.goldmansachs.com/.htaccess-marco Forbidden
+[x] https://www.goldmansachs.com/.htaccess.BAK Forbidden
+[x] https://www.goldmansachs.com/.htaccess.bak1 Forbidden
+[x] https://www.goldmansachs.com/.htaccess.bak Forbidden
+[x] https://www.goldmansachs.com/.htaccess.inc Forbidden
+[x] https://www.goldmansachs.com/.htaccess.old Forbidden
+[x] https://www.goldmansachs.com/.htaccess.orig Forbidden
+[x] https://www.goldmansachs.com/.htaccess.sample Forbidden
+[x] https://www.goldmansachs.com/.htaccess.save Forbidden
+[x] https://www.goldmansachs.com/.htaccess.txt Forbidden
+[x] https://www.goldmansachs.com/.htaccess_extra Forbidden
+[x] https://www.goldmansachs.com/.htaccess_orig Forbidden
+[x] https://www.goldmansachs.com/.htaccess_sc Forbidden
+[x] https://www.goldmansachs.com/.htaccessBAK Forbidden
+[x] https://www.goldmansachs.com/.htaccessOLD Forbidden
+[x] https://www.goldmansachs.com/.htaccessOLD2 Forbidden
+[x] https://www.goldmansachs.com/.htaccess~ Forbidden
+[x] https://www.goldmansachs.com/.htgroup Forbidden
+[x] https://www.goldmansachs.com/.htpasswd Forbidden
+[x] https://www.goldmansachs.com/.htpasswd-old Forbidden
+[x] https://www.goldmansachs.com/.htpasswd.bak Forbidden
+[x] https://www.goldmansachs.com/.htpasswd.inc Forbidden
+[x] https://www.goldmansachs.com/.htpasswd_test Forbidden
+[x] https://www.goldmansachs.com/.htpasswds Forbidden
+[x] https://www.goldmansachs.com/.htpasswrd Forbidden
+[x] https://www.goldmansachs.com/.htusers Forbidden
+[x] https://www.goldmansachs.com/AT-admin.cgi Forbidden
+[x] https://www.goldmansachs.com/auth.cgi Forbidden
+[x] https://www.goldmansachs.com/cachemgr.cgi Forbidden
+[x] https://www.goldmansachs.com/cgi-bin/index.html Forbidden
+[x] https://www.goldmansachs.com/dcadmin.cgi Forbidden
+[+] https://www.goldmansachs.com/favicon.ico
+[x] https://www.goldmansachs.com/Login.cgi Forbidden
+[x] https://www.goldmansachs.com/login.cgi Forbidden
+[x] https://www.goldmansachs.com/Members.cgi Forbidden
+[x] https://www.goldmansachs.com/members.cgi Forbidden
+[x] https://www.goldmansachs.com/msdac/root.exe?/c+dir Forbidden
+[x] https://www.goldmansachs.com/mt-check.cgi Forbidden
+[x] https://www.goldmansachs.com/out.cgi Forbidden
+[x] https://www.goldmansachs.com/perlcmd.cgi Forbidden
+[x] https://www.goldmansachs.com/ps_admin.cgi Forbidden
+[x] https://www.goldmansachs.com/scripts/root.exe?/c+dir Forbidden
+[x] https://www.goldmansachs.com/signin.cgi Forbidden
+[x] https://www.goldmansachs.com/Signin.cgi Forbidden
+[x] https://www.goldmansachs.com/static/..%252f..%252f..%252f..%252f..%252f..%252f..%252f..%252fetc/passwd Forbidden
+[x] https://www.goldmansachs.com/WebShell.cgi Forbidden
+[x] https://www.goldmansachs.com/block.php Forbidden
+[x] https://www.goldmansachs.com/index.cgi Forbidden
+[x] https://www.goldmansachs.com/main.cgi Forbidden

@@ -1,0 +1,23 @@
+updated_date : [datetime.datetime(2018, 9, 10, 16, 20, 16), datetime.datetime(2018, 5, 30, 15, 5, 37)]
+status : [u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'clientTransferProhibited 
+ http://www.icann.org/epp#clientTransferProhibited']
+name : c/o WHOIStrustee.com Limited
+dnssec : signedDelegation
+city : Wakefield
+expiration_date : 2028
+09
+01 06:39:07
+zipcode : WF2 7AN
+domain_name : BUGCROWD.COM
+country : GB
+whois_server : whois.1api.net
+state : West Yorkshire
+registrar : 1API GmbH
+referral_url : None
+address : 6 Thornes Office Park Monckton Road
+name_servers : [u'EDNA.NS.CLOUDFLARE.COM', u'LEE.NS.CLOUDFLARE.COM', u'lee.ns.cloudflare.com', u'edna.ns.cloudflare.com']
+org : Registrant of bugcrowd.com
+creation_date : 2012
+09
+01 06:39:07
+emails : [u'abuse@1api.net', u'4d288ee662@bugcrowd.com.whoistrustee.com', u'help@support.iwantmyname.com']

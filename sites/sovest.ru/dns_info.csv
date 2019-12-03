@@ -1,0 +1,66 @@
+{'crlDistributionPoints': (u'http://crl.sectigo.com/SectigoRSAExtendedValidationSecureServerCA.crl'
+)
+ 'subjectAltName': 'DNS'
+ 'sovest.ru')
+ ('DNS'
+ 'www.sovest.ru'
+ 'notBefore': u'Oct 22 00:00:00 2019 GMT'
+ 'caIssuers': (u'http://crt.sectigo.com/SectigoRSAExtendedValidationSecureServerCA.crt'
+)
+ 'OCSP': (u'http://ocsp.sectigo.com'
+)
+ 'serialNumber': u'F79605BEDB2A3E32E4065E6591ACB9CF'
+ 'notAfter': 'Nov 14 23:59:59 2020 GMT'
+ 'version': 3L
+ 'subject': ('serialNumber'
+ u'1027739328440')
+)
+ 'jurisdictionCountryName'
+ u'RU')
+)
+ 'businessCategory'
+ u'Private Organization')
+)
+ 'countryName'
+ u'RU')
+)
+ 'postalCode'
+ u'117648')
+)
+ 'stateOrProvinceName'
+ u'Moskva')
+)
+ 'localityName'
+ u'Moskva')
+)
+ 'streetAddress'
+ u'mikroraion Chertanovo Severnoe dom 1A korpus 1')
+)
+ 'organizationName'
+ u'QIWI Bank (JSC) (KIVI BANK
+ AO)')
+)
+ 'organizationalUnitName'
+ u'IT')
+)
+ 'organizationalUnitName'
+ u'COMODO EV SSL')
+)
+ 'commonName'
+ u'sovest.ru')
+
+ 'issuer': ('countryName'
+ u'GB')
+)
+ 'stateOrProvinceName'
+ u'Greater Manchester')
+)
+ 'localityName'
+ u'Salford')
+)
+ 'organizationName'
+ u'Sectigo Limited')
+)
+ 'commonName'
+ u'Sectigo RSA Extended Validation Secure Server CA')
+}

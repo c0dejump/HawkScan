@@ -1,0 +1,30 @@
+{'crlDistributionPoints': (u'http://cdp.geotrust.com/GeoTrustRSACA2018.crl'
+)
+ 'subjectAltName': 'DNS'
+ '*.line.me')
+ ('DNS'
+ 'line.me'
+ 'notBefore': u'Aug  6 00:00:00 2018 GMT'
+ 'caIssuers': (u'http://cacerts.geotrust.com/GeoTrustRSACA2018.crt'
+)
+ 'OCSP': (u'http://status.geotrust.com'
+)
+ 'serialNumber': u'0E0037ECB939B67D2C959B9B2618E041'
+ 'notAfter': 'Aug  5 12:00:00 2020 GMT'
+ 'version': 3L
+ 'subject': ('commonName'
+ u'*.line.me')
+)
+)
+ 'issuer': ('countryName'
+ u'US')
+)
+ 'organizationName'
+ u'DigiCert Inc')
+)
+ 'organizationalUnitName'
+ u'www.digicert.com')
+)
+ 'commonName'
+ u'GeoTrust RSA CA 2018')
+}

@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /downloads/datasheet/*ie$.pdf
+Disallow: /downloads/datasheet/*ax$.pdf
+Disallow: /downloads/datasheet/Gov*/
+Disallow: /*clients1.html
+Disallow: /*.zip
+Disallow: /product/virtualUTM
+Disallow: /product/virtualUTM/

@@ -1,0 +1,13 @@
+{'Content-Length': '253'
+ 'Strict-Transport-Security': 'max-age=31536000; preload'
+ 'X-EdgeConnect-Cache-Status': '0'
+ 'Set-Cookie': 'X-Akamai-Chosen=jet_com_phased_prod_eastus2
+ akacd_phased_release=3751965688~rv=44~id=b1b0dfd8661eda7b49bdbcb9afedff30; path=/;'
+ 'Expires': 'Sat
+ 23 Nov 2019 12:41:29 GMT'
+ 'Server': 'AkamaiGHost'
+ 'Connection': 'close'
+ 'Date': 'Sat
+ 23 Nov 2019 12:41:29 GMT'
+ 'Content-Type': 'text/html'
+ 'Mime-Version': '1.0'}

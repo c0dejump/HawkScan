@@ -1,0 +1,40 @@
+updated_date : 2019
+06
+28 22:33:24
+status : [u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'clientTransferProhibited http:://icann.org/epp#clientTransferProhibited']
+name : REDACTED FOR PRIVACY
+dnssec : unsigned
+city : REDACTED FOR PRIVACY
+expiration_date : [datetime.datetime(2020, 6, 30, 14, 19, 31), datetime.datetime(2020, 6, 30, 0, 0)]
+zipcode : REDACTED FOR PRIVACY
+domain_name : [u'TRUSTPILOT.COM', u'trustpilot.com']
+country : DK
+whois_server : whois.NameWeb.biz
+state : None
+registrar : NameWeb BVBA
+referral_url : None
+address : REDACTED FOR PRIVACY
+name_servers : [u'NS
+1198.AWSDNS
+21.ORG', u'NS
+1859.AWSDNS
+40.CO.UK', u'NS
+507.AWSDNS
+63.COM', u'NS
+627.AWSDNS
+14.NET', u'ns
+1198.awsdns
+21.org', u'ns
+507.awsdns
+63.com', u'ns
+627.awsdns
+14.net', u'ns
+1859.awsdns
+40.co.uk']
+org : Trustpilot ApS
+creation_date : [datetime.datetime(2007, 6, 30, 14, 19, 31), datetime.datetime(2012, 6, 18, 0, 0)]
+emails : [u'law
+enforcement
+only@nameweb.biz', u'law
+enforcement
+only@NameWeb.biz', u'info@bNamed.net']

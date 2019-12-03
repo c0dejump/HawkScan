@@ -1,0 +1,50 @@
+{'crlDistributionPoints': (u'http://crl3.digicert.com/sha2-ev-server-g2.crl'
+ u'http://crl4.digicert.com/sha2-ev-server-g2.crl')
+ 'subjectAltName': 'DNS'
+ 'badoo.com')
+ ('DNS'
+ 'www.badoo.com'
+ 'notBefore': u'Mar 22 00:00:00 2019 GMT'
+ 'caIssuers': (u'http://cacerts.digicert.com/DigiCertSHA2ExtendedValidationServerCA.crt'
+)
+ 'OCSP': (u'http://ocsp.digicert.com'
+)
+ 'serialNumber': u'01D9AB744006A169BA0442D28BAFA918'
+ 'notAfter': 'May 20 12:00:00 2020 GMT'
+ 'version': 3L
+ 'subject': ('businessCategory'
+ u'Private Organization')
+)
+ 'jurisdictionCountryName'
+ u'GB')
+)
+ 'serialNumber'
+ u'07540255')
+)
+ 'countryName'
+ u'GB')
+)
+ 'localityName'
+ u'London')
+)
+ 'organizationName'
+ u'Badoo Trading Limited')
+)
+ 'organizationalUnitName'
+ u'Badoo Trading Limited')
+)
+ 'commonName'
+ u'badoo.com')
+
+ 'issuer': ('countryName'
+ u'US')
+)
+ 'organizationName'
+ u'DigiCert Inc')
+)
+ 'organizationalUnitName'
+ u'www.digicert.com')
+)
+ 'commonName'
+ u'DigiCert SHA2 Extended Validation Server CA')
+}

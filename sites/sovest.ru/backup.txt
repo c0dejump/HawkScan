@@ -1,0 +1,8 @@
+..%3B/
+..;/
+robots.txt
+.json
+.vagrant
+.old
+sitemap.xml
+marketplace/

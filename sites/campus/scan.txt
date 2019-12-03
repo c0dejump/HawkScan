@@ -1,0 +1,13 @@
+[+] https://www.campus.academy/?
+[+] https://www.campus.academy/?wsdl
+[+] https://www.campus.academy/robots.txt
+[+] https://www.campus.academy/?
+[+] https://www.campus.academy/?wsdl
+[+] https://www.campus.academy/robots.txt
+[+] https://www.campus.academy/wp-login.php
+[+] https://www.campus.academy/wp-content/
+[+] https://www.campus.academy/wp-json/
+[-] https://www.campus.academy/wp-json/wp/v2/users 401
+[+] https://www.campus.academy/wp-json/wp/v2/posts
+[+] https://www.campus.academy/wp-content/advanced-cache.php
+[+] https://www.campus.academy/xmlrpc.php

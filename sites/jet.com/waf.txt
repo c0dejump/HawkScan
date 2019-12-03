@@ -1,0 +1,18 @@
+
+                 [1;97m______
+                [1;97m/      \
+               [1;97m(  Woof! )
+                [1;97m\______/                      [1;91m)
+                [1;97m,,                           [1;91m) ([1;93m_
+           [1;93m.-. [1;97m-    [1;92m_______                 [1;91m( [1;93m|__|
+          [1;93m()``; [1;92m|==|_______)                [1;91m.)[1;93m|__|
+          [1;93m/ ('        [1;92m/|\                  [1;91m(  [1;93m|__|
+      [1;93m(  /  )       [1;92m / | \                  [1;91m. [1;93m|__|
+       [1;93m\(_)_))      [1;92m/  |  \                   [1;93m|__|[0m
+
+    WAFW00F - Web Application Firewall Detection Tool
+    
+
+Checking https://jet.com/
+The site https://jet.com/ is behind Kona Site Defender (Akamai) WAF.
+Number of requests: 5

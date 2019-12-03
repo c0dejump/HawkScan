@@ -1,0 +1,20 @@
+updated_date : [datetime.datetime(2019, 10, 21, 19, 30), datetime.datetime(2019, 10, 21, 13, 14, 3)]
+status : [u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', u'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', u'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited', u'clientTransferProhibited http://www.icann.org/epp#clientTransferProhibited', u'serverDeleteProhibited http://www.icann.org/epp#serverDeleteProhibited', u'serverTransferProhibited http://www.icann.org/epp#serverTransferProhibited']
+name : Internet Hostmaster
+dnssec : unsigned
+city : Seattle
+expiration_date : 2020
+10
+24 04:00:00
+zipcode : 98134
+domain_name : [u'STARBUCKS.COM', u'starbucks.com']
+country : US
+whois_server : whois.corporatedomains.com
+state : WA
+registrar : CSC CORPORATE DOMAINS, INC.
+referral_url : None
+address : None
+name_servers : [u'UDNS1.CSCDNS.NET', u'UDNS2.CSCDNS.UK', u'udns2.cscdns.uk', u'udns1.cscdns.net']
+org : Starbucks Coffee Company
+creation_date : [datetime.datetime(1993, 10, 25, 4, 0), datetime.datetime(1993, 10, 25, 0, 0)]
+emails : [u'domainabuse@cscglobal.com', u'inethost@starbucks.com']

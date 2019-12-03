@@ -1,0 +1,21 @@
+{'Expect-CT': 'max-age=604800
+ report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+ 'Expires': 'Wed
+ 20 Nov 2019 18:23:26 GMT'
+ 'X-Content-Type-Options': 'nosniff'
+ 'Content-Encoding': 'gzip'
+ 'Transfer-Encoding': 'chunked'
+ 'Set-Cookie': '__cfduid=d4790a17d8cbf60ec2c743bc738b7ae351574274205; expires=Fri
+ 20-Dec-19 18:23:25 GMT; path=/; domain=.backblaze.com; HttpOnly; Secure'
+ 'CF-Cache-Status': 'DYNAMIC'
+ 'Strict-Transport-Security': 'max-age=15768000'
+ 'Vary': 'Accept-Encoding'
+ 'Server': 'cloudflare'
+ 'Connection': 'keep-alive'
+ 'Cache-Control': 'max-age=1'
+ 'Date': 'Wed
+ 20 Nov 2019 18:23:25 GMT'
+ 'X-Frame-Options': 'SAMEORIGIN'
+ 'Alt-Svc': 'h3-23=":443"; ma=86400'
+ 'Content-Type': 'text/html'
+ 'CF-RAY': '538c74767cf76954-CDG'}

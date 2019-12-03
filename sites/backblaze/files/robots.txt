@@ -1,0 +1,12 @@
+# robots.txt for https://www.backblaze.com/
+
+User-agent: *
+Disallow: /api/install_backblaze
+Disallow: /win32/
+Disallow: /mac/
+Disallow: /linux/
+Disallow: /gift/
+Disallow: /gift_download/
+Disallow: /gen/
+Disallow: /fix_billing_problem.htm
+Disallow: /partials/

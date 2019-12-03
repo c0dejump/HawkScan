@@ -1,0 +1,53 @@
+{'subjectAltName': 'DNS'
+ 'livestream.map.fastly.net')
+ ('DNS'
+ '*.cdn.vimeo.tv')
+ ('DNS'
+ '*.dev.lsops.org')
+ ('DNS'
+ '*.livestream.com')
+ ('DNS'
+ '*.livestreamapis.com')
+ ('DNS'
+ '*.lsops.org')
+ ('DNS'
+ '*.new.livestream.com')
+ ('DNS'
+ 'livestream.com')
+ ('DNS'
+ 'livestreamapis.com')
+ ('DNS'
+ 'livestreamstudio.net'
+ 'notBefore': u'Sep 18 17:03:40 2019 GMT'
+ 'caIssuers': (u'http://secure.globalsign.com/cacert/cloudsslsha2g3.crt'
+)
+ 'OCSP': (u'http://ocsp2.globalsign.com/cloudsslsha2g3'
+)
+ 'serialNumber': u'A2B78886E23DF40C4D7348'
+ 'notAfter': 'Sep 18 17:03:40 2020 GMT'
+ 'version': 3L
+ 'subject': ('countryName'
+ u'US')
+)
+ 'stateOrProvinceName'
+ u'California')
+)
+ 'localityName'
+ u'San Francisco')
+)
+ 'organizationName'
+ u'Fastly
+ Inc.')
+)
+ 'commonName'
+ u'livestream.map.fastly.net')
+
+ 'issuer': ('countryName'
+ u'BE')
+)
+ 'organizationName'
+ u'GlobalSign nv-sa')
+)
+ 'commonName'
+ u'GlobalSign CloudSSL CA - SHA256 - G3')
+}

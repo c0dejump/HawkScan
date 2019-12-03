@@ -1,0 +1,13 @@
+{'Expect-CT': 'max-age=604800
+ report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+ 'Content-Encoding': 'gzip'
+ 'Transfer-Encoding': 'chunked'
+ 'Set-Cookie': '__cfduid=d227ca8be469eff586d458b35e754e77a1574946935; expires=Sat
+ 28-Dec-19 13:15:35 GMT; path=/; domain=.www.campus.academy; HttpOnly'
+ 'CF-Cache-Status': 'DYNAMIC'
+ 'Server': 'cloudflare'
+ 'Connection': 'keep-alive'
+ 'Date': 'Thu
+ 28 Nov 2019 13:15:35 GMT'
+ 'CF-RAY': '53cc9c8838a4cd9b-CDG'
+ 'Content-Type': 'text/html'}

@@ -1,0 +1,18 @@
+updated_date : [datetime.datetime(2019, 10, 8, 23, 54, 15), datetime.datetime(2019, 10, 8, 10, 51, 36)]
+status : [u'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', u'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', u'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', u'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited', u'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)', u'clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', u'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)', u'serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)', u'serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)', u'serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)']
+name : None
+dnssec : unsigned
+city : None
+expiration_date : [datetime.datetime(2023, 6, 8, 22, 11, 40), datetime.datetime(2023, 6, 8, 15, 11, 40)]
+zipcode : None
+domain_name : [u'TUMBLR.COM', u'tumblr.com']
+country : US
+whois_server : whois.markmonitor.com
+state : CA
+registrar : MarkMonitor, Inc.
+referral_url : None
+address : None
+name_servers : [u'NS1.EDGECASTDNS.NET', u'NS1.YAHOO.COM', u'NS2.EDGECASTDNS.NET', u'NS2.YAHOO.COM', u'NS3.EDGECASTDNS.NET', u'NS4.EDGECASTDNS.NET', u'ns4.edgecastdns.net', u'ns3.edgecastdns.net', u'ns2.yahoo.com', u'ns1.yahoo.com', u'ns1.edgecastdns.net', u'ns2.edgecastdns.net']
+org : Automattic, Inc.
+creation_date : [datetime.datetime(2006, 6, 8, 22, 11, 40), datetime.datetime(2006, 6, 8, 15, 11, 40)]
+emails : [u'abusecomplaints@markmonitor.com', u'whoisrequest@markmonitor.com']

@@ -1,0 +1,26 @@
+User-agent: SearchmetricsBot
+Disallow:
+
+User-agent: *
+Sitemap: http://venmo.com/sitemap.xml
+Allow: /
+Allow: /about/*
+Allow: /business
+Allow: /business/*
+Allow: /contact-us
+Allow: /contact-us/*
+Allow: /index.html
+Allow: /jobs
+Allow: /jobs/*
+Allow: /legal
+Allow: /legal/*
+Allow: /signup
+Allow: /signup/*
+Allow: /team
+Allow: /team/*
+Allow: /w/signup
+Allow: /card
+Allow: /card/*
+Allow: /purchases
+Allow: /purchases/*
+Disallow: /*

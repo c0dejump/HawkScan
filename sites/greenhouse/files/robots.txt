@@ -1,0 +1,6 @@
+Sitemap: https://www.greenhouse.io/sitemap_old.xml
+
+
+User-agent: *
+Disallow: /cpresources/
+

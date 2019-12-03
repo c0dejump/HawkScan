@@ -1,0 +1,1 @@
+Hi there!  I'm just a plugin, not much I can do when called directly.

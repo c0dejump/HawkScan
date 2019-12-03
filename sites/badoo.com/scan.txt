@@ -1,0 +1,25 @@
+[+] https://badoo.com/:
+[+] https://badoo.com/robots.txt
+[+] https://badoo.com/robots.txt
+[+] https://badoo.com/robots.txt
+[+] https://badoo.com/ass/
+[x] https://badoo.com/friend/ Forbidden
+[+] https://badoo.com/hr/
+[+] https://badoo.com/hu/
+[+] https://badoo.com/it/
+[+] https://badoo.com/ja/
+[x] https://badoo.com/legal/ Forbidden
+[+] https://badoo.com/nl/
+[+] https://badoo.com/pt/
+[x] https://badoo.com/questions/ Forbidden
+[+] https://badoo.com/startpage/
+[+] https://badoo.com/sw/
+[+] https://badoo.com/team/
+[+] https://badoo.com/vi/
+[+] https://badoo.com/.gitignore
+[+] https://badoo.com/BingSiteAuth.xml
+[+] https://badoo.com/favicon.ico
+[x] https://badoo.com/messages Forbidden
+[x] https://badoo.com/multimedia Forbidden
+[x] https://badoo.com/settings Forbidden
+[+] https://badoo.com/users/login

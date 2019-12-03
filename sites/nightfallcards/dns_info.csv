@@ -1,0 +1,25 @@
+{'subjectAltName': 'DNS'
+ 'nightfallcards.fr')
+ ('DNS'
+ 'www.nightfallcards.fr'
+ 'notBefore': u'Oct  7 07:23:51 2019 GMT'
+ 'caIssuers': (u'http://cert.int-x3.letsencrypt.org/'
+)
+ 'OCSP': (u'http://ocsp.int-x3.letsencrypt.org'
+)
+ 'serialNumber': u'030585F5CE1A4F9B6AD66D2374670BD1439E'
+ 'notAfter': 'Jan  5 07:23:51 2020 GMT'
+ 'version': 3L
+ 'subject': ('commonName'
+ u'nightfallcards.fr')
+)
+)
+ 'issuer': ('countryName'
+ u'US')
+)
+ 'organizationName'
+ u"Let's Encrypt")
+)
+ 'commonName'
+ u"Let's Encrypt Authority X3")
+}

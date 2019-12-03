@@ -1,0 +1,38 @@
+updated_date : 2018
+11
+29 23:05:31
+status : [u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'clientTransferProhibited https://www.icann.org/epp#clientTransferProhibited']
+name : REDACTED FOR PRIVACY
+dnssec : unsigned
+city : REDACTED FOR PRIVACY
+expiration_date : [datetime.datetime(2025, 4, 2, 23, 23, 41), datetime.datetime(2025, 4, 2, 23, 23)]
+zipcode : REDACTED FOR PRIVACY
+domain_name : [u'BACKBLAZE.COM', u'backblaze.com']
+country : US
+whois_server : WHOIS.ENOM.COM
+state : CA
+registrar : ENOM, INC.
+referral_url : None
+address : REDACTED FOR PRIVACY
+name_servers : [u'NS
+1008.AWSDNS
+62.NET', u'NS
+1394.AWSDNS
+46.ORG', u'NS
+1738.AWSDNS
+25.CO.UK', u'NS
+431.AWSDNS
+53.COM', u'NS
+CLOUD
+E1.GOOGLEDOMAINS.COM', u'NS
+CLOUD
+E2.GOOGLEDOMAINS.COM', u'NS
+CLOUD
+E3.GOOGLEDOMAINS.COM', u'NS
+CLOUD
+E4.GOOGLEDOMAINS.COM']
+org : REDACTED FOR PRIVACY
+creation_date : 2007
+04
+02 23:23:41
+emails : ABUSE@ENOM.COM

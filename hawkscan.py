@@ -25,7 +25,7 @@ from threading import Thread
 from fake_useragent import UserAgent
 import wafw00f
 try:
-    from Sublist3r import sublist3r
+    from tools.Sublist3r import sublist3r
 except Exception:
     if sys.version > '3':
         print("\n{}subbrute doesn't work with this script on py3 version for the moment sorry".format(INFO))
@@ -285,7 +285,7 @@ def wayback_check(url, directory):
     print("{}Wayback Check".format(INFO))
     print(LINE)
     print(url + "\n")
-    os.system('python waybacktool/waybacktool.py pull --host {} | python waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
+    os.system('python tools/waybacktool/waybacktool.py pull --host {} | python tools/waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
     with open(directory + "/wayback.txt", "r+") as wayback:
         wb_read = wayback.read().splitlines()
         for wb in wb_read:
@@ -586,6 +586,35 @@ def check_exclude_page(req, res, directory, forbi):
                 rec_list.append(result)
                 outpt(directory, res, stats=0)
 
+def firebaseio(dire):
+    """
+    Firebaseio: To check db firebaseio
+    ex: --firebase facebook
+    """
+    print("{}Firebaseio Check".format(INFO))
+    print(LINE)
+    url = 'https://{}.firebaseio.com/.json'.format(dire.split(".")[0])
+    print(url + "\n")
+    r = requests.get(url, verify=False).json()
+    print(r.keys())
+    try:
+        if 'error' in r.keys():
+            print(r['error'])
+            if r['error'] == 'Permission denied':
+                print("{}{} seems to be protected").format(FORBI, url) #successfully protected
+            elif r['error'] == '404 Not Found':
+                print("{}{} not found").format(LESS, url) #doesn't exist
+            elif "Firebase error." in r['error']:
+                print("{}{} Firebase error. Please ensure that you spelled the name of your Firebase correctly ".format(WARNING, url))
+        else:
+            print("{}{} seems to be vulnerable !").format(PLUS, url) #vulnerable
+    except AttributeError:
+        '''
+        Some DBs may just return null
+        '''
+        print("{} null return".format(INFO))
+    print(LINE + "\n")
+
 
 def tryUrl(i, q, directory, u_agent, forced=False):
     """
@@ -606,7 +635,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                 user_agent = {'User-agent': u_agent}
             else:
                 ua = UserAgent()
-                user_agent = {'User-agent': ua.random} #for a user-agent random
+                user_agent = {'User-agent': ua.random} #for a random user-agent
             try:
                 forbi = False
                 if ts:
@@ -620,7 +649,7 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                     waf = verify_waf(req, res, user_agent, tests)
                 #print(waf)
                 #print("timesleep:{}".format(ts))
-                tmsleep = ts
+                #print(waf_score)
                 if waf == True:
                     waf_score += 1
                     if waf_score == 5:
@@ -679,6 +708,8 @@ def tryUrl(i, q, directory, u_agent, forced=False):
                         pass
                 elif status_link == 404:
                     pass
+                elif status_link == 405:
+                    print("{}{}").format(INFO, res)
                 elif status_link == 301:
                     if redirect:
                         print("\033[33m[+] \033[0m" + res + "\033[33m 301 Moved Permanently \033[0m")
@@ -807,8 +838,9 @@ def create_file(url, stat, u_agent, thread, subdomains):
         who_is(url, directory)
         detect_cms(url, directory)
         detect_waf(url, directory)
-        wayback_check(dire, directory)
+        #wayback_check(dire, directory)
         gitpast(url)
+        firebaseio(dire)
         status(stat, directory, u_agent, thread)
         create_report(directory, cookie_)
     # or else ask the question
@@ -828,8 +860,9 @@ def create_file(url, stat, u_agent, thread, subdomains):
             who_is(url, directory)
             detect_cms(url, directory)
             detect_waf(url, directory)
-            wayback_check(dire, directory)
+            #wayback_check(dire, directory)
             gitpast(url)
+            firebaseio(dire)
             status(stat, directory, u_agent, thread)
             create_report(directory, cookie_)
         else:
@@ -867,7 +900,7 @@ if __name__ == '__main__':
     recur = results.recursif
     cookie_ = results.cookie_
     exclude = results.exclude 
-    ts = results.ts   
+    ts = results.ts
 
     banner()
     len_w = 0 #calcul wordlist size

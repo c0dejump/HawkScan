@@ -1,0 +1,19 @@
+{'Expect-CT': 'max-age=604800
+ report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+ 'X-REQUEST-ID': 'Xc7IBkg3okrXQoimnR1eFwAAACU'
+ 'Transfer-Encoding': 'chunked'
+ 'Set-Cookie': '__cfduid=dc303c7e70dd40d4b31d226508b26290a1573832710; expires=Sat
+ 14-Nov-20 15:45:10 GMT; path=/; domain=.marcus.com; HttpOnly; Secure
+ X-Connection-Id=Xc7IBkg3okrXQoimnR1eFwAAACU; path=/; domain=www.marcus.com; secure
+ NSC_cmvf.qspe.nbsdvt.ht.dpn-443-wb=5ccba3d80c0ae0014b5f2d8c72613c5d883e403b8058ea14ba287a5748a186eb8d43e0a8;expires=Fri
+ 15-Nov-2019 15:47:10 GMT;path=/;secure;httponly'
+ 'CF-Cache-Status': 'DYNAMIC'
+ 'Strict-Transport-Security': 'max-age=63072000; includeSubdomains;'
+ 'Vary': 'Accept-Encoding'
+ 'Server': 'cloudflare'
+ 'Connection': 'keep-alive'
+ 'Location': 'https://www.marcus.com/us/en'
+ 'Date': 'Fri
+ 15 Nov 2019 15:45:10 GMT'
+ 'CF-Ray': '536259c9fbc0cdb7-CDG'
+ 'Content-Type': 'text/html; charset=iso-8859-1'}

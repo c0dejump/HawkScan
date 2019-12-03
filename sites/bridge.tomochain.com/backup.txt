@@ -1,0 +1,9 @@
+buffalo/
+lana/
+louise/
+tos/
+.AppleDesktop
+.hgignore.global
+25
+account/signin
+team-planning/weekly-rest

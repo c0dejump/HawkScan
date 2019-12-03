@@ -1,0 +1,34 @@
+{'crlDistributionPoints': (u'http://crl.sca1b.amazontrust.com/sca1b.crl'
+)
+ 'subjectAltName': 'DNS'
+ 'ubnt.com')
+ ('DNS'
+ 'ui.com')
+ ('DNS'
+ '*.ui.com')
+ ('DNS'
+ '*.ubnt.com'
+ 'notBefore': u'Jan  4 00:00:00 2019 GMT'
+ 'caIssuers': (u'http://crt.sca1b.amazontrust.com/sca1b.crt'
+)
+ 'OCSP': (u'http://ocsp.sca1b.amazontrust.com'
+)
+ 'serialNumber': u'0BF899E32A712F19F6D51BA62B05302D'
+ 'notAfter': 'Feb  4 12:00:00 2020 GMT'
+ 'version': 3L
+ 'subject': ('commonName'
+ u'ubnt.com')
+)
+)
+ 'issuer': ('countryName'
+ u'US')
+)
+ 'organizationName'
+ u'Amazon')
+)
+ 'organizationalUnitName'
+ u'Server CA 1B')
+)
+ 'commonName'
+ u'Amazon')
+}

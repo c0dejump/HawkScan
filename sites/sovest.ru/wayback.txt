@@ -1,0 +1,7 @@
+http://www.sovest.ru/, 301, 178, text/html, https://sovest.ru/
+http://sovest.ru/%D0%BA%D0%B0%D1%80%D1%82%D0%B0%20%D1%81%D0%BE%D0%B2%D0%B5%D1%81%D1%82%D1%8C, 200, Unknown, text/html; charset=utf-8
+http://www.sovest.ru/0-10.html, 301, 178, text/html, https://sovest.ru/0-10.html
+http://www.sovest.ru/0-30.html, 301, 178, text/html, https://sovest.ru/0-30.html
+http://www.sovest.ru/0-40.html, 301, 178, text/html, https://sovest.ru/0-40.html
+http://www.sovest.ru/0-50.html, 301, 178, text/html, https://sovest.ru/0-None: Max retries exceeded with url: /robots.txt (Caused by None)
+[-] File not found!

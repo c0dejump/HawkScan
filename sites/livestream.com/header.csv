@@ -1,0 +1,38 @@
+{'Content-Length': '11504'
+ 'Last-Modified': 'Wed
+ 16 Oct 2019 09:48:31 GMT'
+ 'X-Cache-Hits': '58
+ 1'
+ 'x-goog-generation': '1571219311166848'
+ 'X-Frame-Options': 'SAMEORIGIN'
+ 'X-Served-By': 'cache-jfk8120-JFK
+ cache-cdg20756-CDG'
+ 'Expires': '0'
+ 'Pragma': 'no-cache'
+ 'Date': 'Wed
+ 20 Nov 2019 18:27:34 GMT'
+ 'Accept-Ranges': 'bytes'
+ 'X-Cache': 'HIT
+ HIT'
+ 'x-goog-stored-content-length': '41024'
+ 'Age': '2047'
+ 'Connection': 'keep-alive'
+ 'x-goog-metageneration': '1'
+ 'Via': '1.1 varnish'
+ 'Content-Encoding': 'gzip'
+ 'x-goog-meta-mtime': '2019-10-16T15:17:45.653962731+05:30'
+ 'X-Timer': 'S1574274454.408352
+VS0
+VE1'
+ 'Vary': 'Accept-Encoding'
+ 'x-goog-stored-content-encoding': 'identity'
+ 'ETag': '"ac544a60d49e321dba86ac2f1b5bb31b"'
+ 'Cache-Control': 'no-cache
+ no-store
+ private
+ must-revalidate
+ max-age=0
+ max-stale=0
+ post-check=0
+ pre-check=0'
+ 'Content-Type': 'text/html; charset=utf-8'}

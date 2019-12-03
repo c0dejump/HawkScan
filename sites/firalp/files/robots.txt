@@ -1,0 +1,11 @@
+Sitemap: http://www.firalp.fr/sitemap_index.xml
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /offre-emploi/ 
+Disallow: /offre-emploi/alerte-mail/
+Disallow: /offre-emploi/message-confirmation/
+Disallow: /offre-emploi/postuler-a-une-offre/
+Disallow: /offre-emploi/postuler-spontanee/
+Disallow: /page-de-remerciementsoffres
+Disallow: /video/
+Allow: /wp-admin/admin-ajax.php

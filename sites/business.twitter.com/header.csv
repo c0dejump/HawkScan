@@ -1,0 +1,21 @@
+{'x-response-time': '105'
+ 'strict-transport-security': 'max-age=631138519'
+ 'content-security-policy': "default-src 'self' ; connect-src 'self' https://*.twitter.com https://syndication.twitter.com https://cdn.tt.omtrdc.net https://twitterinc.tt.omtrdc.net https://mboxedge28.tt.omtrdc.net; font-src 'self' https://*.twimg.com https://*.twitter.com https://cdn.cms-twdigitalassets.com data:; frame-src 'self' https://twitter.com https://*.twitter.com https://www.google.com https://www.youtube.com https://player.simplecast.com; img-src 'self' https://*.twimg.com https://*.twitter.com https://twitter.com https://t.co https://www.google-analytics.com https://cdn.cms-twdigitalassets.com https://images.newscred.com https://images1.newscred.com https://images2.newscred.com https://images3.newscred.com https://images4.newscred.com https://images-cdn.newscred.com https://*.g.doubleclick.net https://px.ladsp.com https://tag.ladsp.com https://www.google.com/ads/ga-audiences https://pixel.newscred.com https://dc.ads.linkedin.com https://www.googleadservices.com https://www.linkedin.com https://*.ads.linkedin.com https://p.adsymptotic.com/d/px data:; media-src 'self' https://*.twimg.com https://*.twitter.com https://cdn.cms-twdigitalassets.com; object-src 'self' ; script-src 'self' 'sha256-ppW1Vv+qSVcs+/pIj1ZXvMiCLoyHyCdRqtDMeK9fQ9w=' 'sha256-/nYZeBsBEfDf+ABhqZiU2PnUHhhhHmk3hYj22tC7NqU=' 'sha256-E+w2VaDGdLCbkKVC87LxRGZyawlQYadeB09nqor6Uak=' 'sha256-mPbAngaDHnoJhMP+vnc2khnjNDnB+A+QwPKJVVXVXks=' https://*.twimg.com https://*.twitter.com https://static.ads-twitter.com https://googleads.g.doubleclick.net https://www.google-analytics.com https://www.googletagmanager.com https://www.googleadservices.com https://cdn.cms-twdigitalassets.com; style-src 'self' 'unsafe-inline' https://*.twimg.com https://*.twitter.com https://cdn.cms-twdigitalassets.com; report-uri https://twitter.com/i/csp_report; frame-ancestors 'self' ads.twitter.com"
+ 'content-encoding': 'gzip'
+ 'transfer-encoding': 'chunked'
+ 'set-cookie': 'personalization_id="v1_HkHu1EPnoyChJ/gdaSCabA=="; Max-Age=63072000; Expires=Wed
+ 24 Nov 2021 16:19:27 GMT; Path=/; Domain=.twitter.com
+ guest_id=v1%3A157469876741882468; Max-Age=63072000; Expires=Wed
+ 24 Nov 2021 16:19:27 GMT; Path=/; Domain=.twitter.com'
+ 'accept-ranges': 'bytes'
+ 'expires': 'Mon
+ 25 Nov 2019 16:19:27 GMT'
+ 'server': 'tsa_o'
+ 'x-connection-hash': '94979285a3472ae94b26adce8dfa4ecf'
+ 'x-xss-protection': '0'
+ 'cache-control': 'max-age=0'
+ 'date': 'Mon
+ 25 Nov 2019 16:19:27 GMT'
+ 'x-frame-options': 'ALLOW-FROM https://ads.twitter.com/'
+ 'content-type': 'text/html'
+ 'age': '16761'}

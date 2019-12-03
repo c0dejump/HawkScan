@@ -1,0 +1,23 @@
+{'X-Amz-Cf-Pop': 'CDG53-C1'
+ 'Content-Length': '4394'
+ 'Via': '1.1 39f309504c11c4fe223e3b1f0425f198.cloudfront.net (CloudFront)'
+ 'X-Cache': 'Miss from cloudfront'
+ 'content-encoding': 'gzip'
+ 'set-cookie': 'v_id=fp01-3538a793-0c05-419b-a4fc-beae1a042bd6; Max-Age=157680000; Domain=venmo.com; Path=/; Expires=Tue
+ 19 Nov 2024 20:55:05 GMT; Secure'
+ 'strict-transport-security': 'max-age=31536000
+ max-age=31536000'
+ 'vary': 'Accept-Encoding'
+ 'Server': 'nginx'
+ 'x-envoy-upstream-service-time': '7'
+ 'Connection': 'keep-alive'
+ 'etag': 'W/"4418-BKzdhRshZmCTT/xkDPqYYzn+41M"'
+ 'X-Amz-Cf-Id': 'uJaDzzFtRfj5Ck-V7cAGMm108mwOaq8SKO78d9h_e35-s64cDjfryQ=='
+ 'cache-control': 'public
+ no-cache
+ no-store'
+ 'Date': 'Thu
+ 21 Nov 2019 20:55:05 GMT'
+ 'x-frame-options': 'SAMEORIGIN'
+ 'x-powered-by': 'Express'
+ 'Content-Type': 'text/html; charset=utf-8'}

@@ -1,0 +1,18 @@
+updated_date : [datetime.datetime(2018, 3, 15, 14, 50, 19), datetime.datetime(2018, 3, 15, 0, 0)]
+status : [u'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited']
+name : REDACTED FOR PRIVACY
+dnssec : unsigned
+city : REDACTED FOR PRIVACY
+expiration_date : [datetime.datetime(2024, 5, 5, 19, 45, 46), datetime.datetime(2024, 5, 5, 0, 0)]
+zipcode : REDACTED FOR PRIVACY
+domain_name : QIWI.COM
+country : CY
+whois_server : whois.register.it
+state : Nicosia
+registrar : REGISTER S.P.A.
+referral_url : None
+address : REDACTED FOR PRIVACY
+name_servers : [u'NS2.QIWI.COM', u'NS3.QIWI.COM', u'NS4.QIWI.COM', u'NS5.QIWI.COM']
+org : QIWI Plc
+creation_date : [datetime.datetime(1999, 5, 5, 19, 47, 26), datetime.datetime(2011, 11, 20, 0, 0)]
+emails : [u'abuse@register.it', u'whoiscontact@names.co.uk']

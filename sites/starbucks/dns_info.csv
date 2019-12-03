@@ -1,0 +1,85 @@
+{'crlDistributionPoints': (u'http://crl3.digicert.com/ssca-sha2-g6.crl'
+ u'http://crl4.digicert.com/ssca-sha2-g6.crl')
+ 'subjectAltName': 'DNS'
+ 'starbucks.com')
+ ('DNS'
+ 'app.starbucks.co.uk')
+ ('DNS'
+ 'app.starbucks.com.br')
+ ('DNS'
+ 'app.starbucks.de')
+ ('DNS'
+ 'starbucks.ca')
+ ('DNS'
+ 'www.starbucks.fr')
+ ('DNS'
+ 'starbucks.fr')
+ ('DNS'
+ 'www.starbucks.ie')
+ ('DNS'
+ 'app.starbucks.fr')
+ ('DNS'
+ 'www.starbucks.de')
+ ('DNS'
+ 'www.starbucks.com.br')
+ ('DNS'
+ 'preview.starbucks.com')
+ ('DNS'
+ 'app.starbucks.ca')
+ ('DNS'
+ 'starbucks.ie')
+ ('DNS'
+ 'app.starbucks.ie')
+ ('DNS'
+ 'www.starbucks.com')
+ ('DNS'
+ 'starbucks.co.uk')
+ ('DNS'
+ 'starbucks.de')
+ ('DNS'
+ 'app.starbucks.com')
+ ('DNS'
+ 'www.starbucks.co.uk')
+ ('DNS'
+ 'www.starbucks.ca')
+ ('DNS'
+ 'starbucks.com.br')
+ ('DNS'
+ 'fr.starbucks.ca')
+ ('DNS'
+ 'fr.app.starbucks.ca'
+ 'notBefore': u'Aug 27 00:00:00 2019 GMT'
+ 'caIssuers': (u'http://cacerts.digicert.com/DigiCertSHA2SecureServerCA.crt'
+)
+ 'OCSP': (u'http://ocsp.digicert.com'
+)
+ 'serialNumber': u'06FBA0547A3E1E42DD5DCE2925FAD200'
+ 'notAfter': 'Nov 25 12:00:00 2020 GMT'
+ 'version': 3L
+ 'subject': ('countryName'
+ u'US')
+)
+ 'stateOrProvinceName'
+ u'Washington')
+)
+ 'localityName'
+ u'Seattle')
+)
+ 'organizationName'
+ u'Starbucks Coffee Company')
+)
+ 'organizationalUnitName'
+ u'IT')
+)
+ 'commonName'
+ u'starbucks.com')
+
+ 'issuer': ('countryName'
+ u'US')
+)
+ 'organizationName'
+ u'DigiCert Inc')
+)
+ 'commonName'
+ u'DigiCert SHA2 Secure Server CA')
+}

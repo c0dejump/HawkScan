@@ -1,0 +1,24 @@
+updated_date : 2019
+09
+28 23:21:13
+status : [u'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', u'clientRenewProhibited https://icann.org/epp#clientRenewProhibited', u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited']
+name : REDACTED FOR PRIVACY
+dnssec : unsigned
+city : REDACTED FOR PRIVACY
+expiration_date : 2021
+03
+30 08:05:04
+zipcode : REDACTED FOR PRIVACY
+domain_name : campus.academy
+country : FR
+whois_server : whois.godaddy.com/
+state : Loire Atlantique
+registrar : GoDaddy.com, LLC
+referral_url : None
+address : REDACTED FOR PRIVACY
+name_servers : [u'dns107.ovh.net', u'ns107.ovh.net']
+org : Campus Academy Ouest
+creation_date : 2016
+03
+30 08:05:04
+emails : abuse@godaddy.com

@@ -1,0 +1,60 @@
+registrant_address : None
+updated_date : 2019
+04
+02 23:45:08
+registrant_address3 : None
+admin_phone : None
+admin_country : None
+registrant_state_province : TOKYO
+creation_date : 2008
+04
+29 18:01:09
+tech_fax_ext : None
+tech_postal_code : None
+tech_name : None
+admin_city : None
+registrant_org : LINE Corporation
+registrant_id : None
+domain_id : D108500000000003866
+AGRS
+registrant_postal_code : None
+registrant_name : None
+tech_phone : None
+tech_address : None
+tech_phone_ext : None
+admin_fax_ext : None
+domain_name : LINE.ME
+registrant_email : None
+admin_fax : None
+registrant_fax_ext : None
+tech_org : None
+admin_address2 : None
+admin_address3 : None
+registrant_country : None
+tech_address2 : None
+admin_org : None
+registrant_fax : None
+status : [u'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited']
+tech_city : None
+registrant_city : None
+admin_state_province : None
+admin_address : None
+admin_postal_code : None
+registrant_address2 : None
+name_servers : None
+registrant_phone : None
+admin_id : None
+tech_state_province : None
+expiration_date : 2022
+04
+29 18:01:09
+tech_id : None
+tech_fax : None
+admin_name : None
+registrar : MarkMonitor Inc.
+tech_address3 : None
+admin_phone_ext : None
+admin_email : None
+tech_email : None
+registrant_phone_ext : None
+tech_country : None

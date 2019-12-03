@@ -1,0 +1,230 @@
+[+] https://customer.cyberoam.com/?
+[+] https://customer.cyberoam.com/?.save
+[+] https://customer.cyberoam.com/?.old
+[+] https://customer.cyberoam.com/?.backup
+[+] https://customer.cyberoam.com/?.BAK
+[+] https://customer.cyberoam.com/?.bak
+[+] https://customer.cyberoam.com/?wsdl
+[+] https://customer.cyberoam.com/?.zip
+[+] https://customer.cyberoam.com/?wsdl.save
+[+] https://customer.cyberoam.com/?wsdl.old
+[+] https://customer.cyberoam.com/?.rar
+[+] https://customer.cyberoam.com/?~
+[+] https://customer.cyberoam.com/?_old
+[+] https://customer.cyberoam.com/?_backup
+[+] https://customer.cyberoam.com/?_bak
+[+] https://customer.cyberoam.com/?wsdl.backup
+[x] https://customer.cyberoam.com/%3F.jsp Forbidden
+[+] https://customer.cyberoam.com/?wsdl.BAK
+[+] https://customer.cyberoam.com/?wsdl.bak
+[+] https://customer.cyberoam.com/?wsdl.zip
+[+] https://customer.cyberoam.com/?wsdl.rar
+[+] https://customer.cyberoam.com/?wsdl~
+[+] https://customer.cyberoam.com/?wsdl_old
+[+] https://customer.cyberoam.com/?wsdl_backup
+[+] https://customer.cyberoam.com/?wsdl_bak
+[x] https://customer.cyberoam.com/robots.txt Forbidden
+[+] https://customer.cyberoam.com/index.html
+[x] https://customer.cyberoam.com/;index.jsp Forbidden
+[x] https://customer.cyberoam.com/.htpasswd/ Forbidden
+[x] https://customer.cyberoam.com/.htaccess/ Forbidden
+[x] https://customer.cyberoam.com/editor.jsp Forbidden
+[x] https://customer.cyberoam.com/webserver.xml Forbidden
+[x] https://customer.cyberoam.com/editor2.jsp Forbidden
+[x] https://customer.cyberoam.com/images/ Forbidden
+[x] https://customer.cyberoam.com/sitemap_index.xml Forbidden
+[x] https://customer.cyberoam.com/page-sitemap.xml Forbidden
+[x] https://customer.cyberoam.com/sitemap.xml Forbidden
+[x] https://customer.cyberoam.com/css/ Forbidden
+[x] https://customer.cyberoam.com/documents/ Forbidden
+[x] https://customer.cyberoam.com/font/ Forbidden
+[+] https://customer.cyberoam.com/icons/
+[x] https://customer.cyberoam.com/javascript/ Forbidden
+[x] https://customer.cyberoam.com/secret.txt Forbidden
+[x] https://customer.cyberoam.com/web.xml Forbidden
+[x] https://customer.cyberoam.com/template/ Forbidden
+[x] https://customer.cyberoam.com/video/ Forbidden
+[x] https://customer.cyberoam.com/.cc-ban.txt Forbidden
+[x] https://customer.cyberoam.com/.hta Forbidden
+[x] https://customer.cyberoam.com/.htaccess Forbidden
+[x] https://customer.cyberoam.com/.ht_wsr.txt Forbidden
+[x] https://customer.cyberoam.com/.htaccess-local Forbidden
+[x] https://customer.cyberoam.com/.htaccess-dev Forbidden
+[x] https://customer.cyberoam.com/.htaccess-marco Forbidden
+[x] https://customer.cyberoam.com/.htaccess.BAK Forbidden
+[x] https://customer.cyberoam.com/.htaccess.bak1 Forbidden
+[x] https://customer.cyberoam.com/.htaccess.bak Forbidden
+[x] https://customer.cyberoam.com/.htaccess.inc Forbidden
+[x] https://customer.cyberoam.com/.htaccess.old Forbidden
+[x] https://customer.cyberoam.com/.htaccess.orig Forbidden
+[x] https://customer.cyberoam.com/.htaccess.sample Forbidden
+[x] https://customer.cyberoam.com/.htaccess.txt Forbidden
+[x] https://customer.cyberoam.com/.htaccess_extra Forbidden
+[x] https://customer.cyberoam.com/.htaccess_sc Forbidden
+[x] https://customer.cyberoam.com/.htaccess.save Forbidden
+[x] https://customer.cyberoam.com/.htaccessBAK Forbidden
+[x] https://customer.cyberoam.com/.htaccess_orig Forbidden
+[x] https://customer.cyberoam.com/.htaccessOLD Forbidden
+[x] https://customer.cyberoam.com/.htaccessOLD2 Forbidden
+[x] https://customer.cyberoam.com/.htaccess~ Forbidden
+[x] https://customer.cyberoam.com/.htgroup Forbidden
+[x] https://customer.cyberoam.com/.htpasswd Forbidden
+[x] https://customer.cyberoam.com/.htpasswd-old Forbidden
+[x] https://customer.cyberoam.com/.htpasswd.bak Forbidden
+[x] https://customer.cyberoam.com/.htpasswd_test Forbidden
+[x] https://customer.cyberoam.com/.htpasswrd Forbidden
+[x] https://customer.cyberoam.com/.htusers Forbidden
+[x] https://customer.cyberoam.com/.htpasswd.inc Forbidden
+[x] https://customer.cyberoam.com/.htpasswds Forbidden
+[x] https://customer.cyberoam.com/.log.txt Forbidden
+[x] https://customer.cyberoam.com/.project.xml Forbidden
+[x] https://customer.cyberoam.com/1.txt Forbidden
+[x] https://customer.cyberoam.com/123.txt Forbidden
+[x] https://customer.cyberoam.com/2.txt Forbidden
+[x] https://customer.cyberoam.com/accounts.jsp Forbidden
+[x] https://customer.cyberoam.com/accounts.txt Forbidden
+[x] https://customer.cyberoam.com/accounts.xml Forbidden
+[x] https://customer.cyberoam.com/Adm.jsp Forbidden
+[x] https://customer.cyberoam.com/adm.jsp Forbidden
+[x] https://customer.cyberoam.com/admin.jsp Forbidden
+[x] https://customer.cyberoam.com/Admin.jsp Forbidden
+[x] https://customer.cyberoam.com/admin_main.txt Forbidden
+[x] https://customer.cyberoam.com/administrator.jsp Forbidden
+[x] https://customer.cyberoam.com/Administrator.jsp Forbidden
+[x] https://customer.cyberoam.com/admintool.jsp Forbidden
+[x] https://customer.cyberoam.com/atlassian-ide-plugin.xml Forbidden
+[x] https://customer.cyberoam.com/auth.jsp Forbidden
+[x] https://customer.cyberoam.com/auth_user_file.txt Forbidden
+[x] https://customer.cyberoam.com/BingSiteAuth.xml Forbidden
+[x] https://customer.cyberoam.com/bot.txt Forbidden
+[x] https://customer.cyberoam.com/build.local.xml Forbidden
+[x] https://customer.cyberoam.com/build.xml Forbidden
+[x] https://customer.cyberoam.com/cc-log.txt Forbidden
+[x] https://customer.cyberoam.com/cc-errors.txt Forbidden
+[x] https://customer.cyberoam.com/cell.xml Forbidden
+[x] https://customer.cyberoam.com/CHANGELOG.txt Forbidden
+[x] https://customer.cyberoam.com/ChangeLog.txt Forbidden
+[x] https://customer.cyberoam.com/changelog.txt Forbidden
+[x] https://customer.cyberoam.com/Changelog.txt Forbidden
+[x] https://customer.cyberoam.com/changes.txt Forbidden
+[x] https://customer.cyberoam.com/CHANGES.txt Forbidden
+[x] https://customer.cyberoam.com/checked_accounts.txt Forbidden
+[x] https://customer.cyberoam.com/chubb.xml Forbidden
+[x] https://customer.cyberoam.com/cidr.txt Forbidden
+[x] https://customer.cyberoam.com/citydesk.xml Forbidden
+[x] https://customer.cyberoam.com/clientaccesspolicy.xml Forbidden
+[x] https://customer.cyberoam.com/cmdjsp.jsp Forbidden
+[x] https://customer.cyberoam.com/common.xml Forbidden
+[x] https://customer.cyberoam.com/config.inc.php.txt Forbidden
+[x] https://customer.cyberoam.com/config.inc.txt Forbidden
+[x] https://customer.cyberoam.com/config.ini.txt Forbidden
+[x] https://customer.cyberoam.com/config.php.txt Forbidden
+[x] https://customer.cyberoam.com/config.xml Forbidden
+[x] https://customer.cyberoam.com/configuration.php.txt Forbidden
+[x] https://customer.cyberoam.com/contributors.txt Forbidden
+[x] https://customer.cyberoam.com/coverage.xml Forbidden
+[x] https://customer.cyberoam.com/cronlog.txt Forbidden
+[x] https://customer.cyberoam.com/crossdomain.xml Forbidden
+[x] https://customer.cyberoam.com/p3p.xml Forbidden
+[x] https://customer.cyberoam.com/culeadora.txt Forbidden
+[x] https://customer.cyberoam.com/data.txt Forbidden
+[x] https://customer.cyberoam.com/database.txt Forbidden
+[x] https://customer.cyberoam.com/debug-output.txt Forbidden
+[x] https://customer.cyberoam.com/debug.xml Forbidden
+[x] https://customer.cyberoam.com/debug.txt Forbidden
+[x] https://customer.cyberoam.com/debug_error.jsp Forbidden
+[x] https://customer.cyberoam.com/dfshealth.jsp Forbidden
+[x] https://customer.cyberoam.com/err.txt Forbidden
+[x] https://customer.cyberoam.com/error.jsp Forbidden
+[x] https://customer.cyberoam.com/error.txt Forbidden
+[x] https://customer.cyberoam.com/error.xml Forbidden
+[x] https://customer.cyberoam.com/error_log.txt Forbidden
+[x] https://customer.cyberoam.com/errors.txt Forbidden
+[x] https://customer.cyberoam.com/eula.txt Forbidden
+[x] https://customer.cyberoam.com/eula_en.txt Forbidden
+[x] https://customer.cyberoam.com/filezilla.xml Forbidden
+[x] https://customer.cyberoam.com/ftp.txt Forbidden
+[x] https://customer.cyberoam.com/HelloHTML.jsp Forbidden
+[x] https://customer.cyberoam.com/hellouser.jsp Forbidden
+[x] https://customer.cyberoam.com/HelloVXML.jsp Forbidden
+[x] https://customer.cyberoam.com/HelloVXMLError.jsp Forbidden
+[x] https://customer.cyberoam.com/HelloWML.jsp Forbidden
+[x] https://customer.cyberoam.com/HelloWMLError.jsp Forbidden
+[x] https://customer.cyberoam.com/history.txt Forbidden
+[x] https://customer.cyberoam.com/HISTORY.txt Forbidden
+[x] https://customer.cyberoam.com/HitCount.jsp Forbidden
+[x] https://customer.cyberoam.com/htaccess.txt Forbidden
+[x] https://customer.cyberoam.com/humans.txt Forbidden
+[x] https://customer.cyberoam.com/index.jsp Forbidden
+[x] https://customer.cyberoam.com/index.xml Forbidden
+[x] https://customer.cyberoam.com/info.txt Forbidden
+[x] https://customer.cyberoam.com/INSTALL.mysql.txt Forbidden
+[x] https://customer.cyberoam.com/install.mysql.txt Forbidden
+[x] https://customer.cyberoam.com/install.pgsql.txt Forbidden
+[x] https://customer.cyberoam.com/Install.txt Forbidden
+[x] https://customer.cyberoam.com/install.txt Forbidden
+[x] https://customer.cyberoam.com/INSTALL.txt Forbidden
+[x] https://customer.cyberoam.com/Install_dotCMS_Release.txt Forbidden
+[x] https://customer.cyberoam.com/installer-log.txt Forbidden
+[x] https://customer.cyberoam.com/ip.txt Forbidden
+[x] https://customer.cyberoam.com/joomla.xml Forbidden
+[x] https://customer.cyberoam.com/jsp-reverse.jsp Forbidden
+[x] https://customer.cyberoam.com/l0gs.txt Forbidden
+[x] https://customer.cyberoam.com/license.txt Forbidden
+[x] https://customer.cyberoam.com/LICENSE.txt Forbidden
+[x] https://customer.cyberoam.com/License.txt Forbidden
+[x] https://customer.cyberoam.com/local_bd_new.txt Forbidden
+[x] https://customer.cyberoam.com/local_bd_old.txt Forbidden
+[x] https://customer.cyberoam.com/localsettings.php.txt Forbidden
+[x] https://customer.cyberoam.com/log.txt Forbidden
+[x] https://customer.cyberoam.com/log_1.txt Forbidden
+[x] https://customer.cyberoam.com/log_errors.txt Forbidden
+[x] https://customer.cyberoam.com/logexpcus.txt Forbidden
+[x] https://customer.cyberoam.com/login.jsp Forbidden
+[x] https://customer.cyberoam.com/logins.txt Forbidden
+[x] https://customer.cyberoam.com/logon.jsp Forbidden
+[x] https://customer.cyberoam.com/logs.txt Forbidden
+[x] https://customer.cyberoam.com/MAINTAINERS.txt Forbidden
+[x] https://customer.cyberoam.com/members.jsp Forbidden
+[x] https://customer.cyberoam.com/Members.jsp Forbidden
+[x] https://customer.cyberoam.com/members.txt Forbidden
+[x] https://customer.cyberoam.com/nb-configuration.xml Forbidden
+[x] https://customer.cyberoam.com/nbactions.xml Forbidden
+[x] https://customer.cyberoam.com/netadmin.jsp Forbidden
+[x] https://customer.cyberoam.com/node.xml Forbidden
+[x] https://customer.cyberoam.com/order.txt Forbidden
+[x] https://customer.cyberoam.com/order_add_log.txt Forbidden
+[x] https://customer.cyberoam.com/orders.txt Forbidden
+[x] https://customer.cyberoam.com/out.txt Forbidden
+[x] https://customer.cyberoam.com/output-build.txt Forbidden
+[x] https://customer.cyberoam.com/pass.txt Forbidden
+[x] https://customer.cyberoam.com/Pass.txt Forbidden
+[x] https://customer.cyberoam.com/passlist.txt Forbidden
+[x] https://customer.cyberoam.com/passes.txt Forbidden
+[x] https://customer.cyberoam.com/passwd.txt Forbidden
+[x] https://customer.cyberoam.com/passWD.txt Forbidden
+[x] https://customer.cyberoam.com/passWord.txt Forbidden
+[x] https://customer.cyberoam.com/password.txt Forbidden
+[x] https://customer.cyberoam.com/passwordList.txt Forbidden
+[x] https://customer.cyberoam.com/Password.txt Forbidden
+[x] https://customer.cyberoam.com/passwordlist.txt Forbidden
+[x] https://customer.cyberoam.com/Passwordlist.txt Forbidden
+[x] https://customer.cyberoam.com/passwords.txt Forbidden
+[x] https://customer.cyberoam.com/passWords.txt Forbidden
+[x] https://customer.cyberoam.com/Passwords.txt Forbidden
+[x] https://customer.cyberoam.com/php-error.txt Forbidden
+[x] https://customer.cyberoam.com/php-errors.txt Forbidden
+[x] https://customer.cyberoam.com/phpunit.xml Forbidden
+[x] https://customer.cyberoam.com/pip-log.txt Forbidden
+[x] https://customer.cyberoam.com/pom.xml Forbidden
+[x] https://customer.cyberoam.com/profiles.xml Forbidden
+[x] https://customer.cyberoam.com/project.xml Forbidden
+[x] https://customer.cyberoam.com/publication_list.xml Forbidden
+[x] https://customer.cyberoam.com/Read_Me.txt Forbidden
+[x] https://customer.cyberoam.com/README.txt Forbidden
+[x] https://customer.cyberoam.com/Readme.txt Forbidden
+[x] https://customer.cyberoam.com/recentservers.xml Forbidden
+[x] https://customer.cyberoam.com/RELEASE_NOTES.txt Forbidden
+[x] https://customer.cyberoam.com/revision.txt Forbidden
+[x] https://customer.cyberoam.com/robot.txt Forbidden
+[x] https://customer.cyberoam.com/RushSite.xml Forbidden

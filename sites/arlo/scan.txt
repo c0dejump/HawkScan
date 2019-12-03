@@ -1,0 +1,70 @@
+[+] https://www.arlo.com/robots.txt
+[x] https://www.arlo.com/images/ Forbidden
+[x] https://www.arlo.com/assets/ Forbidden
+[x] https://www.arlo.com/About/ Forbidden
+[x] https://www.arlo.com/Downloads/ Forbidden
+[x] https://www.arlo.com/Images/ Forbidden
+[x] https://www.arlo.com/Products/ Forbidden
+[+] https://www.arlo.com/sitemap.xml
+[x] https://www.arlo.com/about/ Forbidden
+[x] https://www.arlo.com/apps/ Forbidden
+[+] https://www.arlo.com/asia/
+[+] https://www.arlo.com/at/
+[+] https://www.arlo.com/au/
+[+] https://www.arlo.com/ch/
+[x] https://www.arlo.com/cn/ Forbidden
+[x] https://www.arlo.com/css/ Forbidden
+[x] https://www.arlo.com/data/ Forbidden
+[+] https://www.arlo.com/de/
+[x] https://www.arlo.com/downloads/ Forbidden
+[+] https://www.arlo.com/es/
+[x] https://www.arlo.com/fonts/ Forbidden
+[+] https://www.arlo.com/fr/
+[+] https://www.arlo.com/holiday/
+[+] https://www.arlo.com/it/
+[+] https://www.arlo.com/jp/
+[x] https://www.arlo.com/js/ Forbidden
+[+] https://www.arlo.com/nl/
+[+] https://www.arlo.com/pl/
+[x] https://www.arlo.com/portal/ Forbidden
+[x] https://www.arlo.com/products/ Forbidden
+[x] https://www.arlo.com/Trace.axd Forbidden
+[+] https://www.arlo.com/ROBOTS.TXT
+[+] https://www.arlo.com/robots.txt
+[x] https://www.arlo.com/images/ Forbidden
+[x] https://www.arlo.com/assets/ Forbidden
+[x] https://www.arlo.com/About/ Forbidden
+[x] https://www.arlo.com/Downloads/ Forbidden
+[x] https://www.arlo.com/Images/ Forbidden
+[x] https://www.arlo.com/Products/ Forbidden
+[+] https://www.arlo.com/sitemap.xml
+[x] https://www.arlo.com/about/ Forbidden
+[x] https://www.arlo.com/apps/ Forbidden
+[+] https://www.arlo.com/asia/
+[+] https://www.arlo.com/at/
+[+] https://www.arlo.com/au/
+[+] https://www.arlo.com/ch/
+[x] https://www.arlo.com/cn/ Forbidden
+[x] https://www.arlo.com/css/ Forbidden
+[x] https://www.arlo.com/data/ Forbidden
+[+] https://www.arlo.com/de/
+[x] https://www.arlo.com/downloads/ Forbidden
+[+] https://www.arlo.com/es/
+[x] https://www.arlo.com/fonts/ Forbidden
+[+] https://www.arlo.com/fr/
+[+] https://www.arlo.com/holiday/
+[+] https://www.arlo.com/it/
+[+] https://www.arlo.com/jp/
+[x] https://www.arlo.com/js/ Forbidden
+[+] https://www.arlo.com/nl/
+[+] https://www.arlo.com/pl/
+[x] https://www.arlo.com/portal/ Forbidden
+[x] https://www.arlo.com/products/ Forbidden
+[x] https://www.arlo.com/sso/ Forbidden
+[x] https://www.arlo.com/static/ Forbidden
+[x] https://www.arlo.com/system/ Forbidden
+[+] https://www.arlo.com/uk/
+[+] https://www.arlo.com/BingSiteAuth.xml
+[+] https://www.arlo.com/favicon.ico
+[x] https://www.arlo.com/Trace.axd Forbidden
+[+] https://www.arlo.com/ROBOTS.TXT

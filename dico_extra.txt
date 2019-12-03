@@ -90,6 +90,9 @@ WebServer.php
 webserver.xml
 Security.php
 security.php
+apache2triadcp/
+apache.conf
+config-db.php
 admin/home/collection/
 comments/%22slapd.conf/%22ftp:/ManyServers.htm
 AuthenticationEvents.php
@@ -399,6 +402,7 @@ usercontrols/
 ~webmaster/
 ~www/
 ww2/
+www_app/
 index.bak
 index.phpbak
 admin.bak
@@ -843,6 +847,7 @@ aol/
 ap/
 apache/
 api/
+api/graphql
 aplicacion/
 apollo/
 apollo13/
@@ -1530,6 +1535,8 @@ cowboys/
 coyote/
 cp/
 cpanel/
+upload_panel
+upload_panel?stats=1
 hubtraffic/
 panel.php
 crack/
@@ -3835,6 +3842,8 @@ shannon/
 shanti/
 sharc/
 share/
+_share/
+_Share/
 shared/
 shark/
 sharks/
@@ -4387,6 +4396,17 @@ user/
 user1/
 users/api/
 users/api/v1/
+rest/api/
+rest/api/1/
+rest/api/2/
+rest/api/2/user
+rest/api/1/user
+rest/api/user
+public_html/.htaccess
+public_html/page/.htaccess
+public_html/page/wp-content/plugins/akismet/.htaccess
+public_html/page/wp-content/uploads/wc-logs/.htaccess
+public_html/page/wp-content/uploads/woocommerce_uploads/.htaccess
 usr/
 ustats/
 usuari/
@@ -4580,6 +4600,7 @@ wormwood/
 wp/
 wp-register/
 wp-rss2/
+wp-cron.php
 wqsb/
 wrangler/
 wright/
@@ -10781,6 +10802,7 @@ plugin.js
 en.js
 frontend.php
 strings.raw
+strings.xml
 backend.php
 module.inc
 colorConfig.ini.php

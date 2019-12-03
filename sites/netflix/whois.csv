@@ -1,0 +1,34 @@
+updated_date : [datetime.datetime(2019, 10, 9, 9, 26, 42), datetime.datetime(2019, 10, 9, 2, 26, 42)]
+status : [u'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', u'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', u'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', u'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited', u'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)', u'clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', u'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)', u'serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)', u'serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)', u'serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)']
+name : Domain Administrator
+dnssec : unsigned
+city : Los Gatos
+expiration_date : [datetime.datetime(2021, 11, 10, 5, 0), datetime.datetime(2021, 11, 9, 0, 0)]
+zipcode : 95032
+domain_name : [u'NETFLIX.COM', u'netflix.com']
+country : US
+whois_server : whois.markmonitor.com
+state : CA
+registrar : MarkMonitor, Inc.
+referral_url : None
+address : 100 Winchester Circle,
+name_servers : [u'NS
+1372.AWSDNS
+43.ORG', u'NS
+1984.AWSDNS
+56.CO.UK', u'NS
+659.AWSDNS
+18.NET', u'NS
+81.AWSDNS
+10.COM', u'ns
+659.awsdns
+18.net', u'ns
+1372.awsdns
+43.org', u'ns
+1984.awsdns
+56.co.uk', u'ns
+81.awsdns
+10.com']
+org : Netflix, Inc.
+creation_date : [datetime.datetime(1997, 11, 11, 5, 0), datetime.datetime(1997, 11, 10, 21, 0)]
+emails : [u'abusecomplaints@markmonitor.com', u'nicadmin@netflix.com', u'whoisrequest@markmonitor.com']

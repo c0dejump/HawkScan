@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>The Best Unlimited Online Backup and Cloud Storage Services</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="online backup, backup software, cloud backup, backup online, best backup software, online backup services, data backup, best online backup, offsite backup, online data backup" name="keywords">
+<meta content="Backblaze is a pioneer in robust, scalable low cost cloud backup and storage services. Personal online backup to enterprise scale data storage solutions." name="description"/>
+<link href="pics/online-backup-share-150.jpg" rel="image_src"/>
+<meta content="https://www.backblaze.com/pics/facebook-share-image.jpg" property="og:image"/>
+<meta content="https://secure.backblaze.com/pics/facebook-share-image.jpg" property="og:image:secure_url"/>
+<meta content="website" property="og:type"/>
+<meta content="Backblaze Online Backup" property="og:title"/>
+<meta content="249147465109688" property="fb:app_id"/>
+<meta content="https://www.backblaze.com" property="og:url"/>
+<meta content="Cloud storage that is astonishingly easy and low-cost." property="og:description"/>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" type="text/css"/>
+<script language="JavaScript" src="scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script language="JavaScript" src="scripts/main.js"></script>
+<script language="JavaScript" src="/scripts/nav.js"></script>
+<script language="JavaScript" src="/scripts/counter.js"></script>
+<script language="JavaScript" src="scripts/on_download_20131011.js"></script>
+<script language="JavaScript" src="scripts/jquery.cookie.js" type="text/javascript"></script>
+<script language="javascript" src="/scripts/bootstrap.min.js"></script>
+<script src="/scripts/dynamic-variables.js"></script>
+<script>
+  function populatePrices(dynamicVariables) {
+    ["monthly", "annually", "biannually"].forEach(function (subscription) {
+      var elements = Array.prototype.slice.call(document.getElementsByClassName("backup-" + subscription));
+      var price = dynamicVariables.getBackupPrice(subscription);
+
+      elements.forEach(function (el) {
+        el.innerText = '' + price;
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    try {
+      var dynamicVariables = Bz.DynamicVariables;
+
+      if (dynamicVariables && dynamicVariables.productPrices) {
+        populatePrices(dynamicVariables);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  })
+</script>
+<script src="/scripts/dynamic-variables.js"></script>
+<script>
+  function populateStatistics(dynamicVariables) {
+    ["data-stored", "files-recovered"].forEach(function (stat) {
+      var elements = Array.prototype.slice.call(document.getElementsByClassName("stat-" + stat));
+      var statistic = dynamicVariables.getStatistic(stat);
+
+      elements.forEach(function (el) {
+        el.innerText = '' + statistic;
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    try {
+      var dynamicVariables = Bz.DynamicVariables;
+
+      if (dynamicVariables && dynamicVariables.statistics) {
+        populateStatistics(dynamicVariables);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  })
+</script>
+<link href="/scripts/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="css/main.css" media="all" rel="stylesheet" type="text/css">
+<link href="css/home.css" media="all" rel="stylesheet" type="text/css">
+<link href="css/counter.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="b2/css/b2_nav.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="css/best-online-backup-service2.css" media="all" rel="stylesheet" type="text/css"/>
+<style>
+        #comparisonTable,
+        #comparisonFootnotes,
+        #tryButtonContainer {
+            display:none;
+        }
+    </style>
+<meta content="3yP_9qV6GNCeACSLjnHDlrUp3OKNr888PQGHI7TB9Hk" name="google-site-verification"/>
+<script language="javascript" src="/scripts/detectmobiledevice.min.js"></script>
+<script src="https://cdn.optimizely.com/js/8207352565.js"></script>
+<script src="/scripts/cookie-consent.js"></script>
+<script src="/scripts/conversion.js"></script>
+<script>
+    function loadGoogleTagManager(global, ID) {
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(global,document,'script','dataLayer',ID);
+    }
+
+    (function(global) {
+        var ID = "GTM-N9N283";
+
+        if (global.location.host.split('.').pop() !== "com") {
+            ID = "GTM-NL4J38";
+        }
+
+        var gtmLoaded = $('script[src="https://www.googletagmanager.com/gtm.js?id=' + ID + '"]').length > 0;
+
+        if (!gtmLoaded) {
+            loadGoogleTagManager(global, ID);
+        }
+    })(window);
+</script>
+</link></link></meta></head>
+<body id="home">
+<noscript><iframe height="0" src="//www.googletagmanager.com/ns.html?id=GTM-N9N283" style="display:none;visibility:hidden" width="0"></iframe></noscript>
+<script>
+  $(document).ready(function() {
+    var $signInLink = document.querySelector('nav li a#signIn');
+    $signInLink.addEventListener('click', function(evt) {
+      evt.target.href = evt.target.href + "?netid=" + new Date().getTime().toString();
+    });
+  });
+</script>
+<nav class="navbar navbar-default navbar-fixed-top">
+<div class="container bz-nav-wrapper">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<div id="nav-icon3">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</button>
+<a class="navbar-brand" href="/index.html" id="homeLink">
+<img alt="Backblaze" height="31" src="/pics/backblaze-logo.gif" style="float:left;" width="180"/></a>
+</div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<ul class="nav navbar-nav" id="mainNav">
+<li class="personal"><a href="/cloud-backup.html" id="personalBackup">Personal Backup</a></li>
+<li class="business"><a href="/business-backup.html" id="businessBackup">Business Backup</a></li>
+<li class="b2"><a href="/b2/cloud-storage.html" id="cloudStorage">B2 Cloud Storage</a></li>
+<li><a href="/blog/" id="blog">Blog</a></li>
+<li class="help"><a href="/help.html" id="help">Help</a></li>
+<li><a href="/user_signin.htm" id="signIn">Sign In</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="main-top">
+<section class="main-section" style="padding-bottom:64px;">
+<div class="container-fluid">
+<div class="row">
+<div class="col-xs-12 main-cloud"> <img alt="Backblaze Red Cloud" height="auto" src="pics/cloud-blaze-red.png" width="300"/></div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<h1 class="main-text"> Cloud storage that's astonishingly
+easy and low-cost.</h1>
+<span class="main-text-red"></span>
+<h3> <span class="stat-data-stored">x</span> Petabytes stored &amp; over <span class="stat-files-recovered">x</span> billion files recovered (and counting):</h3>
+<div class="container-fluid counter-container">
+<div class="row">
+<div class="col-sm-12">
+<div id="counter">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<section class="comparison-footnotes container-fluid" id="comparisonFootnotes">
+<div class="row">
+<div class="col-xs-12">
+<sup>1</sup>All videos and files over 4GB require manual selection  
+<sup>2</sup>Available on Windows Only
+</div>
+</div>
+</section>
+<section class="container-fluid" id="tryButtonContainer" style="margin-bottom:65px;">
+<div class="row">
+<div class="col-xs-12" style="text-align:center;">
+<a class="blue_button blue_button2" href="cloud-backup.html">Try Personal Backup Free for 15 Days</a>
+</div>
+</div>
+</section>
+<section class="home-products-3col">
+<div class="row" style="padding-left:40px; padding-right:40px;">
+<div class="col-sm-4">
+<div class="home-personal-box fancy-box">
+<div class="copy-wrap"> <a href="cloud-backup.html">
+<h2 class="home-product-header">Personal Backup</h2>
+<span class="home-product-text">Never lose a file again.
+Get unlimited cloud backup for your Mac or PC. Just $<span class="backup-monthly">x</span>/month.</span><br/>
+</a><a class="home-product-link" href="cloud-backup.html">Meet Personal Backup &gt;</a> </div>
+<a href="cloud-backup.html">
+<div class="graphic">
+</div>
+</a> </div>
+</div></div></section></body></html> 
+<div class="col-sm-4">
+<div class="home-business-box fancy-box">
+<div class="copy-wrap"> <a href="business-backup.html">
+<h2 class="home-product-header">Business Backup</h2>
+<span class="home-product-text">The easy, effective way to manage your team's backup needs - Desktop, Laptop, Server, &amp; NAS. </span><br/>
+</a><a class="home-product-link" href="business-backup.html">Meet Business Backup &gt;</a> </div>
+<a href="business-backup.html">
+<div class="graphic">
+</div>
+</a> </div>
+</div> 
+<div class="col-sm-4">
+<div class="home-b2-box fancy-box">
+<div class="copy-wrap"> <a href="b2/cloud-storage.html">
+<h2 class="home-product-header">B2 Cloud Storage</h2>
+<span class="home-product-text">Simple, reliable, &amp; affordable. High performance cloud storage at 1/4 of the price.</span><br/>
+</a><a class="home-product-link" href="b2/cloud-storage.html">Meet B2 Cloud Storage &gt;</a> </div>
+<a href="b2/cloud-storage.html">
+<div class="graphic">
+</div>
+</a> </div>
+</div> 
+
+
+<section class="home-personal-section">
+<div class="row home-personal-row">
+<div class="col-sm-1"></div>
+<div class="col-sm-5 home-personal-text">
+<h6>Personal Backup</h6>
+Backblaze cloud backup has backed up over millions of gigabytes of data for <a href="mac-online-backup.html">Mac</a> and <a href="windows-online-backup.html">PC</a> laptops and desktops. To date Backblaze has restored over 30 billion files for our customers. Without our cloud backup service, those files would have been lost forever. <br/><br/>
+Customers can also <a href="lost_computer.html"> locate their computer</a> if lost or stolen, and have a hard drive shipped to their door with their data on it. <a href="backblaze-reviews.html">Read Backblaze reviews</a> from some of our customers how backing up online proved to be a crucial lifeline. <br/><br/>
+<a class="blue_button" href="cloud-backup.html">Try it for Free</a>
+</div>
+<div class="col-sm-1"></div>
+<div class="col-sm-4 home-personal-restore">
+<div class="home-access-files">ACCESS FILES</div>
+<div class="home-persoanl-restore-icon"><img alt="" height="auto" src="pics/icons-download-outline-blue.png" width="40"/></div>
+<div class="home-personal-restore-description"><span class="home-access-files-subhead">Web Download</span><br/>
+<span class="home-access-files-text">
+Sign in anywhere from any computer
+to download a zip file.</span><br/><br/></div>
+<div class="home-persoanl-restore-icon"><img alt="" height="auto" src="pics/icons-drive-outline-blue.png" width="40"/></div>
+<div class="home-personal-restore-description"><span class="home-access-files-subhead">Mail Restore</span><br/>
+<span class="home-access-files-text">
+Have a USB Hard or Flash Drive FedExed to you. Return for a refund.</span><br/><br/></div>
+<div class="home-persoanl-restore-icon"><img alt="" height="auto" src="pics/icons-phone-outline-blue.png" width="40"/></div>
+<div class="home-personal-restore-description"><span class="home-access-files-subhead">Mobile Access</span><br/>
+<span class="home-access-files-text">
+Use the Backblaze app on Apple iOS or Android to access files.</span></div>
+</div>
+<div class="col-sm-1"></div>
+</div>
+</section>
+<section class="home-business-section">
+<div class="row home-business-row">
+<div class="col-sm-1"></div>
+<div class="col-sm-5 home-business-text">
+<br/>
+<h6>Business Backup</h6>
+Business Backup is the solution for ensuring your company's data is backed up. Business Backup enables you to backup your employee computers as well as your Server / NAS Devices. Our Business platform centralizes billing and administration, empowering you to manage your team's backup needs. <br/><br/>
+<a class="blue_button" href="business-backup.html">Learn More</a>
+</div><div class="col-sm-1"></div>
+<div class="col-sm-4 home-business-price"><br/>
+<div class="col-xs-2"><img alt="" height="auto" src="pics/help-product-personal.jpg" width="60"/> </div>
+<div class="col-xs-10">
+<span class="home-business-price-first">Computer Backup </span><br/>
+<span class="home-business-price-second">
+$<span class="backup-annually">x</span>/Computer/Year<br/></span><span class="home-business-price-first">unlimited data.</span>
+<br/>
+<br/>
+</div>
+<div class="col-xs-2"><img alt="" height="auto" src="pics/help-product-business.jpg" width="60"/></div>
+<div class="col-xs-10">
+<span class="home-business-price-first">Server / NAS Backup via B2</span><br/>
+<span class="home-business-price-second">
+$5/Month/Terabyte <br/></span><span class="home-business-price-first">99.99% uptime</span>
+</div>
+</div>
+<div class="col-sm-1"></div>
+</div>
+</section>
+<section class="home-b2-section">
+<div class="row home-b2-row">
+<div class="col-sm-2"></div>
+<div class="col-sm-8 home-b2-text">
+<h6>B2 Cloud Storage</h6>
+Backblaze B2 Cloud Storage is our latest product offering, which offers the <a href="b2/cloud-storage-pricing.html">lowest priced enterprise cloud storage service</a> on the market. Often referred to as Infrastructure-as-a-Service (IaaS) or object storage, B2 Cloud Storage enables developers, IT people, and others to easily store mass volumes of data in the cloud.
+<br/><br/>
+<a class="blue_button" href="b2/sign-up.html">Create Account &amp; Get 10 GB Free</a><br/><br/>
+<div class="col-xs-5 home-b2-mini-text">
+<img alt="" height="auto" src="pics/icons-tree-outline-blue.png" width="80"><br/>You can quickly scale up and down while only paying for your actual usage â no locked in fees. </img></div>
+<div class="col-xs-1"></div>
+<div class="col-xs-6 home-b2-mini-text"><img alt="" height="auto" src="pics/icons-cloud-outline-blue.png" width="80"><br/>B2 Cloud Storage is similar to Amazon S3, Microsoft Azure storage, and Google Cloud Storage - but at a much lower cost.</img></div>
+</div>
+<div class="col-sm-2"></div>
+</div>
+</section>
+<section class="home-vault-section">
+<div class="row">
+<div class="col-sm-2"></div>
+<div class="col-sm-5 home-vault-text">As a highly open company, Backblaze publishes detailed information on the Storage Pod hardware, the Vault software, and the reliability statistics behind the <a href="b2/hard-drive-test-data.html">hard drives</a> it uses.</div>
+<div class="col-sm-4 home-vault-image"><img alt="" class="img-responsive" src="pics/home-b2-datacenter-pods.jpg"/></div>
+<div class="col-sm-1"></div>
+</div>
+</section>
+<section class="home-awards-section">
+<div class="row">
+<div class="col-sm-10 col-sm-offset-1 home-awards-text">
+<div class="home-awards-icon"> <img alt="" height="auto" src="pics/icons-trophy-outline-blue.png" width="40"/></div> Backblaze has <a href="company/news.html#awards">won numerous awards</a> and recognitions including #1 cloud backup service by About.com, SIIA CODiE Best Cloud Storage and Backup Solution, and Deloitte Fast 500 fastest growing technology companies. </div>
+</div>
+</section>
+<section class="home-news">
+<h5 class="home-news"><span class="stylish-line-grey"></span>Backblaze in the News<span class="stylish-line-grey"></span></h5>
+<div style="margin-bottom:0px"> <a href="company/news.html"><img alt="" class="home-press-logos" height="348" src="pics/home-press-logos.jpg" width="1760"/></a></div>
+</section>
+<div style="clear:both; margin-bottom:60px;"></div>
+<section class="footer-container container-fluid" style="clear:left;">
+<div class="row footer-row">
+<div class="col-sm-10">
+<a href="/company/about.html">About Us</a> |
+<a href="/company/jobs.html">Careers</a> |
+<a href="/company/partners.html">Partners</a> |
+<a href="/security.html">Security</a><br/>
+Backblaze © 2019.
+<a href="/company/privacy.html" style="color:#999999; text-decoration:underline;">Terms &amp; Privacy </a>
+</div>
+<div class="col-sm-2">
+<div class="language-select-box language-select-box-dynamic">
+<img alt="language" border="0" height="20" id="selectedLangImg" onclick="javascript:runLangPulldown(this)" src="/pics/lang/plang_english_a.gif" width="123"/></div>
+</div>
+</div>
+</section>
+<style>
+    .no-js-alert {
+        position: fixed;
+        z-index: 100;
+        bottom: 0; 
+        width: 100%; 
+        text-align: center;
+        margin: 0;
+        padding: .75rem 1.25rem;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        color: #ffffff;
+        background-color: #c41f2dda;
+        border-color: #8f1c25;
+    }
+    @media only screen and (max-width: 757px) {
+        .no-js-alert {
+            font-size: 11px;
+        }
+    }
+</style>
+<noscript>
+<br/>
+<div class="no-js-alert">
+        Your browser appears to be blocking javascript. Our site requires it to be enabled to 
+        function properly. 
+        <br/>
+        To use this site, please enable javascript on your browser.
+    </div>
+</noscript>
+<script language="JavaScript" type="text/javascript">
+
+//    $( document ).ready(function() {
+        autoSenseLang();
+        selectedLang();
+        i8n('my_account', 'nav_sign_in');
+//    });
+
+</script>
+<script data-cf-beacon='{"rayId":"538c7566889b69c2","version":"2019.10.2","startTime":1574274243803}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script>
+
+

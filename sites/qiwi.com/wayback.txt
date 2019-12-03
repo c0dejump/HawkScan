@@ -1,0 +1,9 @@
+http://qiwi.com/, 200, Unknown, text/html
+http://www.qiwi.com/%D0%BA%D0%B3, 301, 178, text/html, https://qiwi.com/%D0%BA%D0%B3
+https://www.qiwi.com/action/settings.js?v=2.0.5.2, 301, 178, text/html, https://qiwi.com/action/settings.js?v=2.0.5.2
+https://www.qiwi.com/action/settings.js?v=3.1.26, 301, 178, text/html, https://qiwi.com/action/settings.js?v=3.1.26
+http://www.qiwi.com/artists.htm, 301, 178, text/html, https://qiwi.com/artists.htm
+https://www.qiwi.com/auth/login.action, 301, 178, text/html, https:/https://3dsecure.qiwi.com/acs/pages/enrollment/authentication.jsf?request_id=11934023056GBf7rf3BWz9HNMmre, 302, Unknown, Unknown, https://3DSecure.qiwi.com/acs/sessionExpired.jsf
+https://3dsecure.qiwi.com/acs/pages/enrollment/authentication.jsf?request_id=1193402305HFXusSJHtvyfNyNQDa, 302, Unknown, Unknown, https://3DSecure.qiwi.com/acs/sessionExpired.jsf
+https://3dsecure.qiwi.com/acs/pages/enrollment/authentication.jsf?request_id=1193402305S1Cw0fNL0ydO34O5rs, 302, Unknown, Unknown, https://3DSecure.qiwi.coNone: Max retries exceeded with url: /robots.txt (Caused by None)
+[-] File not found!

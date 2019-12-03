@@ -1,0 +1,58 @@
+{'crlDistributionPoints': (u'http://crl3.digicert.com/sha2-ev-server-g2.crl'
+ u'http://crl4.digicert.com/sha2-ev-server-g2.crl')
+ 'subjectAltName': 'DNS'
+ 'backblaze.com')
+ ('DNS'
+ 'www.backblaze.com')
+ ('DNS'
+ 'secure.backblaze.com')
+ ('DNS'
+ 'blog.backblaze.com'
+ 'notBefore': u'Nov 10 00:00:00 2018 GMT'
+ 'caIssuers': (u'http://cacerts.digicert.com/DigiCertSHA2ExtendedValidationServerCA.crt'
+)
+ 'OCSP': (u'http://ocsp.digicert.com'
+)
+ 'serialNumber': u'0B4024C33E3557F60ACFB05E214A0A1A'
+ 'notAfter': 'Jan  6 12:00:00 2021 GMT'
+ 'version': 3L
+ 'subject': ('businessCategory'
+ u'Private Organization')
+)
+ 'jurisdictionCountryName'
+ u'US')
+)
+ 'jurisdictionStateOrProvinceName'
+ u'Delaware')
+)
+ 'serialNumber'
+ u'4337553')
+)
+ 'countryName'
+ u'US')
+)
+ 'stateOrProvinceName'
+ u'California')
+)
+ 'localityName'
+ u'San Mateo')
+)
+ 'organizationName'
+ u'Backblaze
+ Inc.')
+)
+ 'commonName'
+ u'backblaze.com')
+
+ 'issuer': ('countryName'
+ u'US')
+)
+ 'organizationName'
+ u'DigiCert Inc')
+)
+ 'organizationalUnitName'
+ u'www.digicert.com')
+)
+ 'commonName'
+ u'DigiCert SHA2 Extended Validation Server CA')
+}

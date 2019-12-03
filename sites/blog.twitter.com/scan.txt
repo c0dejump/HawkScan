@@ -1,0 +1,9 @@
+[+] https://blog.twitter.com/?
+[x] https://blog.twitter.com/.htpasswd/ Forbidden
+[x] https://blog.twitter.com/.htaccess/ Forbidden
+[+] https://blog.twitter.com/?
+[+] https://blog.twitter.com/robots.txt
+[+] https://blog.twitter.com/?
+[+] https://blog.twitter.com/robots.txt
+[x] https://blog.twitter.com/.htpasswd/ Forbidden
+[x] https://blog.twitter.com/.htaccess/ Forbidden

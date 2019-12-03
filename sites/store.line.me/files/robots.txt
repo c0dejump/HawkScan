@@ -1,0 +1,6 @@
+User-Agent:*
+Disallow:/setLanguage
+Disallow:/event
+Disallow:/login
+Disallow:/chargeCash
+Disallow:/mypage

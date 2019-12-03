@@ -1,0 +1,28 @@
+updated_date : 2018
+08
+09 22:41:13
+status : [u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', u'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', u'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited', u'clientTransferProhibited http://www.icann.org/epp#clientTransferProhibited', u'serverDeleteProhibited http://www.icann.org/epp#serverDeleteProhibited', u'serverTransferProhibited http://www.icann.org/epp#serverTransferProhibited', u'serverUpdateProhibited http://www.icann.org/epp#serverUpdateProhibited']
+name : Goldman Sachs & Co. HQ
+dnssec : unsigned
+city : New York
+expiration_date : 2028
+02
+22 05:00:00
+zipcode : 10282
+domain_name : [u'MARCUS.COM', u'marcus.com']
+country : US
+whois_server : whois.corporatedomains.com
+state : NY
+registrar : CSC CORPORATE DOMAINS, INC.
+referral_url : None
+address : 200 West Street
+name_servers : [u'NS1.GOLDMANSACHS.BIZ', u'NS1.GOLDMANSACHS.INFO', u'NS1.GS.COM', u'NS1.GS360.NET', u'NS2.GS.COM', u'NS3.GS.COM', u'NS4.GS.COM', u'NS5.GS.COM', u'NS6.GS.COM', u'NS7.GS.COM', u'ns7.gs.com', u'ns6.gs.com', u'ns3.gs.com', u'ns5.gs.com', u'ns1.gs360.net', u'ns4.gs.com', u'ns1.goldmansachs.biz', u'ns1.gs.com', u'ns2.gs.com', u'ns1.goldmansachs.info']
+org : Goldman Sachs & Co.
+creation_date : 1992
+02
+21 05:00:00
+emails : [u'domainabuse@cscglobal.com', u'gs
+domainreg@ny.email.gs.com', u'gs
+domainreg@gs.com', u'gs
+dnsadmin
+external@ny.email.gs.com']

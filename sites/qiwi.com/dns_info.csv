@@ -1,0 +1,136 @@
+{'crlDistributionPoints': (u'http://cdp.thawte.com/ThawteEVRSACA2018.crl'
+)
+ 'subjectAltName': 'DNS'
+ 'qiwi.com')
+ ('DNS'
+ 'www.qiwi.com')
+ ('DNS'
+ 'developer.qiwi.com')
+ ('DNS'
+ 'service2.qiwi.com')
+ ('DNS'
+ 'update.qiwi.com')
+ ('DNS'
+ 'games.qiwi.com')
+ ('DNS'
+ 'qampus.qiwi.com')
+ ('DNS'
+ 'jira.qiwi.com')
+ ('DNS'
+ 'mpi-test.qiwi.com')
+ ('DNS'
+ 'xml2.qiwi.com')
+ ('DNS'
+ 'jobs.qiwi.com')
+ ('DNS'
+ 'update1.qiwi.com')
+ ('DNS'
+ 'vpn2.qiwi.com')
+ ('DNS'
+ 'eportxml2.qiwi.com')
+ ('DNS'
+ 'servicedev.qiwi.com')
+ ('DNS'
+ 'w.qiwi.com')
+ ('DNS'
+ 'donate.qiwi.com')
+ ('DNS'
+ 'oauth.qiwi.com')
+ ('DNS'
+ 'bill.qiwi.com')
+ ('DNS'
+ 'private-api.qiwi.com')
+ ('DNS'
+ 'cupis.qiwi.com')
+ ('DNS'
+ '3dsecure.qiwi.com')
+ ('DNS'
+ 'ishop.qiwi.com')
+ ('DNS'
+ 'monitor2.qiwi.com')
+ ('DNS'
+ 'vpn3.qiwi.com')
+ ('DNS'
+ 'checkout.qiwi.com')
+ ('DNS'
+ 'service1.qiwi.com')
+ ('DNS'
+ 'pos1.qiwi.com')
+ ('DNS'
+ 'security.qiwi.com')
+ ('DNS'
+ 'agt.qiwi.com')
+ ('DNS'
+ 'agent2.qiwi.com')
+ ('DNS'
+ 'pos2.qiwi.com')
+ ('DNS'
+ 'xml1.qiwi.com')
+ ('DNS'
+ 'sso.qiwi.com')
+ ('DNS'
+ 'store.qiwi.com')
+ ('DNS'
+ 'visa.qiwi.com')
+ ('DNS'
+ 'win2.qiwi.com')
+ ('DNS'
+ 'win1.qiwi.com')
+ ('DNS'
+ 'vpn1.qiwi.com')
+ ('DNS'
+ 'api.qiwi.com')
+ ('DNS'
+ 'agent.qiwi.com')
+ ('DNS'
+ 'teamplay.qiwi.com')
+ ('DNS'
+ 'vpn.qiwi.com')
+ ('DNS'
+ 'monitor1.qiwi.com')
+ ('DNS'
+ 'edge.qiwi.com'
+ 'notBefore': u'Mar 18 00:00:00 2019 GMT'
+ 'caIssuers': (u'http://cacerts.thawte.com/ThawteEVRSACA2018.crt'
+)
+ 'OCSP': (u'http://status.thawte.com'
+)
+ 'serialNumber': u'024E62EB3C8BD7361E678FBF130C3CE3'
+ 'notAfter': 'May 16 12:00:00 2020 GMT'
+ 'version': 3L
+ 'subject': ('businessCategory'
+ u'Private Organization')
+)
+ 'jurisdictionCountryName'
+ u'RU')
+)
+ 'serialNumber'
+ u'1027739328440')
+)
+ 'countryName'
+ u'RU')
+)
+ 'localityName'
+ u'Moscow')
+)
+ 'organizationName'
+ u'QIWI Bank (JSC)')
+)
+ 'organizationalUnitName'
+ u'IT Department')
+)
+ 'commonName'
+ u'qiwi.com')
+
+ 'issuer': ('countryName'
+ u'US')
+)
+ 'organizationName'
+ u'DigiCert Inc')
+)
+ 'organizationalUnitName'
+ u'www.digicert.com')
+)
+ 'commonName'
+ u'Thawte EV RSA CA 2018')
+}

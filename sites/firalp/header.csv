@@ -1,0 +1,21 @@
+{'Content-Encoding': 'gzip'
+ 'Transfer-Encoding': 'chunked'
+ 'Set-Cookie': 'PHPSESSID=t25cpunc6mvv7ki5mibkkdg521; path=/'
+ 'Expires': 'Thu
+ 19 Nov 1981 08:52:00 GMT'
+ 'Vary': 'Accept-Encoding
+ Accept-Encoding'
+ 'Server': 'nginx'
+ 'Connection': 'keep-alive'
+ 'Link': '<http://www.firalp.fr/wp-json/>; rel="https://api.w.org/"
+ <http://www.firalp.fr/>; rel=shortlink'
+ 'Pragma': 'no-cache'
+ 'Cache-Control': 'no-store
+ no-cache
+ must-revalidate
+ post-check=0
+ pre-check=0'
+ 'Date': 'Mon
+ 18 Nov 2019 10:13:19 GMT'
+ 'Content-Type': 'text/html; charset=UTF-8'
+ 'X-Pingback': 'http://www.firalp.fr/xmlrpc.php'}

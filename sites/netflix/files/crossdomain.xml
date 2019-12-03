@@ -1,0 +1,3 @@
+<cross-domain-policy>
+<allow-access-from domain="*.netflix.com"></allow-access-from>
+</cross-domain-policy>

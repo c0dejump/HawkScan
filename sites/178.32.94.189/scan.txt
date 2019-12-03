@@ -1,0 +1,393 @@
+[+] http://178.32.94.189/?
+[+] http://178.32.94.189/?.save
+[+] http://178.32.94.189/?.old
+[+] http://178.32.94.189/?.backup
+[+] http://178.32.94.189/?.BAK
+[+] http://178.32.94.189/?.bak
+[+] http://178.32.94.189/?.zip
+[+] http://178.32.94.189/?.rar
+[+] http://178.32.94.189/?~
+[+] http://178.32.94.189/?_old
+[+] http://178.32.94.189/?wsdl
+[+] http://178.32.94.189/?_backup
+[+] http://178.32.94.189/?wsdl.save
+[+] http://178.32.94.189/?_bak
+[+] http://178.32.94.189/?wsdl.old
+[+] http://178.32.94.189/?wsdl.backup
+[+] http://178.32.94.189/?wsdl.BAK
+[+] http://178.32.94.189/?wsdl.bak
+[+] http://178.32.94.189/?wsdl.zip
+[+] http://178.32.94.189/?wsdl.rar
+[+] http://178.32.94.189/?wsdl~
+[+] http://178.32.94.189/?wsdl_old
+[+] http://178.32.94.189/?wsdl_backup
+[+] http://178.32.94.189/?wsdl_bak
+[x] http://178.32.94.189/.htpasswd/ Forbidden
+[x] http://178.32.94.189/.htaccess/ Forbidden
+[x] http://178.32.94.189/.git/ Forbidden
+[x] http://178.32.94.189/.git Forbidden
+[x] http://178.32.94.189/.git-rewrite/ Forbidden
+[x] http://178.32.94.189/.git/branches/ Forbidden
+[x] http://178.32.94.189/.git/COMMIT_EDITMSG Forbidden
+[x] http://178.32.94.189/.git/config Forbidden
+[x] http://178.32.94.189/.git/configf Forbidden
+[x] http://178.32.94.189/.git/description Forbidden
+[x] http://178.32.94.189/.git/FETCH_HEAD Forbidden
+[x] http://178.32.94.189/.git/HEAD Forbidden
+[x] http://178.32.94.189/.git/hooks/ Forbidden
+[x] http://178.32.94.189/.git/index Forbidden
+[x] http://178.32.94.189/.git/info/ Forbidden
+[x] http://178.32.94.189/.git/info/exclude Forbidden
+[x] http://178.32.94.189/.git/logs/ Forbidden
+[x] http://178.32.94.189/.git/logs/HEAD Forbidden
+[x] http://178.32.94.189/.git/logs/refs Forbidden
+[x] http://178.32.94.189/.git/logs/refs/heads Forbidden
+[x] http://178.32.94.189/.git/logs/refs/heads/master Forbidden
+[x] http://178.32.94.189/.git/logs/refs/remotes Forbidden
+[x] http://178.32.94.189/.git/logs/refs/remotes/origin Forbidden
+[x] http://178.32.94.189/.git/logs/refs/remotes/origin/HEAD Forbidden
+[x] http://178.32.94.189/.git/logs/refs/remotes/origin/master Forbidden
+[x] http://178.32.94.189/.git/objects/ Forbidden
+[x] http://178.32.94.189/.git/packed-refs Forbidden
+[x] http://178.32.94.189/.git/refs/ Forbidden
+[x] http://178.32.94.189/.git/refs/heads Forbidden
+[x] http://178.32.94.189/.git/refs/heads/master Forbidden
+[x] http://178.32.94.189/.git/refs/remotes/origin/HEAD Forbidden
+[x] http://178.32.94.189/.git/refs/remotes/origin/master Forbidden
+[x] http://178.32.94.189/.git/refs/remotes/origin Forbidden
+[x] http://178.32.94.189/.git/refs/tags Forbidden
+[x] http://178.32.94.189/.git2/ Forbidden
+[x] http://178.32.94.189/.git/refs/remotes Forbidden
+[x] http://178.32.94.189/cgi-bin/ Forbidden
+[x] http://178.32.94.189/cgi-bin/stats Forbidden
+[x] http://178.32.94.189/icons/ Forbidden
+[x] http://178.32.94.189/.git_release Forbidden
+[x] http://178.32.94.189/.gitattributes Forbidden
+[x] http://178.32.94.189/.gitconfig Forbidden
+[x] http://178.32.94.189/.gitignore Forbidden
+[x] http://178.32.94.189/.gitignore.swp Forbidden
+[x] http://178.32.94.189/.gitignore/ Forbidden
+[x] http://178.32.94.189/.gitignore_global Forbidden
+[x] http://178.32.94.189/.gitignore~ Forbidden
+[x] http://178.32.94.189/.gitk Forbidden
+[x] http://178.32.94.189/.gitkeep Forbidden
+[x] http://178.32.94.189/.gitmodules Forbidden
+[x] http://178.32.94.189/.gitreview Forbidden
+[x] http://178.32.94.189/.ht_wsr.txt Forbidden
+[x] http://178.32.94.189/.hta Forbidden
+[x] http://178.32.94.189/.htaccess Forbidden
+[x] http://178.32.94.189/.htaccess-local Forbidden
+[x] http://178.32.94.189/.htaccess-marco Forbidden
+[x] http://178.32.94.189/.htaccess.BAK Forbidden
+[x] http://178.32.94.189/.htaccess.bak Forbidden
+[x] http://178.32.94.189/.htaccess.bak1 Forbidden
+[x] http://178.32.94.189/.htaccess.inc Forbidden
+[x] http://178.32.94.189/.htaccess.old Forbidden
+[x] http://178.32.94.189/.htaccess.orig Forbidden
+[x] http://178.32.94.189/.htaccess.sample Forbidden
+[x] http://178.32.94.189/.htaccess.save Forbidden
+[x] http://178.32.94.189/.htaccess.txt Forbidden
+[x] http://178.32.94.189/.htaccess-dev Forbidden
+[x] http://178.32.94.189/.htaccess/ Forbidden
+[x] http://178.32.94.189/.htaccess_extra Forbidden
+[x] http://178.32.94.189/.htaccess_orig Forbidden
+[x] http://178.32.94.189/.htaccess_sc Forbidden
+[x] http://178.32.94.189/.htaccessOLD Forbidden
+[x] http://178.32.94.189/.htaccessBAK Forbidden
+[x] http://178.32.94.189/.htaccessOLD2 Forbidden
+[x] http://178.32.94.189/.htgroup Forbidden
+[x] http://178.32.94.189/.htaccess~ Forbidden
+[x] http://178.32.94.189/.htpasswd Forbidden
+[x] http://178.32.94.189/.htpasswd-old Forbidden
+[x] http://178.32.94.189/.htpasswd.bak Forbidden
+[x] http://178.32.94.189/.htpasswd.inc Forbidden
+[x] http://178.32.94.189/.htpasswd/ Forbidden
+[x] http://178.32.94.189/.htpasswd_test Forbidden
+[x] http://178.32.94.189/.htpasswrd Forbidden
+[x] http://178.32.94.189/.htpasswds Forbidden
+[x] http://178.32.94.189/.htusers Forbidden
+[x] http://178.32.94.189/.svn/ Forbidden
+[x] http://178.32.94.189/.svn/all-wcprops Forbidden
+[x] http://178.32.94.189/.svn/entries Forbidden
+[x] http://178.32.94.189/.svn Forbidden
+[x] http://178.32.94.189/.svn/pristine/ Forbidden
+[x] http://178.32.94.189/.svn/prop-base/ Forbidden
+[x] http://178.32.94.189/.svn/props/ Forbidden
+[x] http://178.32.94.189/.svn/text-base/ Forbidden
+[x] http://178.32.94.189/.svn/tmp/ Forbidden
+[x] http://178.32.94.189/.svn/text-base/index.php.svn-base Forbidden
+[x] http://178.32.94.189/.svnignore Forbidden
+[x] http://178.32.94.189/cgi-bin/ Forbidden
+[x] http://178.32.94.189/cgi-bin/a1stats/a1disp.cgi Forbidden
+[x] http://178.32.94.189/cgi-bin/awstats.pl Forbidden
+[x] http://178.32.94.189/cgi-bin/awstats/ Forbidden
+[x] http://178.32.94.189/cgi-bin/htimage.exe?2,2 Forbidden
+[x] http://178.32.94.189/cgi-bin/htmlscript Forbidden
+[x] http://178.32.94.189/cgi-bin/imagemap.exe?2,2 Forbidden
+[x] http://178.32.94.189/cgi-bin/index.html Forbidden
+[x] http://178.32.94.189/cgi-bin/logi.php Forbidden
+[x] http://178.32.94.189/cgi-bin/login Forbidden
+[x] http://178.32.94.189/cgi-bin/php.ini Forbidden
+[x] http://178.32.94.189/cgi-bin/test.cgi Forbidden
+[x] http://178.32.94.189/server-status Forbidden
+[x] http://178.32.94.189/server-status/ Forbidden
+[+] http://178.32.94.189/?
+[+] http://178.32.94.189/?.save
+[+] http://178.32.94.189/?.old
+[+] http://178.32.94.189/?.backup
+[+] http://178.32.94.189/?wsdl
+[+] http://178.32.94.189/?.BAK
+[+] http://178.32.94.189/?wsdl.save
+[+] http://178.32.94.189/?.bak
+[+] http://178.32.94.189/?.zip
+[+] http://178.32.94.189/?wsdl.old
+[+] http://178.32.94.189/?wsdl.backup
+[+] http://178.32.94.189/?.rar
+[+] http://178.32.94.189/?wsdl.BAK
+[+] http://178.32.94.189/?~
+[+] http://178.32.94.189/?wsdl.bak
+[+] http://178.32.94.189/?_old
+[+] http://178.32.94.189/?wsdl.zip
+[+] http://178.32.94.189/?_backup
+[+] http://178.32.94.189/?wsdl.rar
+[+] http://178.32.94.189/?_bak
+[+] http://178.32.94.189/?wsdl~
+[+] http://178.32.94.189/?wsdl_old
+[+] http://178.32.94.189/?wsdl_backup
+[+] http://178.32.94.189/?wsdl_bak
+[x] http://178.32.94.189/.htpasswd/ Forbidden
+[x] http://178.32.94.189/.htaccess/ Forbidden
+[x] http://178.32.94.189/.git/ Forbidden
+[x] http://178.32.94.189/.git Forbidden
+[x] http://178.32.94.189/.git-rewrite/ Forbidden
+[x] http://178.32.94.189/.git/branches/ Forbidden
+[x] http://178.32.94.189/.git/COMMIT_EDITMSG Forbidden
+[x] http://178.32.94.189/.git/config Forbidden
+[x] http://178.32.94.189/.git/configf Forbidden
+[x] http://178.32.94.189/.git/description Forbidden
+[x] http://178.32.94.189/.git/FETCH_HEAD Forbidden
+[x] http://178.32.94.189/.git/HEAD Forbidden
+[x] http://178.32.94.189/.git/hooks/ Forbidden
+[x] http://178.32.94.189/.git/index Forbidden
+[x] http://178.32.94.189/.git/info/ Forbidden
+[x] http://178.32.94.189/.git/logs/ Forbidden
+[x] http://178.32.94.189/.git/logs/HEAD Forbidden
+[x] http://178.32.94.189/.git/logs/refs Forbidden
+[x] http://178.32.94.189/.git/logs/refs/heads Forbidden
+[x] http://178.32.94.189/.git/logs/refs/heads/master Forbidden
+[x] http://178.32.94.189/.git/logs/refs/remotes Forbidden
+[x] http://178.32.94.189/.git/logs/refs/remotes/origin Forbidden
+[x] http://178.32.94.189/.git/logs/refs/remotes/origin/HEAD Forbidden
+[x] http://178.32.94.189/.git/info/exclude Forbidden
+[x] http://178.32.94.189/.git/logs/refs/remotes/origin/master Forbidden
+[x] http://178.32.94.189/.git/objects/ Forbidden
+[x] http://178.32.94.189/.git/packed-refs Forbidden
+[x] http://178.32.94.189/.git/refs/ Forbidden
+[x] http://178.32.94.189/.git/refs/heads Forbidden
+[x] http://178.32.94.189/.git/refs/heads/master Forbidden
+[x] http://178.32.94.189/.git/refs/remotes Forbidden
+[x] http://178.32.94.189/.git/refs/remotes/origin Forbidden
+[x] http://178.32.94.189/.git/refs/remotes/origin/HEAD Forbidden
+[x] http://178.32.94.189/.git/refs/remotes/origin/master Forbidden
+[x] http://178.32.94.189/.git/refs/tags Forbidden
+[x] http://178.32.94.189/.git2/ Forbidden
+[x] http://178.32.94.189/cgi-bin/ Forbidden
+[x] http://178.32.94.189/cgi-bin/stats Forbidden
+[x] http://178.32.94.189/icons/ Forbidden
+[x] http://178.32.94.189/.git_release Forbidden
+[x] http://178.32.94.189/.gitattributes Forbidden
+[x] http://178.32.94.189/.gitconfig Forbidden
+[x] http://178.32.94.189/.gitignore.swp Forbidden
+[x] http://178.32.94.189/.gitignore/ Forbidden
+[x] http://178.32.94.189/.gitignore_global Forbidden
+[x] http://178.32.94.189/.gitignore Forbidden
+[x] http://178.32.94.189/.gitk Forbidden
+[x] http://178.32.94.189/.gitkeep Forbidden
+[x] http://178.32.94.189/.gitignore~ Forbidden
+[x] http://178.32.94.189/.gitmodules Forbidden
+[x] http://178.32.94.189/.gitreview Forbidden
+[x] http://178.32.94.189/.ht_wsr.txt Forbidden
+[x] http://178.32.94.189/.hta Forbidden
+[x] http://178.32.94.189/.htaccess Forbidden
+[x] http://178.32.94.189/.htaccess-dev Forbidden
+[x] http://178.32.94.189/.htaccess-local Forbidden
+[x] http://178.32.94.189/.htaccess-marco Forbidden
+[x] http://178.32.94.189/.htaccess.bak Forbidden
+[x] http://178.32.94.189/.htaccess.bak1 Forbidden
+[x] http://178.32.94.189/.htaccess.BAK Forbidden
+[x] http://178.32.94.189/.htaccess.old Forbidden
+[x] http://178.32.94.189/.htaccess.orig Forbidden
+[x] http://178.32.94.189/.htaccess.inc Forbidden
+[x] http://178.32.94.189/.htaccess.save Forbidden
+[x] http://178.32.94.189/.htaccess.txt Forbidden
+[x] http://178.32.94.189/.htaccess.sample Forbidden
+[x] http://178.32.94.189/.htaccess_extra Forbidden
+[x] http://178.32.94.189/.htaccess_sc Forbidden
+[x] http://178.32.94.189/.htaccess_orig Forbidden
+[x] http://178.32.94.189/.htaccessBAK Forbidden
+[x] http://178.32.94.189/.htaccessOLD2 Forbidden
+[x] http://178.32.94.189/.htaccessOLD Forbidden
+[x] http://178.32.94.189/.htaccess~ Forbidden
+[x] http://178.32.94.189/.htgroup Forbidden
+[x] http://178.32.94.189/.htpasswd Forbidden
+[x] http://178.32.94.189/.htpasswd-old Forbidden
+[x] http://178.32.94.189/.htpasswd.bak Forbidden
+[x] http://178.32.94.189/.htpasswd.inc Forbidden
+[x] http://178.32.94.189/.htpasswd_test Forbidden
+[x] http://178.32.94.189/.htpasswds Forbidden
+[x] http://178.32.94.189/.htpasswrd Forbidden
+[x] http://178.32.94.189/.htusers Forbidden
+[x] http://178.32.94.189/.svn/ Forbidden
+[x] http://178.32.94.189/.svn/all-wcprops Forbidden
+[x] http://178.32.94.189/.svn Forbidden
+[x] http://178.32.94.189/.svn/pristine/ Forbidden
+[x] http://178.32.94.189/.svn/prop-base/ Forbidden
+[x] http://178.32.94.189/.svn/entries Forbidden
+[x] http://178.32.94.189/.svn/text-base/ Forbidden
+[x] http://178.32.94.189/.svn/text-base/index.php.svn-base Forbidden
+[x] http://178.32.94.189/.svn/tmp/ Forbidden
+[x] http://178.32.94.189/.svnignore Forbidden
+[x] http://178.32.94.189/.svn/props/ Forbidden
+[x] http://178.32.94.189/cgi-bin/awstats.pl Forbidden
+[x] http://178.32.94.189/cgi-bin/a1stats/a1disp.cgi Forbidden
+[x] http://178.32.94.189/cgi-bin/htimage.exe?2,2 Forbidden
+[x] http://178.32.94.189/cgi-bin/awstats/ Forbidden
+[x] http://178.32.94.189/cgi-bin/imagemap.exe?2,2 Forbidden
+[x] http://178.32.94.189/cgi-bin/htmlscript Forbidden
+[x] http://178.32.94.189/cgi-bin/logi.php Forbidden
+[x] http://178.32.94.189/cgi-bin/index.html Forbidden
+[x] http://178.32.94.189/cgi-bin/login Forbidden
+[x] http://178.32.94.189/cgi-bin/php.ini Forbidden
+[x] http://178.32.94.189/cgi-bin/test.cgi Forbidden
+[x] http://178.32.94.189/server-status Forbidden
+[x] http://178.32.94.189/server-status/ Forbidden
+[+] https://178.32.94.189/?
+[+] https://178.32.94.189/?.save
+[+] https://178.32.94.189/?.old
+[+] https://178.32.94.189/?.backup
+[+] https://178.32.94.189/?wsdl
+[+] https://178.32.94.189/?.BAK
+[+] https://178.32.94.189/?wsdl.save
+[+] https://178.32.94.189/?wsdl.old
+[+] https://178.32.94.189/?.bak
+[+] https://178.32.94.189/?.zip
+[+] https://178.32.94.189/?.rar
+[+] https://178.32.94.189/?~
+[+] https://178.32.94.189/?_old
+[+] https://178.32.94.189/?_backup
+[+] https://178.32.94.189/?_bak
+[+] https://178.32.94.189/?wsdl.backup
+[+] https://178.32.94.189/?wsdl.BAK
+[+] https://178.32.94.189/?wsdl.bak
+[+] https://178.32.94.189/?wsdl.zip
+[+] https://178.32.94.189/?wsdl.rar
+[+] https://178.32.94.189/?wsdl~
+[+] https://178.32.94.189/?wsdl_old
+[+] https://178.32.94.189/?wsdl_backup
+[+] https://178.32.94.189/?wsdl_bak
+[x] https://178.32.94.189/.htaccess/ Forbidden
+[x] https://178.32.94.189/.htpasswd/ Forbidden
+[x] https://178.32.94.189/.git Forbidden
+[x] https://178.32.94.189/.git/ Forbidden
+[x] https://178.32.94.189/.git/branches/ Forbidden
+[x] https://178.32.94.189/.git/COMMIT_EDITMSG Forbidden
+[x] https://178.32.94.189/.git-rewrite/ Forbidden
+[x] https://178.32.94.189/.git/configf Forbidden
+[x] https://178.32.94.189/.git/config Forbidden
+[x] https://178.32.94.189/.git/FETCH_HEAD Forbidden
+[x] https://178.32.94.189/.git/HEAD Forbidden
+[x] https://178.32.94.189/.git/description Forbidden
+[x] https://178.32.94.189/.git/hooks/ Forbidden
+[x] https://178.32.94.189/.git/index Forbidden
+[x] https://178.32.94.189/.git/info/ Forbidden
+[x] https://178.32.94.189/.git/info/exclude Forbidden
+[x] https://178.32.94.189/.git/logs/ Forbidden
+[x] https://178.32.94.189/.git/logs/HEAD Forbidden
+[x] https://178.32.94.189/.git/logs/refs/heads Forbidden
+[x] https://178.32.94.189/.git/logs/refs/heads/master Forbidden
+[x] https://178.32.94.189/.git/logs/refs Forbidden
+[x] https://178.32.94.189/.git/logs/refs/remotes/origin Forbidden
+[x] https://178.32.94.189/.git/logs/refs/remotes/origin/HEAD Forbidden
+[x] https://178.32.94.189/.git/logs/refs/remotes Forbidden
+[x] https://178.32.94.189/.git/logs/refs/remotes/origin/master Forbidden
+[x] https://178.32.94.189/.git/objects/ Forbidden
+[x] https://178.32.94.189/.git/refs/ Forbidden
+[x] https://178.32.94.189/.git/packed-refs Forbidden
+[x] https://178.32.94.189/.git/refs/heads Forbidden
+[x] https://178.32.94.189/.git/refs/heads/master Forbidden
+[x] https://178.32.94.189/.git/refs/remotes/origin Forbidden
+[x] https://178.32.94.189/.git/refs/remotes/origin/HEAD Forbidden
+[x] https://178.32.94.189/.git/refs/remotes Forbidden
+[x] https://178.32.94.189/.git/refs/remotes/origin/master Forbidden
+[x] https://178.32.94.189/.git/refs/tags Forbidden
+[x] https://178.32.94.189/.git2/ Forbidden
+[x] https://178.32.94.189/cgi-bin/ Forbidden
+[x] https://178.32.94.189/cgi-bin/stats Forbidden
+[x] https://178.32.94.189/icons/ Forbidden
+[x] https://178.32.94.189/.gitattributes Forbidden
+[x] https://178.32.94.189/.gitignore Forbidden
+[x] https://178.32.94.189/.gitconfig Forbidden
+[x] https://178.32.94.189/.gitignore.swp Forbidden
+[x] https://178.32.94.189/.gitignore/ Forbidden
+[x] https://178.32.94.189/.gitignore_global Forbidden
+[x] https://178.32.94.189/.git_release Forbidden
+[x] https://178.32.94.189/.gitignore~ Forbidden
+[x] https://178.32.94.189/.gitk Forbidden
+[x] https://178.32.94.189/.gitkeep Forbidden
+[x] https://178.32.94.189/.gitreview Forbidden
+[x] https://178.32.94.189/.gitmodules Forbidden
+[x] https://178.32.94.189/.ht_wsr.txt Forbidden
+[x] https://178.32.94.189/.htaccess Forbidden
+[x] https://178.32.94.189/.htaccess-dev Forbidden
+[x] https://178.32.94.189/.htaccess-local Forbidden
+[x] https://178.32.94.189/.hta Forbidden
+[x] https://178.32.94.189/.htaccess.BAK Forbidden
+[x] https://178.32.94.189/.htaccess-marco Forbidden
+[x] https://178.32.94.189/.htaccess.bak Forbidden
+[x] https://178.32.94.189/.htaccess.inc Forbidden
+[x] https://178.32.94.189/.htaccess.orig Forbidden
+[x] https://178.32.94.189/.htaccess.bak1 Forbidden
+[x] https://178.32.94.189/.htaccess.old Forbidden
+[x] https://178.32.94.189/.htaccess.save Forbidden
+[x] https://178.32.94.189/.htaccess.sample Forbidden
+[x] https://178.32.94.189/.htaccess_extra Forbidden
+[x] https://178.32.94.189/.htaccess.txt Forbidden
+[x] https://178.32.94.189/.htaccess_sc Forbidden
+[x] https://178.32.94.189/.htaccess_orig Forbidden
+[x] https://178.32.94.189/.htaccessBAK Forbidden
+[x] https://178.32.94.189/.htaccessOLD Forbidden
+[x] https://178.32.94.189/.htaccessOLD2 Forbidden
+[x] https://178.32.94.189/.htaccess~ Forbidden
+[x] https://178.32.94.189/.htpasswd Forbidden
+[x] https://178.32.94.189/.htgroup Forbidden
+[x] https://178.32.94.189/.htpasswd.bak Forbidden
+[x] https://178.32.94.189/.htpasswd-old Forbidden
+[x] https://178.32.94.189/.htpasswd.inc Forbidden
+[x] https://178.32.94.189/.htpasswd_test Forbidden
+[x] https://178.32.94.189/.htpasswds Forbidden
+[x] https://178.32.94.189/.htusers Forbidden
+[x] https://178.32.94.189/.htpasswrd Forbidden
+[x] https://178.32.94.189/.svn Forbidden
+[x] https://178.32.94.189/.svn/all-wcprops Forbidden
+[x] https://178.32.94.189/.svn/entries Forbidden
+[x] https://178.32.94.189/.svn/ Forbidden
+[x] https://178.32.94.189/.svn/props/ Forbidden
+[x] https://178.32.94.189/.svn/pristine/ Forbidden
+[x] https://178.32.94.189/.svn/prop-base/ Forbidden
+[x] https://178.32.94.189/.svn/text-base/ Forbidden
+[x] https://178.32.94.189/.svn/tmp/ Forbidden
+[x] https://178.32.94.189/.svnignore Forbidden
+[x] https://178.32.94.189/.svn/text-base/index.php.svn-base Forbidden
+[x] https://178.32.94.189/cgi-bin/awstats.pl Forbidden
+[x] https://178.32.94.189/cgi-bin/awstats/ Forbidden
+[x] https://178.32.94.189/cgi-bin/a1stats/a1disp.cgi Forbidden
+[x] https://178.32.94.189/cgi-bin/htimage.exe?2,2 Forbidden
+[x] https://178.32.94.189/cgi-bin/imagemap.exe?2,2 Forbidden
+[x] https://178.32.94.189/cgi-bin/logi.php Forbidden
+[x] https://178.32.94.189/cgi-bin/htmlscript Forbidden
+[x] https://178.32.94.189/cgi-bin/index.html Forbidden
+[x] https://178.32.94.189/cgi-bin/login Forbidden
+[x] https://178.32.94.189/cgi-bin/php.ini Forbidden
+[x] https://178.32.94.189/cgi-bin/test.cgi Forbidden
+[x] https://178.32.94.189/server-status Forbidden
+[x] https://178.32.94.189/server-status/ Forbidden

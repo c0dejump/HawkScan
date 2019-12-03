@@ -1,0 +1,25 @@
+{'X-XSS-Protection': '0'
+ 'X-Content-Type-Options': 'nosniff'
+ 'Content-Encoding': 'gzip'
+ 'Transfer-Encoding': 'chunked'
+ 'Set-Cookie': 'wa_lang_pref=fr; expires=Wed
+ 27-Nov-2019 14:00:05 GMT; Max-Age=604800; path=/; domain=.whatsapp.com; secure; httponly
+ wa_ul=23ea6f1b-af6f-439f-8ab3-42b950ff27d9; expires=Fri
+ 19-Nov-2021 14:00:05 GMT; Max-Age=63072000; path=/; domain=.blog.whatsapp.com; secure; httponly'
+ 'Strict-Transport-Security': 'max-age=31536000; preload; includeSubDomains'
+ 'Vary': 'Accept-Encoding'
+ 'X-FB-Debug': 'DXegInN8z/I5SQHZf081+2DOcm3BqIN4s/RCsXXPKpRnSHB4weOVhmzdb2v7NHefaUOk0SHjGNDQN7iOFZZHLA=='
+ 'Connection': 'keep-alive'
+ 'Alt-Svc': 'h3-23=":443"; ma=3600'
+ 'Pragma': 'no-cache'
+ 'Cache-Control': 'private
+ no-cache
+ no-store
+ must-revalidate'
+ 'Date': 'Wed
+ 20 Nov 2019 14:00:05 GMT'
+ 'X-Frame-Options': 'DENY'
+ 'X-FB-TRIP-ID': '1679558926'
+ 'Content-Type': 'text/html; charset="utf-8"'
+ 'Expires': 'Sat
+ 01 Jan 2000 00:00:00 GMT'}

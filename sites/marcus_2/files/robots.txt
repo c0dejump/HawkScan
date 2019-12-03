@@ -1,0 +1,15 @@
+user-agent: *
+disallow: /uk/en/error/
+disallow: /uk/en/error/not-found
+disallow: /uk/en/savings/select-product
+disallow: /uk/en/savings/your-savings/fund-account
+disallow: /uk/en/savings/your-savings/account-detail
+disallow: /uk/en/savings/your-savings/transfer
+disallow: /uk/en/savings/additional-account
+disallow: /uk/en/dashboard
+disallow: /uk/en/dashboard/account/profile
+disallow: /uk/en/dashboard/account/change-request
+
+disallow: /content/marcus/
+
+sitemap: https://www.marcus.co.uk/sitemap.xml

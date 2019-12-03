@@ -1,0 +1,68 @@
+{'crlDistributionPoints': (u'http://crl3.digicert.com/ssca-sha2-g6.crl'
+ u'http://crl4.digicert.com/ssca-sha2-g6.crl')
+ 'subjectAltName': 'DNS'
+ 'account.netflix.com')
+ ('DNS'
+ 'ca.netflix.com')
+ ('DNS'
+ 'netflix.ca')
+ ('DNS'
+ 'netflix.com')
+ ('DNS'
+ 'signup.netflix.com')
+ ('DNS'
+ 'www.netflix.ca')
+ ('DNS'
+ 'www1.netflix.com')
+ ('DNS'
+ 'www2.netflix.com')
+ ('DNS'
+ 'www3.netflix.com')
+ ('DNS'
+ 'develop-stage.netflix.com')
+ ('DNS'
+ 'release-stage.netflix.com')
+ ('DNS'
+ 'www.netflix.com')
+ ('DNS'
+ 'tv.netflix.com')
+ ('DNS'
+ 'embed.develop-stage.netflix.com')
+ ('DNS'
+ 'embed.release-stage.netflix.com'
+ 'notBefore': u'Feb  7 00:00:00 2018 GMT'
+ 'caIssuers': (u'http://cacerts.digicert.com/DigiCertSHA2SecureServerCA.crt'
+)
+ 'OCSP': (u'http://ocsp.digicert.com'
+)
+ 'serialNumber': u'0CAE082F0743B2A202019D185E1A10CC'
+ 'notAfter': 'Feb  7 12:00:00 2020 GMT'
+ 'version': 3L
+ 'subject': ('countryName'
+ u'US')
+)
+ 'stateOrProvinceName'
+ u'CA')
+)
+ 'localityName'
+ u'Los Gatos')
+)
+ 'organizationName'
+ u'Netflix
+ Inc.')
+)
+ 'organizationalUnitName'
+ u'Operations')
+)
+ 'commonName'
+ u'www.netflix.com')
+
+ 'issuer': ('countryName'
+ u'US')
+)
+ 'organizationName'
+ u'DigiCert Inc')
+)
+ 'commonName'
+ u'DigiCert SHA2 Secure Server CA')
+}

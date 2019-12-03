@@ -1,0 +1,52 @@
+{'crlDistributionPoints': (u'http://crl3.digicert.com/sha2-ha-server-g6.crl'
+ u'http://crl4.digicert.com/sha2-ha-server-g6.crl')
+ 'subjectAltName': 'DNS'
+ '*.cdn.whatsapp.net')
+ ('DNS'
+ 'whatsapp.com')
+ ('DNS'
+ 'wa.me')
+ ('DNS'
+ '*.whatsapp.net')
+ ('DNS'
+ '*.snr.whatsapp.net')
+ ('DNS'
+ 'whatsapp.net')
+ ('DNS'
+ '*.whatsapp.com'
+ 'notBefore': u'Oct  3 00:00:00 2019 GMT'
+ 'caIssuers': (u'http://cacerts.digicert.com/DigiCertSHA2HighAssuranceServerCA.crt'
+)
+ 'OCSP': (u'http://ocsp.digicert.com'
+)
+ 'serialNumber': u'01D39A1BA8AC5A0C03A6075FFAEB4FC0'
+ 'notAfter': 'Jan  1 12:00:00 2020 GMT'
+ 'version': 3L
+ 'subject': ('countryName'
+ u'US')
+)
+ 'stateOrProvinceName'
+ u'California')
+)
+ 'localityName'
+ u'Menlo Park')
+)
+ 'organizationName'
+ u'Facebook
+ Inc.')
+)
+ 'commonName'
+ u'*.whatsapp.net')
+
+ 'issuer': ('countryName'
+ u'US')
+)
+ 'organizationName'
+ u'DigiCert Inc')
+)
+ 'organizationalUnitName'
+ u'www.digicert.com')
+)
+ 'commonName'
+ u'DigiCert SHA2 High Assurance Server CA')
+}

@@ -1,0 +1,9 @@
+?
+?wsdl
+robots.txt
+wp-login.php
+wp-content/
+wp-json/
+wp-json/wp/v2/posts
+wp-content/advanced-cache.php
+xmlrpc.php

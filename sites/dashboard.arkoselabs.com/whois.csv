@@ -1,0 +1,43 @@
+updated_date : [datetime.datetime(2019, 7, 18, 0, 14, 35), datetime.datetime(2019, 7, 18, 0, 14, 36, 551000)]
+status : [u'ok https://icann.org/epp#ok', u'renewPeriod https://icann.org/epp#renewPeriod']
+name : On behalf of arkoselabs.com owner
+dnssec : unsigned
+city : Seattle
+expiration_date : 2020
+08
+20 23:01:39
+zipcode : 98108
+1226
+domain_name : [u'ARKOSELABS.COM', u'arkoselabs.com']
+country : US
+whois_server : whois.registrar.amazon.com
+state : WA
+registrar : Amazon Registrar, Inc.
+referral_url : None
+address : P.O. Box 81226
+name_servers : [u'NS
+1019.AWSDNS
+63.NET', u'NS
+1457.AWSDNS
+54.ORG', u'NS
+1890.AWSDNS
+44.CO.UK', u'NS
+475.AWSDNS
+59.COM', u'ns
+1019.awsdns
+63.net', u'ns
+1457.awsdns
+54.org', u'ns
+1890.awsdns
+44.co.uk', u'ns
+475.awsdns
+59.com']
+org : Whois Privacy Service
+creation_date : 2018
+08
+20 23:01:39
+emails : [u'registrar
+abuse@amazon.com', u'owner
+9375159@arkoselabs.com.whoisprivacyservice.org', u'admin
+9375159@arkoselabs.com.whoisprivacyservice.org', u'tech
+9375159@arkoselabs.com.whoisprivacyservice.org', u'registrar@amazon.com']

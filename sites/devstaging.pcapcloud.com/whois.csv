@@ -1,0 +1,30 @@
+updated_date : [datetime.datetime(2018, 7, 23, 23, 16, 38), datetime.datetime(2015, 11, 20, 0, 42, 22)]
+status : [u'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', u'clientRenewProhibited https://icann.org/epp#clientRenewProhibited', u'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', u'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', u'clientTransferProhibited http://www.icann.org/epp#clientTransferProhibited', u'clientUpdateProhibited http://www.icann.org/epp#clientUpdateProhibited', u'clientRenewProhibited http://www.icann.org/epp#clientRenewProhibited', u'clientDeleteProhibited http://www.icann.org/epp#clientDeleteProhibited']
+name : None
+dnssec : unsigned
+city : None
+expiration_date : 2020
+11
+20 00:42:22
+zipcode : None
+domain_name : [u'PCAPCLOUD.COM', u'pcapcloud.com']
+country : US
+whois_server : whois.godaddy.com
+state : California
+registrar : GoDaddy.com, LLC
+referral_url : None
+address : None
+name_servers : [u'NS
+1021.AWSDNS
+63.NET', u'NS
+1368.AWSDNS
+43.ORG', u'NS
+1631.AWSDNS
+11.CO.UK', u'NS
+237.AWSDNS
+29.COM']
+org : Personal Capital Corporation
+creation_date : 2015
+11
+20 00:42:22
+emails : abuse@godaddy.com

@@ -1,0 +1,12 @@
+User-agent: Twitterbot
+Disallow: *
+Allow: /ti/g2/
+
+User-agent: *
+Disallow: /app/
+Disallow: /cs/
+Disallow: /R/
+Disallow: /ti/
+Disallow: /msg/
+Disallow: /au/
+Disallow: /run/

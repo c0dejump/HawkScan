@@ -1,0 +1,10 @@
+[+] https://business.twitter.com/?
+[+] https://business.twitter.com/robots.txt
+[x] https://business.twitter.com/.htpasswd/ Forbidden
+[x] https://business.twitter.com/.htaccess/ Forbidden
+[+] https://business.twitter.com/?
+[+] https://business.twitter.com/robots.txt
+[+] https://business.twitter.com/?
+[+] https://business.twitter.com/robots.txt
+[x] https://business.twitter.com/.htaccess/ Forbidden
+[x] https://business.twitter.com/.htpasswd/ Forbidden

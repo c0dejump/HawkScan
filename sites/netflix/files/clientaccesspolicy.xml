@@ -1,0 +1,16 @@
+
+<access-policy>
+<cross-domain-access>
+<policy>
+<allow-from http-request-headers="*">
+<domain uri="http://netflix.com"></domain>
+<domain uri="http://*.netflix.com"></domain>
+<domain uri="https://netflix.com"></domain>
+<domain uri="https://*.netflix.com"></domain>
+</allow-from>
+<grant-to>
+<resource include-subpaths="true" path="/"></resource>
+</grant-to>
+</policy>
+</cross-domain-access>
+</access-policy>

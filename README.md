@@ -35,6 +35,8 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  - [x] Work it with py2 and py3
  - [x] Add option rate-limit if app is unstable (--timesleep)
  - [x] Check in waybackmachine
+ - [x] Response error to WAF
+ - [x] Check if DataBase firebaseio existe and accessible
  
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
@@ -42,7 +44,7 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check pastebin
  - [ ] Detect famous honeypot
- - [ ] Response error to WAF + bypass it
+ - [ ] Auto reconfiguration if waf detect it
  - [ ] Best HTML report and On-the-fly writing report
  - [ ] Access token
  - [ ] Clean script, to add class or split different function on a file ? (to see next)

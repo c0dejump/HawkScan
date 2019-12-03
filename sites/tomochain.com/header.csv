@@ -1,0 +1,21 @@
+{'Expect-CT': 'max-age=604800
+ report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+ 'Access-Control-Allow-Origin': 'http://tomochain.com
+https://tomochain.com'
+ 'CF-RAY': '539199896e36edc3-CDG'
+ 'Transfer-Encoding': 'chunked'
+ 'Set-Cookie': '__cfduid=da7d68a08ea843200df9378d20c7162e71574328152; expires=Sat
+ 21-Dec-19 09:22:32 GMT; path=/; domain=.tomochain.com; HttpOnly; Secure'
+ 'CF-Cache-Status': 'DYNAMIC'
+ 'Content-Encoding': 'gzip'
+ 'Vary': 'Accept-Encoding'
+ 'Server': 'cloudflare'
+ 'Connection': 'keep-alive'
+ 'Link': '<https://tomochain.com/rest/>; rel="https://api.w.org/"
+ <https://tomochain.com/>; rel=shortlink'
+ 'Date': 'Thu
+ 21 Nov 2019 09:22:33 GMT'
+ 'X-Frame-Options': 'SAMEORIGIN'
+ 'X-SRCache-Fetch-Status': 'HIT'
+ 'Content-Type': 'text/html; charset=UTF-8'
+ 'X-SRCache-Store-Status': 'BYPASS'}

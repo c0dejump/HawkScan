@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+<html itemscope="" itemtype="http://schema.org/Article" lang="en-US">
+<head>
+<meta content="IE=Edge" http-equiv="x-ua-compatible"/>
+<!--[if lt IE 7]>      <html lang="en-US" class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en-US" class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>                <html lang="en-US" class="lt-ie9"> <![endif]-->
+<meta charset="utf-8"/>
+<meta content="noodp,noydir" name="robots"/>
+<!-- -->
+<!--[if IE 9]>
+        <link rel="stylesheet" href="/a/pgs/global/mediaplayer/css/progress-polyfill.css" type="text/css" media="screen,print">
+        <link rel="stylesheet" href="/a/pgs/global/mediaplayer/css/rangeslider.css" type="text/css" media="screen,print">
+        <![endif]-->
+<!--[if IE 9]>
+        <script src="/a/pgs/global/mediaplayer/js/libs/progress-polyfill.min.js" type="text/javascript"></script>
+        <script src="/a/pgs/global/mediaplayer/js/libs/rangeslider.min.js" type="text/javascript"></script>
+        <![endif]-->
+<link href="http://www.goldmansachs.com/" rel="canonical"/>
+<meta content="https://www.goldmansachs.com/" property="og:url"/>
+<!--
+-->
+<!--
+-->
+<!--
+-->
+<!-- -->
+<title>Goldman Sachs</title>
+<meta content="The Goldman Sachs Group, Inc. is a leading global investment banking, securities and investment management firm that provides a wide range of financial services to a substantial and diversified client base." name="description"/>
+<!-- -->
+<!-- -->
+<meta content="Goldman Sachs" property="og:site_name"/>
+<meta content="Goldman Sachs" property="og:title"/>
+<meta content="The Goldman Sachs Group, Inc. is a leading global investment banking, securities and investment management firm that provides a wide range of financial services to a substantial and diversified client base." property="og:description"/>
+<!-- -->
+<!-- -->
+<meta content="summary" name="twitter:card"/>
+<meta content="https://www.goldmansachs.com/" name="twitter:url"/>
+<meta content="@GoldmanSachs" name="twitter:site"/>
+<meta content="Goldman Sachs" name="twitter:title"/>
+<meta content="The Goldman Sachs Group, Inc. is a leading global investment banking, securities and investment management firm that provides a wide range of financial services to a substantial and diversified client base." name="twitter:description"/>
+<meta content="Goldman Sachs" itemprop="name"/>
+<meta content="The Goldman Sachs Group, Inc. is a leading global investment banking, securities and investment management firm that provides a wide range of financial services to a substantial and diversified client base." itemprop="description"/>
+<!-- -->
+<!-- -->
+<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<link href="/a/pgs/css/reset.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<script src="/a/pgs/js/geo/gs.geo.js" type="text/javascript"></script>
+<!-- -->
+<!-- -->
+<script>
+var GS = GS || {};
+GS.navURL = "/sitemap/index.html";
+GS.siteView = "Desktop";
+</script>
+<link href="/a/pgs/css/prod/gs.w3c.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/prod/gs.nav.css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/prod/gs.responsivedesign.css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/prod/gs.print.css" media="print" rel="stylesheet" type="text/css"/>
+<!--[if IE 9]>
+				<link rel="stylesheet" href="/a/pgs/css/gs.browser.ie.9.css" type="text/css" media="screen">
+			<![endif]-->
+<!--[if lt IE 9]>
+				<link rel="stylesheet" href="/a/pgs/css/prod/gs.browser.ie.css" type="text/css" media="screen">
+			<![endif]-->
+<!--[if IE 8]>
+				<link rel="stylesheet" href="/a/pgs/css/prod/gs.browser.ie.8.css" type="text/css" media="screen">
+			<![endif]-->
+<!--[if IE 7]>
+				<link rel="stylesheet" href="/a/pgs/css/prod/gs.browser.ie.7.css" type="text/css" media="screen">
+			<![endif]-->
+<!--[if lte IE 6]>
+				<link rel="stylesheet" href="/a/pgs/css/prod/gs.browser.ie.6.css" type="text/css" media="screen">
+			<![endif]-->
+<script src="/a/pgs/js/prod/gsAll.js" type="text/javascript"></script>
+<script src="/a/pgs/js/prod/gs.slider.js" type="text/javascript"></script>
+<script src="/a/pgs/js/gs.share.js" type="text/javascript"></script>
+<!-- -->
+<link href="/a/pgs/css/owl.carousel.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/owl.theme.default.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/homepage-redesign/homepage.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/homepage-redesign/careers.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/homepage-redesign/hero-tout.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/components/careers.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/components/slick.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/components/normalize.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/components/fonts.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/components/slick-theme.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/homepage-redesign/supress.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/components/cta-block.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/components/gs-briefings.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/components/large-hero-v2.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/components/image-with-cards.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/css/components/infinity-slider.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/navigation/css/footer.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<link href="/a/pgs/navigation/css/style.css" media="screen,print" rel="stylesheet" type="text/css"/>
+<script src="/a/pgs/js/gs.lazy-load.js" type="text/javascript"></script>
+<script src="/a/pgs/js/gs.social-feed.js" type="text/javascript"></script>
+<script src="/a/pgs/js/gs.homepage.js" type="text/javascript"></script>
+<script src="/a/pgs/js/lib/owl.carousel.min.js" type="text/javascript"></script>
+<!--[if IEMobile]><link rel="stylesheet" href="/a/pgs/mobile/css/gs.mobile-ie.css" type="text/css" media="screen"><![endif]-->
+<style type="text/css">
+</style>
+<script>(window.BOOMR_mq=window.BOOMR_mq||[]).push(["addVar",{"rua.upush":"false","rua.cpush":"false","rua.upre":"false","rua.cpre":"false","rua.uprl":"false","rua.cprl":"false","rua.cprf":"false","rua.trans":"","rua.cook":"false","rua.ims":"false","rua.ufprl":"false","rua.cfprl":"false"}]);</script>
+<script>!function(){function o(n,i){if(n&&i)for(var r in i)i.hasOwnProperty(r)&&(void 0===n[r]?n[r]=i[r]:n[r].constructor===Object&&i[r].constructor===Object?o(n[r],i[r]):n[r]=i[r])}try{var n=decodeURIComponent("");if(n.length>0&&window.JSON&&"function"==typeof window.JSON.parse){var i=JSON.parse(n);void 0!==window.BOOMR_config?o(window.BOOMR_config,i):window.BOOMR_config=i}}catch(r){window.console&&"function"==typeof window.console.error&&console.error("mPulse: Could not parse configuration",r)}}();</script>
+<script>!function(e){var a="https://s.go-mpulse.net/boomerang/",t="addEventListener";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,a="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="6ZD6R-6X44W-4EB8T-Z5DDC-SEA7M",function(){function n(a){e.BOOMR_onload=a&&a.timeStamp||(new Date).getTime()}if(!e.BOOMR||!e.BOOMR.version&&!e.BOOMR.snippetExecuted){e.BOOMR=e.BOOMR||{},e.BOOMR.snippetExecuted=!0;var i,o,r,_=document.createElement("iframe");if(e[t])e[t]("load",n,!1);else if(e.attachEvent)e.attachEvent("onload",n);_.src="javascript:void(0)",_.title="",_.role="presentation",(_.frameElement||_).style.cssText="width:0;height:0;border:0;display:none;",r=document.getElementsByTagName("script")[0],r.parentNode.insertBefore(_,r);try{o=_.contentWindow.document}catch(O){i=document.domain,_.src="javascript:var d=document.open();d.domain='"+i+"';void(0);",o=_.contentWindow.document}o.open()._l=function(){var e=this.createElement("script");if(i)this.domain=i;e.id="boomr-if-as",e.src=a+"6ZD6R-6X44W-4EB8T-Z5DDC-SEA7M",BOOMR_lstart=(new Date).getTime(),this.body.appendChild(e)},o.write("<bo"+'dy onload="document._l();">'),o.close()}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var a=""=="true"?1:0,t="",n="livuauaxyzbimxoo6gmq-f-5dc99f826-clientnsv4-s.akamaihd.net",i={"ak.v":25,"ak.cp":"618780","ak.ai":parseInt("467296",10),"ak.ol":"0","ak.cr":345,"ak.ipv":4,"ak.proto":"","ak.rid":"2ff488a","ak.r":20558,"ak.a2":a,"ak.m":"b","ak.n":"essl","ak.bpcip":"90.43.64.0","ak.cport":61681,"ak.gh":"23.3.15.10","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.csrc":"-","ak.acc":"reno","ak.t":"1573843353"};if(""!==t)i["ak.ruds"]=t;var o={i:!1,av:function(a){var t="http.initiator";if(a&&(!a[t]||"spa_hard"===a[t]))i["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.r","ak.acc","ak.t"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:n,init:function(){if(!o.i){var e=BOOMR.subscribe;e("before_beacon",o.av,null,null),e("onbeacon",o.rv,null,null),o.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body class="gs-v2 top-level full-width supress-series interim-footer full-width" id="homepage">
+<script type="text/javascript">
+var ebRand = Math.random()+'';
+ebRand = ebRand * 1000000;
+//<![CDATA[ 
+document.write('<scr'+'ipt src="HTTPS://bs.serving-sys.com/BurstingPipe/ActivityServer.bs?cn=as&ActivityID=191868&rnd=' + ebRand + '" async></scr' + 'ipt>');
+//]]>
+
+(function() {
+   window.addEventListener( "load", function() {
+   var img = document.createElement('img');
+   img.height = 1;
+   img.width = 1;
+   img.src = "HTTPS://bs.serving-sys.com/BurstingPipe/ActivityServer.bs?cn=as&ActivityID=191868&ns=1";
+   document.getElementsByTagName("body")[0].appendChild(img);
+  })
+})();
+
+</script>
+<script type="application/ld+json">
+{ "@context" : "http://schema.org",
+  "@type" : "Organization",
+  "name" : "Goldman Sachs",
+  "url" : "http://www.goldmansachs.com",
+  "sameAs" : [ 
+    "https://twitter.com/goldmansachs",
+    "https://www.linkedin.com/company/goldman-sachs",
+    "https://www.youtube.com/GoldmanSachs",
+    "https://plus.google.com/+GoldmanSachs"] 
+}
+</script>
+<!-- -->
+<section id="global-nav">
+<div class="frame">
+<span class="local-language"></span>
+<span class="action yes"></span>
+<span class="action no"></span>
+</div>
+</section>
+<section id="brazil-alert">
+<div class="alert-frame">
+<div class="close clearfix">
+<a></a>
+</div>
+<div class="title clearfix">
+<h3></h3>
+</div>
+<div class="link clearfix">
+<a></a>
+</div>
+</div>
+</section>
+<!-- -->
+<!-- -->
+<div class="" id="wrapper">
+<script src="/a/pgs/global/gs-analytics-init.js" type="text/javascript"></script>
+<script type="text/javascript">
+		gsAnalytics.accountName = "gspubweb";
+					gsAnalytics.siteName = "Goldman Sachs";
+					gsAnalytics.sectionName = "";
+					gsAnalytics.subSectionName = "";
+					gsAnalytics.subSubSectionName = "";
+					gsAnalytics.pageName = "";
+			</script>
+<script src="/a/pgs/global/gs-analytics.js" type="text/javascript"></script>
+<div class="vt-root" data-base-url="" data-env="gs" data-locale="en" data-nav-json="/navigation/nav.json" data-theme="com" id="vt-root">
+<header aria-label="gs global menu" class="module gs-header com" data-name="header" role="menubar">
+<span class="bar-loader--top js-loader run"></span>
+<div class="inner-container inner-container__root">
+<div class="f-row top-row">
+<div class="f-col">
+<a aria-disabled="false" aria-label="GS logo" class="gs-header-logo" href="/index.html" tabindex="0"> <img alt="GS logo" src="/a/pgs/navigation/assets/images/gs-logo.svg"/> </a>
+</div>
+<div class="f-col f-col">
+<button class="ui-icon-btn ui-icon-btn--hamburger blue js-hamburger" data-type="hamburger" tabindex="0"> <i class="icon-menu"></i> <span class="line"></span> <span class="line"></span> </button>
+</div>
+<div class="f-col f-col" id="nav-legal-link-container">
+<button class="ui-icon-btn ui-icon-btn--search blue js-search" data-type="search" tabindex="0" title="gs header search open"> <i class="icon-gs-search"></i> <span class="line"></span> <span class="line"></span> </button>
+</div>
+</div>
+<div class="f-row middle-row">
+<div class="f-col">
+<a aria-disabled="false" aria-label="GS logo" class="gs-header-logo" href="/index.html" tabindex="0"> <img alt="GS logo" src="/a/pgs/navigation/assets/images/gs-logo.svg"/> </a>
+</div>
+<div class="breadcrumb-hamburger">
+<button class="ui-icon-btn ui-icon-btn--hamburger blue js-breadcrumb-hamburger" data-type="hamburger" tabindex="0"> <i class="icon-menu"></i> <span class="line"></span> <span class="line"></span> </button>
+</div>
+<div class="f-col breadcrumb-container">
+<div class="module i-breadcrumb" data-name="i-breadcrumb">
+</div>
+</div>
+<div class="f-col">
+<span class="cta-placeholder"> </span>
+</div>
+</div>
+<div class="f-row nav-row">
+<nav class="gs-headerNav lv-0" data-lv="0" role="group">
+<div aria-haspopup="true" class="nav-item lv-0 has-children has-teaser" data-animation-id="nav-ani-288-0" data-id="0" data-internal-transition="true" data-lv="0" role="menuitem">
+<a aria-hidden="false" aria-label="Our Firm" class="ui-text-btn" data-id="" href="/our-firm/index.html" role="menuitem" style="opacity: 0; will-change: opacity, transform;" tabindex="0" target="_self"> Our Firm <i class="icon-caret-right"></i> </a>
+</div>
+<div aria-haspopup="true" class="nav-item lv-0 has-children has-teaser" data-animation-id="nav-ani-288-1" data-id="1" data-internal-transition="true" data-lv="0" role="menuitem">
+<a aria-hidden="false" aria-label="What We Do" class="ui-text-btn" data-id="" href="/what-we-do/index.html" role="menuitem" style="opacity: 0; will-change: opacity, transform;" tabindex="0" target="_self"> What We Do <i class="icon-caret-right"></i> </a>
+</div>
+<div aria-haspopup="true" class="nav-item lv-0 has-children has-teaser" data-animation-id="nav-ani-288-2" data-id="2" data-internal-transition="true" data-lv="0" role="menuitem">
+<a aria-hidden="false" aria-label="Insights" class="ui-text-btn" data-id="" href="/insights/index.html" role="menuitem" style="opacity: 0; will-change: opacity, transform;" tabindex="0" target="_self"> Insights <i class="icon-caret-right"></i> </a>
+</div>
+<div aria-haspopup="true" class="nav-item lv-0 has-children has-teaser" data-animation-id="nav-ani-288-3" data-id="3" data-internal-transition="true" data-lv="0" role="menuitem">
+<a aria-hidden="false" aria-label="Citizenship" class="ui-text-btn" data-id="" href="/citizenship/index.html" role="menuitem" style="opacity: 0; will-change: opacity, transform;" tabindex="0" target="_self"> Citizenship <i class="icon-caret-right"></i> </a>
+</div>
+<div aria-haspopup="true" class="nav-item lv-0 has-children has-teaser" data-animation-id="nav-ani-288-4" data-id="4" data-internal-transition="true" data-lv="0" role="menuitem">
+<a aria-hidden="false" aria-label="Careers" class="ui-text-btn" data-id="" href="/careers/index.html" role="menuitem" style="opacity: 0; will-change: opacity, transform;" tabindex="0" target="_self"> Careers <i class="icon-caret-right"></i> </a>
+</div>
+<div aria-haspopup="true" class="nav-item lv-0 has-children has-teaser" data-animation-id="nav-ani-288-5" data-id="5" data-internal-transition="true" data-lv="0" role="menuitem">
+<a aria-hidden="false" aria-label="Investor Relations" class="ui-text-btn" data-id="" href="/investor-relations/index.html" role="menuitem" style="opacity: 0; will-change: opacity, transform;" tabindex="0" target="_self"> Investor Relations <i class="icon-caret-right"></i> </a>
+</div>
+<div aria-haspopup="true" class="nav-item lv-0 has-children has-teaser" data-animation-id="nav-ani-288-6" data-id="6" data-internal-transition="true" data-lv="0" role="menuitem">
+<a aria-hidden="false" aria-label="Media Relations" class="ui-text-btn" data-id="" href="/media-relations/index.html" role="menuitem" style="opacity: 0; will-change: opacity, transform;" tabindex="0" target="_self"> Media Relations <i class="icon-caret-right"></i> </a>
+</div>
+<div aria-haspopup="true" class="nav-item lv-0 utility has-children" data-animation-id="nav-ani-288-7" data-id="7" data-internal-transition="false" data-lv="0" role="menuitem">
+<a aria-hidden="false" aria-label="Client Login" class="ui-text-btn icon-before" data-id="" href="/login/index.html" style="opacity: 0; will-change: opacity, transform;" tabindex="0" target="_self"> <i class="icon-user"></i> Client Login </a>
+</div>
+<div aria-haspopup="true" class="nav-item lv-0 utility has-children" data-animation-id="nav-ani-288-8" data-id="8" data-internal-transition="false" data-lv="0" role="menuitem">
+<a aria-hidden="false" aria-label="Worldwide" class="ui-text-btn icon-before" data-id="" href="/worldwide/index.html" style="opacity: 0; will-change: opacity, transform;" tabindex="0" target="_self"> <i class="icon-globe"></i> Worldwide </a>
+</div>
+</nav>
+<div class="root-teaser"></div>
+</div>
+<div class="mobile-cta">
+<span class="mobile-cta-placeholder"></span>
+</div>
+</div>
+<button aria-hidden="false" aria-label="exit header" class="ui-text-btn focus-exit" tabindex="0"> exit menu </button>
+</header>
+<aside class="module mobile-navigation" data-name="mobile-navigation">
+<div class="mobile-navigation__inner">
+<div class="mobile-navigation__top">
+<a aria-label="previous" class="ui-icon-btn horizontal m-nav-back-btn" href="#back" tabindex="-1"> <i class="icon-caret"></i> <span class="label m-nav-current"> </span> </a>
+</div>
+<div class="mobile-navigation__bottom">
+<nav class="m-nav" data-lv="0">
+<ul>
+<li class="">
+<div class="m-nav-item has-children" data-id="0" data-lv="0">
+<a aria-disabled="false" aria-label="Our Firm" class="ui-text-btn js-route" data-id="" href="/our-firm/index.html" tabindex="-1" target="_self"> Our Firm <i class="icon-caret-right"></i> </a>
+</div> </li>
+<li class="">
+<div class="m-nav-item has-children" data-id="1" data-lv="0">
+<a aria-disabled="false" aria-label="What We Do" class="ui-text-btn js-route" data-id="" href="/what-we-do/index.html" tabindex="-1" target="_self"> What We Do <i class="icon-caret-right"></i> </a>
+</div> </li>
+<li class="">
+<div class="m-nav-item has-children" data-id="2" data-lv="0">
+<a aria-disabled="false" aria-label="Insights" class="ui-text-btn js-route" data-id="" href="/insights/index.html" tabindex="-1" target="_self"> Insights <i class="icon-caret-right"></i> </a>
+</div> </li>
+<li class="">
+<div class="m-nav-item has-children" data-id="3" data-lv="0">
+<a aria-disabled="false" aria-label="Citizenship" class="ui-text-btn js-route" data-id="" href="/citizenship/index.html" tabindex="-1" target="_self"> Citizenship <i class="icon-caret-right"></i> </a>
+</div> </li>
+<li class="">
+<div class="m-nav-item has-children" data-id="4" data-lv="0">
+<a aria-disabled="false" aria-label="Careers" class="ui-text-btn js-route" data-id="" href="/careers/index.html" tabindex="-1" target="_self"> Careers <i class="icon-caret-right"></i> </a>
+</div> </li>
+<li class="">
+<div class="m-nav-item has-children" data-id="5" data-lv="0">
+<a aria-disabled="false" aria-label="Investor Relations" class="ui-text-btn js-route" data-id="" href="/investor-relations/index.html" tabindex="-1" target="_self"> Investor Relations <i class="icon-caret-right"></i> </a>
+</div> </li>
+<li class="">
+<div class="m-nav-item has-children" data-id="6" data-lv="0">
+<a aria-disabled="false" aria-label="Media Relations" class="ui-text-btn js-route" data-id="" href="/media-relations/index.html" tabindex="-1" target="_self"> Media Relations <i class="icon-caret-right"></i> </a>
+</div> </li>
+<li class="utility">
+<div class="m-nav-item utility has-children" data-id="7" data-lv="0">
+<a aria-disabled="false" aria-label="Client Login" class="ui-icon-btn" data-id="" href="/login/index.html" tabindex="-1" target="_self"> <i class="icon-user"></i> <span class="label">Client Login</span> </a>
+</div> </li>
+<li class="utility">
+<div class="m-nav-item utility has-children" data-id="8" data-lv="0">
+<a aria-disabled="false" aria-label="Worldwide" class="ui-icon-btn" data-id="" href="/worldwide/index.html" tabindex="-1" target="_self"> <i class="icon-globe"></i> <span class="label">Worldwide</span> </a>
+</div> </li>
+</ul>
+</nav>
+</div>
+</div>
+</aside>
+<div class="module search-overlay" data-name="search-overlay">
+<div class="search-overlay__form">
+<form action="/search/search.gscgi" id="global-search-form">
+<div class="ui-component ui-input search search-overlay-input" data-name="ui-input" data-type="text">
+<button class="ui-icon-btn before" title="search button"> <i class="icon-gs-search"></i> </button>
+<input autocomplete="off" id="global-search" name="query" placeholder="Search here..." type="search"/>
+<label for="global-search">Search here...</label>
+<button class="ui-icon-btn after" title="search button">Go</button>
+</div>
+</form>
+<button aria-hidden="false" aria-label="exit search" class="ui-text-btn focus-exit" tabindex="0"> exit search </button>
+</div>
+<div class="search-overlay__bg"></div>
+</div>
+<div class="main js-swap-area">
+</div>
+</div>
+<div id="content">
+<section class="default-component careers-large-hero title-and-copy full-width" data-title="large-hero">
+<div class="careers-large-hero__container large-hero">
+<div class="large-hero__image">
+<img class="careers-large-hero__image mobile-image" src="/homepage/2016/multimedia/aif-2019-hero-mobile.jpg"/>
+<img class="careers-large-hero__image" src="/homepage/2016/multimedia/aif-2019-hero-desktop.jpg"/>
+</div>
+<div class="careers-large-hero__copy left">
+<div class="careers-large-hero__content left">
+<p class="eyebrow"><i>Goldman Sachs Gives</i></p>
+<h1>Analyst Impact Fund</h1>
+<p> The <em>Goldman Sachs Gives</em> Analyst Impact Fund is a competition across our global offices that builds on our longstanding culture of teamwork and service.  This year over 360 teams and nearly 1,000 analysts competed for a top grant of $250,000 for the nonprofit of their choice.</p>
+<div class="cta">
+<a class="button-cta" href="/citizenship/goldman-sachs-gives/meet-the-grantees/analyst-impact-fund-2019/index.html">Watch the Finals</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="announcements">
+<div class="container">
+<div class="row col-1">
+<article class="card-module col">
+<div class="heading">
+<h6></h6>
+<h5><a href="/media-relations/press-releases/current/managing-director-announcement-14-nov-2019.html">Goldman Sachs Announces Managing Director Class of 2019</a></h5>
+</div>
+<p> </p>
+<div class="topics">
+<a class="topics-link" href="/media-relations/press-releases/current/managing-director-announcement-14-nov-2019.html">Read More</a>
+</div>
+</article>
+</div>
+</div>
+</section>
+<section class="card-grid">
+<ul class="row owl-carousel owl-theme" id="cardGridItems">
+<li class="card-module">
+<div class="card-flipper">
+<div class="card-front">
+<a class="figure" href="/insights/talks-at-gs/mark-esper.html">
+<figure class="pulseImage">
+<img alt="Dr. Mark Esper, US Secretary of Defense" class="" src="/insights/talks-at-gs/mark-esper-f/800x450.jpg"/>
+<div class="video-icon"></div>
+</figure> </a>
+<time datetime="11 NOV 2019">11 NOV 2019</time>
+<div class="heading">
+<h6> <a class="toggle-flip"> Talks at GS <span> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> </span> </a> </h6>
+<h5><a href="/insights/talks-at-gs/mark-esper.html">Dr. Mark Esper, US Secretary of Defense</a></h5>
+</div>
+<p><a href="/insights/talks-at-gs/mark-esper.html">US Secretary of Defense Mark Esper reflects on his service in the US Army, his views on events shaping Americaâs national security interests globally and his thoughts on running the largest employer in the country. <b>Watch Video</b></a></p>
+</div>
+<div class="card-back">
+<div class="inner">
+<a class="toggle-flip"><i class="ui-thick-close"><span>close</span></i></a>
+<h4>More from this series</h4>
+<h6><a href="/insights/series/talks-at-gs/index.html">Talks at GS</a></h6>
+<ul>
+<li> <h5><a href="/insights/talks-at-gs/tory-burch.html">Tory Burch: The Business of Empowering Women </a></h5> </li>
+<li> <h5><a href="/insights/talks-at-gs/bjarke-ingels.html">Bjarke Ingels: Transforming the Global Skyline </a></h5> </li>
+<li> <h5><a href="/insights/talks-at-gs/christy-turlington-burns.html">Christy Turlington Burns: Advancing Global Maternal Health </a></h5> </li>
+</ul>
+</div>
+</div>
+</div> </li>
+<li class="card-module">
+<div class="card-flipper">
+<div class="card-front">
+<a class="figure" href="/insights/pages/infographics/european-renewables/index.html">
+<figure class="pulseImage">
+<img alt="The Power Shift: Europeâs Road to Renewables" class="" src="/insights/pages/infographics/european-renewables/tout-image-800x450.jpg"/>
+</figure> </a>
+<time datetime="08 NOV 2019">08 NOV 2019</time>
+<div class="heading">
+<h5><a href="/insights/pages/infographics/european-renewables/index.html">The Power Shift: Europeâs Road to Renewables</a></h5>
+</div>
+<p><a href="/insights/pages/infographics/european-renewables/index.html">Green energy is making up a growing portion of the global energy mix, and Europe is leading the way. Goldman Sachs Research explains how technological advances have slashed the costs of wind and solar power, helping fuel the regionâs renewables boom. <b>View Infographic</b> </a></p>
+<div class="topics">
+<span class="topics-heading">TOPICS:</span>
+<a class="topics-link" href="/insights/topics/clean-tech-and-renewables.html">Clean Tech and Renewables</a> , 
+          <a class="topics-link" href="/insights/topics/europe.html">Europe</a> , 
+          <a class="topics-link" href="/insights/topics/infographics.html">Infographics</a> , 
+          <a class="topics-link" href="/insights/topics/technology-driving-innovation.html">Technology Driving Innovation</a>
+</div>
+</div>
+</div> </li>
+<li class="card-module">
+<div class="card-flipper">
+<div class="card-front">
+<a class="figure" href="/insights/podcasts/episodes/09-25-2019-how-can-cities-adapt-to-climate-change.html">
+<figure class="pulseImage">
+<img alt="How Can Cities Adapt to Climate Change?" class="" src="/insights/podcasts/episodes/09-25-2019-how-can-cities-adapt-to-climate-change-f/800x450.png"/>
+</figure> </a>
+<time datetime="25 SEP 2019">25 SEP 2019</time>
+<div class="heading">
+<h6> <a class="toggle-flip"> Exchanges at Goldman Sachs <span> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> </span> </a> </h6>
+<h5><a href="/insights/podcasts/episodes/09-25-2019-how-can-cities-adapt-to-climate-change.html">How Can Cities Adapt to Climate Change?</a></h5>
+</div>
+<p><a href="/insights/podcasts/episodes/09-25-2019-how-can-cities-adapt-to-climate-change.html">Goldman Sachsâ Amanda Hindlian and Sandra Lawson discuss key findings of their teamâs recent research report. <b>Listen Now</b></a></p>
+<div class="topics">
+<span class="topics-heading">TOPIC:</span>
+<a class="topics-link" href="/insights/topics/science.html">Science</a>
+</div>
+</div>
+<div class="card-back">
+<div class="inner">
+<a class="toggle-flip"><i class="ui-thick-close"><span>close</span></i></a>
+<h4>More from this series</h4>
+<h6><a href="/insights/series/exchanges-at-goldman-sachs/index.html">Exchanges at Goldman Sachs</a></h6>
+<ul>
+</ul>
+</div>
+</div>
+</div> </li>
+<li class="card-module">
+<div class="card-flipper">
+<div class="card-front">
+<a class="figure" href="/insights/pages/gmi-gender-gaps-2.0.html">
+<figure class="pulseImage">
+<img alt="Closing the Gender Gaps 2.0: Fresh Data Show More Work to Do" class="" src="/insights/pages/gender-pay-gap-2.0-f/800x450.jpg"/>
+</figure> </a>
+<time datetime="OCT 2019">OCT 2019</time>
+<div class="heading">
+<h6> <a class="toggle-flip"> Goldman Sachs Research <span> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> </span> </a> </h6>
+<h5><a href="/insights/pages/gmi-gender-gaps-2.0.html">Closing the Gender Gaps 2.0: Fresh Data Show More Work to Do</a></h5>
+</div>
+<p><a href="/insights/pages/gmi-gender-gaps-2.0.html">The latest gender pay gap analysis from the Global Markets Institute reveals that the unexplainable share of the wage gap has increased â a sign thereâs more work to be done. <b>Read Report</b></a></p>
+<div class="topics">
+<span class="topics-heading">TOPICS:</span>
+<a class="topics-link" href="/insights/topics/global-markets-institute.html">Global Markets Institute</a> , 
+          <a class="topics-link" href="/insights/topics/women.html">Women</a>
+</div>
+</div>
+<div class="card-back">
+<div class="inner">
+<a class="toggle-flip"><i class="ui-thick-close"><span>close</span></i></a>
+<h4>More from this series</h4>
+<h6><a href="/insights/series/goldman-sachs-research/index.html">Goldman Sachs Research</a></h6>
+<ul>
+</ul>
+</div>
+</div>
+</div> </li>
+<li class="card-module">
+<div class="card-flipper">
+<div class="card-front">
+<a class="figure" href="/citizenship/10000-small-businesses/UK/profiles/index.html">
+<figure class="pulseImage">
+<img alt="Meet the &lt;i&gt;10,000 Small Businesses&lt;/i&gt; UK Alumni" class="" src="/citizenship/10000-small-businesses/UK/profiles/multimedia/tlc-800x450.jpg"/>
+</figure> </a>
+<time datetime="12 NOV 2019">12 NOV 2019</time>
+<div class="heading">
+<h5><a href="/citizenship/10000-small-businesses/UK/profiles/index.html">Meet the <i>10,000 Small Businesses</i> UK Alumni</a></h5>
+</div>
+<p><a href="/citizenship/10000-small-businesses/UK/profiles/index.html">Goldman Sachs <i>10,000 Small Businesses </i> UK program is an investment to help entrepreneurs create jobs and economic opportunity by providing greater access to education and business support services. The program has reached over 1,700 businesses from across the UK and has resulted in immediate and sustained business growth for the alumni of the program. <b>Watch Videos</b></a></p>
+</div>
+</div> </li>
+<li class="card-module">
+<div class="card-flipper">
+<div class="card-front">
+<a class="figure" href="/insights/pages/paper-and-packaging-industry.html">
+<figure class="pulseImage">
+<img alt="Unpacking the Shift to Sustainable Packaging" class="" src="/insights/pages/the-long-and-short-of-it/paper-and-packaging-industry/800x450.png"/>
+<div class="video-icon"></div>
+</figure> </a>
+<time datetime="24 OCT 2019">24 OCT 2019</time>
+<div class="heading">
+<h6> <a class="toggle-flip"> The Long &amp; Short of It <span> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> </span> </a> </h6>
+<h5><a href="/insights/pages/paper-and-packaging-industry.html">Unpacking the Shift to Sustainable Packaging</a></h5>
+</div>
+<p><a href="/insights/pages/paper-and-packaging-industry.html">With 15 to 20% of all consumer goods sold via the internet today, the need for packaging to deliver goods quickly and cheaply is increasing as the global focus on sustainability gains momentum. Kristy Grippi of Goldman Sachsâ Investment Banking Division explains how these trends â along with the shift towards consumer-centric retail â are driving innovation across the paper and packaging industry. <b>Watch Video</b></a></p>
+<div class="topics">
+<span class="topics-heading">TOPIC:</span>
+<a class="topics-link" href="/insights/topics/clean-tech-and-renewables.html">Clean Tech and Renewables</a>
+</div>
+</div>
+<div class="card-back">
+<div class="inner">
+<a class="toggle-flip"><i class="ui-thick-close"><span>close</span></i></a>
+<h4>More from this series</h4>
+<h6><a href="/insights/series/the-long-and-short-of-it/index.html">The Long &amp; Short of It</a></h6>
+<ul>
+</ul>
+</div>
+</div>
+</div> </li>
+<li class="card-module">
+<div class="card-flipper">
+<div class="card-front">
+<a class="figure" href="/insights/pages/the-car-industry-shifts-gears.html">
+<figure class="pulseImage">
+<img alt="The Car Industry Shifts Gears" class="" src="/insights/pages/the-long-and-short-of-it/the-car-industry-shifts-gears-f/800x450.png"/>
+<div class="video-icon"></div>
+</figure> </a>
+<time datetime="10 SEP 2019">10 SEP 2019</time>
+<div class="heading">
+<h6> <a class="toggle-flip"> The Long &amp; Short of It <span> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> </span> </a> </h6>
+<h5><a href="/insights/pages/the-car-industry-shifts-gears.html">The Car Industry Shifts Gears</a></h5>
+</div>
+<p><a href="/insights/pages/the-car-industry-shifts-gears.html">Autonomous driving is upending the auto industry as both traditional carmakers and new tech companies compete for the future of mobility. Axel Hoefer of Goldman Sachs Investment Banking Division explains how the development of this new technology is impacting deal making. <b>Watch Video</b></a></p>
+<div class="topics">
+<span class="topics-heading">TOPICS:</span>
+<a class="topics-link" href="/insights/topics/cars.html">Cars</a> , 
+          <a class="topics-link" href="/insights/topics/technology-driving-innovation.html">Technology Driving Innovation</a>
+</div>
+</div>
+<div class="card-back">
+<div class="inner">
+<a class="toggle-flip"><i class="ui-thick-close"><span>close</span></i></a>
+<h4>More from this series</h4>
+<h6><a href="/insights/series/the-long-and-short-of-it/index.html">The Long &amp; Short of It</a></h6>
+<ul>
+</ul>
+</div>
+</div>
+</div> </li>
+<li class="card-module">
+<div class="card-flipper">
+<div class="card-front">
+<a class="figure" href="https://www.marcus.com/us/en">
+<figure class="pulseImage">
+<img alt="Marcus by Goldman Sachs" class="" src="/homepage/2016/touts/images/marcus-lightbulb.jpg"/>
+</figure> </a>
+<time datetime=""></time>
+<div class="heading">
+<h5><a href="https://www.marcus.com/us/en">Marcus by Goldman Sachs</a></h5>
+</div>
+<p><a href="https://www.marcus.com/us/en">Marcus by Goldman Sachs® provides consumers with no-fee personal loans and high-yield savings accounts to help them achieve financial well-being. Learn more about our </a><a href="https://www.marcus.com/us/en/personal-loans" style="color:#747576"><b>personal loans</b></a> and <a href="https://www.marcus.com/us/en/savings" style="color:#747576"><b>high-yield savings accounts.</b></a></p>
+</div>
+</div> </li>
+<li class="card-module">
+<div class="card-flipper">
+<div class="card-front">
+<a class="figure" href="/insights/talks-at-gs/rick-atkinson.html">
+<figure class="pulseImage">
+<img alt="Rick Atkinson, Author of &lt;i&gt;The British Are Coming: The War for America, Lexington to Princeton, 1775-1777&lt;/i&gt;" class="" src="/insights/talks-at-gs/rick-atkinson-f/800x450.jpg"/>
+<div class="video-icon"></div>
+</figure> </a>
+<time datetime="5 NOV 2019">5 NOV 2019</time>
+<div class="heading">
+<h6> <a class="toggle-flip"> Talks at GS <span> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> <i class="more-dot">â¢</i> </span> </a> </h6>
+<h5><a href="/insights/talks-at-gs/rick-atkinson.html">Rick Atkinson, Author of <i>The British Are Coming: The War for America, Lexington to Princeton, 1775-1777</i></a></h5>
+</div>
+<p><a href="/insights/talks-at-gs/rick-atkinson.html">Historian Rick Atkinson discusses his new historical trilogy on the American Revolution, the enduring lessons from the early battles of that war and the key figures at the center of the fight â from George Washington to King George III. <b>Watch Video</b></a></p>
+</div>
+<div class="card-back">
+<div class="inner">
+<a class="toggle-flip"><i class="ui-thick-close"><span>close</span></i></a>
+<h4>More from this series</h4>
+<h6><a href="/insights/series/talks-at-gs/index.html">Talks at GS</a></h6>
+<ul>
+<li> <h5><a href="/insights/talks-at-gs/tory-burch.html">Tory Burch: The Business of Empowering Women </a></h5> </li>
+<li> <h5><a href="/insights/talks-at-gs/bjarke-ingels.html">Bjarke Ingels: Transforming the Global Skyline </a></h5> </li>
+<li> <h5><a href="/insights/talks-at-gs/christy-turlington-burns.html">Christy Turlington Burns: Advancing Global Maternal Health </a></h5> </li>
+</ul>
+</div>
+</div>
+</div> </li>
+</ul>
+</section>
+<section class="default-component careers-large-hero title-and-copy full-width" data-title="large-hero">
+<div class="careers-large-hero__container large-hero">
+<div class="large-hero__image">
+<img class="careers-large-hero__image" src="/homepage/2016/multimedia/podcast-1400x556.jpg"/>
+</div>
+<div class="careers-large-hero__copy top">
+<div class="careers-large-hero__content top">
+<p class="eyebrow">Podcast Series</p>
+<h1>Exchanges at Goldman Sachs</h1>
+<p> <em>Exchanges at Goldman Sachs</em> is our podcast where people from across the firm share their insights on developments shaping markets, industries and the global economy. </p>
+<div class="cta">
+<a class="button-cta" href="/insights/podcasts/index.html">Explore Series and Listen</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="grey">
+<section class="default-component image-with-cards-section" data-title="image-with-cards">
+<div class="image-with-cards">
+<div class="image-with-cards__image-holder">
+<div class="image-with-cards__top__content">
+<p class="image-with-cards__top__eyebrow">Careers at Goldman Sachs</p>
+<h3 class="image-with-cards__top__title">See Yourself Here</h3>
+<div class="image-with-cards__top__copy">
+<p> Here, we make things possible. Here, what we do extends far beyond finance. Discover a day in the life of our people and learn more about our culture.</p>
+</div>
+</div>
+<img alt="See Yourself Here" src="/homepage/2016/multimedia/day-in-the-life-861x435.jpg"/>
+<div class="image-with-cards__content-holder">
+<div class="image-with-cards__ctas">
+<a class="cta" href="/careers/index.html">Explore Now</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- -->
+<section data-title="homepage briefings" id="briefings">
+<div class="container briefings">
+<h3 class="briefings-logo">Briefin<span>gs</span></h3>
+<p>A weekly email from Goldman Sachs about trends shaping markets, industries and the global economy.</p>
+<p class="briefings-yes-text no-margin hidden">Thank you for subscribing to BRIEFINGS: our weekly email about trends shaping markets, industries and the global economy.</p>
+<p class="briefings-error-text no-margin hidden">Some error occurred. Please refresh the page and try again.</p>
+<p class="briefings-invalid-text no-margin hidden">Invalid input parameters. Please refresh the page and try again.</p>
+<form class="briefings__sign-up" method="post">
+<div class="fieldset">
+<input autocomplete="off" class="briefings-email-text no-margin no-border" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" placeholder="Email" required="" type="email"/>
+<button class="btn btn-blue" type="submit">Sign Up</button>
+<div class="cta-loader input-type inline homepage hidden">
+<img src="/a/pgs/images/loader.svg"/>
+</div>
+</div>
+</form>
+</div>
+<script type="text/javascript">
+        window.briefings_url='https://www.gsam.com/bin/gsam/servlets/EmailSubscriptionServlet';
+        window.subscription_id='100001';
+    </script>
+</section>
+<!-- -->
+</div>
+<script type="text/javascript"> 
+                                         var GS = GS || {}; 
+                                         GS.Navigation = GS.Navigation || {}; 
+                                         GS.Navigation.parentPage = 'com/index.html'; 
+                                 </script>
+<footer class="A1-footer" data-nav-json="/navigation/nav.json" id="A1-footer">
+<section class="A1-footer__top">
+<div class="A1-footer__top-wrapper">
+<div class="A1-footer__inline-lists">
+<ul class="A1-footer__list">
+<li class="A1-footer__list-item"> <a class="A1-footer__link" href="/privacy-and-cookies/index.html">Privacy and Cookies</a> </li>
+<li class="A1-footer__list-item"> <a class="A1-footer__link" href="http://optout.aboutads.info/#/">Ad Choices</a> </li>
+<li class="A1-footer__list-item"> <a class="A1-footer__link" href="/terms-and-conditions/index.html">Terms &amp; Conditions</a> </li>
+<li class="A1-footer__list-item"> <a class="A1-footer__link" href="/security/index.html">Security</a> </li>
+<li class="A1-footer__list-item"> <a class="A1-footer__link" href="/regulatory-disclosures/index.html">Regulatory Disclosures</a> </li>
+<li class="A1-footer__list-item"> <a class="A1-footer__link" href="/sitemap/index.html">Site Map</a> </li>
+<li class="A1-footer__list-item"> <a class="A1-footer__link" href="/login/index.html">Login</a> </li>
+</ul>
+</div>
+<div class="A1-footer__dropdown-lists">
+<div class="A1-footer__dropdown"></div>
+</div>
+</div>
+</section>
+<section class="A1-footer__bottom">
+<div class="A1-footer__bottom-wrapper">
+<div class="A1-footer__social-bar"></div>
+<div class="A1-footer__copyright">
+        © 2019 Goldman Sachs 
+      </div>
+</div>
+</section>
+</footer>
+<script>
+        GS.loadNewNav = "true";
+    </script>
+<script type="text/javascript">
+	window.country_msg_url='/homepage/local-content/index.html';
+</script>
+<script type="text/javascript">
+	window.share_template_url='/fragments/share-templates.html';
+</script>
+<!-- -->
+<script src="/a/pgs/js/components/gs.briefings.js" type="text/javascript"></script>
+<script src="/a/pgs/js/components/utilities/custom-event-polyfill.js" type="text/javascript"></script>
+<script src="/a/pgs/js/components/utilities/utility.js" type="text/javascript"></script>
+<script src="/a/pgs/js/components/utilities/global.js" type="text/javascript"></script>
+<script src="/a/pgs/js/components/utilities/slick-carousel.js" type="text/javascript"></script>
+<script src="/a/pgs/js/components/carousel-menu.js" type="text/javascript"></script>
+<script src="/a/pgs/js/components/video-hero.js" type="text/javascript"></script>
+<script src="/a/pgs/js/components/gs.hero-tout.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/gs-factory-helpers.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/gs-factory-events.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/footer.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/handlebars.min.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/hammerjs.min.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/url-parse.min.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/es6-promise.min.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/elem-dataset.min.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/browser-detect.min.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/normalize-wheel.min.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/isomorphic-fetch.min.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/web-animations-js.min.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/libraries/director.min.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/bundle.js" type="text/javascript"></script>
+<script src="/a/pgs/navigation/js/nav-analytics.js" type="text/javascript"></script>
+</div>
+</body>
+</html>

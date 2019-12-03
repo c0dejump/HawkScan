@@ -1,0 +1,38 @@
+{'Expect-CT': 'max-age=604800
+ report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+ 'Content-Length': '72033'
+ 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload'
+ 'CF-Cache-Status': 'DYNAMIC'
+ 'vary': 'Accept-Encoding
+ Cookie
+ Cookie'
+ 'X-Varnish': '209668'
+ 'x-styx-req-id': '850782cd-062f-11ea-90f7-268049c0fe51'
+ 'x-pantheon-styx-hostname': 'styx-fe3-b-c8f8fbbbb-cw296'
+ 'x-cache-hits': '1
+ 3'
+ 'x-ua-compatible': 'IE=edge'
+ 'cache-control': 'public
+ max-age=600'
+ 'Date': 'Wed
+ 13 Nov 2019 16:14:49 GMT'
+ 'CF-RAY': '53520a720c92694e-CDG'
+ 'Age': '512'
+ 'x-served-by': 'cache-mdw17327-MDW
+ cache-bwi5049-BWI'
+ 'x-cache': 'HIT
+ HIT'
+ 'Set-Cookie': '__cfduid=d22e7d0d4d0fd4a0872017e4d2c21e4161573661688; expires=Thu
+ 12-Nov-20 16:14:48 GMT; path=/; domain=.bugcrowd.com; HttpOnly'
+ 'accept-ranges': 'bytes'
+ 'Server': 'cloudflare'
+ 'Connection': 'keep-alive'
+ 'link': '<https://www.bugcrowd.com/wp-json/>; rel="https://api.w.org/"
+ <https://www.bugcrowd.com/>; rel=shortlink'
+ 'access-control-allow-origin': 'https://ww2.bugcrowd.com'
+ 'X-Content-Type-Options': 'nosniff'
+ 'content-encoding': 'gzip'
+ 'x-timer': 'S1573661689.137139
+VS0
+VE0'
+ 'Content-Type': 'text/html; charset=UTF-8'}

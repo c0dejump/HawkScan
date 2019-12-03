@@ -1,0 +1,118 @@
+{'crlDistributionPoints': (u'http://crl.globalsign.com/gs/gsextendvalsha2g3r3.crl'
+)
+ 'subjectAltName': 'DNS'
+ 'www.sophos.com')
+ ('DNS'
+ 'club.sophos.com')
+ ('DNS'
+ 'discover.sophos.com')
+ ('DNS'
+ 'es.sophos.com')
+ ('DNS'
+ 'forms.sophos.com')
+ ('DNS'
+ 'fr.sophos.com')
+ ('DNS'
+ 'investors.sophos.com')
+ ('DNS'
+ 'my.sophos.com')
+ ('DNS'
+ 'myutm.sophos.com')
+ ('DNS'
+ 'partnerportal.sophos.com')
+ ('DNS'
+ 'secure2.sophos.com')
+ ('DNS'
+ 'csc.cyberoam.com')
+ ('DNS'
+ 'customer.cyberoam.com')
+ ('DNS'
+ 'cyberoamregistration.cyberoam.com')
+ ('DNS'
+ 'cyberoamupdate.cyberoam.com')
+ ('DNS'
+ 'docs.cyberoam.com')
+ ('DNS'
+ 'hitmanpro.com')
+ ('DNS'
+ 'home.sophos.com')
+ ('DNS'
+ 'kb.cyberoam.com')
+ ('DNS'
+ 'my.astaro.com')
+ ('DNS'
+ 'ncms.netgenie.net')
+ ('DNS'
+ 'partner.cyberoam.com')
+ ('DNS'
+ 'sophoshome.com')
+ ('DNS'
+ 'surfright.com')
+ ('DNS'
+ 'surfright.nl')
+ ('DNS'
+ 'www.astaro.com')
+ ('DNS'
+ 'www.cyberoam.com')
+ ('DNS'
+ 'www.hitmanpro.com')
+ ('DNS'
+ 'www.sophos.co.jp')
+ ('DNS'
+ 'www.sophos.de')
+ ('DNS'
+ 'www.sophos.fr')
+ ('DNS'
+ 'www.sophos.it')
+ ('DNS'
+ 'www.sophoshome.com')
+ ('DNS'
+ 'www.surfright.com')
+ ('DNS'
+ 'www.surfright.nl')
+ ('DNS'
+ 'sophos.com'
+ 'notBefore': u'Aug  8 10:52:05 2019 GMT'
+ 'caIssuers': (u'http://secure.globalsign.com/cacert/gsextendvalsha2g3r3.crt'
+)
+ 'OCSP': (u'http://ocsp2.globalsign.com/gsextendvalsha2g3r3'
+)
+ 'serialNumber': u'38E395F64A85B19658D6B846'
+ 'notAfter': 'Jun 22 09:56:03 2021 GMT'
+ 'version': 3L
+ 'subject': ('businessCategory'
+ u'Private Organization')
+)
+ 'serialNumber'
+ u'02096520')
+)
+ 'jurisdictionCountryName'
+ u'GB')
+)
+ 'countryName'
+ u'GB')
+)
+ 'stateOrProvinceName'
+ u'Oxfordshire')
+)
+ 'localityName'
+ u'Abingdon')
+)
+ 'streetAddress'
+ u'The Pentagon')
+)
+ 'organizationName'
+ u'Sophos Ltd.')
+)
+ 'commonName'
+ u'www.sophos.com')
+
+ 'issuer': ('countryName'
+ u'BE')
+)
+ 'organizationName'
+ u'GlobalSign nv-sa')
+)
+ 'commonName'
+ u'GlobalSign Extended Validation CA - SHA256 - G3')
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html><head><title>Purchases</title><meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/><meta charset="utf-8"/><meta content="Pay in your favorite apps using Venmo. Buy with fewer clicks, split payments easily, and share with friends." name="description"/><meta content="pay+with+venmo, venmo+purchase, venmo+buy, venmo+business, venmo+commerce, venmo+pay" name="keywords"/><meta content="Venmo Purchases" property="og:title"/><meta content="website" property="og:type"/><meta content="Pay in your favorite apps using Venmo. Buy with fewer clicks, split payments easily, and share with friends." property="og:description"/><meta content="https://cdn1.venmo.com/production/images/pwv/meta-screenshot.png" property="og:image"/><meta content="http://www.venmo.com/purchases" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="@venmo" name="twitter:site"/><meta content="Pay with Venmo" name="twitter:title"/><meta content="Pay in your favorite apps using Venmo. Buy with fewer clicks, split payments easily, and share with friends." name="twitter:description"/><meta content="https://cdn1.venmo.com/production/images/pwv/meta-screenshot.png" name="twitter:image"/><link href="https://cdn1.venmo.com/production/stylesheets/pwv-marketing.compiled.css" rel="stylesheet"/></head><body><div id="app"></div><script>
+      window.venmo = window.venmo || {};
+      window.venmo.app = {"name":"pwv-marketing","useServices":true,"isContentPage":true,"version":"-"};
+    </script><script>
+      window.venmo = window.venmo || {};
+      window.venmo.services = {"braintree_encryption":{"braintree_cse_public_key":"MIIBCgKCAQEAocjDYw9sXSlP9RioVLRhlKdAsvzCdSfztugTCRV6sQuLXsemB04tAmbjdfMUPvef5ox4vFLPAvA3EDoj6jj/90zM+JI1KZZL3AyQvyLVxrLDRBsWGDawrz+bc2RLZE+SuWJwD3OwOIqZE6mMTUzJfyO8nw0S85YMITT5ylpczvSi8jytBMBv8ur6EIdK6U2RddnIVbgVoAUXMQZqhDprJsGjExEVyWtpTibvCvHum173lafm5nt6gK36uGQwOXqlCZxOvET2W7MrV6QnGFJj+S5w4vZS6E9uIDslb9NLbUKUnjo1TUuZ+bLEFe7XfA57yCafuHPinz3qBI3fTuMUbQIDAQAB","enabled":true},"braintree":{"tokenization_key":"production_pg6js949_dcz2m2h9dfjptytk"},"facebook":{"enabled":true,"id":"180347063770"},"ga":{"enabled":true,"id":"UA-15492939-15","contentPageId":"UA-15492939-14"},"trackjs":{"token":"42f77a0fdea14510acb1a4afce90f71d","enabled":true},"mParticle":{"enabled":true,"id":"40433222e815b743853a4bb6b7a86058","isSandbox":false,"excludingPaths":["/account/password-new"]},"plaid":{"enabled":true,"env":"production","key":"05e9781bcf561d4f946d221f75e21c","apiVersion":"v2","clientName":"Venmo"},"firebase":{"enabled":false,"apiKey":"AIzaSyBgRZGUk2Fq0_JlmgzoqUzvZPALx1smPfA","authDomain":"fir-venmo.firebaseapp.com","databaseURL":"https://fir-venmo.firebaseio.com","projectId":"firebase-venmo","storageBucket":"firebase-venmo.appspot.com","messagingSenderId":"966004744864"}};
+    </script><script>/* eslint-disable */
+(function() {
+
+  function plaid(config) {
+    (function(d){
+      var js, id = 'plaid-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//cdn.plaid.com/link/v2/stable/link-initialize.js";
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    window.createPlaidHandler = function(option){
+      return window.Plaid && window.Plaid.create({
+        apiVersion: config.apiVersion,
+        clientName: config.clientName,
+        env: config.env,
+        key: config.key,
+        product: 'auth',
+        selectAccount: false,
+        onSuccess: option.onSuccess,
+        onExit: option.onExit,
+        isEmbedded: true,
+        onEvent: option.onEvent,
+      });
+    }
+  }
+
+  function facebook(config) {
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: config.id,
+        xfbml: true,
+        status: true,
+        version: 'v2.4'
+      });
+    };
+    (function(d){
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
+  }
+
+  function googleAnalytics(config) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    /**
+     * We only want to track with webapp property by default on webapp pages.
+     * On content pages, we send pageviews to both, but track events by default to webapp property.
+     * We also don't want to pass along any query params, as they may contain sensitive info.
+     * We override `location` per the dev guide to prevent it from being set with params included.
+     * https://developers.google.com/analytics/devguides/collection/analyticsjs/creating-trackers
+     */
+    var pageUrl = window.location.href.split('?')[0];
+    if ( window.venmo.app && window.venmo.app.isContentPage ) {
+      ga('create', config.contentPageId, 'auto', 'contentPageTracker');
+      ga('create', config.id, 'auto');
+      ga('set', 'location', pageUrl);
+      ga('contentPageTracker.send', 'pageview');
+      ga('send', 'pageview');
+    } else {
+      ga('create', config.id, 'auto');
+      ga('set', 'location', pageUrl);
+      ga('send', 'pageview');
+    }
+  }
+
+  function twitter() {
+    window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+
+      return t;
+    }(document, "script", "twitter-wjs"));
+
+  }
+
+  function mParticle(config) {
+    (function (apiKey) {
+      window.mParticle = window.mParticle || {};
+      window.mParticle.isIOS=/Venmo.*(iPhone|iPad|iPod)/i.test(navigator.userAgent);
+      window.mParticle.config = window.mParticle.config || {};
+      window.mParticle.config.rq = [];
+      window.mParticle.ready = function (f) {
+        window.mParticle.config.rq.push(f);
+      };
+      var mp = document.createElement('script');
+      mp.type = 'text/javascript';
+      mp.async = true;
+      mp.src = ('https:' == document.location.protocol ? 'https://jssdkcdns' : 'http://jssdkcdn') + '.mparticle.com/js/v2/' + apiKey + '/mparticle.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(mp, s);
+    })(config.id);
+  }
+
+  function firebase(config) {
+    (function(d){
+      var js, id = 'firebase-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//www.gstatic.com/firebasejs/5.7.3/firebase.js";
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    window.initializeFirebase = function(option){
+      return window.firebase && window.firebase.initializeApp({
+        apiKey: config.apiKey,
+        authDomain: config.authDomain,
+        databaseURL: config.databaseURL,
+        projectId: config.projectId,
+        storageBucket: config.storageBucket,
+        messagingSenderId: config.messagingSenderId
+      });
+    }
+  }
+
+  function trackjs(config) {
+    (function(d){
+      var js, ref = d.getElementsByTagName('script')[0];
+      js = d.createElement('script'); js.async = true;
+      js.src = "//d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js";
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
+    window._trackJs = {
+      token: config.token,
+      application: 'shabu',
+      version: window.venmo.app.version,
+      onError: function() {
+        return window.venmo.services
+          && window.venmo.services.trackjs
+          && window.venmo.services.trackjs.enabled;
+      }
+    };
+  }
+
+  var serviceSnippets = {
+    facebook: facebook,
+    twitter: twitter,
+    ga: googleAnalytics,
+    mParticle: mParticle,
+    trackjs: trackjs,
+    plaid: plaid,
+    firebase: firebase
+  };
+
+  /* eslint-enable */
+
+  if ( window.venmo && window.venmo.services ) {
+    var servicesConfig = window.venmo.services;
+    Object.keys(serviceSnippets).forEach(function(service) {
+      var serviceConfig = servicesConfig[service];
+      if ( serviceConfig && serviceConfig.enabled && serviceSnippets[service] ) {
+        serviceSnippets[service](serviceConfig);
+      }
+    });
+
+  }
+
+})();
+</script><script>window.isMobile = false</script><script crossorigin="anonymous" src="https://cdn1.venmo.com/production/js/pwv-marketing.min.js"></script><script src="//platform.twitter.com/widgets.js"></script></body></html>
