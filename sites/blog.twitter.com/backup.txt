@@ -1,4 +1,0 @@
-?
-robots.txt
-.htpasswd/
-.htaccess/

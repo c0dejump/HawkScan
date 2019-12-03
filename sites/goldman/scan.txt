@@ -1,3 +1,0 @@
-[x] https://www.goldman.com/* Forbidden
-[x] https://www.goldman.com/? Forbidden
-[x] https://www.goldman.com/: Forbidden

@@ -1,4 +1,0 @@
-?
-?wsdl
-index.html
-soap/

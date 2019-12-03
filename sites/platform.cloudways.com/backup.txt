@@ -1,9 +1,0 @@
-?
-?wsdl
-robots.txt
-koolix/
-koolix
-admin/
-index.php
-index.php?-s
-index/

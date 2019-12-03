@@ -1,9 +1,0 @@
-User-Agent: *
-Disallow: /?utm_source=lsplayer
-Disallow: /?*=*&amp;utm_source=lsplayer
-Disallow: /join
-Disallow: /session/new
-Disallow: /accounts/new
-Disallow: /userguide
-Disallow: /redirector
-Disallow: /unsubscribe

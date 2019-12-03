@@ -1,3 +1,0 @@
-Sitemap: https://go.wepay.com/sitemap.xml 
-User-Agent: *
-Allow: /

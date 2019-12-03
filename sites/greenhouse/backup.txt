@@ -1,6 +1,0 @@
-..%3B/
-?wsdl
-robots.txt
-index.php
-index.php?-s
-index.html
