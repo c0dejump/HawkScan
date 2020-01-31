@@ -959,7 +959,7 @@ if __name__ == '__main__':
     auto = results.auto
 
     banner()
-    #auto_update()
+    auto_update()
     len_w = 0 #calcul wordlist size
     cookie_auth = {}
     if url.split("/")[-1] != "":
