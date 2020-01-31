@@ -95,26 +95,20 @@ def auto_update():
     """
     auto_update: for update the tool
     """
+    update = 0
     print("{}Checking update...".format(INFO))
-    git_pull = os.system("git pull origin master")
-    print(git_pull)
-    if git_pull:
-        print("{}A new version found\n".format(INFO))
-        try:
-            au = raw_input("Do you want update it ? (y/n): ")
-        except:
-            au = input("Do you want update it ? (y/n): ")
-        if au == "y":
-            try:
-                os.system("git pull origin master")
-            except:
-                os.system("rm -rf ../HawkScan && git clone https://github.com/c0dejump/HawkScan.git")
-        else:
-            os.system("rm -rf git_status.txt")
-            pass
+    os.system("git pull origin master > /dev/null 2>&1 > git_status.txt")
+    with open("git_status.txt", "r") as gs:
+        for s in gs:
+            if "Already up to date" not in s:
+                update = 1
+    if update == 1:
+        print("{}A new version was be donwload\n".format(INFO))
+        os.system("rm -rf git_status.txt")
     else:
-        print("nop")
-
+        print("{}Nothing update found".format(INFO))
+        os.system("rm -rf git_status.txt")
+                
 def gitpast(url):
     """
     Github: check github informations
