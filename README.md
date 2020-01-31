@@ -10,6 +10,10 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
 
 This script use "waybacktool" to check in waybackmachine (https://github.com/Rhynorater/waybacktool)
 
+# News
+**!** Automatic threads depending response to website       
+**!** New display
+
 # Features
  - [x] URL fuzzing and dir/file detection
  - [x] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
@@ -37,6 +41,7 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  - [x] Check in waybackmachine
  - [x] Response error to WAF
  - [x] Check if DataBase firebaseio existe and accessible
+ - [x] Automatic threads depending response to website (and reconfig if WAF detected too many times). Max: 10
  
 # TODO
  - [ ] Testing website paramaters (attack, so no passive scan)
@@ -44,7 +49,6 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  - [ ] Anonymous routing through some proxy (http/s proxy list)
  - [ ] Check pastebin
  - [ ] Detect famous honeypot
- - [ ] Auto reconfiguration if waf detect it
  - [ ] Best HTML report and On-the-fly writing report
  - [ ] Access token
  - [ ] Clean script, to add class or split different function on a file ? (to see next)
@@ -61,7 +65,7 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
   
  >
      
-    usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE] [--timesleep TS]
+    usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE] [--timesleep TS] [--auto]
  
  > 
  
@@ -79,3 +83,4 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
       --cookie COOKIE  Scan with an authentification cookie   
       --exclude EXCLUDE  To define a page type to exclude during scan    
       --timesleep TS     To define a timesleep/rate-limit if app is unstable during scan 
+      --auto          Automatic threads depending response to website. Max: 10

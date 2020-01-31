@@ -7,9 +7,6 @@ import sys, os, re
 import time
 from time import strftime
 import ssl, OpenSSL
-import socket
-import pprint
-import whois
 import argparse
 from bs4 import BeautifulSoup
 import json
@@ -34,6 +31,7 @@ except Exception:
     pass    
 from modules.creat_report import create_report
 from modules.detect_waf import verify_waf
+from modules.mini_scans import mini_scans
 
 
 def banner():
@@ -58,11 +56,11 @@ except:
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
-#list to append url and then recursif scan
 rec_list = []
+#list to append url and then recursif scan
 
-#for exclude option
 req_p = u""
+#for exclude option
 
 class ThreadManager:
     """
@@ -108,32 +106,74 @@ def auto_update():
     else:
         print("{}Nothing update found".format(INFO))
         os.system("rm -rf git_status.txt")
-                
-def gitpast(url):
+
+
+def status(stat, directory, u_agent, thread):
     """
-    Github: check github informations
-    Pastebin: check pastebin information #TODO
+    Status:
+     - Get response status of the website (200, 302, 404...).
+     - Check if a backup exist before to start the scan.
+     If exist it restart scan from to the last line of backup.
     """
-    print("{}Check in Github".format(INFO))
-    print(LINE)
-    if "www" in url:
-        url = url.split(".")[1]
-    else:
-        url = url.split("/")[2]
-    url = "{}".format(url)
-    print("search: {}\n".format(url))
-    types = ["Commits", "Issues", "Code", "Repositories", "Marketplace", "Topics", "Wikis", "Users"]
-    for t in types:
-        github = "https://github.com/search?q={}&type={}".format(url, t)
-        req = requests.get(github, verify=False)
-        soup = BeautifulSoup(req.text, "html.parser")
-        search = soup.find('a', {"class":"menu-item selected"})
-        if search:
-            for s in search.find("span"):
-                print("{}{}: {}".format(INFO, t, s))
+    check_b = check_backup(directory)
+    #check backup before start scan
+    if check_b == True:
+        with open(directory + "/backup.txt", "r") as word:
+            for ligne in word.readlines():
+                print("{}{}{}".format(BACK, url, ligne.replace("\n","")))
+                lignes = ligne.split("\n")
+                #take the last line in file
+                last_line = lignes[-2]
+            with open(wordlist, "r") as f:
+                for nLine, line in enumerate(f):
+                    line = line.replace("\n","")
+                    if line == last_line:
+                        print(LINE)
+                        forced = False
+                        check_words(url, wordlist, directory, u_agent, thread, forced, nLine)
+    elif check_b == False:
+        os.remove(directory + "/backup.txt")
+        print("restarting scan...")
+        print(LINE)
+    if stat == 200:
+        check_words(url, wordlist, directory, u_agent, thread)
+    elif stat == 301:
+        print(PLUS + " 301 Moved Permanently\n")
+        check_words(url, wordlist, directory, u_agent, thread)
+    elif stat == 302:
+        print(PLUS + " 302 Moved Temporarily\n")
+        check_words(url, wordlist, directory, u_agent, thread)
+    elif stat == 304:
+        pass
+    elif stat == 404:
+        try:
+            a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
+        except:
+            a = input("{} not found/ forced ?(y:n)".format(LESS))
+        if a == "y":
+            check_words(url, wordlist, directory, u_agent, thread)
         else:
-            print("{}{}: not found".format(INFO, t))
-    print("\n" + LINE)
+            sys.exit()
+    elif stat == 403:
+        try:
+            a = raw_input(FORBI + " forbidden/ forced ?(y:n)")
+        except:
+            a = input(FORBI + " forbidden/ forced ?(y:n)")
+        if a == "y":
+            forced = True
+            check_words(url, wordlist, directory, u_agent, forced, thread)
+        else:
+            sys.exit()
+    else:
+        try:
+            a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
+        except:
+            a = input("{} not found/ forced ?(y:n)".format(LESS))
+        if a == "y":
+            check_words(url, wordlist, directory, u_agent, thread)
+        else:
+            sys.exit()
+                
 
 def mail(req, directory, all_mail):
     """
@@ -176,11 +216,13 @@ def subdomain(subdomains):
     print(LINE)
     time.sleep(2)
 
+
 def sitemap(req, directory):
     """ Get sitemap.xml of website"""
     soup = BeautifulSoup(req.text, "html.parser")
     with open(directory + '/sitemap.xml', 'w+') as file:
         file.write(str(soup).replace(' ','\n'))
+
 
 def detect_waf(url, directory):
     """
@@ -277,39 +319,6 @@ def cve_cms(result, v):
         print("{} Nothing CVE found \n".format(LESS))
 
 
-def get_header(url, directory):
-    """Get header of website (cookie, link, etc...)"""
-    head = r.headers
-    print(INFO + "HEADER")
-    print(LINE)
-    print(" {} \n".format(head).replace(',','\n'))
-    print(LINE)
-    with open(directory + '/header.csv', 'w+') as file:
-        file.write(str(head).replace(',','\n'))
-
-
-def who_is(url, directory):
-    """Get whois of website"""
-    print(INFO + "WHOIS")
-    print(LINE)
-    try:
-        who_is = whois.whois(url)
-        #pprint.pprint(who_is + "\n")
-        for k, w in who_is.iteritems():
-            is_who = "{} : {}-".format(k, w)
-            print(is_who)
-            with open(directory + '/whois.csv', 'a+') as file:
-                file.write(is_who.replace("-","\n"))
-    except:
-        erreur = sys.exc_info()
-        typerr = u"%s" % (erreur[0])
-        typerr = typerr[typerr.find("'")+1:typerr.rfind("'")]
-        print(typerr)
-        msgerr = u"%s" % (erreur[1])
-        print(msgerr)
-    print("\n" + LINE)
-
-
 def wayback_check(url, directory):
     """
     Wayback_check:
@@ -341,73 +350,6 @@ def wayback_check(url, directory):
     print(LINE)
 
 
-def status(stat, directory, u_agent, thread):
-    """
-    Status:
-     - Get response status of the website (200, 302, 404...).
-     - Check if a backup exist before to start the scan.
-     If exist it restart scan from to the last line of backup.
-    """
-    check_b = check_backup(directory)
-    #check backup before start scan
-    if check_b == True:
-        with open(directory + "/backup.txt", "r") as word:
-            for ligne in word.readlines():
-                print("{}{}{}".format(BACK, url, ligne.replace("\n","")))
-                lignes = ligne.split("\n")
-                #take the last line in file
-                last_line = lignes[-2]
-            with open(wordlist, "r") as f:
-                for nLine, line in enumerate(f):
-                    line = line.replace("\n","")
-                    if line == last_line:
-                        print(LINE)
-                        forced = False
-                        check_words(url, wordlist, directory, u_agent, thread, forced, nLine)
-    elif check_b == False:
-        os.remove(directory + "/backup.txt")
-        print("restarting scan...")
-        print(LINE)
-    if stat == 200:
-        check_words(url, wordlist, directory, u_agent, thread)
-    elif stat == 301:
-        print(PLUS + " 301 Moved Permanently\n")
-        check_words(url, wordlist, directory, u_agent, thread)
-    elif stat == 302:
-        print(PLUS + " 302 Moved Temporarily\n")
-        check_words(url, wordlist, directory, u_agent, thread)
-    elif stat == 304:
-        pass
-    elif stat == 404:
-        try:
-            a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
-        except:
-            a = input("{} not found/ forced ?(y:n)".format(LESS))
-        if a == "y":
-            check_words(url, wordlist, directory, u_agent, thread)
-        else:
-            sys.exit()
-    elif stat == 403:
-        try:
-            a = raw_input(FORBI + " forbidden/ forced ?(y:n)")
-        except:
-            a = input(FORBI + " forbidden/ forced ?(y:n)")
-        if a == "y":
-            forced = True
-            check_words(url, wordlist, directory, u_agent, forced, thread)
-        else:
-            sys.exit()
-    else:
-        try:
-            a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
-        except:
-            a = input("{} not found/ forced ?(y:n)".format(LESS))
-        if a == "y":
-            check_words(url, wordlist, directory, u_agent, thread)
-        else:
-            sys.exit()
-
-
 def check_backup(directory):
     """Check if a backup file exist from function 'Status' """
     if os.path.exists(directory + "/backup.txt"):
@@ -424,38 +366,6 @@ def check_backup(directory):
             return False
     else:
         pass
-
-
-def get_dns(url, directory):
-    """Get DNS informations"""
-    try:
-        if "https" in url:
-            url = url.replace('https://','').replace('/','')
-            context = ssl.create_default_context()
-            conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=url)
-            conn.connect((url, 443))
-            cert = conn.getpeercert()
-            print(INFO + "DNS information")
-            print(LINE)
-            pprint.pprint(str(cert['subject']).replace(',','').replace('((','').replace('))',''))
-            pprint.pprint(cert['subjectAltName'])
-            print('')
-            conn.close()
-            print(LINE)
-            with open(directory + '/dns_info.csv', 'w+') as file:
-                file.write(str(cert).replace(',','\n').replace('((','').replace('))',''))
-        else:
-            pass
-    except:
-        print(INFO + "DNS information")
-        print(LINE)
-        erreur = sys.exc_info()
-        typerr = u"%s" % (erreur[0])
-        typerr = typerr[typerr.find("'")+1:typerr.rfind("'")]
-        print(typerr)
-        msgerr = u"%s" % (erreur[1])
-        print(msgerr + "\n")
-        print(LINE)
 
 
 def backup(res, directory, forbi):
@@ -623,33 +533,6 @@ def check_exclude_page(req, res, directory, forbi, HOUR):
                 rec_list.append(result)
                 outpt(directory, res, stats=0)
 
-def firebaseio(dire):
-    """
-    Firebaseio: To check db firebaseio
-    ex: --firebase facebook
-    """
-    print("{}Firebaseio Check".format(INFO))
-    print(LINE)
-    url = 'https://{}.firebaseio.com/.json'.format(dire.split(".")[0])
-    print(url + "\n")
-    r = requests.get(url, verify=False).json()
-    try:
-        if 'error' in r.keys():
-            if r['error'] == 'Permission denied':
-                print("{}{} seems to be protected").format(FORBI, url) #successfully protected
-            elif r['error'] == '404 Not Found':
-                print("{}{} not found").format(LESS, url) #doesn't exist
-            elif "Firebase error." in r['error']:
-                print("{}{} Firebase error. Please ensure that you spelled the name of your Firebase correctly ".format(WARNING, url))
-        else:
-            print("{}{} seems to be vulnerable !".format(PLUS, url)) #vulnerable
-    except AttributeError:
-        '''
-        Some DBs may just return null
-        '''
-        print("{} null return".format(INFO))
-    print(LINE + "\n")
-
 
 def get_links(req, directory):
     """
@@ -665,6 +548,7 @@ def get_links(req, directory):
                     links.write(str(link+"\n"))
             else:
                 pass
+
 
 def defined_thread(thread, i, score_next):
     """
@@ -698,7 +582,11 @@ def defined_thread(thread, i, score_next):
     else:
         return 0, 0;
 
+
 def len_page_flush(len_p):
+    """
+    Len_page_flush: to defined the word size for then "flush" it
+    """
     if len_p <= 10:
         return 10
     elif len_p > 10 and len_p <= 20:
@@ -710,14 +598,16 @@ def len_page_flush(len_p):
     elif len_p > 40 and len_p <= 50:
         return 55
     elif len_p > 50 and len_p <= 70:
-        return 70
+        return 75
     else:
-        return 80
+        return len_p + 5
+
 
 def thread_wrapper(i, q, threads, manager, t_event, directory=False, forced=False, u_agent=False):
     while not q.empty() and not t_event.isSet():
         #print("AAAAAAAAAAAA: {}".format(t_event.isSet()))
         tryUrl(i, q, threads, manager, directory, forced, u_agent)
+
 
 def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=False):
     """
@@ -821,8 +711,8 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                                 spl = res.split("/")[3:]
                                 result = "/".join(spl)
                                 rec_list.append(result)
-                    #get mail
                     mail(req, directory, all_mail)
+                    #get mail
                     if 'sitemap.xml' in res:
                         sitemap(req, directory)
                 if status_link == 403:
@@ -908,10 +798,8 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
             #traceback.print_exc()
             pass
         len_p = len(page)
-        len_flush = len_page_flush(len_p)
-        """ 
-        for flush display (yeah for the style :)
-        """
+        len_flush = len_page_flush(len_p) 
+        #for flush display
         sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3} | {4:{5}}\033[0m\r".format(percentage(numbers, len_w)*threading.active_count(), numbers*threading.active_count(), len_w, threading.active_count() - 1, page, len_flush))
         sys.stdout.flush()
 
@@ -980,8 +868,9 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
 def create_file(url, stat, u_agent, thread, subdomains):
     """
     create_file:
-    Create directory with the website name to keep a scan backup. 
+    Create directory with the website name to keep a scan backup.
     """
+    ms = mini_scans()
     dire = ''
     if 'www' in url:
         direct = url.split('.')
@@ -998,14 +887,14 @@ def create_file(url, stat, u_agent, thread, subdomains):
         os.makedirs(directory) # creat the dir
         if subdomains:
             subdomain(subdomains)
-        get_header(url, directory)
-        get_dns(url, directory)
-        who_is(url, directory)
+        ms.get_header(url, directory)
+        ms.get_dns(url, directory)
+        ms.who_is(url, directory)
         detect_cms(url, directory)
         detect_waf(url, directory)
         wayback_check(dire, directory)
-        gitpast(url)
-        firebaseio(director)
+        ms.gitpast(url)
+        ms.firebaseio(director)
         status(stat, directory, u_agent, thread)
         create_report(directory, cookie_)
     # or else ask the question
@@ -1020,14 +909,14 @@ def create_file(url, stat, u_agent, thread, subdomains):
             os.makedirs(directory)
             if subdomains:
                 subdomain(subdomains)
-            get_header(url, directory)
-            get_dns(url, directory)
-            who_is(url, directory)
+            ms.get_header(url, directory)
+            ms.get_dns(url, directory)
+            ms.who_is(url, directory)
             detect_cms(url, directory)
             detect_waf(url, directory)
             wayback_check(dire, directory)
-            gitpast(url)
-            firebaseio(dire)
+            ms.gitpast(url)
+            ms.firebaseio(dire)
             status(stat, directory, u_agent, thread)
             create_report(directory, cookie_)
         else:
@@ -1052,7 +941,7 @@ if __name__ == '__main__':
     parser.add_argument("--cookie", help="Scan with an authentification cookie", required=False, dest="cookie_", type=str)
     parser.add_argument("--exclude", help="To define a page type to exclude during scan", required=False, dest="exclude")
     parser.add_argument("--timesleep", help="To define a timesleep/rate-limit if app is unstable during scan", required=False, dest="ts", type=int, default=0)
-    parser.add_argument("--auto", help="Automatic threads incrementation", required=False, dest="auto", action='store_true')
+    parser.add_argument("--auto", help="Automatic threads depending response to website. Max: 10", required=False, dest="auto", action='store_true')
     results = parser.parse_args()
                                      
     url = results.url
@@ -1070,7 +959,7 @@ if __name__ == '__main__':
     auto = results.auto
 
     banner()
-    auto_update()
+    #auto_update()
     len_w = 0 #calcul wordlist size
     cookie_auth = {}
     if url.split("/")[-1] != "":

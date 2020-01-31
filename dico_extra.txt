@@ -15,6 +15,7 @@ index.php?-s
 index.html
 index/
 ;index.jsp
+?static=1
 contact/
 contact.php
 include.php
