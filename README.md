@@ -12,7 +12,7 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
 
 # News
 **/!\** Automatic threads depending response to website       
-**/!\** New display
+**/!\** New display    
 **/!\** Auto update
 
 # Features
