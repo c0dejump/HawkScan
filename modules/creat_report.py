@@ -111,6 +111,31 @@ def create_report(directory, cookie_):
                             """.format(mail, stat)
         except:
             mails = "<tr><td><b> No emails found </b></td></tr>"
+        try:
+            link = ""
+            with open(directory + "/links.txt", "r") as links:
+                for l in links.read().splitlines():
+                    link += """
+                        <tr>
+                        <td style="width: 120px; padding: 3px;"><a href="{}">{}</a></td>
+                        </tr>
+                        """.format(l, l)
+        except:
+            links = "<tr><td><b> No links found </b></td></tr>"
+        try:
+            wayback = ""
+            with open(directory + "/wayback.txt", "r") as waybacks:
+                for wb in waybacks.read().splitlines():
+                    w = wb.split(",")
+                    w_status = w[1]
+                    wayback += """
+                        <tr>
+                        <td style="width: 120px; padding: 3px;"><a href="{}">{}</a></td>
+                        <td style="width: 20px; padding: 3px;">{}</td>
+                        </tr>
+                        """.format(w[0], w[0], w_status)
+        except:
+            links = "<tr><td><b> No wayback found </b></td></tr>"
         with open(directory + "/cms.txt","r") as cmsFile:
             cms = ""
             for cms_read in cmsFile.read().splitlines():
@@ -174,6 +199,35 @@ def create_report(directory, cookie_):
                 </tbody>
                 </table>
                 </br>
+                <hr>
+                <br>
+                <b>Links</b><br><br>
+                <table style="width: 400px; border-color: black; height: 1px;" border="1" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td style="width: 120px;"><b>Links</b></td>
+                {}
+                </tbody>
+                </table>
+                </br>
+                <br>
+                <hr>
+                <br>
+                <b>Wayback</b><br><br>
+                <table style="width: 400px; border-color: black; height: 1px;" border="1" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td style="width: 120px;"><b>Links</b></td>
+                <td style="width: 20px;"><b>Status</b></td>
+                {}
+                </tbody>
+                </table>
+                </br>
                 </center>
                 </body>
-                </html>'''.format(auth_stat, waf, cms, urls, mails))
+                </html>'''.format(auth_stat, waf, cms, urls, mails, link, wayback))
+
+"""if __name__ == '__main__':
+    directory = "sites/unibet/"
+    cookie_ = None
+    create_report(directory, cookie_)"""

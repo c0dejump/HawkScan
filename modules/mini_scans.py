@@ -17,7 +17,7 @@ class mini_scans:
         head = r.headers
         print(INFO + "HEADER")
         print(LINE)
-        print(" {} \n".format(head).replace(',','\n'))
+        print("  {} \n".format(head).replace(',','\n'))
         print(LINE)
         with open(directory + '/header.csv', 'w+') as file:
             file.write(str(head).replace(',','\n'))
@@ -43,9 +43,9 @@ class mini_scans:
             search = soup.find('a', {"class":"menu-item selected"})
             if search:
                 for s in search.find("span"):
-                    print("{}{}: {}".format(INFO, t, s))
+                    print("  {}{}: {}".format(INFO, t, s))
             else:
-                print("{}{}: not found".format(INFO, t))
+                print("  {}{}: not found".format(INFO, t))
         print("\n" + LINE)
 
     def who_is(self, url, directory):
@@ -56,7 +56,7 @@ class mini_scans:
             who_is = whois.whois(url)
             #pprint.pprint(who_is + "\n")
             for k, w in who_is.iteritems():
-                is_who = "{} : {}-".format(k, w)
+                is_who = " {} : {}-".format(k, w)
                 print(is_who)
                 with open(directory + '/whois.csv', 'a+') as file:
                     file.write(is_who.replace("-","\n"))
@@ -100,11 +100,20 @@ class mini_scans:
             print(msgerr + "\n")
             print(LINE)
 
-    def firebaseio(self, dire):
+    def firebaseio(self, url):
         """
         Firebaseio: To check db firebaseio
         ex: --firebase facebook
         """
+        get_domain = url.split("/")[2]
+        parse_domain = get_domain.split(".")
+        if not "www" in get_domain:
+            if len(parse_domain) > 2:
+                dire = "{}-{}".format(parse_domain[0], parse_domain[1])
+            else:
+                dire = "{}".format(parse_domain[0])
+        else:
+            dire = "{}".format(parse_domain[1])
         print("{}Firebaseio Check".format(INFO))
         print(LINE)
         url = 'https://{}.firebaseio.com/.json'.format(dire.split(".")[0])
@@ -113,13 +122,13 @@ class mini_scans:
         try:
             if 'error' in r.keys():
                 if r['error'] == 'Permission denied':
-                    print("{}{} seems to be protected".format(FORBI, url)) #successfully protected
+                    print("  {}{} seems to be protected".format(FORBI, url)) #successfully protected
                 elif r['error'] == '404 Not Found':
-                    print("{}{} not found".format(LESS, url)) #doesn't exist
+                    print("  {}{} not found".format(LESS, url)) #doesn't exist
                 elif "Firebase error." in r['error']:
-                    print("{}{} Firebase error. Please ensure that you spelled the name of your Firebase correctly ".format(WARNING, url))
+                    print("  {}{} Firebase error. Please ensure that you spelled the name of your Firebase correctly ".format(WARNING, url))
             else:
-                print("{}{} seems to be vulnerable !".format(PLUS, url)) #vulnerable
+                print("  {}{} seems to be vulnerable !".format(PLUS, url)) #vulnerable
         except AttributeError:
             '''
             Some DBs may just return null
@@ -127,3 +136,32 @@ class mini_scans:
             print("{} null return".format(INFO))
         print(LINE + "\n")
 
+    def wayback_check(self, url, directory):
+        """
+        Wayback_check:
+        Check in a wayback machine to found old file on the website or other things...
+        Use "waybacktool"
+        """
+        print("{}Wayback Check".format(INFO))
+        print(LINE)
+        print(url + "\n")
+        os.system('python tools/waybacktool/waybacktool.py pull --host {} | python tools/waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
+        statinfo = os.path.getsize(directory + "/wayback.txt")
+        if statinfo < 1:
+            print("  {}Nothing wayback found".format(INFO))
+        with open(directory + "/wayback.txt", "r+") as wayback:
+            wb_read = wayback.read().splitlines()
+            for wb in wb_read:
+                wb_res = list(wb.split(","))
+                try:
+                    if wb_res[1] == " 200":
+                        print("{}{}{}".format(PLUS, wb_res[0], wb_res[1]))
+                    elif wb_res[1] == " 301" or wb_res[1] == " 302":
+                        print("{}{}{}".format(LESS, wb_res[0], wb_res[1]))
+                    elif wb_res[1] == " 404" or wb_res[1] == " 403":
+                        pass
+                    else:
+                        print("{}{}{}".format(INFO, wb_res[0], wb_res[1]))
+                except:
+                    pass
+        print(LINE)

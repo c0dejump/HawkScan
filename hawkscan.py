@@ -11,7 +11,7 @@ import argparse
 from bs4 import BeautifulSoup
 import json
 import traceback
-import csv
+from requests.exceptions import Timeout
 
 # external modules
 from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
@@ -32,6 +32,7 @@ except Exception:
 from modules.creat_report import create_report
 from modules.detect_waf import verify_waf
 from modules.mini_scans import mini_scans
+from modules.parsing_html import parsing_html
 
 
 def banner():
@@ -87,25 +88,26 @@ class ThreadManager:
     def stop_thread(self):
         t, e = self.workers[0]
         e = e.set() # put event to set True for stop thread
-        
+        del workers[0]
 
 def auto_update():
     """
     auto_update: for update the tool
     """
-    update = 0
-    print("{}Checking update...".format(INFO))
-    os.system("git pull origin master > /dev/null 2>&1 > git_status.txt")
-    with open("git_status.txt", "r") as gs:
-        for s in gs:
-            if "Already up to date" not in s:
-                update = 1
-    if update == 1:
-        print("{}A new version was be donwload\n".format(INFO))
-        os.system("rm -rf git_status.txt")
-    else:
-        print("{}Nothing update found".format(INFO))
-        os.system("rm -rf git_status.txt")
+    if update:
+        updt = 0
+        print("{}Checking update...".format(INFO))
+        os.system("git pull origin master > /dev/null 2>&1 > git_status.txt")
+        with open("git_status.txt", "r") as gs:
+            for s in gs:
+                if "Already up to date" not in s:
+                    updt = 1
+        if updt == 1:
+            print("{}A new version was be donwload\n".format(INFO))
+            os.system("rm -rf git_status.txt")
+        else:
+            print("{}Nothing update found".format(INFO))
+            os.system("rm -rf git_status.txt")
 
 
 def status(stat, directory, u_agent, thread):
@@ -147,18 +149,18 @@ def status(stat, directory, u_agent, thread):
         pass
     elif stat == 404:
         try:
-            a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
+            a = raw_input("{} not found/ forced ? [y/N]: ".format(LESS))
         except:
-            a = input("{} not found/ forced ?(y:n)".format(LESS))
+            a = input("{} not found/ forced ? [y/N]: ".format(LESS))
         if a == "y":
             check_words(url, wordlist, directory, u_agent, thread)
         else:
             sys.exit()
     elif stat == 403:
         try:
-            a = raw_input(FORBI + " forbidden/ forced ?(y:n)")
+            a = raw_input(FORBI + " forbidden/ forced ? [y/N]: ")
         except:
-            a = input(FORBI + " forbidden/ forced ?(y:n)")
+            a = input(FORBI + " forbidden/ forced ? [y/N]: ")
         if a == "y":
             forced = True
             check_words(url, wordlist, directory, u_agent, forced, thread)
@@ -166,43 +168,14 @@ def status(stat, directory, u_agent, thread):
             sys.exit()
     else:
         try:
-            a = raw_input("{} not found/ forced ?(y:n)".format(LESS))
+            a = raw_input("{} not found/ forced ? [y/N]: ".format(LESS))
         except:
-            a = input("{} not found/ forced ?(y:n)".format(LESS))
+            a = input("{} not found/ forced ? [y/N]: ".format(LESS))
         if a == "y":
             check_words(url, wordlist, directory, u_agent, thread)
         else:
             sys.exit()
-                
 
-def mail(req, directory, all_mail):
-    """
-    Mail:
-    get mail adresse in web page during the scan and check if the mail leaked
-    """
-    mails = req.text
-    # for all @mail
-    reg = re.compile(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+")
-    search = re.findall(reg, mails)
-    for mail in search:
-        #check if email pwned
-        if mail:
-            datas = { "act" : mail, "accounthide" : "test", "submit" : "Submit" }
-            req_ino = requests.post("https://www.inoitsu.com/", data=datas)
-            if "DETECTED" in req_ino.text:
-                pwnd = "{}: pwned ! ".format(mail)
-                if pwnd not in all_mail:
-                    all_mail.append(pwnd)
-            else:
-                no_pwned = "{}: no pwned ".format(mail)
-                if no_pwned not in all_mail:
-                    all_mail.append(no_pwned)
-    with open(directory + '/mail.csv', 'a+') as file:
-        if all_mail is not None and all_mail != []:
-            writer = csv.writer(file)
-            for r in all_mail:
-                r = r.split(":")
-                writer.writerow(r)
 
 def subdomain(subdomains):
     """
@@ -215,13 +188,6 @@ def subdomain(subdomains):
     sub = sublist3r.main(subdomains, 40, sub_file, ports= None, silent=False, verbose= False, enable_bruteforce= False, engines=None)
     print(LINE)
     time.sleep(2)
-
-
-def sitemap(req, directory):
-    """ Get sitemap.xml of website"""
-    soup = BeautifulSoup(req.text, "html.parser")
-    with open(directory + '/sitemap.xml', 'w+') as file:
-        file.write(str(soup).replace(' ','\n'))
 
 
 def detect_waf(url, directory):
@@ -242,10 +208,10 @@ def detect_waf(url, directory):
         print(INFO + "WAF")
         print(LINE)
         if detect == True:
-            print("{}{}".format(WARNING, message))
+            print("  {}{}".format(WARNING, message))
             print(LINE)
         else:
-            print("{}This website dos not use WAF".format(LESS))
+            print("  {}This website dos not use WAF".format(LESS))
             print(LINE)
 
 
@@ -259,8 +225,8 @@ def detect_cms(url, directory):
     req = requests.get("https://whatcms.org/APIEndpoint/Detect?key=1481ff2f874c4942a734d9c499c22b6d8533007dd1f7005c586ea04efab2a3277cc8f2&url={}".format(url))
     if "Not Found" in req.text:
         with open(directory + "/cms.txt", "w+") as cms_write:
-            cms_write.write("this website does not seem to use a CMS")
-        print("{} this website does not seem to use a CMS \n".format(LESS))
+            cms_write.write("  this website does not seem to use a CMS")
+        print("  {} this website does not seem to use a CMS \n".format(LESS))
         print(LINE)
     else:
         reqt = json.loads(req.text)
@@ -269,13 +235,13 @@ def detect_cms(url, directory):
         if v:
             with open(directory + "/cms.txt", "w+") as cms_write:
                 cms_write.write("This website use {} {}".format(result, v))
-            print("{} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v))
+            print("  {} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v))
             cve_cms(result, v)
             print(LINE)
         else:
             with open(directory + "/cms.txt", "w+") as cms_write:
-                cms_write.write("This website use {} but nothing version found".format(result))
-            print("{} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result))
+                cms_write.write("  This website use {} but nothing version found".format(result))
+            print("  {} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result))
             print(LINE)
 
 
@@ -298,9 +264,9 @@ def cve_cms(result, v):
                 for p in search:
                     dates = p.find("td").text.strip()
                     detail = p.find("a").text.strip()
-                    print("{}{} : {}".format(WARNING, dates, detail))
+                    print("  {}{} : {}".format(WARNING, dates, detail))
             else:
-                print("{} Nothing wpvunldb found \n".format(LESS))
+                print("  {} Nothing wpvunldb found \n".format(LESS))
     elif 'WordPress' in req.text:
         version =  v.replace('.','')
         site = "https://wpvulndb.com/wordpresses/{}".format(version)
@@ -314,49 +280,18 @@ def cve_cms(result, v):
                 detail = p.find("a").text.strip()
                 print("{}{} : {}".format(WARNING, dates, detail))
         else:
-            print("{} Nothing wpvunldb found \n".format(LESS))
+            print("  {} Nothing wpvunldb found \n".format(LESS))
     else:
-        print("{} Nothing CVE found \n".format(LESS))
-
-
-def wayback_check(url, directory):
-    """
-    Wayback_check:
-    Check in a wayback machine to found old file on the website or other things...
-    Use "waybacktool"
-    """
-    print("{}Wayback Check".format(INFO))
-    print(LINE)
-    print(url + "\n")
-    os.system('python tools/waybacktool/waybacktool.py pull --host {} | python tools/waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
-    statinfo = os.path.getsize(directory + "/wayback.txt")
-    if statinfo < 1:
-        print("{}Nothing wayback found".format(INFO))
-    with open(directory + "/wayback.txt", "r+") as wayback:
-        wb_read = wayback.read().splitlines()
-        for wb in wb_read:
-            wb_res = list(wb.split(","))
-            try:
-                if wb_res[1] == " 200":
-                    print("{}{}{}".format(PLUS, wb_res[0], wb_res[1]))
-                elif wb_res[1] == " 301" or wb_res[1] == " 302":
-                    print("{}{}{}".format(LESS, wb_res[0], wb_res[1]))
-                elif wb_res[1] == " 404" or wb_res[1] == " 403":
-                    pass
-                else:
-                    print("{}{}{}".format(INFO, wb_res[0], wb_res[1]))
-            except:
-                pass
-    print(LINE)
+        print("  {} Nothing CVE found \n".format(LESS))
 
 
 def check_backup(directory):
     """Check if a backup file exist from function 'Status' """
     if os.path.exists(directory + "/backup.txt"):
         try:
-            bp = raw_input("A backup file exist, do you want to continue or restart ? (C:R)\n")
+            bp = raw_input("A backup file exist, do you want to continue or restart ? [c:r]: ")
         except:
-            bp = input("A backup file exist, do you want to continue or restart ? (C:R)\n")
+            bp = input("A backup file exist, do you want to continue or restart ? [c:r]: ")
         if bp == 'C' or bp == 'c':
             print("restart from last save in backup.txt ...")
             print(LINE)
@@ -405,7 +340,7 @@ def file_backup(res, directory, HOUR):
     file_backup:
     During the scan, check if a backup file or dir exist.
     """
-    ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak']
+    ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak', '/..%3B/', '/%20../']
     d_files = directory + "/files/"
     for exton in ext_b:
         res_b = res + exton
@@ -431,8 +366,25 @@ def file_backup(res, directory, HOUR):
             else:
                 print("{}{}{}".format(HOUR, PLUS, res_b))
                 outpt(directory, res_b, 200)
-        else:
+        elif req_b.status_code == 404:
             pass
+        elif req_b.status_code == 500:
+            pass
+        elif req_b.status_code == 301 or req_b.status_code == 302:
+            if redirect:
+                print("{}{}{}".format(HOUR, LESS, res_b))
+            else:
+                pass
+        elif req_b.status_code == 403:
+            pass
+        elif status_link == 429:
+            manager.stop_thread()
+            print("{}{} Too many requests".format(HOUR, WARNING))
+            print("STOP so many requests, we should wait a little...")
+            return False
+        else:
+            print("{}{} {}".format(HOUR, res_b, req_b.status_code))
+
 
 
 def hidden_dir(res, user_agent, directory, forbi, HOUR):
@@ -444,11 +396,11 @@ def hidden_dir(res, user_agent, directory, forbi, HOUR):
     hidd_d = "{}~{}/".format(url, pars[3])
     hidd_f = "{}~{}".format(url, pars[3])
     if cookie_auth:
-        req_d = requests.get(hidd_d, headers=user_agent, allow_redirects=False, verify=False, timeout=5, cookies=cookie_auth)
-        req_f = requests.get(hidd_f, headers=user_agent, allow_redirects=False, verify=False, timeout=5, cookies=cookie_auth)
+        req_d = requests.get(hidd_d, headers=user_agent, allow_redirects=False, verify=False, timeout=6, cookies=cookie_auth)
+        req_f = requests.get(hidd_f, headers=user_agent, allow_redirects=False, verify=False, timeout=6, cookies=cookie_auth)
     else:
-        req_d = requests.get(hidd_d, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
-        req_f = requests.get(hidd_f, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+        req_d = requests.get(hidd_d, headers=user_agent, allow_redirects=False, verify=False, timeout=6)
+        req_f = requests.get(hidd_f, headers=user_agent, allow_redirects=False, verify=False, timeout=6)
     sk_d = req_d.status_code
     sk_f = req_f.status_code
     if sk_d == 200:
@@ -534,22 +486,6 @@ def check_exclude_page(req, res, directory, forbi, HOUR):
                 outpt(directory, res, stats=0)
 
 
-def get_links(req, directory):
-    """
-    Get_links: get all links on webpage during the scan
-    """
-    soup = BeautifulSoup(req.text, "html.parser")
-    search = soup.find_all('a')
-    if search:
-        for s in search:
-            link = s.get("href")
-            if "http" in link or "https" in link:
-                with open(directory + "/links.txt", "a+") as links:
-                    links.write(str(link+"\n"))
-            else:
-                pass
-
-
 def defined_thread(thread, i, score_next):
     """
     Defined_thread: to defined the threads number
@@ -566,17 +502,15 @@ def defined_thread(thread, i, score_next):
         pass
     #print("threads: {}".format(thread))
     #print(res_time)
-    if res_time != 0 and res_time < 1 and thread_count < 11:
+    #print(i)
+    if res_time != 0 and res_time < 1 and thread_count < 10:
         score = 1
-        if i == 30 and score_next == 0:
-            thread = 1
-            return thread, i;
+        if i == 40 and score_next == 0:
+            return 1, i;
         elif i == 160 and score_next == 1:
-            thread = 1
-            return thread, i;
+            return 1, i;
         elif i == 340 and score_next == 2:
-            thread = 1
-            return thread, i;
+            return 1, i;
         else:
             return 0, score;
     else:
@@ -588,7 +522,7 @@ def len_page_flush(len_p):
     Len_page_flush: to defined the word size for then "flush" it
     """
     if len_p <= 10:
-        return 10
+        return 15
     elif len_p > 10 and len_p <= 20:
         return 25
     elif len_p > 20 and len_p <= 30:
@@ -600,13 +534,65 @@ def len_page_flush(len_p):
     elif len_p > 50 and len_p <= 70:
         return 75
     else:
-        return len_p + 5
+        return 100
+
+def defined_connect(res, user_agent=False, cookie_auth=False):
+    if cookie_auth:
+        if redirect:
+            req = requests.get(res, headers=user_agent, allow_redirects=True, verify=False, timeout=6, cookies=cookie_auth)
+            if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
+                print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
+                sys.exit()
+                #TODO
+            else:
+                return req
+        else:
+            req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=3, cookies=cookie_auth)
+            if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
+                print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
+                sys.exit()
+                #TODO
+            else:
+                return req
+    else:
+        if redirect:
+            req = requests.get(res, headers=user_agent, allow_redirects=True, verify=False, timeout=6)
+            if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
+                print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
+                sys.exit()
+                #TODO
+            else:
+                return req
+        else:
+            req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=6)
+            if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
+                print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
+                sys.exit()
+                #TODO
+            else:
+                return req
 
 
 def thread_wrapper(i, q, threads, manager, t_event, directory=False, forced=False, u_agent=False):
     while not q.empty() and not t_event.isSet():
         #print("AAAAAAAAAAAA: {}".format(t_event.isSet()))
         tryUrl(i, q, threads, manager, directory, forced, u_agent)
+
+
+def test_timeout(url):
+    """
+    Test_timeout: just a little function for test if the connection is good or not
+    """
+    try:
+        req_timeout = requests.get(url, timeout=30)
+    except Timeout:
+        print("{}Service potential Unavailable".format(WARNING))
+        print("The site web seem unavailable please wait...\n")
+        time.sleep(180)
+    except requests.exceptions.ConnectionError:
+        print("{}Service potential Unavailable".format(WARNING))
+        print("The site web seem unavailable please wait...\n")
+        time.sleep(180)
 
 
 def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=False):
@@ -619,28 +605,34 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
     - file_backup()
     - mail()
     """
+    parsing = parsing_html()
     thread_score = 0
     score_next = 0
     all_mail = []
     waf_score = 0
     percentage = lambda x, y: float(x) / float(y) * 100
+    thread_i = 0
+    stop_add_thread = False
+    time_i = 180
+    time_bool = False
     for numbers in range(len_w):
+        thread_count = threading.active_count()
         now = time.localtime(time.time())
         hour_t = time.strftime("%H:%M:%S", now)
         HOUR = "\033[35m[{}] \033[0m".format(hour_t)
         res = q.get()
         page = res.split("/")[-1]
         #print(threading.active_count())
-        if auto:
+        if auto and not stop_add_thread:
             thrds, scores = defined_thread(threads, thread_score, score_next)
-                #print(thrds)
-                #print(threads)
+            #print(thrds)
+            #print(scores)
             if scores == 1:
                 thread_score += 1
             if thrds == 1:
-                manager.add_thread(i, threads, manager)
                 threads += 1
                 score_next += 1
+                manager.add_thread(i, threads, manager)
             #print("{}: {}".format(threading.currentThread().getName() ,thread_score))
         try:
             if u_agent:
@@ -652,39 +644,35 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 forbi = False
                 if ts:
                     time.sleep(ts)
-                if cookie_auth:
-                    if redirect:
-                        req = requests.get(res, headers=user_agent, allow_redirects=True, verify=False, timeout=5, cookies=cookie_auth)
-                    else:
-                        req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5, cookies=cookie_auth)
-                else:
-                    if redirect:
-                        req = requests.get(res, headers=user_agent, allow_redirects=True, verify=False, timeout=5)
-                    else:
-                        req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=5)
+                req = defined_connect(res, user_agent, cookie_auth)
                 tests = 0
                 if "robots.txt" in res.split("/")[3:] and req.status_code == 200:
                     print("{}{}{}".format(HOUR, PLUS, res))
                     for r in req.text.split("\n"):
-                        print("\t- {}".format(r))
+                        print("  - {}".format(r))
                 if not "git" in res:
                     waf = verify_waf(req, res, user_agent, tests)
-                #print(waf)
+                    #print(waf)
                 #print("timesleep:{}".format(ts))
                 #print(waf_score)
+                #print(thread_i)
                 if waf == True:
                     waf_score += 1
-                    if waf_score == 4:
-                        print("{} Auto-reconfig scan to prevent the WAF".format(INFO))
+                    time_bool = True
+                    if waf_score == 2:
                         waf_score = 0
                         if thread_count != 1:
+                            thread_i += 1
+                            stop_add_thread = True
+                            print("{} Auto-reconfig scan to prevent the WAF".format(INFO))
                             manager.stop_thread()
-                        '''TODO: auto reconfigure scan to prevent waf repop
-                            use TOR (apt install tor, pip install torrequest)'''
+                        #TODO: potentialy use TOR (apt install tor, pip install torrequest) for next requests after that.
                     pass
+                test_timeout(url)
                 hidden_dir(res, user_agent, directory, forbi, HOUR)
                 status_link = req.status_code
                 redirect_link = req.history
+                #test backup files
                 if status_link == 200:
                     if exclude:
                         check_exclude_page(req, res, directory, forbi, HOUR)
@@ -699,10 +687,8 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                             outpt(directory, res, stats=0)
                         #check backup
                         backup(res, directory, forbi)
-                        #test backup files
-                        file_backup(res, directory, HOUR)
                         #add directory for recursif scan
-                        get_links(req, directory)
+                        parsing.get_links(req, directory)
                         #scrape all link
                         if res[-1] == "/" and recur:
                             if ".git" in res:
@@ -711,11 +697,11 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                                 spl = res.split("/")[3:]
                                 result = "/".join(spl)
                                 rec_list.append(result)
-                    mail(req, directory, all_mail)
+                    parsing.mail(req, directory, all_mail)
                     #get mail
                     if 'sitemap.xml' in res:
-                        sitemap(req, directory)
-                if status_link == 403:
+                        parsing.sitemap(req, directory)
+                elif status_link == 403:
                     #pass
                     if res[-1] == "/" and recur:
                         if ".htaccess" in res or ".htpasswd" in res or ".git" in res or "wp" in res:
@@ -727,7 +713,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                             outpt(directory, res, stats=403)
                     if not forced:
                         forbi = True
-                        print("{}{} {} \033[31m Forbidden \033[0m".format(HOUR, FORBI, res))
+                        print("{}{}{} \033[31m Forbidden \033[0m".format(HOUR, FORBI, res))
                         backup(res, directory, forbi)
                         outpt(directory, res, stats=403)
                     else:
@@ -782,14 +768,18 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     if req_test_index.status_code == 503:
                         manager.stop_thread()
                         print("{}{} Service potential Unavailable".format(HOUR, WARNING))
-                        try:
-                            good_service = raw_input("The site web seem unavailable pls tape anything if it's ok:\n")
-                        except:
-                            good_service = input("The site web seem unavailable pls tape anything if it's ok:\n")
-                        if good_service:
-                            pass
+                        print("The site web seem unavailable please wait\n")
+                        time_bool = True
                     else:
                         pass
+                elif status_link == 429:
+                    manager.stop_thread()
+                    print("{}{} Too many requests".format(HOUR, WARNING))
+                    print("STOP so many requests, we should wait a little...")
+                    time_bool = True
+                fbackp = file_backup(res, directory, HOUR)
+                if fbackp == False:
+                    time_bool = True
             except Exception:
                 pass
                 #traceback.print_exc()
@@ -799,9 +789,22 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
             pass
         len_p = len(page)
         len_flush = len_page_flush(len_p) 
-        #for flush display
-        sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3} | {4:{5}}\033[0m\r".format(percentage(numbers, len_w)*threading.active_count(), numbers*threading.active_count(), len_w, threading.active_count() - 1, page, len_flush))
-        sys.stdout.flush()
+        thread_all = thread_count - thread_i
+        if time_bool:
+            while time_i != 0:
+                time_i -= 1
+                time.sleep(1)
+                print_time = "stop {}s |".format(time_i) if time_bool else ""
+                #for flush display
+                sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} - {4} {5:{6}}\033[0m\r".format(percentage(numbers, len_w)*thread_all, numbers*thread_all, len_w, thread_all, print_time, page, len_flush))
+                sys.stdout.flush()
+            time_i = 60
+            time_bool = False
+        else:
+            sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} | {4:{5}}\033[0m\r".format(percentage(numbers, len_w)*thread_all, numbers*thread_all, len_w, thread_all, page, len_flush))
+            sys.stdout.flush()
+        """sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} | {4:{5}}\033[0m\r".format(percentage(numbers, len_w)*thread_all, numbers*thread_all, len_w, thread_all, page, len_flush))
+        sys.stdout.flush()"""
 
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):
@@ -892,17 +895,19 @@ def create_file(url, stat, u_agent, thread, subdomains):
         ms.who_is(url, directory)
         detect_cms(url, directory)
         detect_waf(url, directory)
-        wayback_check(dire, directory)
+        ms.wayback_check(dire, directory)
         ms.gitpast(url)
-        ms.firebaseio(director)
+        ms.firebaseio(url)
         status(stat, directory, u_agent, thread)
         create_report(directory, cookie_)
     # or else ask the question
     else:
         try:
-            new_file = raw_input('this directory exist, do you want to create another directory ? (y:n)\n')
+            new_file = raw_input('This directory exist, do you want to create another directory ? [y/N]: ')
+            print("\n")
         except:
-            new_file = input('this directory exist, do you want to create another directory ? (y:n)\n')
+            new_file = input('This directory exist, do you want to create another directory ? [y/N]: ')
+            print("\n")
         if new_file == 'y':
             print(LINE)
             directory = directory + '_2'
@@ -914,12 +919,13 @@ def create_file(url, stat, u_agent, thread, subdomains):
             ms.who_is(url, directory)
             detect_cms(url, directory)
             detect_waf(url, directory)
-            wayback_check(dire, directory)
+            ms.wayback_check(dire, directory)
             ms.gitpast(url)
             ms.firebaseio(dire)
             status(stat, directory, u_agent, thread)
             create_report(directory, cookie_)
         else:
+            print(LINE)
             if subdomains:
                 subdomain(subdomains)
             status(stat, directory, u_agent, thread)
@@ -942,6 +948,7 @@ if __name__ == '__main__':
     parser.add_argument("--exclude", help="To define a page type to exclude during scan", required=False, dest="exclude")
     parser.add_argument("--timesleep", help="To define a timesleep/rate-limit if app is unstable during scan", required=False, dest="ts", type=int, default=0)
     parser.add_argument("--auto", help="Automatic threads depending response to website. Max: 10", required=False, dest="auto", action='store_true')
+    parser.add_argument("--update", help="For automatic update", required=False, dest="update", action='store_true')
     results = parser.parse_args()
                                      
     url = results.url
@@ -957,6 +964,7 @@ if __name__ == '__main__':
     exclude = results.exclude 
     ts = results.ts
     auto = results.auto
+    update = results.update
 
     banner()
     auto_update()
@@ -975,6 +983,7 @@ if __name__ == '__main__':
     if exclude:
         req_exclude = requests.get(exclude, verify=False)
         req_p = req_exclude.text
+    test_timeout(url)
     r = requests.get(url, allow_redirects=False, verify=False)
     stat = r.status_code
     print("\n \033[32m url " + url + " found \033[0m\n")
