@@ -11,9 +11,9 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
 This script use "waybacktool" to check in waybackmachine (https://github.com/Rhynorater/waybacktool)
 
 # News
-**!** Search S3 buckets in source code page
-**!** Add payloads in dico_extra.txt
-**!** Princpals bugs and false positifs corrected
+**!** Search S3 buckets in source code page 
+**!** Add payloads in dico_extra.txt 
+**!** Princpals bugs and false positifs corrected 
 
 # Features
  - [x] URL fuzzing and dir/file detection
