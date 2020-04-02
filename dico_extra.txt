@@ -79,6 +79,11 @@ error_docs/
 error_docs
 ansible/Vagrantfile
 ansible/roles/common/tasks/main.yml
+cpresources/
+openx/
+openx/www/
+openx/www/admin/
+openx/www/admin/stats.php
 wp-admin/
 wp-admin/js/
 wp-admin/admin-ajax.php?action=kbslider_show_image&img=../wp-config.php
@@ -611,6 +616,7 @@ Linux/
 Log/
 Login/
 Logs/
+application/logs/
 M/
 M_images/
 Main/
@@ -626,6 +632,8 @@ O/
 OasDefault/
 P/
 PDF/
+PDF/CMA/
+CMA/
 PRUEBA/
 PRUEBAS/
 Pages/
@@ -988,6 +996,9 @@ back/
 back-up/
 backdoor/
 backend/
+back_office/
+back_office/dashboard/
+back_office/uploader/
 background/
 backoffice/
 backups/
@@ -1331,6 +1342,7 @@ cfi/
 cfj/
 cgi/
 cgi-bin/
+cgi-bin/cfsearch.cgi
 cgi-bin/stats
 cgi-exe/
 cgi-home/
@@ -1769,6 +1781,7 @@ disk/
 disney/
 dispatch/
 dispatcher/
+dispatcher/invalidate.cache
 display/
 disseny/
 divider/
@@ -4862,8 +4875,12 @@ config.asp
 .hgrc
 .history
 .ht_wsr.txt
+.cachegrind.aggregate
+.cachegrind
 .hta
 .htaccess
+htaccess.fi
+htpasswd.fi
 .htaccess-dev
 .htaccess-local
 .htaccess-marco
@@ -9239,6 +9256,7 @@ phpinfos.php
 phpini.bak
 phpldapadmin
 phpldapadmin/
+phpldapadmin/config.php
 phpliteadmin.php
 phpm/
 phpma/
@@ -9744,6 +9762,8 @@ Server
 server-info
 server-status
 server-status/
+client-status
+client-status/
 server.cfg
 server.log
 Server.php

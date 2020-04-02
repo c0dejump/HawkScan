@@ -2,7 +2,12 @@ from bs4 import BeautifulSoup
 import requests
 import csv
 import sys, re
+from config import S3
+import traceback
 
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
+urls_s3 = []
 
 class parsing_html:
     """
@@ -17,11 +22,48 @@ class parsing_html:
         if search:
             for s in search:
                 link = s.get("href")
-                if "http" in link or "https" in link:
-                    with open(directory + "/links.txt", "a+") as links:
-                        links.write(str(link+"\n"))
-                else:
+                try:
+                    if "http" in link or "https" in link:
+                        with open(directory + "/links.txt", "a+") as links:
+                            links.write(str(link+"\n"))
+                    else:
+                        pass
+                except:
                     pass
+
+    def search_s3(self, res, req, directory):
+        s3_keyword = ["S3://", "s3-", "amazonaws", "aws"]
+        for s3_f in s3_keyword:
+            reqtext = req.text.split(" ")
+            for req_key in reqtext:
+                req_value = req_key.split('"')
+                for r in req_value:
+                    if s3_f in r:
+                        if urls_s3 == []:
+                            urls_s3.append(r)
+                        else:
+                            for urls in urls_s3:
+                                if r != urls:
+                                    urls_s3.append(r)
+                                else:
+                                    pass
+                    #elif re.search(s3_f, req.text):
+                    #    print("{}Potentialy s3 buckets found in this page: {} | With this payload: {}".format(S3, res, s3_f))
+                    else:
+                        pass
+        s3_links = list(set(urls_s3))
+        for s3_l in s3_links:
+            try:
+                req_s3 = requests.get(s3_l, verify=False)
+                if req_s3.status_code == 200:
+                    print("{} Potentialy s3 buckets found with reponse 200: {}".format(S3, s3_l))
+            except:
+                pass
+        #re.findall(r'(s3-|s3\.)?(.*)(amazon|aws|S3:\/).*', s3_links)
+
+
+
+        
 
     def mail(self, req, directory, all_mail):
         """

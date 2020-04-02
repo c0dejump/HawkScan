@@ -185,7 +185,7 @@ def subdomain(subdomains):
     """
     print("search subdomains:\n")
     sub_file = "sublist/" + subdomains + ".txt"
-    sub = sublist3r.main(subdomains, 40, sub_file, ports= None, silent=False, verbose= False, enable_bruteforce= False, engines=None)
+    sub = sublist3r.main(subdomains, 40, sub_file, ports=None, silent=False, verbose=False, enable_bruteforce=False, engines=None)
     print(LINE)
     time.sleep(2)
 
@@ -317,7 +317,7 @@ def backup(res, directory, forbi):
 def dl(res, req, directory):
     """ Download files and calcul size """
     soup = BeautifulSoup(req.text, "html.parser")
-    extensions = ['.txt', '.html', '.jsp', '.xml', '.php', '.log', '.aspx', '.zip', '.old', '.bak', '.sql', '.js', '.asp', '.ini', '.log', '.rar', '.dat', '.log', '.backup', '.dll', '.save', '.BAK', '.inc', '.php?-s']
+    extensions = ['.txt', '.html', '.jsp', '.xml', '.php', '.aspx', '.zip', '.old', '.bak', '.sql', '.js', '.asp', '.ini', '.rar', '.dat', '.log', '.backup', '.dll', '.save', '.BAK', '.inc', '.php?-s']
     d_files = directory + "/files/"
     if not os.path.exists(d_files):
         os.makedirs(d_files)
@@ -340,6 +340,7 @@ def file_backup(res, directory, HOUR):
     file_backup:
     During the scan, check if a backup file or dir exist.
     """
+    size_check = 0
     ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak', '/..%3B/', '/%20../']
     d_files = directory + "/files/"
     for exton in ext_b:
@@ -356,13 +357,19 @@ def file_backup(res, directory, HOUR):
         else:
             req_b = requests.get(res_b, allow_redirects=False, verify=False)
         soup = BeautifulSoup(req_b.text, "html.parser")
+        if exclude:
+            check_exclude_page(req_b, res, directory, forbi, HOUR)
         if req_b.status_code == 200:
-            with open(r_files, 'w+') as fichier_bak:
+            #print("plop")
+            with open(r_files+"-file.txt", 'w+') as fichier_bak:
                 fichier_bak.write(str(soup))
-            size_bytes = os.path.getsize(r_files)
-            if size_bytes:
+            size_bytes = os.path.getsize(r_files+"-file.txt")
+            if size_bytes == size_check:
+                pass
+            elif size_bytes != size_check:
                 print("{}{}{} ({} bytes)".format(HOUR, PLUS, res_b, size_bytes))
                 outpt(directory, res_b, 200)
+                size_check = size_bytes
             else:
                 print("{}{}{}".format(HOUR, PLUS, res_b))
                 outpt(directory, res_b, 200)
@@ -377,8 +384,7 @@ def file_backup(res, directory, HOUR):
                 pass
         elif req_b.status_code == 403:
             pass
-        elif status_link == 429:
-            manager.stop_thread()
+        elif req_b.status_code == 429:
             print("{}{} Too many requests".format(HOUR, WARNING))
             print("STOP so many requests, we should wait a little...")
             return False
@@ -586,13 +592,11 @@ def test_timeout(url):
     try:
         req_timeout = requests.get(url, timeout=30)
     except Timeout:
-        print("{}Service potential Unavailable".format(WARNING))
+        print("{}Service potentialy Unavailable".format(WARNING))
         print("The site web seem unavailable please wait...\n")
         time.sleep(180)
     except requests.exceptions.ConnectionError:
-        print("{}Service potential Unavailable".format(WARNING))
-        print("The site web seem unavailable please wait...\n")
-        time.sleep(180)
+        pass
 
 
 def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=False):
@@ -701,6 +705,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     #get mail
                     if 'sitemap.xml' in res:
                         parsing.sitemap(req, directory)
+                    parsing.search_s3(res, req, directory)
                 elif status_link == 403:
                     #pass
                     if res[-1] == "/" and recur:
@@ -727,6 +732,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     if redirect:
                         if redirect_link != 404 or redirect_link != 403:
                             print("{}\033[33m[+] \033[0m {} \033[33m 301 Moved Permanently \033[0m".format(HOUR, res))
+                            parsing.search_s3(res, req, directory)
                             outpt(directory, res, stats=301)
                     else:
                         pass
@@ -734,12 +740,15 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     if redirect:
                         if redirect_link != 404 or redirect_link != 403:
                             print("{}\033[33m[+] \033[0m {} \033[33m 304 Not modified \033[0m".format(HOUR, res))
+                            parsing.search_s3(res, req, directory)
                     else:
                         print("{}\033[33m[+] \033[0m {} \033[33m 304 Not modified \033[0m".format(HOUR, res))
+                        parsing.search_s3(res, req, directory)
                 elif status_link == 302:
                     if redirect:
                         if redirect_link != 404 or redirect_link != 403:
                             print("{}\033[33m[+] \033[0m {} \033[33m 302 Moved Temporarily \033[0m".format(HOUR, res))
+                            parsing.search_s3(res, req, directory)
                             outpt(directory, res, stats=302)
                     else:
                         pass
@@ -767,7 +776,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     req_test_index = requests.get(url, verify=False) # take origin page url (index) to check if it's really unavailable
                     if req_test_index.status_code == 503:
                         manager.stop_thread()
-                        print("{}{} Service potential Unavailable".format(HOUR, WARNING))
+                        print("{}{} Service potentialy Unavailable".format(HOUR, WARNING))
                         print("The site web seem unavailable please wait\n")
                         time_bool = True
                     else:
@@ -781,8 +790,8 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 if fbackp == False:
                     time_bool = True
             except Exception:
-                pass
-                #traceback.print_exc()
+                #pass
+                traceback.print_exc()
             q.task_done()
         except Exception:
             #traceback.print_exc()
@@ -946,7 +955,7 @@ if __name__ == '__main__':
     parser.add_argument("-o", help="Output to site_scan.txt (default in website directory)", required=False, dest="output")
     parser.add_argument("--cookie", help="Scan with an authentification cookie", required=False, dest="cookie_", type=str)
     parser.add_argument("--exclude", help="To define a page type to exclude during scan", required=False, dest="exclude")
-    parser.add_argument("--timesleep", help="To define a timesleep/rate-limit if app is unstable during scan", required=False, dest="ts", type=int, default=0)
+    parser.add_argument("--timesleep", help="To define a timesleep/rate-limit if app is unstable during scan", required=False, dest="ts", type=float, default=0)
     parser.add_argument("--auto", help="Automatic threads depending response to website. Max: 10", required=False, dest="auto", action='store_true')
     parser.add_argument("--update", help="For automatic update", required=False, dest="update", action='store_true')
     results = parser.parse_args()

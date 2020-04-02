@@ -72,23 +72,24 @@ def create_report(directory, cookie_):
                             <td style="width: 20px; color: red; padding: 3px;">{}</td>
                             </tr>
                             """.format(nowdate, s1, s1, s0)
-        with open(directory + "/waf.txt", "r") as waff:
-            waf_res = ""
-            for w in waff.read().splitlines():
-                if "The site" in w:
-                    waf_res = w
-            if waf_res:
-                waf += """
-                    <tr>
-                    <td style="width: 120px;">{}</td>
-                    </tr>
-                """.format(waf_res)
-            else:
-                waf += """
-                    <tr>
-                    <td style="width: 120px;">This site dosn't seem to use a WAF</td>
-                    </tr>
-                """.format(w)
+        try:
+            with open(directory + "/waf.txt", "r") as waff:
+                waf_res = ""
+                for w in waff.read().splitlines():
+                    if "The site" in w:
+                        waf_res = w
+                if waf_res:
+                    waf += """
+                        <tr>
+                        <td style="width: 120px;">{}</td>
+                        </tr>
+                    """.format(waf_res)
+        except:
+            waf += """
+                <tr>
+                <td style="width: 120px;">This site dosn't seem to use a WAF</td>
+                </tr>
+            """
         try:
             with open(directory + "/mail.csv", "r") as csvFile:
                 reader = csv.reader(csvFile)

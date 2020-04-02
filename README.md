@@ -11,9 +11,9 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
 This script use "waybacktool" to check in waybackmachine (https://github.com/Rhynorater/waybacktool)
 
 # News
-**!** Automatic threads depending response to website       
-**!** New display    
-**!** Auto update
+**!** Search S3 buckets in source code page
+**!** Add payloads in dico_extra.txt
+**!** Princpals bugs and false positifs corrected
 
 # Features
  - [x] URL fuzzing and dir/file detection
@@ -43,18 +43,23 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  - [x] Response error to WAF
  - [x] Check if DataBase firebaseio existe and accessible
  - [x] Automatic threads depending response to website (and reconfig if WAF detected too many times). Max: 10
+ - [x] Search S3 buckets in source code page
  
-# TODO
- - [ ] Testing website paramaters (attack, so no passive scan)
- - [ ] Get certificate (crypto keys...)
- - [ ] Anonymous routing through some proxy (http/s proxy list)
- - [ ] Check pastebin
- - [ ] Detect famous honeypot
- - [ ] Best HTML report and On-the-fly writing report
- - [ ] Access token
- - [ ] Clean script, to add class or split different function on a file ? (to see next)
- - [ ] Check source code and verify leak or sentsitive data in the Github
- - [ ] Add option "--analyse" to analyse code source of web site page (spider link, js code...)
+# TODO 
+**P1 is the most important**
+
+ - [ ] JS parsing and analysis [P1]
+ - [ ] Scan API endpoints/informations leaks [P1]
+ - [ ] Check HTTP headers security [P2]
+ - [ ] Fuzzing amazonaws S3 Buckets [P2]
+ - [ ] Get certificate (crypto keys...) [P2]
+ - [ ] Anonymous routing through some proxy (http/s proxy list) [P2]
+ - [ ] Check pastebin [P2]
+ - [ ] Best HTML report and On-the-fly writing report [P2]
+ - [ ] Access token [P2]
+ - [ ] Check source code and verify leak or sentsitive data in the Github [P2]
+ - [ ] Testing website paramaters (attack, so no passive scan) [P3]
+ - [ ] Detect famous honeypot [P3]
  
  # Usage
  > 
@@ -84,4 +89,15 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
       --cookie COOKIE  Scan with an authentification cookie   
       --exclude EXCLUDE  To define a page type to exclude during scan    
       --timesleep TS     To define a timesleep/rate-limit if app is unstable during scan 
-      --auto          Automatic threads depending response to website. Max: 10
+      --auto          Automatic threads depending response to website. Max: 10    
+      --update           For automatic update
+
+ >
+
+# Exemple
+
+ >
+
+    python hawkscan.py -u exemple.com -w dico_extra.txt
+
+ >
