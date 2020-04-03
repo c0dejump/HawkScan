@@ -355,7 +355,11 @@ def file_backup(res, directory, HOUR):
         if cookie_auth:
             req_b = requests.get(res_b, allow_redirects=False, verify=False, cookies=cookie_auth)
         else:
-            req_b = requests.get(res_b, allow_redirects=False, verify=False)
+            if redirect:
+                req_check = requests.get(res_b, allow_redirects=True, verify=False)
+                req_b = requests.get(req_check.url, verify=False)
+            else:
+                req_b = requests.get(res_b, allow_redirects=False, verify=False)
         soup = BeautifulSoup(req_b.text, "html.parser")
         if exclude:
             check_exclude_page(req_b, res, directory, forbi, HOUR)
@@ -379,11 +383,11 @@ def file_backup(res, directory, HOUR):
             pass
         elif req_b.status_code == 301 or req_b.status_code == 302:
             if redirect:
-                print("{}{}{}".format(HOUR, LESS, res_b))
+                print("{}{}{} => {}".format(HOUR, LESS, res_b, req_b.url))
             else:
                 pass
         elif req_b.status_code == 403:
-            pass
+            print("{}{}{}".format(HOUR, FORBI, res_b))
         elif req_b.status_code == 429:
             print("{}{} Too many requests".format(HOUR, WARNING))
             print("STOP so many requests, we should wait a little...")
@@ -790,8 +794,8 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 if fbackp == False:
                     time_bool = True
             except Exception:
-                #pass
-                traceback.print_exc()
+                pass
+                #traceback.print_exc()
             q.task_done()
         except Exception:
             #traceback.print_exc()
