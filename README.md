@@ -99,5 +99,9 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  >
 
     python hawkscan.py -u exemple.com -w dico_extra.txt
+    
+    python hawkscan.py -u exemple.com -w dico_extra.txt -t 5 --redirect
+    
+    python hawkscan.py -u exemple.com -w dico_extra.txt -t 5 --exclude exemple.com/profile.php?id=1
 
  >
