@@ -48,10 +48,10 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
 # TODO 
 **P1 is the most important**
 
+ - [ ] Identify and test S3 buckets, Google Storage buckets and Azure Storage containers for common misconfiguration [P1]
  - [ ] JS parsing and analysis [P1]
  - [ ] Scan API endpoints/informations leaks [P1]
  - [ ] Check HTTP headers security [P2]
- - [ ] Fuzzing amazonaws S3 Buckets [P2]
  - [ ] Get certificate (crypto keys...) [P2]
  - [ ] Anonymous routing through some proxy (http/s proxy list) [P2]
  - [ ] Check pastebin [P2]
