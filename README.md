@@ -48,10 +48,10 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
 # TODO 
 **P1 is the most important**
 
- - [ ] Identify and test S3 buckets, Google Storage buckets and Azure Storage containers for common misconfiguration [P1]
  - [ ] JS parsing and analysis [P1]
  - [ ] Scan API endpoints/informations leaks [P1]
  - [ ] Check HTTP headers security [P2]
+ - [ ] Fuzzing amazonaws S3 Buckets [P2]
  - [ ] Get certificate (crypto keys...) [P2]
  - [ ] Anonymous routing through some proxy (http/s proxy list) [P2]
  - [ ] Check pastebin [P2]
@@ -84,7 +84,8 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
       -a USER_AGENT  choice user-agent     
       --redirect     For scan with redirect response like 301,302      
       -p PREFIX      add prefix in wordlist to scan    
-      -o OUTPUT      output to site_scan.txt (default in website directory)  
+      -o OUTPUT      output to site_scan.txt (default in website directory)      
+      -b             Add a backup file scan like 'exemple.com/ex.php.bak...' but longer      
       -r             recursive dir/files       
       --cookie COOKIE  Scan with an authentification cookie   
       --exclude EXCLUDE  To define a page type to exclude during scan    
@@ -94,14 +95,19 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
 
  >
 
-# Exemples
+# Exemple
 
  >
-
+    //Basic
     python hawkscan.py -u https://www.exemple.com -w dico_extra.txt
-    
+
+    //With redirect
     python hawkscan.py -u https://www.exemple.com -w dico_extra.txt -t 5 --redirect
-    
+
+    //With backup files scan
+    python hawkscan.py -u https://www.exemple.com -w dico_extra.txt -t 5 -b
+
+    //With an exclude page
     python hawkscan.py -u https://www.exemple.com -w dico_extra.txt -t 5 --exclude https://www.exemple.com/profile.php?id=1
 
  >
