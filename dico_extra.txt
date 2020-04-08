@@ -4,6 +4,8 @@
 ?wsdl
 ..%3B/
 ..;/
+;/..;/
+;/..;/manager
 %3F.jsp
 robots.txt
 koolix/
@@ -74,6 +76,10 @@ php_files
 WelcomeController.php
 DemoController.php
 routes.yaml
+routes
+routes/
+getRoutes
+getConf
 editor.jsp
 error_docs/
 error_docs
@@ -891,6 +897,8 @@ aol/
 ap/
 apache/
 api/
+api/admin
+api/admin.json
 api/graphql
 aplicacion/
 apollo/
@@ -906,6 +914,7 @@ application/
 applications/
 apply/
 apps/
+apps/files/
 april/
 ar/
 archie/
@@ -2730,6 +2739,7 @@ larry1/
 laser/
 lastpost/
 latest/
+latest/meta-data/
 launch/
 launchpage/
 laura/
@@ -2970,6 +2980,7 @@ message/
 messages/
 messaging/
 meta/
+meta-data/
 metabase/
 metal/
 metallic/
@@ -4465,6 +4476,7 @@ public_html/page/.htaccess
 public_html/page/wp-content/plugins/akismet/.htaccess
 public_html/page/wp-content/uploads/wc-logs/.htaccess
 public_html/page/wp-content/uploads/woocommerce_uploads/.htaccess
+wp-content/plugins/wordfence/wordfence.php
 usr/
 ustats/
 usuari/
@@ -6500,6 +6512,7 @@ api/error_log
 api/swagger.yml
 api-doc
 api-docs
+api-docs/
 apibuild.pyc
 api/method
 api/users/profiles/
@@ -7101,6 +7114,8 @@ cgi
 cgi-admin
 cgi-bin
 CGI-BIN/
+perl-bin/
+perl-bin/formeng.pl
 cgi-bin/a1stats/a1disp.cgi
 cgi-bin/awstats.pl
 cgi-bin/awstats/
@@ -7274,6 +7289,9 @@ conf/web.xml
 conferences
 config
 Config
+config/config.sample.php
+config/config.php
+config.sample.php
 config.%EXT%
 config.bak
 config.codekit
