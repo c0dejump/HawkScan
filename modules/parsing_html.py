@@ -40,25 +40,33 @@ class parsing_html:
                 for r in req_value:
                     if s3_f in r:
                         if urls_s3 == []:
+                            #print(urls_s3)
                             urls_s3.append(r)
                         else:
                             for urls in urls_s3:
                                 if r != urls:
                                     urls_s3.append(r)
+                                    try:
+                                        req_s3 = requests.get(r, verify=False)
+                                        if req_s3.status_code == 200:
+                                            print("{} Potentialy s3 buckets found with reponse 200: {}".format(S3, r))
+                                    except:
+                                        pass
                                 else:
                                     pass
                     #elif re.search(s3_f, req.text):
                     #    print("{}Potentialy s3 buckets found in this page: {} | With this payload: {}".format(S3, res, s3_f))
                     else:
                         pass
-        s3_links = list(set(urls_s3))
-        for s3_l in s3_links:
-            try:
-                req_s3 = requests.get(s3_l, verify=False)
-                if req_s3.status_code == 200:
-                    print("{} Potentialy s3 buckets found with reponse 200: {}".format(S3, s3_l))
-            except:
-                pass
+        """if urls_s3:
+            s3_links = list(set(urls_s3))
+            for s3_l in s3_links:
+                try:
+                    req_s3 = requests.get(s3_l, verify=False)
+                    if req_s3.status_code == 200:
+                        print("{} Potentialy s3 buckets found with reponse 200: {}".format(S3, s3_l))
+                except:
+                    pass"""
         #re.findall(r'(s3-|s3\.)?(.*)(amazon|aws|S3:\/).*', s3_links)
 
 
