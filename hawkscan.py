@@ -436,7 +436,7 @@ def file_backup(res, directory, forbi, HOUR):
             with open(r_files+"-file.txt", 'w+') as fichier_bak:
                 fichier_bak.write(str(soup))
             size_bytes = os.path.getsize(r_files+"-file.txt")
-            if size_bytes == size_check:
+            if size_bytes == size_check or not size_bytes > size_check + 5 and not size_bytes < size_check - 5:
                 pass
             elif size_bytes != size_check:
                 if exclude:
