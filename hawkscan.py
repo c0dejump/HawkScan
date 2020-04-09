@@ -372,6 +372,8 @@ def check_exclude_page(req, res, directory, forbi, HOUR):
     for use this option you do defined a profil/false positive page base, ex: 
         --exclude url.com/profil/codejump
     """
+    if redirect or stat == 301 or stat == 302:
+        req = requests.get(req.url, verify=False)
     scoring = 0
     words = req_p
     for w in words.split("\n"):
@@ -381,8 +383,7 @@ def check_exclude_page(req, res, directory, forbi, HOUR):
             pass
     len_w = [lines for lines in words.split("\n")] #to avoid to do line per line
     perc = round(100 * float(scoring) / len(len_w)) #to do a percentage for check look like page
-    #print(perc)
-    #print(res)
+    #print(perc) #DEBUG percentage
     if perc >= 80:
         pass
     elif perc >= 50 and perc < 80:
@@ -555,9 +556,9 @@ def len_page_flush(len_p):
 
 def defined_connect(res, user_agent=False, cookie_auth=False):
     if cookie_auth:
-        if redirect or stat == 301 or stat == 302:
-            req_check = requests.get(res, headers=user_agent, allow_redirects=True, verify=False, timeout=6, cookies=cookie_auth)
-            req = requests.get(req_check.url, headers=user_agent, verify=False, timeout=6, cookies=cookie_auth)
+        if redirect:
+            allow_redirection = True if stat == 301 or stat == 302 else False
+            req = requests.get(res, headers=user_agent, allow_redirects=allow_redirection, verify=False, timeout=6)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
                 sys.exit()
@@ -573,15 +574,15 @@ def defined_connect(res, user_agent=False, cookie_auth=False):
             else:
                 return req
     else:
-        if redirect or stat == 301 or stat == 302:
-            req_check = requests.get(res, headers=user_agent, allow_redirects=True, verify=False, timeout=6)
-            #req = requests.get(req_check.url, headers=user_agent, verify=False, timeout=6)
-            if "You need to enable JavaScript to run this app" in req_check.text or "JavaScript Required" in req_check.text or "without JavaScript enabled" in req_check.text:
+        if redirect:
+            allow_redirection = True if stat == 301 or stat == 302 else False
+            req = requests.get(res, headers=user_agent, allow_redirects=allow_redirection, verify=False, timeout=6)
+            if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
                 sys.exit()
                 #TODO
             else:
-                return req_check
+                return req
         else:
             req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=6)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
@@ -688,7 +689,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 test_timeout(url)
                 if backup:
                     hidden_dir(res, user_agent, directory, forbi, HOUR)
-                if redirect:
+                if redirect and req.history:
                     for histo in req.history:
                         status_link = histo.status_code
                 else:
@@ -696,6 +697,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 redirect_link = req.url
                 redirect_stat = req.status_code
                 #test backup files
+                print(status_link)
                 if status_link == 200:
                     if exclude:
                         check_exclude_page(req, res, directory, forbi, HOUR)
@@ -749,6 +751,8 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     print("{}{}{}").format(HOUR, INFO, res)
                 elif status_link == 301:
                     if redirect and redirect_stat == 200:
+                        if exclude:
+                            check_exclude_page(req, res, directory, forbi, HOUR)
                         print("{}{}{}\033[33m => {}\033[0m 301 Moved Permanently".format(HOUR, LESS, res, redirect_link))
                         parsing.search_s3(res, req, directory)
                         outpt(directory, res, stats=301)
@@ -758,6 +762,8 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                         parsing.search_s3(res, req, directory)
                 elif status_link == 302:
                     if redirect and redirect_stat == 200:
+                        if exclude:
+                            check_exclude_page(req, res, directory, forbi, HOUR)
                         print("{}{}{}\033[33m => {}\033[0m 302 Moved Temporarily".format(HOUR, LESS, res, redirect_link))
                         parsing.search_s3(res, req, directory)
                         outpt(directory, res, stats=302)
@@ -800,12 +806,12 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     if fbackp == False:
                         time_bool = True
             except Exception:
-                pass
-                #traceback.print_exc()
+                #pass
+                traceback.print_exc() #DEBUG
             q.task_done()
         except Exception:
-            #traceback.print_exc()
             pass
+            #traceback.print_exc() #DEBUG
         len_p = len(page)
         len_flush = len_page_flush(len_p) 
         thread_all = thread_count - thread_i
