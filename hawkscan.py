@@ -61,6 +61,8 @@ rec_list = []
 req_p = u""
 #for exclude option
 
+stat = 0
+
 class ThreadManager:
     """
     Class ThreadManager:
@@ -454,9 +456,7 @@ def file_backup(res, directory, forbi, HOUR):
             pass
         elif req_b_status == 301 or req_b_status == 302:
             if redirect:
-                print("{}{}{} => {}".format(HOUR, LESS, res_b, req_b.url))
-            else:
-                pass
+                print("{}{}{} => {}".format(HOUR, LESS, res_b, req_check.url))
         elif req_b_status == 403:
             pass
             #print("{}{}{}".format(HOUR, FORBI, res_b))
@@ -555,8 +555,9 @@ def len_page_flush(len_p):
 
 def defined_connect(res, user_agent=False, cookie_auth=False):
     if cookie_auth:
-        if redirect:
-            req = requests.get(res, headers=user_agent, allow_redirects=True, verify=False, timeout=6, cookies=cookie_auth)
+        if redirect or stat == 301 or stat == 302:
+            req_check = requests.get(res, headers=user_agent, allow_redirects=True, verify=False, timeout=6, cookies=cookie_auth)
+            req = requests.get(req_check.url, headers=user_agent, verify=False, timeout=6, cookies=cookie_auth)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
                 sys.exit()
@@ -572,14 +573,15 @@ def defined_connect(res, user_agent=False, cookie_auth=False):
             else:
                 return req
     else:
-        if redirect:
-            req = requests.get(res, headers=user_agent, allow_redirects=True, verify=False, timeout=6)
-            if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
+        if redirect or stat == 301 or stat == 302:
+            req_check = requests.get(res, headers=user_agent, allow_redirects=True, verify=False, timeout=6)
+            #req = requests.get(req_check.url, headers=user_agent, verify=False, timeout=6)
+            if "You need to enable JavaScript to run this app" in req_check.text or "JavaScript Required" in req_check.text or "without JavaScript enabled" in req_check.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
                 sys.exit()
                 #TODO
             else:
-                return req
+                return req_check
         else:
             req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=6)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
@@ -686,8 +688,13 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 test_timeout(url)
                 if backup:
                     hidden_dir(res, user_agent, directory, forbi, HOUR)
-                status_link = req.status_code
-                redirect_link = req.history
+                if redirect:
+                    for histo in req.history:
+                        status_link = histo.status_code
+                else:
+                    status_link = req.status_code
+                redirect_link = req.url
+                redirect_stat = req.status_code
                 #test backup files
                 if status_link == 200:
                     if exclude:
@@ -741,29 +748,19 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 elif status_link == 405:
                     print("{}{}{}").format(HOUR, INFO, res)
                 elif status_link == 301:
-                    if redirect:
-                        if redirect_link != 404 or redirect_link != 403:
-                            print("{}\033[33m[+] \033[0m {} \033[33m 301 Moved Permanently \033[0m".format(HOUR, res))
-                            parsing.search_s3(res, req, directory)
-                            outpt(directory, res, stats=301)
-                    else:
-                        pass
+                    if redirect and redirect_stat == 200:
+                        print("{}{}{}\033[33m => {}\033[0m 301 Moved Permanently".format(HOUR, LESS, res, redirect_link))
+                        parsing.search_s3(res, req, directory)
+                        outpt(directory, res, stats=301)
                 elif status_link == 304:
-                    if redirect:
-                        if redirect_link != 404 or redirect_link != 403:
-                            print("{}\033[33m[+] \033[0m {} \033[33m 304 Not modified \033[0m".format(HOUR, res))
-                            parsing.search_s3(res, req, directory)
-                    else:
-                        print("{}\033[33m[+] \033[0m {} \033[33m 304 Not modified \033[0m".format(HOUR, res))
+                    if redirect and redirect_stat == 200:
+                        print("{}\033[33m[+] \033[0m {}\033[33m 304 Not modified \033[0m".format(HOUR, res))
                         parsing.search_s3(res, req, directory)
                 elif status_link == 302:
-                    if redirect:
-                        if redirect_link != 404 or redirect_link != 403:
-                            print("{}\033[33m[+] \033[0m {} \033[33m 302 Moved Temporarily \033[0m".format(HOUR, res))
-                            parsing.search_s3(res, req, directory)
-                            outpt(directory, res, stats=302)
-                    else:
-                        pass
+                    if redirect and redirect_stat == 200:
+                        print("{}{}{}\033[33m => {}\033[0m 302 Moved Temporarily".format(HOUR, LESS, res, redirect_link))
+                        parsing.search_s3(res, req, directory)
+                        outpt(directory, res, stats=302)
                 elif status_link == 400 or status_link == 500:
                     if "Server Error" in req.text or "Erreur du serveur dans l'application" in req.text:
                         if status_link == 400:
@@ -962,7 +959,7 @@ if __name__ == '__main__':
     parser.add_argument("-s", help="Subdomain tester", dest='subdomains', required=False)
     parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. Default: 5", dest='thread', type=int, default=5, required=False)
     parser.add_argument("-a", help="Choice user-agent", dest='user_agent', required=False)
-    parser.add_argument("--redirect", help="For sacn with redirect response (301/302)", dest='redirect', required=False, action='store_true')
+    parser.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
     parser.add_argument("-r", help="Recursive dir/files", required=False, dest="recursif", action='store_true')
     parser.add_argument("-p", help="Add prefix in wordlist to scan", required=False, dest="prefix")
     parser.add_argument("-o", help="Output to site_scan.txt (default in website directory)", required=False, dest="output")
