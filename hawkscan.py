@@ -697,7 +697,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 redirect_link = req.url
                 redirect_stat = req.status_code
                 #test backup files
-                print(status_link)
+                #print(status_link) #DEBUG status response
                 if status_link == 200:
                     if exclude:
                         check_exclude_page(req, res, directory, forbi, HOUR)
