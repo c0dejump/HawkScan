@@ -365,7 +365,7 @@ def outpt(directory, res, stats):
                 op.write(str("[+] " + res + "\n"))
 
 
-def check_exclude_page(req, res, directory, forbi, HOUR):
+def check_exclude_page(req, res, directory, forbi, HOUR, size_bytes=False):
     """
     Check_exclude_page: 
     If scan blog, or social network etc.. you can activate this option to pass profil/false positive pages.
@@ -389,7 +389,10 @@ def check_exclude_page(req, res, directory, forbi, HOUR):
     elif perc >= 50 and perc < 80:
         print("{}{}{} Potential exclude page {}%".format(HOUR, EXCL, res, perc))
     else:
-        print("{}{}{}".format(HOUR, PLUS, res))
+        if size_bytes:
+            print("{}{}{} ({} bytes)".format(HOUR, PLUS, res, size_bytes))
+        else:
+            print("{}{}{}".format(HOUR, PLUS, res))
         #check backup
         create_backup(res, directory, forbi)
         #output scan.txt
@@ -436,18 +439,19 @@ def file_backup(res, directory, forbi, HOUR):
             with open(r_files+"-file.txt", 'w+') as fichier_bak:
                 fichier_bak.write(str(soup))
             size_bytes = os.path.getsize(r_files+"-file.txt")
-            if size_bytes == size_check or not size_bytes > size_check + 5 and not size_bytes < size_check - 5:
+            if size_bytes == size_check or not size_bytes > size_check + 5 and not size_bytes < size_check - 5: 
+                #if the number of bytes equal to size_check and not bigger than size_check +5 and not smaller than size_check -5
                 pass
             elif size_bytes != size_check:
                 if exclude:
-                    check_exclude_page(req_b, res, directory, forbi, HOUR)
+                    check_exclude_page(req_b, res_b, directory, forbi, HOUR, size_bytes)
                 else:
                     print("{}{}{} ({} bytes)".format(HOUR, PLUS, res_b, size_bytes))
-                    outpt(directory, res_b, 200)
-                    size_check = size_bytes
+                outpt(directory, res_b, 200)
+                size_check = size_bytes
             else:
                 if exclude:
-                    check_exclude_page(req_b, res, directory, forbi, HOUR)
+                    check_exclude_page(req_b, res_b, directory, forbi, HOUR)
                 else:
                     print("{}{}{}".format(HOUR, PLUS, res_b))
                     outpt(directory, res_b, 200)
@@ -806,8 +810,8 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     if fbackp == False:
                         time_bool = True
             except Exception:
-                #pass
-                traceback.print_exc() #DEBUG
+                pass
+                #traceback.print_exc() #DEBUG
             q.task_done()
         except Exception:
             pass
