@@ -372,9 +372,11 @@ def check_exclude_page(req, res, directory, forbi, HOUR, size_bytes=False):
     for use this option you do defined a profil/false positive page base, ex: 
         --exclude url.com/profil/codejump
     """
+    scoring = 0
+
     if redirect or stat == 301 or stat == 302:
         req = requests.get(req.url, verify=False)
-    scoring = 0
+
     words = req_p
     for w in words.split("\n"):
         if w in req.text:
@@ -383,7 +385,8 @@ def check_exclude_page(req, res, directory, forbi, HOUR, size_bytes=False):
             pass
     len_w = [lines for lines in words.split("\n")] #to avoid to do line per line
     perc = round(100 * float(scoring) / len(len_w)) #to do a percentage for check look like page
-    #print(perc) #DEBUG percentage
+    print(req.text)
+    print(perc) #DEBUG percentage
     if perc >= 80:
         pass
     elif perc >= 50 and perc < 80:
@@ -413,6 +416,7 @@ def file_backup(res, directory, forbi, HOUR):
     During the scan, check if a backup file or dir exist.
     """
     size_check = 0
+
     ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak', '/..%3B/', '/%20../']
     d_files = directory + "/files/"
     for exton in ext_b:
@@ -439,8 +443,8 @@ def file_backup(res, directory, forbi, HOUR):
             with open(r_files+"-file.txt", 'w+') as fichier_bak:
                 fichier_bak.write(str(soup))
             size_bytes = os.path.getsize(r_files+"-file.txt")
-            if size_bytes == size_check or not size_bytes > size_check + 5 and not size_bytes < size_check - 5: 
-                #if the number of bytes equal to size_check and not bigger than size_check +5 and not smaller than size_check -5
+            if size_bytes == size_check or size_bytes in range(size_check - 5, size_check + 5):
+                #if the number of bytes of the page equal to size_check variable and not bigger than size_check +5 and not smaller than size_check -5
                 pass
             elif size_bytes != size_check:
                 if exclude:
@@ -610,8 +614,7 @@ def test_timeout(url):
     try:
         req_timeout = requests.get(url, timeout=30)
     except Timeout:
-        print("{}Service potentialy Unavailable".format(WARNING))
-        print("The site web seem unavailable please wait...\n")
+        print("{}Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(WARNING))
         time.sleep(180)
     except requests.exceptions.ConnectionError:
         pass
@@ -795,8 +798,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     req_test_index = requests.get(url, verify=False) # take origin page url (index) to check if it's really unavailable
                     if req_test_index.status_code == 503:
                         manager.stop_thread()
-                        print("{}{} Service potentialy Unavailable".format(HOUR, WARNING))
-                        print("The site web seem unavailable please wait\n")
+                        print("{}{} Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(HOUR, WARNING))
                         time_bool = True
                     else:
                         pass
