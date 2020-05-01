@@ -8,9 +8,10 @@ def req_test_false_positif(res, user_agent):
     url_base = res.split("/")[:3]
     url_send = '/'.join(url_base)+"/"
     req_test_waf = requests.get(url_send, headers=user_agent, allow_redirects=True, verify=False)
+    #print(req_test_waf.status_code)
     return req_test_waf
 
-def verify_waf(req, res, user_agent, tests):
+def verify_waf(req, res, user_agent):
     """
     Function verify if there is a WAF to instable website
     """
@@ -502,7 +503,8 @@ def verify_waf(req, res, user_agent, tests):
         "Your organization has selected Zscaler to protect you from internet threats" in req_test.text or "The Internet site you have attempted to access is prohibited. Accenture's webfilters indicate that the site likely contains content considered inappropriate" in req_test.text:
         print("{}ZScaler WAF detected : {} ".format(INFO, res))
         return True
-    elif "Access Denied" in req_test.text:
+    elif "Access Denied" in req_test.text or "access denied" in req_test.text or "Something went wrong" in req_test.text or \
+    "we have detected malicious traffic" in req_test.text and not forced:
         if req_test.status_code == 401 or req_test.status_code == 403:
             print("{}{} Unknown WAF detected : {} ".format(INFO, req_test.status_code, res))
             return True
@@ -510,4 +512,4 @@ def verify_waf(req, res, user_agent, tests):
         return False
 
 if __name__ == '__main__':
-    verify_waf(req, res, user_agent, tests)
+    verify_waf(req, res, user_agent)

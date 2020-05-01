@@ -141,39 +141,51 @@ def status(stat, directory, u_agent, thread):
     if stat == 200:
         check_words(url, wordlist, directory, u_agent, thread)
     elif stat == 301:
-        print(PLUS + " 301 Moved Permanently\n")
-        check_words(url, wordlist, directory, u_agent, thread)
+        try:
+            follow = raw_input("{} 301 Moved Permanently\nDo you want follow redirection ? [y/N]".format(PLUS))
+            print("")
+        except:
+            follow = input("{} 301 Moved Permanently\nDo you want follow redirection ? [y/N]".format(PLUS))
+            print("")
+        stat = 301 if follow == "y" or follow == "Y" else 0
+        check_words(url, wordlist, directory, u_agent, thread, forced)
     elif stat == 302:
-        print(PLUS + " 302 Moved Temporarily\n")
-        check_words(url, wordlist, directory, u_agent, thread)
+        try:
+            follow = raw_input("{} 302 Moved Temporarily\nDo you want follow redirection ? [y/N]".format(PLUS))
+            print("")
+        except:
+            follow = input("{} 302 Moved Temporarily\nDo you want follow redirection ? [y/N]".format(PLUS))
+            print("")
+        stat = 302 if follow == "y" or follow == "Y" else 0
+        check_words(url, wordlist, directory, u_agent, thread, forced)
     elif stat == 304:
         pass
     elif stat == 404:
         try:
-            a = raw_input("{} not found/ forced ? [y/N]: ".format(LESS))
+            not_found = raw_input("{} not found/ forced ? [y/N]: ".format(LESS))
         except:
-            a = input("{} not found/ forced ? [y/N]: ".format(LESS))
-        if a == "y":
-            check_words(url, wordlist, directory, u_agent, thread)
+            not_found = input("{} not found/ forced ? [y/N]: ".format(LESS))
+        if not_found == "y" or not_found == "Y":
+            check_words(url, wordlist, directory, u_agent, thread, forced)
         else:
             sys.exit()
     elif stat == 403:
         try:
-            a = raw_input(FORBI + " forbidden/ forced ? [y/N]: ")
+            fht = raw_input(FORBI + " forbidden/ forced ? [y/N]: ")
         except:
-            a = input(FORBI + " forbidden/ forced ? [y/N]: ")
-        if a == "y":
+            fht = input(FORBI + " forbidden/ forced ? [y/N]: ")
+        if fht == "y" or fht == "Y":
             forced = True
-            check_words(url, wordlist, directory, u_agent, forced, thread)
+            check_words(url, wordlist, directory, u_agent, forced, thread, forced)
         else:
             sys.exit()
     else:
         try:
-            a = raw_input("{} not found/ forced ? [y/N]: ".format(LESS))
+            not_found = raw_input("{} not found/ forced ? [y/N]: ".format(LESS))
         except:
-            a = input("{} not found/ forced ? [y/N]: ".format(LESS))
-        if a == "y":
-            check_words(url, wordlist, directory, u_agent, thread)
+            not_found = input("{} not found/ forced ? [y/N]: ".format(LESS))
+        if not_found == "y" or not_found == "Y":
+            check_words(url, wordlist, directory, u_agent, thread, forced)
         else:
             sys.exit()
 
@@ -383,13 +395,13 @@ def check_exclude_page(req, res, directory, forbi, HOUR, size_bytes=False):
             scoring += 1
         else:
             pass
-    len_w = [lines for lines in words.split("\n")] #to avoid to do line per line
-    perc = round(100 * float(scoring) / len(len_w)) #to do a percentage for check look like page
-    print(req.text)
-    print(perc) #DEBUG percentage
+    len_wd = [lines for lines in words.split("\n")] #to avoid to do line per line
+    perc = round(100 * float(scoring) / len(len_wd)) #to do a percentage for check look like page
+    #print(req.text)
+    #print(perc) #DEBUG percentage
     if perc >= 80:
         pass
-    elif perc >= 50 and perc < 80:
+    elif perc > 50 and perc < 80:
         print("{}{}{} Potential exclude page {}%".format(HOUR, EXCL, res, perc))
     else:
         if size_bytes:
@@ -417,7 +429,7 @@ def file_backup(res, directory, forbi, HOUR):
     """
     size_check = 0
 
-    ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak', '/..%3B/', '/%20../']
+    ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak', '/..%3B/', '/%20../', "?stats=1", "/authorize/", ".json"]
     d_files = directory + "/files/"
     for exton in ext_b:
         res_b = res + exton
@@ -443,7 +455,8 @@ def file_backup(res, directory, forbi, HOUR):
             with open(r_files+"-file.txt", 'w+') as fichier_bak:
                 fichier_bak.write(str(soup))
             size_bytes = os.path.getsize(r_files+"-file.txt")
-            if size_bytes == size_check or size_bytes in range(size_check - 5, size_check + 5):
+            ranges = range(size_check - 10, size_check + 10) if size_check < 100000 else range(size_check - 1000, size_check + 1000)
+            if size_bytes == size_check or size_bytes in ranges:
                 #if the number of bytes of the page equal to size_check variable and not bigger than size_check +5 and not smaller than size_check -5
                 pass
             elif size_bytes != size_check:
@@ -462,6 +475,8 @@ def file_backup(res, directory, forbi, HOUR):
         elif req_b_status == 404:
             pass
         elif req_b_status == 500:
+            pass
+        elif req_b_status == 401:
             pass
         elif req_b_status == 301 or req_b_status == 302:
             if redirect:
@@ -563,9 +578,10 @@ def len_page_flush(len_p):
 
 
 def defined_connect(res, user_agent=False, cookie_auth=False):
+    #print(stat_redir)
+    allow_redirection = True if stat == 301 or stat == 302 or redirect else False
     if cookie_auth:
         if redirect:
-            allow_redirection = True if stat == 301 or stat == 302 else False
             req = requests.get(res, headers=user_agent, allow_redirects=allow_redirection, verify=False, timeout=6)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
@@ -574,7 +590,7 @@ def defined_connect(res, user_agent=False, cookie_auth=False):
             else:
                 return req
         else:
-            req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=3, cookies=cookie_auth)
+            req = requests.get(res, headers=user_agent, allow_redirects=allow_redirection, verify=False, timeout=6, cookies=cookie_auth)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
                 sys.exit()
@@ -583,7 +599,6 @@ def defined_connect(res, user_agent=False, cookie_auth=False):
                 return req
     else:
         if redirect:
-            allow_redirection = True if stat == 301 or stat == 302 else False
             req = requests.get(res, headers=user_agent, allow_redirects=allow_redirection, verify=False, timeout=6)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
@@ -592,7 +607,7 @@ def defined_connect(res, user_agent=False, cookie_auth=False):
             else:
                 return req
         else:
-            req = requests.get(res, headers=user_agent, allow_redirects=False, verify=False, timeout=6)
+            req = requests.get(res, headers=user_agent, allow_redirects=allow_redirection, verify=False, timeout=6)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
                 sys.exit()
@@ -612,7 +627,7 @@ def test_timeout(url):
     Test_timeout: just a little function for test if the connection is good or not
     """
     try:
-        req_timeout = requests.get(url, timeout=30)
+        req_timeout = requests.get(url, timeout=50)
     except Timeout:
         print("{}Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(WARNING))
         time.sleep(180)
@@ -638,10 +653,11 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
     percentage = lambda x, y: float(x) / float(y) * 100
     thread_i = 0
     stop_add_thread = False
-    time_i = 180
+    time_i = 120
     time_bool = False
     for numbers in range(len_w):
         thread_count = threading.active_count()
+        thread_all = thread_count - 1
         now = time.localtime(time.time())
         hour_t = time.strftime("%H:%M:%S", now)
         HOUR = "\033[35m[{}] \033[0m".format(hour_t)
@@ -670,13 +686,12 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 if ts:
                     time.sleep(ts)
                 req = defined_connect(res, user_agent, cookie_auth)
-                tests = 0
                 if "robots.txt" in res.split("/")[3:] and req.status_code == 200:
                     print("{}{}{}".format(HOUR, PLUS, res))
                     for r in req.text.split("\n"):
                         print("  - {}".format(r))
-                if not "git" in res:
-                    waf = verify_waf(req, res, user_agent, tests)
+                if not "git" in res and not forced:
+                    waf = verify_waf(req, res, user_agent)
                     #print(waf)
                 #print("timesleep:{}".format(ts))
                 #print(waf_score)
@@ -687,12 +702,12 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     if waf_score == 2:
                         waf_score = 0
                         if thread_count != 1:
-                            thread_i += 1
+                            thread_count += 1
                             stop_add_thread = True
                             print("{} Auto-reconfig scan to prevent the WAF".format(INFO))
                             manager.stop_thread()
                         #TODO: potentialy use TOR (apt install tor, pip install torrequest) for next requests after that.
-                    pass
+                    #pass
                 test_timeout(url)
                 if backup:
                     hidden_dir(res, user_agent, directory, forbi, HOUR)
@@ -760,20 +775,21 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     if redirect and redirect_stat == 200:
                         if exclude:
                             check_exclude_page(req, res, directory, forbi, HOUR)
-                        print("{}{}{}\033[33m => {}\033[0m 301 Moved Permanently".format(HOUR, LESS, res, redirect_link))
-                        parsing.search_s3(res, req, directory)
-                        outpt(directory, res, stats=301)
+                        else:
+                            print("{}{}{}\033[33m => {}\033[0m 301 Moved Permanently".format(HOUR, LESS, res, redirect_link))
+                            parsing.search_s3(res, req, directory)
+                            outpt(directory, res, stats=301)
                 elif status_link == 304:
-                    if redirect and redirect_stat == 200:
-                        print("{}\033[33m[+] \033[0m {}\033[33m 304 Not modified \033[0m".format(HOUR, res))
-                        parsing.search_s3(res, req, directory)
+                    print("{}\033[33m[+] \033[0m {}\033[33m 304 Not modified \033[0m".format(HOUR, res))
+                    parsing.search_s3(res, req, directory)
                 elif status_link == 302:
                     if redirect and redirect_stat == 200:
                         if exclude:
                             check_exclude_page(req, res, directory, forbi, HOUR)
-                        print("{}{}{}\033[33m => {}\033[0m 302 Moved Temporarily".format(HOUR, LESS, res, redirect_link))
-                        parsing.search_s3(res, req, directory)
-                        outpt(directory, res, stats=302)
+                        else:
+                            print("{}{}{}\033[33m => {}\033[0m 302 Moved Temporarily".format(HOUR, LESS, res, redirect_link))
+                            parsing.search_s3(res, req, directory)
+                            outpt(directory, res, stats=302)
                 elif status_link == 400 or status_link == 500:
                     if "Server Error" in req.text or "Erreur du serveur dans l'application" in req.text:
                         if status_link == 400:
@@ -803,10 +819,13 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     else:
                         pass
                 elif status_link == 429:
-                    manager.stop_thread()
-                    print("{}{} Too many requests".format(HOUR, WARNING))
-                    print("STOP so many requests, we should wait a little...")
-                    time_bool = True
+                    req_test_many = requests.get(url, verify=False)
+                    if req_test_many == 429:
+                        print("{}{} Too many requests".format(HOUR, WARNING))
+                        print("STOP so many requests, we should wait a little...")
+                        time_bool = True
+                    else:
+                        print("{}{}{} 429".format(HOUR, LESS, res))
                 if backup:
                     fbackp = file_backup(res, directory, forbi, HOUR)
                     if fbackp == False:
@@ -820,19 +839,18 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
             #traceback.print_exc() #DEBUG
         len_p = len(page)
         len_flush = len_page_flush(len_p) 
-        thread_all = thread_count - thread_i
         if time_bool:
             while time_i != 0:
                 time_i -= 1
                 time.sleep(1)
                 print_time = "stop {}s |".format(time_i) if time_bool else ""
                 #for flush display
-                sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} - {4} {5:{6}}\033[0m\r".format(percentage(numbers, len_w)*thread_all, numbers*thread_all, len_w, thread_all, print_time, page, len_flush))
+                sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} - {4} {5:{6}}\033[0m\r".format(percentage(numbers, len_w) * thread_all, numbers*thread_all, len_w, thread_all, print_time, page, len_flush))
                 sys.stdout.flush()
             time_i = 60
             time_bool = False
         else:
-            sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} | {4:{5}}\033[0m\r".format(percentage(numbers, len_w)*thread_all, numbers*thread_all, len_w, thread_all, page, len_flush))
+            sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} | {4:{5}}\033[0m\r".format(percentage(numbers, len_w) * thread_all, numbers*thread_all, len_w, thread_all, page, len_flush))
             sys.stdout.flush()
         """sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} | {4:{5}}\033[0m\r".format(percentage(numbers, len_w)*thread_all, numbers*thread_all, len_w, thread_all, page, len_flush))
         sys.stdout.flush()"""
@@ -1013,6 +1031,7 @@ if __name__ == '__main__':
     with open(wordlist, 'r') as words:
         for l in words:
             len_w += 1
+    len_w = int(round(len_w * 1.6)) if backup else len_w
     if exclude:
         req_exclude = requests.get(exclude, verify=False)
         req_p = req_exclude.text

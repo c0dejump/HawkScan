@@ -17,6 +17,8 @@ index.php
 index.php?-s
 index.html
 index/
+_clockwork
+__clockwork
 ;index.jsp
 ?static=1&order=asc
 contact/
@@ -2419,6 +2421,9 @@ htdocs/
 htm/
 html/
 htmls/
+oa_html/
+OA_HTML/
+OA_HTML/bin/sqlnet.log
 hu/
 humor/
 hunter/
@@ -4197,6 +4202,12 @@ sysadmin/
 system/
 system_web/
 web.config
+MacroScripts/web.config
+views/web.config
+umbracoSettings.config
+dashboard.config
+config/umbracoSettings.config
+config/dashboard.config
 web.xml
 t/
 t-bone/
@@ -4333,7 +4344,14 @@ tomcat/
 manager/
 manager/html
 manager/text
+manager/text/list
+manager/text/serverinfo
+manager/text/resources
+manager/text/threaddump
+manager/text/vminfo
 manager/jmxproxy
+manager/status/all
+manager/status?XML=true
 manager/status
 tomcat-docs/
 tommy/
@@ -6553,6 +6571,7 @@ api/v1/delta/userAssets
 api/v1/history/history
 api/v1/monitoring/accounts
 api/v1/monitoring/address-check
+redacted-api/
 app
 rest
 connect/login
@@ -6688,6 +6707,7 @@ home-page/information-bloc
 APP
 app-admin
 app.config
+config-auth
 app/.htaccess
 app/bin
 app/composer.json
@@ -9477,6 +9497,8 @@ pma/
 PMA/
 pma/index.php
 pma/scripts/setup.php
+pma/setup/index.php
+pma/ChangeLog 
 pma2005/
 PMA2005/
 pma2009/

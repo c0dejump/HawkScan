@@ -6,6 +6,7 @@ import sys, re, os
 import ssl, OpenSSL
 import socket
 import pprint
+import traceback
 # External
 from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
 
@@ -71,24 +72,27 @@ class mini_scans:
 
     def get_dns(self, url, directory):
         """Get DNS informations"""
+        port = 0
         try:
             if "https" in url:
                 url = url.replace('https://','').replace('/','')
-                context = ssl.create_default_context()
-                conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=url)
-                conn.connect((url, 443))
-                cert = conn.getpeercert()
-                print(INFO + "DNS information")
-                print(LINE)
-                pprint.pprint(str(cert['subject']).replace(',','').replace('((','').replace('))',''))
-                pprint.pprint(cert['subjectAltName'])
-                print('')
-                conn.close()
-                print(LINE)
-                with open(directory + '/dns_info.csv', 'w+') as file:
-                    file.write(str(cert).replace(',','\n').replace('((','').replace('))',''))
+                port = 443
             else:
-                pass
+                url = url.replace('http://','').replace('/','')
+                port = 80
+            context = ssl.create_default_context()
+            conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=url)
+            conn.connect((url, port))
+            cert = conn.getpeercert()
+            print(INFO + "DNS information")
+            print(LINE)
+            pprint.pprint(str(cert['subject']).replace(',','').replace('((','').replace('))',''))
+            pprint.pprint(cert['subjectAltName'])
+            print('')
+            conn.close()
+            print(LINE)
+            with open(directory + '/dns_info.csv', 'w+') as file:
+                file.write(str(cert).replace(',','\n').replace('((','').replace('))',''))
         except:
             print(INFO + "DNS information")
             print(LINE)
@@ -145,7 +149,10 @@ class mini_scans:
         print("{}Wayback Check".format(INFO))
         print(LINE)
         print(url + "\n")
-        os.system('python tools/waybacktool/waybacktool.py pull --host {} | python tools/waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
+        try:
+            os.system('python tools/waybacktool/waybacktool.py pull --host {} | python tools/waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
+        except Exception:
+            traceback.print_exc()
         statinfo = os.path.getsize(directory + "/wayback.txt")
         if statinfo < 1:
             print("  {}Nothing wayback found".format(INFO))
