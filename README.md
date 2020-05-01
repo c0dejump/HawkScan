@@ -59,7 +59,6 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  - [ ] Access token [P2]
  - [ ] Check source code and verify leak or sentsitive data in the Github [P2]
  - [ ] Testing website paramaters (attack, so no passive scan) [P3]
- - [ ] Detect famous honeypot [P3]
  
  # Usage
  > 
