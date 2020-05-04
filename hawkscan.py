@@ -148,7 +148,7 @@ def status(stat, directory, u_agent, thread):
             follow = input("{} 301 Moved Permanently\nDo you want follow redirection ? [y/N]".format(PLUS))
             print("")
         stat = 301 if follow == "y" or follow == "Y" else 0
-        check_words(url, wordlist, directory, u_agent, thread, forced)
+        check_words(url, wordlist, directory, u_agent, thread)
     elif stat == 302:
         try:
             follow = raw_input("{} 302 Moved Temporarily\nDo you want follow redirection ? [y/N]".format(PLUS))
@@ -157,7 +157,7 @@ def status(stat, directory, u_agent, thread):
             follow = input("{} 302 Moved Temporarily\nDo you want follow redirection ? [y/N]".format(PLUS))
             print("")
         stat = 302 if follow == "y" or follow == "Y" else 0
-        check_words(url, wordlist, directory, u_agent, thread, forced)
+        check_words(url, wordlist, directory, u_agent, thread)
     elif stat == 304:
         pass
     elif stat == 404:
@@ -166,6 +166,7 @@ def status(stat, directory, u_agent, thread):
         except:
             not_found = input("{} not found/ forced ? [y/N]: ".format(LESS))
         if not_found == "y" or not_found == "Y":
+            forced = True
             check_words(url, wordlist, directory, u_agent, thread, forced)
         else:
             sys.exit()
