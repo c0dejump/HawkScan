@@ -164,10 +164,9 @@ def create_report(directory, cookie_):
                 <center>
                 <h1>Hawkscan Report </h1></br>
                 <hr></br>
-                <b>Status : <p style="color: blue;">{}</b><br>
-                <hr>
-                <b>WAF</b> </br>
-                <p style="color: red;">{}</p>
+                <b><p style="text-align: right;">Status : <i style="color: blue;">{}</b></p><br>
+                <b style="text-align: left;">WAF</b> </br>
+                <p style="color: red; text-align: left;">{}</p>
                 <br>
                 <hr>
                 <br>

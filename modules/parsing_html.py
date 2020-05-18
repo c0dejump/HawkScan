@@ -39,7 +39,23 @@ class parsing_html:
                 req_value = req_key.split('"')
                 for r in req_value:
                     if s3_f in r:
-                        if urls_s3 == []:
+                        if not os.path.exists(directory + "/s3_links.txt"):
+                            with open(directory + "/s3_links.txt", "a+") as s3_links:
+                                s3_links.write(str(r+"\n"))
+                        else:
+                            with open(directory + "/s3_links.txt", "a+") as read_links:
+                                for rl in read_links.readlines():
+                                    if r == rl:
+                                        pass
+                                    else:
+                                        try:
+                                            req_s3 = requests.get(r, verify=False)
+                                            if req_s3.status_code == 200:
+                                                print("{} Potentialy s3 buckets found with reponse 200: {}".format(S3, r))
+                                                read_links.write(r)
+                                        except:
+                                            pass
+                        """if urls_s3 == []:
                             #print(urls_s3)
                             urls_s3.append(r)
                         else:
@@ -53,11 +69,11 @@ class parsing_html:
                                     except:
                                         pass
                                 else:
-                                    pass
+                                    pass"""
                     #elif re.search(s3_f, req.text):
                     #    print("{}Potentialy s3 buckets found in this page: {} | With this payload: {}".format(S3, res, s3_f))
-                    else:
-                        pass
+                    #else:
+                        #pass
         """if urls_s3:
             s3_links = list(set(urls_s3))
             for s3_l in s3_links:

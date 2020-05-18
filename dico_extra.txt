@@ -17,6 +17,7 @@ index.php
 index.php?-s
 index.html
 index/
+index.php/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 _clockwork
 __clockwork
 ;index.jsp
@@ -119,6 +120,10 @@ getConf
 editor.jsp
 error_docs/
 error_docs
+vdoc/
+vdoc/INSTALL.OVERVIEW
+vdoc/INSTALL.COMPILING
+vdoc/README
 ansible/Vagrantfile
 ansible/roles/common/tasks/main.yml
 cpresources/
@@ -134,6 +139,7 @@ wp-content/uploads/db-backup
 wp-admin.php
 wp-login.php
 wp-includes/
+wp-includes/certificates/
 wp-content/
 wp-includes/wlwmanifest.xml
 wp-json/
@@ -428,6 +434,7 @@ mail/
 nrotc/
 app/plugins/saml-20-single-sign-on/saml/config/config.php
 xmlrpc.php
+apixmlrpc.php
 user_upload/
 functions.inc.php
 THXData/
@@ -1571,6 +1578,7 @@ copper/
 copyright/
 corba/
 core/
+core/php-cas/
 cornelius/
 corona/
 corp/
@@ -4497,6 +4505,7 @@ public_html/page/wp-content/plugins/akismet/.htaccess
 public_html/page/wp-content/uploads/wc-logs/.htaccess
 public_html/page/wp-content/uploads/woocommerce_uploads/.htaccess
 wp-content/plugins/wordfence/wordfence.php
+wp-content/mu-plugins/
 usr/
 ustats/
 usuari/
@@ -4943,6 +4952,7 @@ htpasswd.fi
 .htusers
 .idea
 .idea/
+.idea/web.iml
 .idea/.name
 .idea/compiler.xml
 .idea/copyright/profiles_settings.xml
@@ -5186,6 +5196,7 @@ keys
 .version
 .vgextensions/
 .viminfo
+vim_settings.xml
 .vimrc
 .web
 .workspace/
@@ -7149,6 +7160,8 @@ cgi-bin/logi.php
 cgi-bin/login
 cgi-bin/php.ini
 cgi-bin/test.cgi
+cgi-bin/info.pl
+cgi-bin/tips.pl
 cgi-bin2/
 cgi-dos/
 cgi-shl/
@@ -8720,6 +8733,7 @@ Mail/smtp/Admin/smadv.%EXT%
 mailadmin
 mailform.%EXT%
 mailman
+mailman/options/
 mailman/listinfo
 mailman/admin/
 main

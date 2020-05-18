@@ -51,6 +51,7 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  - [ ] JS parsing and analysis [P1]
  - [ ] Scan API endpoints/informations leaks [P1]
  - [ ] Check HTTP headers security [P2]
+ - [ ] Check phpmyadmin version [P2]
  - [ ] Fuzzing amazonaws S3 Buckets [P2]
  - [ ] Get certificate (crypto keys...) [P2]
  - [ ] Anonymous routing through some proxy (http/s proxy list) [P2]
@@ -59,6 +60,7 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  - [ ] Access token [P2]
  - [ ] Check source code and verify leak or sentsitive data in the Github [P2]
  - [ ] Testing website paramaters (attack, so no passive scan) [P3]
+ - [ ] Detect famous honeypot [P3]
  
  # Usage
  > 

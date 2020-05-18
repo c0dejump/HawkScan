@@ -186,6 +186,7 @@ def status(stat, directory, u_agent, thread):
         except:
             not_found = input("{} not found/ forced ? [y/N]: ".format(LESS))
         if not_found == "y" or not_found == "Y":
+            forced = True
             check_words(url, wordlist, directory, u_agent, thread, forced)
         else:
             sys.exit()
@@ -430,7 +431,7 @@ def file_backup(res, directory, forbi, HOUR):
     """
     size_check = 0
 
-    ext_b = ['.save', '.old', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak', '/..%3B/', '/%20../', "?stats=1", "/authorize/", ".json"]
+    ext_b = ['.save', '.old', '.NEW', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak', '/..%3B/', '/%20../', "?stats=1", "/authorize/", ".json"]
     d_files = directory + "/files/"
     for exton in ext_b:
         res_b = res + exton
@@ -586,7 +587,7 @@ def defined_connect(res, user_agent=False, cookie_auth=False):
             req = requests.get(res, headers=user_agent, allow_redirects=allow_redirection, verify=False, timeout=6)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
-                sys.exit()
+                #sys.exit()
                 #TODO
             else:
                 return req
@@ -594,7 +595,7 @@ def defined_connect(res, user_agent=False, cookie_auth=False):
             req = requests.get(res, headers=user_agent, allow_redirects=allow_redirection, verify=False, timeout=6, cookies=cookie_auth)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
-                sys.exit()
+                #sys.exit()
                 #TODO
             else:
                 return req
@@ -603,7 +604,7 @@ def defined_connect(res, user_agent=False, cookie_auth=False):
             req = requests.get(res, headers=user_agent, allow_redirects=allow_redirection, verify=False, timeout=6)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
-                sys.exit()
+                #sys.exit()
                 #TODO
             else:
                 return req
@@ -611,7 +612,7 @@ def defined_connect(res, user_agent=False, cookie_auth=False):
             req = requests.get(res, headers=user_agent, allow_redirects=allow_redirection, verify=False, timeout=6)
             if "You need to enable JavaScript to run this app" in req.text or "JavaScript Required" in req.text or "without JavaScript enabled" in req.text:
                 print("{}Need to enable JavaScript to run this app, this problem will be fix ASAP sorry".format(INFO))
-                sys.exit()
+                #sys.exit()
                 #TODO
             else:
                 return req
@@ -636,7 +637,7 @@ def test_timeout(url):
         pass
 
 
-def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=False):
+def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=False, nLine=False):
     """
     tryUrl:
     Test all URL contains in the dictionnary with multi-threading.
@@ -765,6 +766,8 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                         print("{}{}{} \033[31m Forbidden \033[0m".format(HOUR, FORBI, res))
                         create_backup(res, directory, forbi)
                         outpt(directory, res, stats=403)
+                    elif not forced and recur:
+                        pass
                     else:
                         #print("{}{} {} \033[31m Forbidden \033[0m".format(HOUR, FORBI, res))
                         pass
@@ -839,19 +842,19 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
             pass
             #traceback.print_exc() #DEBUG
         len_p = len(page)
-        len_flush = len_page_flush(len_p) 
-        if time_bool:
+        len_flush = len_page_flush(len_p)
+        if time_bool: #if a waf detected, stop for any seconds
             while time_i != 0:
                 time_i -= 1
                 time.sleep(1)
                 print_time = "stop {}s |".format(time_i) if time_bool else ""
                 #for flush display
-                sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} - {4} {5:{6}}\033[0m\r".format(percentage(numbers, len_w) * thread_all, numbers*thread_all, len_w, thread_all, print_time, page, len_flush))
+                sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} - {4} {5:{6}}\033[0m\r".format(percentage(numbers, len_w)*thread_all, numbers*thread_all+nLine, len_w, thread_all, print_time, page, len_flush))
                 sys.stdout.flush()
             time_i = 60
             time_bool = False
         else:
-            sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} | {4:{5}}\033[0m\r".format(percentage(numbers, len_w) * thread_all, numbers*thread_all, len_w, thread_all, page, len_flush))
+            sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} | {4:{5}}\033[0m\r".format(percentage(numbers, len_w)*thread_all, numbers*thread_all+nLine, len_w, thread_all, page, len_flush))
             sys.stdout.flush()
         """sys.stdout.write("\033[34m[i] {0:.2f}% - {1}/{2} | Threads: {3:} | {4:{5}}\033[0m\r".format(percentage(numbers, len_w)*thread_all, numbers*thread_all, len_w, thread_all, page, len_flush))
         sys.stdout.flush()"""
@@ -879,7 +882,7 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
         enclosure_queue.put(link_url)
     manager = ThreadManager(enclosure_queue)
     for i in range(threads):
-        worker = Thread(target=tryUrl, args=(i, enclosure_queue, threads, manager, directory, forced, u_agent))
+        worker = Thread(target=tryUrl, args=(i, enclosure_queue, threads, manager, directory, forced, u_agent, nLine))
         worker.setDaemon(True)
         worker.start()
     enclosure_queue.join()
