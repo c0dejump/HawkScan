@@ -504,7 +504,7 @@ def verify_waf(req, res, user_agent):
         print("{}ZScaler WAF detected : {} ".format(INFO, res))
         return True
     elif "Access Denied" in req_test.text or "access denied" in req_test.text or "Something went wrong" in req_test.text or \
-    "we have detected malicious traffic" in req_test.text and not forced:
+    "we have detected malicious traffic" in req_test.text or "device from your location is sending large amounts of web requests" in req_test.text and not forced:
         if req_test.status_code == 401 or req_test.status_code == 403:
             print("{}{} Unknown WAF detected : {} ".format(INFO, req_test.status_code, res))
             return True

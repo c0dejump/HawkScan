@@ -1,0 +1,147 @@
+/* ------
+SOMMAIRE
+---------*/
+/*
+
+00 - MAIN
+
+*/
+header{
+	padding: 35px 0px;
+	border-bottom: 2px solid var(--color05);
+}
+	header h1{
+		text-align: center;
+	}
+
+
+
+main .subTitle{
+	padding: 40px 0px;
+}
+	main .subTitle span.subText{
+		color: var(--color02);
+		font-family: 'pr', sans-serif;
+	}
+main .subLink{
+	background-color: var(--color06);
+	padding: 20px 0px;
+}
+	main .subLink h2{
+		color: var(--color02);
+		text-transform: uppercase;
+		font-size: 2rem;
+	}
+ul {
+list-style-type: none;
+}
+
+input[type=radio] {
+position: absolute;
+left: -9999px;
+top: -9999px;
+}
+
+.tabs {
+	position: relative;
+	z-index: 999;
+	height: 42px;
+	white-space: nowrap;
+	font-size: 0;
+	display: flex;
+	align-items: center;
+}
+
+.tabs label {
+	cursor: pointer;
+	color: var(--color02);
+	text-transform: uppercase;
+	font-size: 2rem;
+	font-family: "pm", sans-serif;
+	display: block;
+	padding: 8px 0px;
+	transition: color 0.5s, background 0.5s;
+	line-height: 36px;
+}
+
+.tabs label:first-child {
+margin-left: 0;
+}
+
+.tabs label:hover {
+	background: var(--color02);
+	color: var(--color06);
+}
+
+input:nth-child(1):checked ~ .tabs label:nth-child(1),
+input:nth-child(2):checked ~ .tabs label:nth-child(2),
+input:nth-child(3):checked ~ .tabs label:nth-child(3),
+input:nth-child(4):checked ~ .tabs label:nth-child(4) {
+	background: var(--color02);
+	color: var(--color06);
+}
+
+.sections {
+	margin-top: 40px;
+}
+
+.sections li {
+	display: none;
+	width: 100%;
+	padding: 1em;
+	border: solid 1px #DDD;
+	border-radius: 0 5px 5px 5px;
+	background-color: #FFF;
+	box-shadow: 1px 1px 20px rgba(0,0,0,0.4);
+}
+.sections li h3{
+	margin-bottom: 20px;
+	position: relative;
+	margin-left: 30px;
+}
+.sections li h3::before{
+	content: "";
+	position: absolute;
+	top: 50%;
+	right: 100%;
+	transform: translateY(-50%);
+	width: 25px;
+	height: 25px;
+	background-image: url(img/share.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	margin-right: 5px;
+}
+
+input:nth-child(1):checked ~ .sections li:nth-child(1),
+input:nth-child(2):checked ~ .sections li:nth-child(2),
+input:nth-child(3):checked ~ .sections li:nth-child(3),
+input:nth-child(4):checked ~ .sections li:nth-child(4) {
+	display: block;
+}
+
+table {
+	border: 3px solid var(--color03);
+	border-collapse: collapse;
+	width: calc(100% / 2.1);
+	background-color: var(--color06);
+}
+th {
+	font-family: monospace;
+	border: 2px solid var(--color03);
+	padding: 15px 25px;
+	font-family: 'mb', sans-serif;
+	color: var(--color03);
+	text-transform: uppercase;
+	text-align: center;
+	background-color: var(--color06);
+	background-image: url(sky.jpg);
+}
+td {
+	font-family: sans-serif;
+	border: 2px solid var(--color03);
+	padding: 15px 25px;
+	text-align: center;
+	background-color: var(--color06);
+	color: var(--color03);
+}

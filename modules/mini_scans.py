@@ -153,22 +153,26 @@ class mini_scans:
             os.system('python tools/waybacktool/waybacktool.py pull --host {} | python tools/waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
         except Exception:
             traceback.print_exc()
-        statinfo = os.path.getsize(directory + "/wayback.txt")
-        if statinfo < 1:
-            print("  {}Nothing wayback found".format(INFO))
-        with open(directory + "/wayback.txt", "r+") as wayback:
-            wb_read = wayback.read().splitlines()
-            for wb in wb_read:
-                wb_res = list(wb.split(","))
-                try:
-                    if wb_res[1] == " 200":
-                        print("{}{}{}".format(PLUS, wb_res[0], wb_res[1]))
-                    elif wb_res[1] == " 301" or wb_res[1] == " 302":
-                        print("{}{}{}".format(LESS, wb_res[0], wb_res[1]))
-                    elif wb_res[1] == " 404" or wb_res[1] == " 403":
+        try:
+            statinfo = os.path.getsize(directory + "/wayback.txt")
+        except:
+            print("\t{}Nothing wayback found !".format(INFO))
+        if statinfo < 1 :
+            print("\t{}Nothing wayback found".format(INFO))
+        else:
+            with open(directory + "/wayback.txt", "r+") as wayback:
+                wb_read = wayback.read().splitlines()
+                for wb in wb_read:
+                    wb_res = list(wb.split(","))
+                    try:
+                        if wb_res[1] == " 200":
+                            print("{}{}{}".format(PLUS, wb_res[0], wb_res[1]))
+                        elif wb_res[1] == " 301" or wb_res[1] == " 302":
+                            print("{}{}{}".format(LESS, wb_res[0], wb_res[1]))
+                        elif wb_res[1] == " 404" or wb_res[1] == " 403":
+                            pass
+                        else:
+                            print("{}{}{}".format(INFO, wb_res[0], wb_res[1]))
+                    except:
                         pass
-                    else:
-                        print("{}{}{}".format(INFO, wb_res[0], wb_res[1]))
-                except:
-                    pass
         print(LINE)

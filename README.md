@@ -4,16 +4,18 @@
 
 Security Tool for Reconnaissance and Information Gathering on a website. (python 2.x & 3.x)
 
-This script use "WafW00f" to detect the WAF (https://github.com/EnableSecurity/wafw00f)
+This script use "WafW00f" to detect the WAF in the first step (https://github.com/EnableSecurity/wafw00f)
 
 This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Sublist3r)
 
 This script use "waybacktool" to check in waybackmachine (https://github.com/Rhynorater/waybacktool)
 
 # News
-**!** Search S3 buckets in source code page   
+**!** V 1.0 !
+**!** Better management of Threads   
 **!** Add payloads in dico_extra.txt   
-**!** Princpals bugs and false positifs corrected   
+**!** New style for the report
+**!** Errors management
 
 # Features
  - [x] URL fuzzing and dir/file detection
@@ -48,15 +50,15 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
 # TODO 
 **P1 is the most important**
 
+ - [ ] Try if bypass the waf is possible while the scan
  - [ ] JS parsing and analysis [P1]
  - [ ] Scan API endpoints/informations leaks [P1]
- - [ ] Check HTTP headers security [P2]
+ - [ ] Check HTTP headers/ssl security [P2]
  - [ ] Check phpmyadmin version [P2]
  - [ ] Fuzzing amazonaws S3 Buckets [P2]
- - [ ] Get certificate (crypto keys...) [P2]
  - [ ] Anonymous routing through some proxy (http/s proxy list) [P2]
  - [ ] Check pastebin [P2]
- - [ ] Best HTML report and On-the-fly writing report [P2]
+ - [ ] On-the-fly writing report [P2]
  - [ ] Access token [P2]
  - [ ] Check source code and verify leak or sentsitive data in the Github [P2]
  - [ ] Testing website paramaters (attack, so no passive scan) [P3]
@@ -81,7 +83,7 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
       -u URL         URL to scan [required]                                                                              
       -w WORDLIST    Wordlist used for URL Fuzzing [required]                                                            
       -s SUBDOMAINS  subdomain tester                                                                                    
-      -t THREAD      Number of threads to use for URL Fuzzing. Default: 5  
+      -t THREAD      Number of threads to use for URL Fuzzing. Default: 20  
       -a USER_AGENT  choice user-agent     
       --redirect     For scan with redirect response like 301,302      
       -p PREFIX      add prefix in wordlist to scan    
@@ -112,3 +114,8 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
     python hawkscan.py -u https://www.exemple.com -w dico_extra.txt -t 5 --exclude https://www.exemple.com/profile.php?id=1
 
  >
+
+# Thanks
+Layno
+Sanguinarius
+Cyber_Ph4ntoM

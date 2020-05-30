@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import csv
-import sys, re
+import sys, re, os
 from config import S3
 import traceback
 
@@ -31,8 +31,12 @@ class parsing_html:
                 except:
                     pass
 
+
     def search_s3(self, res, req, directory):
-        s3_keyword = ["S3://", "s3-", "amazonaws", "aws"]
+        """
+        search_s3: Check on source page if a potentialy "s3 amazon bucket" is there
+        """
+        s3_keyword = ["S3://", "s3-", "amazonaws"]
         for s3_f in s3_keyword:
             reqtext = req.text.split(" ")
             for req_key in reqtext:
@@ -55,39 +59,7 @@ class parsing_html:
                                                 read_links.write(r)
                                         except:
                                             pass
-                        """if urls_s3 == []:
-                            #print(urls_s3)
-                            urls_s3.append(r)
-                        else:
-                            for urls in urls_s3:
-                                if r != urls:
-                                    urls_s3.append(r)
-                                    try:
-                                        req_s3 = requests.get(r, verify=False)
-                                        if req_s3.status_code == 200:
-                                            print("{} Potentialy s3 buckets found with reponse 200: {}".format(S3, r))
-                                    except:
-                                        pass
-                                else:
-                                    pass"""
-                    #elif re.search(s3_f, req.text):
-                    #    print("{}Potentialy s3 buckets found in this page: {} | With this payload: {}".format(S3, res, s3_f))
-                    #else:
-                        #pass
-        """if urls_s3:
-            s3_links = list(set(urls_s3))
-            for s3_l in s3_links:
-                try:
-                    req_s3 = requests.get(s3_l, verify=False)
-                    if req_s3.status_code == 200:
-                        print("{} Potentialy s3 buckets found with reponse 200: {}".format(S3, s3_l))
-                except:
-                    pass"""
-        #re.findall(r'(s3-|s3\.)?(.*)(amazon|aws|S3:\/).*', s3_links)
 
-
-
-        
 
     def mail(self, req, directory, all_mail):
         """
@@ -105,11 +77,11 @@ class parsing_html:
                 req_ino = requests.post("https://www.inoitsu.com/", data=datas)
                 if "DETECTED" in req_ino.text:
                     pwnd = "{}: pwned ! ".format(mail)
-                    if pwnd not in all_mail:
+                    if pwnd not in all_mail and not "png" in mail or not "jpg" in mail:
                         all_mail.append(pwnd)
                 else:
                     no_pwned = "{}: no pwned ".format(mail)
-                    if no_pwned not in all_mail:
+                    if no_pwned not in all_mail and not "png" in mail or not "jpg" in mail:
                         all_mail.append(no_pwned)
         with open(directory + '/mail.csv', 'a+') as file:
             if all_mail is not None and all_mail != []:

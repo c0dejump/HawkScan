@@ -22,6 +22,7 @@ _clockwork
 __clockwork
 ;index.jsp
 ?static=1&order=asc
+static../.git/config
 contact/
 contact.php
 include.php
@@ -7383,6 +7384,7 @@ config/monkdonate.ini
 config/monkid.ini
 config/producao.ini
 config/routes.yml
+config/client.inc
 config/settings.inc
 config/settings.ini
 config/settings.ini.cfm
@@ -9822,6 +9824,7 @@ server-status
 server-status/
 client-status
 client-status/
+client.inc
 server.cfg
 server.log
 Server.php
@@ -11431,6 +11434,7 @@ password.php
 overlib_mini.js
 order.php
 notification.php
+notification-log.txt
 move.php
 modcp.php
 messages.php
