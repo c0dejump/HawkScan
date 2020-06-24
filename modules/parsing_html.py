@@ -72,7 +72,7 @@ class parsing_html:
         search = re.findall(reg, mails)
         for mail in search:
             #check if email pwned
-            if mail:
+            if mail and not "png" in mail or not "jpg" in mail:
                 datas = { "act" : mail, "accounthide" : "test", "submit" : "Submit" }
                 req_ino = requests.post("https://www.inoitsu.com/", data=datas)
                 if "DETECTED" in req_ino.text:

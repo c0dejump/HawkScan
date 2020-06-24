@@ -11,11 +11,12 @@ This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Subl
 This script use "waybacktool" to check in waybackmachine (https://github.com/Rhynorater/waybacktool)
 
 # News
-**!** V 1.0 !
-**!** Better management of Threads   
-**!** Add payloads in dico_extra.txt   
-**!** New style for the report
-**!** Errors management
+**!** V 1.2 !   
+**!** Adding news words in dico.txt (old dico_extra.txt)
+**!** Adding extensions in backup check test function, option -b (.json, .xml, .bkp...) => very long
+**!** Test bypass of waf rate limited in real time (X-Originating-IP...)  
+**!** Exclude response http code (--exclude 403)
+**!** Filter on response http code in report
 
 # Features
  - [x] URL fuzzing and dir/file detection
@@ -46,19 +47,19 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  - [x] Check if DataBase firebaseio existe and accessible
  - [x] Automatic threads depending response to website (and reconfig if WAF detected too many times). Max: 10
  - [x] Search S3 buckets in source code page
+ - [x] Testing bypass of waf if detected
  
 # TODO 
 **P1 is the most important**
 
- - [ ] Try if bypass the waf is possible while the scan
  - [ ] JS parsing and analysis [P1]
  - [ ] Scan API endpoints/informations leaks [P1]
+ - [ ] On-the-fly writing report [P1]
  - [ ] Check HTTP headers/ssl security [P2]
  - [ ] Check phpmyadmin version [P2]
  - [ ] Fuzzing amazonaws S3 Buckets [P2]
  - [ ] Anonymous routing through some proxy (http/s proxy list) [P2]
  - [ ] Check pastebin [P2]
- - [ ] On-the-fly writing report [P2]
  - [ ] Access token [P2]
  - [ ] Check source code and verify leak or sentsitive data in the Github [P2]
  - [ ] Testing website paramaters (attack, so no passive scan) [P3]

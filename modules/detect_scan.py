@@ -27,7 +27,6 @@ class detect_scans:
                 with open(directory + "/cms.txt", "w+") as cms_write:
                     cms_write.write("This website use {} {}".format(result, v))
                 print("\t{} This website use \033[32m{} {} \033[0m\n".format(PLUS, result, v))
-                print(LINE)
                 return result, v;
             else:
                 with open(directory + "/cms.txt", "w+") as cms_write:
@@ -70,7 +69,10 @@ class detect_scans:
                     dates = p.find("td").text.strip()
                     detail = p.find("a").text.strip()
                     print("{}{} : {}".format(WARNING, dates, detail))
+                    print(LINE)
             else:
                 print("  {} Nothing wpvunldb found \n".format(LESS))
+                print(LINE)
         else:
             print("  {} Nothing CVE found \n".format(LESS))
+            print(LINE)
