@@ -117,6 +117,6 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
  >
 
 # Thanks
-Layno
-Sanguinarius
-Cyber_Ph4ntoM
+Layno   
+Sanguinarius   
+Cyber_Ph4ntoM   
