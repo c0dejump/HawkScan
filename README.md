@@ -12,11 +12,11 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
 
 # News
 **!** V 1.2 !   
-**!** Adding news words in dico.txt (old dico_extra.txt)
-**!** Adding extensions in backup check test function, option -b (.json, .xml, .bkp...) => very long
-**!** Test bypass of waf rate limited in real time (X-Originating-IP...)  
-**!** Exclude response http code (--exclude 403)
-**!** Filter on response http code in report
+**!** Adding news words in dico.txt (old dico_extra.txt)  
+**!** Adding extensions in backup check test function, option -b (.json, .xml, .bkp...) => very long  
+**!** Test bypass of waf rate limited in real time (X-Originating-IP...)    
+**!** Exclude response http code (--exclude 403)  
+**!** Filter on response http code in report   
 
 # Features
  - [x] URL fuzzing and dir/file detection
