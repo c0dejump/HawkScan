@@ -114,7 +114,7 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
     //With an exclude page
     python hawkscan.py -u https://www.exemple.com -w dico.txt -t 5 --exclude https://www.exemple.com/profile.php?id=1
     
-    //WIth an exclude http code
+    //With an exclude http code
     python hawkscan.py -u https://www.exemple.com -w dico.txt --exclude 403
  >
 
