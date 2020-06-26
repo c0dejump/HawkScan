@@ -396,8 +396,8 @@ def file_backup(s, res, directory, forbi, HOUR):
     size_check = 0
 
     ext_b = ['.key', '.log', '.ini', '.env', '.dat', '.conf', '.config', '.cgi', '.bok', '.bkf', '.action', 
-    '.save', '.old', '.NEW', '.backup', '.BAK', '.bak', '.zip', '.rar', '~', '_old', '_backup', '_bak', 
-    '/..%3B/', '/%20../', "?stats=1", "/authorize/", ".json", ".bkp", ".wml", ".xls", ".xlsx", ".xml", ".xsd", ".yml"]
+    '.save', '.old', '.NEW', '.backup', '.BAK', '.bak', '.bak1', '.zip', '.rar', '~', '_old', '_backup', '_bak', 
+    '/..%3B/', '/%20../', "?stats=1", "authorize/", ".json", ".bkp", ".wml", ".xml", ".xsd", ".yml"]
     d_files = directory + "/files/"
     for exton in ext_b:
         res_b = res + exton
@@ -1096,7 +1096,10 @@ if __name__ == '__main__':
     if cookie_:
         s = cookie_.split(";")
         for c in s:
-            c = c.split("=", 1)
+            if "=" in c:
+                c = c.split("=", 1)
+            elif ":" in c:
+                c = c.split(":", 1)
             cookie_auth.update([(c[0],c[1])])
     with open(wordlist, 'r') as words:
         for l in words:
