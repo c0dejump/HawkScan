@@ -103,17 +103,19 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
 
  >
     //Basic
-    python hawkscan.py -u https://www.exemple.com -w dico_extra.txt
+    python hawkscan.py -u https://www.exemple.com -w dico.txt
 
     //With redirect
-    python hawkscan.py -u https://www.exemple.com -w dico_extra.txt -t 5 --redirect
+    python hawkscan.py -u https://www.exemple.com -w dico.txt -t 5 --redirect
 
     //With backup files scan
-    python hawkscan.py -u https://www.exemple.com -w dico_extra.txt -t 5 -b
+    python hawkscan.py -u https://www.exemple.com -w dico.txt -t 5 -b
 
     //With an exclude page
-    python hawkscan.py -u https://www.exemple.com -w dico_extra.txt -t 5 --exclude https://www.exemple.com/profile.php?id=1
-
+    python hawkscan.py -u https://www.exemple.com -w dico.txt -t 5 --exclude https://www.exemple.com/profile.php?id=1
+    
+    //WIth an exclude http code
+    python hawkscan.py -u https://www.exemple.com -w dico.txt --exclude 403
  >
 
 # Thanks
