@@ -99,7 +99,7 @@ This script use "waybacktool" to check in waybackmachine (https://github.com/Rhy
 
  >
 
-# Exemples
+# Examples
 
  >
     //Basic
