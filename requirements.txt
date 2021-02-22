@@ -1,0 +1,13 @@
+requests
+pyopenssl
+prettyprinter
+prettyprint
+queuelib
+fake_useragent
+python-whois
+argparse
+bs4
+dnspython
+wafw00f
+python-whois
+sockets
