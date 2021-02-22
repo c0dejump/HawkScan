@@ -109,18 +109,16 @@ class filterManager:
     def check_multiple(self, req, res, directory, forbi, HOUR, parsing=False, size_bytes=False):
         """
         Check_multiple: check multiple exclude, ex:
-        --exclude 500,1337b,https://www.exemple.com
+        --exclude 500,1337b
         --exclude 500,403
         """
         filterM = filterManager()
         list_exclude = {}
         for l_exclude in req_p:
             list_exclude[l_exclude] = False
-        #print(list_exclude)
         for m_exclude in req_p:
             try:
                 if int(m_exclude):
-                    #print(m_exclude)
                     check_code = filterM.check_exclude_code(res, req, directory, HOUR, parsing, multiple=True)
                     if check_code:
                         list_exclude[m_exclude] = True
@@ -128,7 +126,6 @@ class filterManager:
                 check_page = filterM.check_exclude_page(req, res, directory, forbi, HOUR, parsing, size_bytes, multiple=m_exclude)
                 if check_page:
                     list_exclude[m_exclude] = True
-        print(list_exclude)
         if False not in list_exclude.values():
             print("{} {} {} ({} bytes)".format(HOUR, PLUS, res, len(req.content)))
             for l_exclude in req_p:
