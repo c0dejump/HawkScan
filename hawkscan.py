@@ -109,16 +109,18 @@ class filterManager:
     def check_multiple(self, req, res, directory, forbi, HOUR, parsing=False, size_bytes=False):
         """
         Check_multiple: check multiple exclude, ex:
-        --exclude 500,1337b
+        --exclude 500,1337b,https://www.exemple.com
         --exclude 500,403
         """
         filterM = filterManager()
         list_exclude = {}
         for l_exclude in req_p:
             list_exclude[l_exclude] = False
+        #print(list_exclude)
         for m_exclude in req_p:
             try:
                 if int(m_exclude):
+                    #print(m_exclude)
                     check_code = filterM.check_exclude_code(res, req, directory, HOUR, parsing, multiple=True)
                     if check_code:
                         list_exclude[m_exclude] = True
@@ -126,6 +128,7 @@ class filterManager:
                 check_page = filterM.check_exclude_page(req, res, directory, forbi, HOUR, parsing, size_bytes, multiple=m_exclude)
                 if check_page:
                     list_exclude[m_exclude] = True
+        #print(list_exclude)
         if False not in list_exclude.values():
             print("{} {} {} ({} bytes)".format(HOUR, PLUS, res, len(req.content)))
             for l_exclude in req_p:
@@ -151,8 +154,8 @@ class filterManager:
                 return True
             else:
                 print("{} {} {} ({} bytes) \033[33m{} Server Error\033[0m".format(HOUR, SERV_ERR, res, len(req.content), req.status_code))
-            if js:
-                parsing.get_javascript(res, req)
+                if js:
+                    parsing.get_javascript(res, req)
         else:
             if multiple:
                 return True
@@ -173,7 +176,7 @@ class filterManager:
             --exclude 240b for just number of bytes
         """
         scoring = 0
-        multiple = multiple if multiple else "0"
+        multiple = multiple if multiple else False
         if multiple and "http" in multiple:
             print("\n\033[34mHi ! Sorry but multiple excludes with an url doesn't work for the moment, please put a number or bytes number\n(ex: --exclude 404,1337b)\033[0m")
             pid = os.getpid()
@@ -184,7 +187,7 @@ class filterManager:
             req_bytes = len(req.content)
             if multiple and req_bytes == req_len:
                 return False
-            else:
+            elif multiple and req_bytes != req_len:
                 return True
             if not multiple:
                 if req_bytes == req_len:
@@ -471,7 +474,7 @@ def backup_ext(s, res, page, directory, forbi, HOUR, parsing, filterM):
     ext_b = ['.db', '.swp', '.yml', '.xsd', '.xml', '.wml', '.bkp', '.rar', '.zip', '.7z', '.bak', '.bac', '.BAK', '.NEW', '.old', 
             '.bkf', '.bok', '.cgi', '.dat', '.ini', '.log', '.key', '.conf', '.env', '_bak', '_old', '.bak1', '.json', '.lock', 
             '.save', '.atom', '%20../', '..%3B/', '.action', '_backup', '.backup', '.config', '?stats=1', 'authorize/', '.md', '.gz', 
-            'txt']
+            'txt', 'asp', 'aspx']
     
     d_files = directory + "/files/" #directory to download backup file if exist
 
