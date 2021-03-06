@@ -6,7 +6,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
 # News
 **!** Updated: Add new content in google dork, dico and javascript recon      
-**!** Updated: Real setup.py :)      
+**!** Updated: A true setup.py :)      
 **!** Fixed: Bugs      
 *(for more details go on CHANGELOG.md)*   
 
