@@ -9,7 +9,7 @@ Changelog:
 - 1.7.2
 ---------
 	Updated: Add new content in google dork, dico and javascript recon
-	Updated: Real setup.py :)
+	Updated: A true setup.py :)
 ---------
 
 - 1.7.1
