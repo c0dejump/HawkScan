@@ -1,0 +1,404 @@
+/* ------
+SOMMAIRE
+---------*/
+/*
+
+00 - COULEURS
+01 - TITRES
+02 - LIENS
+03 - BOUTONS
+04 - PADDING ET LARGEURS
+*/
+body{
+	margin: 0px;
+}
+.container{
+	margin: 0 auto;
+	max-width: 95%;
+	width: 1600px;
+}
+.containerplus{
+	margin: 0 auto;
+	max-width: 95%;
+	width: 1450px;
+}
+.centerText{
+	text-align: center;
+}
+
+@font-face{
+	font-family: 'pr';/*poppins regular*/
+	src: url('fonts/poppins/Poppins-Regular.woff2') format('woff2'),
+		 url('fonts/poppins/Poppins-Regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face{
+	font-family: 'psb';/*poppins semi-bold*/
+	src: url('fonts/poppins/Poppins-SemiBold.woff2') format('woff2'),
+		 url('fonts/poppins/Poppins-SemiBold.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face{
+	font-family: 'pb';/*poppins bold*/
+	src: url('fonts/poppins/Poppins-Bold.woff2') format('woff2'),
+		 url('fonts/poppins/Poppins-Bold.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+
+
+/* ----------
+00 - COULEURS
+-------------*/
+:root{
+	--color00: #fff;    /*Blanc*/
+	--color01: #000;    /*Noir*/
+	--color02: #00dffc; /*Bleu clair*/
+	--color03: #008c9e; /*Bleu moyen*/
+	--color04: #005f6b; /*Bleu foncé*/
+	--color05: #343838; /*Gris clair*/
+	--color06: #272625; /*Gris foncé*/
+}
+/*
+Utilisation :
+background: var(--color1);
+border-bottom: 3px solid var(--color1);
+color: var(--color1);
+*/
+
+
+/* ------
+01 - TITRES
+---------*/
+h1, h2, h3, h4, h5, h6, .like-h1, .like-h2, .like-h3, .like-h4, .like-h5, .like-h6{
+	line-height:1;
+	margin: 0px;
+	color: var(--color06);
+}
+h1, .like-h1{
+	text-transform: uppercase;
+	font-size: 3.5rem;
+	font-family: "pb", sans-serif;
+}
+h2, .like-h2{
+	font-size: 2.5rem;
+	font-family: "pm", sans-serif;
+}
+h3, .like-h3{
+	font-size: 2rem;
+	font-family: "psm", sans-serif;
+}
+h4, .like-h4{
+	font-size: 2rem;
+}
+h5, .like-h5{
+	font-size: 1.8rem;
+}
+h6, .like-h6{
+	font-size: 1.6rem;
+}
+
+
+
+/* ------------
+02 - LIENS
+--------------*/
+a, a:link, a:visited{
+	color: #4d4d4d;
+	text-decoration: none;
+}
+a:hover, a:active{
+	color: #000;
+}
+
+
+/* ------------
+03 - BOUTONS
+--------------*/
+
+a.bouton1, .bouton1 a,
+a.bouton2, .bouton2 a,
+a.bouton3, .bouton3 a, {
+	font-family: "mb", sans-serif;
+	display: inline-block;
+	padding: 10px 20px 10px 20px;
+	color: #fff;
+	margin: 15px 0 0 0;
+	border-radius: 22px;
+	cursor: pointer;
+}
+
+a.bouton1, .bouton1 a {
+	background-color: var(--color03);
+	border: 3px solid var(--color03);
+	transition: border 0.5s, background 0.5s, color 0.5s;
+}
+a.bouton1:hover, .bouton1 a:hover {
+	background-color: var(--color02);
+	color: var(--color03);
+	border: 3px solid var(--color03);
+}
+a.bouton2, .bouton2 a {
+	background-color: var(--color03);
+}
+a.bouton2:hover, .bouton2 a:hover {
+	
+}
+a.bouton3, .bouton3 a {
+	background-color: var(--color04);
+}
+a.bouton3:hover, .bouton3 a:hover {
+	
+}
+
+button.bouton1, .bouton1 button,
+button.bouton2, .bouton2 button,
+button.bouton3, .bouton3 button,
+button.bouton4, .bouton4 button {
+	font-family: "mb", sans-serif;
+	display: inline-block;
+	padding: 10px 20px 10px 20px;
+	color: #fff;
+	margin: 15px 0 0 0;
+	border-radius: 22px;
+	cursor: pointer;
+}
+
+button.bouton1, .bouton1 button {
+	background-color: var(--color03);
+	border: 3px solid var(--color03);
+	transition: border 0.5s, background 0.5s, color 0.5s;
+}
+button.bouton1:hover, .bouton1 button:hover {
+	background-color: var(--color02);
+	color: var(--color03);
+	border: 3px solid var(--color03);
+}
+button.bouton2, .bouton2 button {
+	background-color: var(--color03);
+}
+button.bouton2:hover, .bouton2 button:hover {
+	
+}
+button.bouton3, .bouton3 button {
+	background-color: var(--color04);
+}
+button.bouton3:hover, .bouton3 button:hover {
+	
+}
+button.bouton4, .bouton4 button {
+	color: black;
+	background-color: #c4c4c4;
+	border: 2px solid #2A2A2A;
+	border-radius: 0px;
+	transition: border 0.5s, background 0.5s, color 0.5s;
+}
+button.bouton4:hover, .bouton4 button:hover {
+	color: white;
+	background-color: var(--color02)
+}
+
+
+
+/* ------------
+04 - CONTENU WYSIWYG
+--------------*/
+p{
+	margin: 0 0 10px 0;
+	font-family: 'pr', sans-serif;
+	color: #2A2A2A;
+	line-height: 1.4;
+}
+strong{
+	font-family: 'pb', sans-serif;
+	font-weight: normal;
+}
+em{
+	font-style:italic;
+}
+	em strong, strong em{
+		font-family: 'pb', sans-serif;
+		font-style: italic;
+		font-weight: normal;
+	}
+cite{
+	color:#000;
+	font-family: Arial, sans-serif;
+	font-size:1.1em;
+	padding:0 3px 0 3px;
+}
+acronym{
+	border-bottom:1px dashed #007aaa;
+	cursor:help;
+}
+q{
+	color:#007aaa;
+	font-style:italic;
+}
+	q:after{
+		content: " ' Source: "attr(cite)" ";
+		font-size:1em;
+	}
+
+ul{
+	color: #2A2A2A;
+	margin: 5px 0 5px 15px;
+}
+	ul li{
+		list-style: none;
+		padding: 0 0 10px 0px;
+		position: relative;
+		font-family: 'psb', sans-serif;
+		color: #2A2A2A;
+	}
+hr{
+	border-bottom:2px ridge #666;
+	border:0;
+}
+
+
+
+/* CLASS GENERIQUES */
+
+/* Width */
+
+
+.w100 {
+	width: 100%
+}
+.w90 {
+	width: 90%
+}
+.w80 {
+	width: 80%
+}
+.w70 {
+	width: 70%
+}
+.w60 {
+	width: 60%
+}
+.w50 {
+	width: 50%
+}
+.w45 {
+	width: 45%
+}
+.w40 {
+	width: 40%
+}
+.w30 {
+	width: 30%
+}
+.w25 {
+	width: 25%
+}
+.w20 {
+	width: 20%
+}
+.w10 {
+	width: 10%
+}
+
+/* Width flex avec goutiere */
+
+
+.w1-2 {
+	width: calc(100% / 2.1)
+}
+
+.w1-3 {
+	width: calc(100% / 3.2)
+}
+
+.w1-4 {
+	width: calc(100% / 4.3)
+}
+
+/* Flex */
+
+
+.flex {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex
+}
+.flex-wrap {
+	-ms-flex-wrap: wrap;
+	    flex-wrap: wrap;
+}
+
+.flex-jcc {
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center
+}
+.flex-jce{
+	-webkit-box-pack: flex-end;
+	    -ms-flex-pack: flex-end;
+	        justify-content: flex-end
+}
+.flex-aic {
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center
+}
+
+.flex-aife {
+	-webkit-box-align: end;
+	    -ms-flex-align: end;
+	        align-items: flex-end
+}
+
+.flex-jsb {
+	-webkit-box-pack: justify;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between
+}
+
+.flex-jsa {
+	-webkit-box-pack: justify;
+	    -ms-flex-pack: justify;
+	        justify-content: space-around
+}
+
+.flex-dc {
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+}
+
+
+/* MEDIA // Cover */
+
+/* .cover {
+	overflow: hidden;
+} */
+	.cover img{
+		object-fit: cover;
+		font-family: 'object-fit: cover';
+		height: 100%;
+		width: 100%;
+	}
+
+	
+/*RESPONSIVE
+01 - DESKTOP */
+@media screen and (max-width: 1400px), (max-device-width: 1400px){
+}
+@media screen and (max-width: 1200px), (max-device-width: 1200px){
+
+}
+/*02 TABLETTE*/
+@media screen and (max-width: 1024px), (max-device-width: 1024px){
+
+}
+/*03 MINI-TABLETTE*/
+@media screen and (max-width: 767px), (max-device-width: 767px){
+
+}
