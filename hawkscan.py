@@ -945,14 +945,14 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 #errors = manager.error_check() #TODO
                 #error_bool = True
             except Exception:
-                traceback.print_exc() #DEBUG
+                #traceback.print_exc() #DEBUG
                 with open(directory + "/errors.txt", "a+") as write_error:
                     write_error.write(res+"\n")
                 #errors = manager.error_check()#TODO
                 #error_bool = True
             q.task_done()
         except Exception:
-            traceback.print_exc() #DEBUG
+            #traceback.print_exc() #DEBUG
             pass
         if time_bool: #if a waf detected, stop for any seconds
             while time_i != 0:
