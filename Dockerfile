@@ -1,11 +1,16 @@
-FROM python:3.5-alpine
-RUN apk update 
-RUN apk add git libffi libffi-dev gcc g++ make openssl-dev openssl openssh
+FROM python:3.7-alpine
+RUN apk update
+RUN apk add libffi libffi-dev gcc g++ make openssl-dev openssl openssh curl
 WORKDIR /root
-RUN git clone https://github.com/c0dejump/HawkScan.git
+COPY . /root/HawkScan
 WORKDIR /root/HawkScan
+
+# Get Rust for python cryptography
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
 RUN pip install -r requirements.txt && \
     rm -rf .git && \
-    apk del git libffi-dev gcc g++ make openssl-dev && \
+    apk del libffi-dev gcc g++ make openssl-dev curl && \
     rm -rf /var/cache/apk/*
 ENTRYPOINT ["python", "hawkscan.py"]

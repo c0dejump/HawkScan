@@ -56,7 +56,7 @@ req_p = u""
 
 stat = 0
 
-tw, th = terminal_size() # determine terminal size
+tw, th = terminal_size() if sys.stdout.isatty() else 0,0 # determine terminal size
 
 
 header_parsed = {}
