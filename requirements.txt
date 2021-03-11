@@ -12,3 +12,4 @@ wafw00f
 python-whois
 sockets
 urlparser
+python-socketio[client]

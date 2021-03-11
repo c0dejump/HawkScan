@@ -39,7 +39,7 @@ from modules.banner import banner
 from modules.check_subdomain import subdomain
 from modules.terminal_size import terminal_size
 from modules.output import multiple_outputs
-
+from modules.check_socketio import check_socketio
 
 try:
     enclosure_queue = Queue()
@@ -57,7 +57,6 @@ req_p = u""
 stat = 0
 
 tw, th = terminal_size() if sys.stdout.isatty() else 0,0 # determine terminal size
-
 
 header_parsed = {}
 
@@ -1045,6 +1044,7 @@ def create_dir_and_file(r, url, stat, u_agent, thread, subdomains, beforeStart):
     create_dir_and_file:
     Create directory with the website name to keep a scan backup.
     """
+    socketio_checker = check_socketio()
     checkCms = check_cms()
     manageDir = manage_dir()
 
@@ -1100,12 +1100,14 @@ def create_dir_and_file(r, url, stat, u_agent, thread, subdomains, beforeStart):
         beforeStart.check_vhost(dire, url)
         beforeStart.check_backup_domain(dire, url)
         start_scan(subdomains, r, stat, directory, u_agent, thread, manageDir, header_, forbi)
+        socketio_checker.run(url, directory)
     else:
         for de in dire_exists:
             if os.path.exists("sites/{}/backup.txt".format(de)):
                 backup_exist = True
                 de = "sites/{}".format(de)
                 start_scan(subdomains, r, stat, de, u_agent, thread, manageDir, header_, forbi) 
+                socketio_checker.run(url, de)
 
     #print("creat_other: {} // bck_exst: {}".format(creat_other, backup_exist)) #DEBUG
     if not backup_exist and creat_other:
@@ -1113,6 +1115,8 @@ def create_dir_and_file(r, url, stat, u_agent, thread, subdomains, beforeStart):
         os.makedirs(new_directory)
         os.makedirs("{}/output/".format(new_directory))
         start_scan(subdomains, r, stat, new_directory, u_agent, thread, manageDir, header_, forbi)
+        socketio_checker.run(url, new_directory)
+
 
 
 if __name__ == '__main__':
