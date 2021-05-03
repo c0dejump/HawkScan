@@ -479,7 +479,6 @@ def backup_ext(s, res, page, directory, forbi, HOUR, parsing, filterM):
     authent = (auth.split(":")[0], auth.split(":")[1]) if auth else False
 
     bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
-
     for exton in bckp:
         res_b = res + exton
         page_b = page + exton
@@ -948,7 +947,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                     else:
                         pass
                         #print("{}{}{} 429".format(HOUR, LESS, res))
-                if backup:
+                if backup != None:
                     fbackp = backup_ext(s, res, page, directory, forbi, get_date(), parsing, filterM)
                         #errors = manager.error_check() #TODO
                         #error_bool = True
@@ -1230,7 +1229,6 @@ if __name__ == '__main__':
     stat = r.status_code
     if backup is not None:
         bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
-        print(bckp)
     resume_scan(url, thread, wordlist, recur, redirect, js, backup=False if backup == None else bckp)
     print(LINE)
     create_dir_and_file(r, url, stat, u_agent, thread, subdomains, beforeStart)
