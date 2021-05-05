@@ -136,6 +136,7 @@ class filterManager:
         if False not in list_exclude.values():
             if req.status_code in [403, 401]:
                 print("{} {} {} ({} bytes)".format(HOUR, FORBI, res, len(req.content)))
+                bypass_forbidden(res)
             else:
                 print("{} {} {} ({} bytes) [{}]".format(HOUR, PLUS, res, len(req.content), req.status_code))
             for l_exclude in req_p:
@@ -155,6 +156,7 @@ class filterManager:
         elif req_st == req_p:
             pass
         elif req_st in [403, 401]:
+            bypass_forbidden(res)
             pass
         elif req_st in [500, 400, 422, 423, 424, 425]:
             print("{} {} {} ({} bytes) \033[33m{} Server Error\033[0m".format(HOUR, SERV_ERR, res, len(req.content), req.status_code))
@@ -230,6 +232,7 @@ class filterManager:
                 print("{} {} {} Potential exclude page {}%".format(HOUR, EXCL, res, perc))
             else:
                 if req.status_code in [403, 401, 429]:
+                    bypass_forbidden(res)
                     pass
                 elif req.status_code in [500, 400, 422, 423, 424, 425]:
                     if multiple:
@@ -827,9 +830,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                                 spl = res.split("/")[3:]
                                 result = "/".join(spl)
                                 rec_list.append(result)
-                        parsing.mail(req, directory)
                         #report.create_report_url(status_link, res, directory)
-                        #get mail
                     if 'sitemap.xml' in res:
                         parsing.sitemap(req, directory)
                     parsing.search_s3(res, req, directory)

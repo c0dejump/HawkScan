@@ -67,35 +67,6 @@ class parsing_html:
                                         #traceback.print_exc()
 
 
-    def mail(self, req, directory):
-        """
-        Mail:
-        get mail adresse in web page during the scan and check if the mail leaked
-        """
-        write_mail = True
-        mails = req.text
-        # for all @mail
-        reg = re.compile(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+")
-        search = re.findall(reg, mails)
-        for mail in search:
-            #check if email pwned
-            if mail and not "png" in mail or not "jpg" in mail or not "jpeg" in mail:
-                datas = { "act" : mail, "accounthide" : "test", "submit" : "Submit" }
-                req_ino = requests.post("https://www.inoitsu.com/", data=datas, verify=False)
-                res_pwned = "{}: pwned ! ".format(mail) if "DETECTED" in req_ino.text else "{}: no pwned ".format(mail)
-                if os.path.exists(directory + '/mail.csv'):
-                    with open(directory + '/mail.csv', 'r+') as read_csv_file:
-                        read_file = csv.reader(read_csv_file)
-                        for r_mail in read_file:
-                            if res_pwned.split(":")[0] == r_mail[0]:
-                                write_mail = False
-                if write_mail == True:
-                    with open(directory + '/mail.csv', 'a+') as write_csv_file:
-                        writer = csv.writer(write_csv_file)
-                        writer.writerow(res_pwned.split(":"))
-                        write_mail = False
-
-
     def sitemap(self, req, directory):
         """Get sitemap.xml of website"""
         soup = BeautifulSoup(req.text, "html.parser")
