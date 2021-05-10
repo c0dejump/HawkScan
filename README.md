@@ -5,7 +5,7 @@
 Security Tool for Reconnaissance and Information Gathering on a website. (python 3.x)
 
 # News
-**!** Updated: dico.txt → dichawk.txt (dico.txt it was to simple for a personal dictionary :)       
+**!** Updated: Style refont     
 **!** Fixed: dispay and feature bugs        
 *(for more details go on CHANGELOG.md)*   
  

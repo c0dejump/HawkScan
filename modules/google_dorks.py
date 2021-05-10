@@ -8,6 +8,7 @@ import sys
 import requests
 from config import WARNING, INFO, LINE
 import time
+import traceback
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
@@ -74,11 +75,16 @@ def query_dork(domain, directory):
                     req_url_found = requests.get(result['url'], verify=False, timeout=3)
                     if req_url_found.status_code not in [404, 408, 503, 405, 428, 412, 429]:
                         print(" \033[32m[{}]\033[0m {}".format(req_url_found.status_code, result['url']))
+                        with open(directory+"/site/{}/google_dorks.txt".format(directory), "a+") as raw:
+                            raw.write("{}\n".format(result['url']))
                     elif req_url_found.status_code in [403, 401]:
+                        print(" \033[31m[{}]\033[0m {}".format(req_url_found.status_code, result['url']))
+                    else:
                         print(" \033[31m[{}]\033[0m {}".format(req_url_found.status_code, result['url']))
                 except:
                     print("{}Error with URL {}".format(WARNING, result['url']))
         except:
+            #traceback.print_exc()
             pass
         print("")
     print(LINE)

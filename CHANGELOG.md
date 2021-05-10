@@ -1,6 +1,12 @@
 Changelog:
 ----------
 
+- 1.8.1
+---------
+	Updated: Style refont
+	Fixed: Mutliple little things
+---------
+
 - 1.8
 ---------
 	Update: you can choose your backup file when you scan, EX:

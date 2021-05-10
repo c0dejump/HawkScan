@@ -17,7 +17,7 @@ class before_start:
 
     def get_header(self, url, directory):
         """Get header of website (cookie, link, etc...)"""
-        r = requests.get(url, allow_redirects=False, verify=False)
+        r = requests.get(url, allow_redirects=False, verify=False, headers={"User-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"})
         print(INFO + "HEADER")
         print(LINE)
         print("  {} \n".format(r.headers).replace(',','\n'))
@@ -132,7 +132,7 @@ class before_start:
         print(LINE)
         print(url + "\n")
         try:
-            os.system('python tools/waybacktool/waybacktool.py pull --host {} | python tools/waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
+            os.system('python3 tools/waybacktool/waybacktool.py pull --host {} | python3 tools/waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
         except Exception:
             traceback.print_exc()
         try:
@@ -193,7 +193,7 @@ class before_start:
         print("{}Check Vhosts misconfiguration".format(INFO))
         print(LINE)
         try:
-            req_index = requests.get(url, verify=False)
+            req_index = requests.get(url, verify=False, headers={"User-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"})
             len_index = len(req_index.content)
             retrieve_ip = False
             dom = socket.gethostbyname(domain)
@@ -217,7 +217,7 @@ class before_start:
         print("{}Check domain backup".format(INFO))
         print(LINE)
         backup_dn_ext = ["zip", "rar", "iso", "tar", "gz", "tgz", "tar.gz", "7z", "jar"]
-        req_index = requests.get(url, verify=False, timeout=6)
+        req_index = requests.get(url, verify=False, timeout=6, headers={"User-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"})
         len_index = len(req_index.content)
         domain = domain.split('.')[1] if len(domain.split('.')) > 2 else domain.split('.')[0]
         print("{}List of backup extension for domain {}: {}\nExemple: {}{}.zip\n".format(INFO, domain, backup_dn_ext, url, domain.split('.')[0]))
@@ -242,7 +242,7 @@ class before_start:
         Test_timeout: just a little function for test if the connection is good or not
         """
         try:
-            req_timeout = requests.get(url, timeout=30, verify=False)
+            req_timeout = requests.get(url, timeout=30, verify=False, headers={"User-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"})
         except Timeout:
             print("{}Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(WARNING))
             time.sleep(180)

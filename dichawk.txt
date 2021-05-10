@@ -16,6 +16,7 @@ koolix/
 koolix
 admin/
 %61dmin/
+admin/resource/
 admin/help
 admin/help.cgi.bak
 admin/WS_FTP.LOG
@@ -57,6 +58,7 @@ shift.trace.db
 vision/
 etat-serveur?auto
 etat-serveur
+etat-serveur?refresh=2
 annonce/
 role.php
 annonces/
@@ -785,6 +787,7 @@ Graphics/
 H/
 HTML/
 Health/
+health/;admin/resource/
 Help/
 Home/
 I/
@@ -3624,6 +3627,17 @@ porsche9/
 porta/
 portada/
 portal/
+portal/env
+portal/dump
+portal/dump/
+portal/index.html
+portal/info
+portal/info.json
+portal/health
+portal/jolokia
+portal/jolokia/list
+portal/trace
+portal/heapdump
 porter/
 portfolio/
 portland/
@@ -10204,6 +10218,7 @@ server-info.htm
 server.log.jsp
 server-status
 server-status/
+server-status?auto
 client-status
 client-status/
 client.inc

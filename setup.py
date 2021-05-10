@@ -10,10 +10,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="HawkScan",
-    version="1.7.3",
+    version="1.8.1",
     author="c0dejump",
     author_email="codejumpgame@gmail.com",
-    description="Security Tool for Reconnaissance and Information Gathering on a website. (python 2.x & 3.x)",
+    description="Security Tool for Reconnaissance and Information Gathering on a website. (python 3.x)",
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=find_packages(exclude=["static"]),
