@@ -4,6 +4,16 @@
 
 Security Tool for Reconnaissance and Information Gathering on a website. (python 3.x)
 
+- [News](https://github.com/c0dejump/HawkScan/#News)
+- [Installation](https://github.com/c0dejump/HawkScan/#Installation)
+- [Special features](https://github.com/c0dejump/HawkScan/#Special-features)
+- [TODO](https://github.com/c0dejump/HawkScan/#todo)
+- [Usage](https://github.com/c0dejump/HawkScan/#usage)
+- [Exemples](https://github.com/c0dejump/HawkScan/#exemples)
+- [Thanks](https://github.com/c0dejump/HawkScan/#thanks)
+- [Donations](https://github.com/c0dejump/HawkScan/#paypal)
+- [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
+
 # News
 **!** Updated: Style refont     
 **!** Fixed: dispay and feature bugs        
@@ -12,7 +22,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 # Installation
 ``` 
 
-       git clone https://github.com/c0dejump/HawkScan.git && sudo python HawkScan/setup.py install
+       git clone https://github.com/c0dejump/HawkScan.git && sudo python3 HawkScan/setup.py install
 
        pip(3) install -r requirements.txt 
     Or:    
@@ -94,7 +104,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     -s SUBDOMAINS         Subdomain tester         
     --js                  For try to found keys or token in the javascript page  
     --ffs                 Force the first step of scan during the first running (waf, vhosts, wayback etc...)              
-    --notify              For receveid notify when the scan finished (work only on linux)
+    --notify              For receveid notify when the scan finished (only work on linux)
 
 > Export Settings:                    
     -o OUTPUT             Output to site_scan.txt (default in website directory)            
