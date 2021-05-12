@@ -116,6 +116,7 @@ class filterManager:
         --exclude 500,1337b,https://www.exemple.com
         --exclude 500,403
         """
+        req_bytes = len(req.content)
         exclude_bytes = "[{} bytes]".format(req_bytes)
         filterM = filterManager()
         list_exclude = {}
@@ -151,6 +152,7 @@ class filterManager:
         You can activate this option to pass the response status code, ex:
         --exclude 500
         """
+        req_bytes = len(req.content)
         exclude_bytes = "[{} bytes]".format(req_bytes)
         req_st = str(req.status_code) if multiple else req.status_code
         if multiple and req_st in req_p:
