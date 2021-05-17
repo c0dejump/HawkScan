@@ -1140,7 +1140,7 @@ def create_dir_and_file(r, url, stat, u_agent, thread, subdomains, beforeStart):
 if __name__ == '__main__':
     #arguments
     parser = argparse.ArgumentParser(add_help = True)
-    parser = argparse.ArgumentParser(description='\033[32m Version 1.8 | Contact: codejumpgame@gmail.com\033')
+    parser = argparse.ArgumentParser(description='\033[32m Version 1.8 | Contact: codejumpgame@gmail.com\033[0m')
 
     group = parser.add_argument_group('\033[34m> General\033[0m')
     group.add_argument("-u", help="URL to scan \033[31m[required]\033[0m", dest='url')
