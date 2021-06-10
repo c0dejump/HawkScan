@@ -16,7 +16,8 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
 # News
 **!** Updated: New logo made by Cyber_Ph4ntoM   
-**!** Updated: Code review        
+**!** Updated: Little code review        
+**!** Updated: Add multiple words in dichawk.txt      
 *(for more details go on CHANGELOG.md)*   
  
 # Installation
