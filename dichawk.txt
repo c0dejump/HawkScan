@@ -171,6 +171,8 @@ DemoController.php
 routes.yaml
 routes
 routes/
+routes/web.php
+routes/console.php
 getRoutes
 getConf
 editor.jsp
@@ -225,6 +227,8 @@ wp-json/wp/v2/settings
 wp-json/yoast/v1/
 wp-activate.php
 wp-links-opml.php
+wpcf7-submissions/
+wp-content/uploads/wpcf7-submissions/
 v2/apis/auth/_resource
 v2/apis/auth/
 v2/apis/
@@ -263,6 +267,8 @@ wp-content/plugins/wp-file-manager/lib/files
 wp-content/plugins/wp-file-manager/lib/
 wp-content/plugins/wp-file-manager/lib/php
 wp-content/plugins/wp-file-manager/lib/themes
+wp-content/plugins/wordfence/views/waf/options-group-whitelisted.php
+wp-content/plugins/wordfence/lib/wfIPWhitelist.php
 wp-content/wp-cache-config.php
 wp-content/w3tc-config/
 wp-content/index.php
@@ -585,6 +591,7 @@ THXData/
 datasafe
 config/
 config/deploy.rb
+config/production.rb
 config/services.yaml
 config/services.xml
 accueil/
@@ -607,6 +614,8 @@ usercontrols/
 ~user/
 ~webmaster/
 ~www/
+~hthb1/Joomla1.5/installation/index.php
+~hthb1/
 ww2/
 www_app/
 ajaxpackagesave
@@ -779,6 +788,7 @@ DEMO/
 Default/
 Demo/
 default.settings.php
+default.services.yml
 Download/
 Downloads/
 E/
@@ -986,6 +996,9 @@ administracion/
 administrat/
 administration/
 administrator/
+administrator/manifests/files/joomla.xml 
+administrator/manifests/files/
+administrator/manifests/
 adminlogin/
 adminlogon/
 adminsitradores/
@@ -1787,6 +1800,10 @@ copper/
 copyright/
 corba/
 core/
+core/includes/
+core/install.php
+core/assets/
+core/modules/
 core/php-cas/
 cornelius/
 corona/
@@ -2275,6 +2292,7 @@ $file
 fileadmin/
 filelist/
 files/
+files/private/
 film/
 filter/
 finance/
@@ -2754,6 +2772,9 @@ instalacion/
 install/
 install.php
 installation/
+installation/index.php?view=preinstall
+installation/index.php
+test/installation/index.php
 insurance/
 intel/
 interactive/
@@ -3600,6 +3621,9 @@ please/
 plover/
 pls/
 plugins/
+plugins/system/cache/cache.xml
+plugins/system/
+plugins/system/cache/
 plus/
 pluto/
 plx/
@@ -6066,6 +6090,8 @@ admin/backups/
 .;/admin/config
 admin/config.php
 admin/config
+admin/config/media/libraries_ui
+admin/config/media/
 administrator/webconfig.txt.php
 admin/controlpanel
 admin/controlpanel.%EXT%
@@ -7672,6 +7698,10 @@ conf/web.xml
 conferences
 config
 Config
+shared/config/config.inc.php
+config/config.inc.php
+config/config-sample.inc.php
+config/config-sample.inc
 config/config.sample.php
 config/config.php
 config.sample.php
@@ -8238,6 +8268,7 @@ Exadmin/
 examadmin
 example
 example.php
+example.sites.php
 examples
 examples/servlets/index.html
 examples/servlets/servlet/CookieExample
@@ -8835,6 +8866,8 @@ joomla.xml
 joomla.zip
 joomla/administrator
 joomla/database
+joomla/test/logs/
+test/logs/
 js
 js/elfinder/elfinder.php
 js/FCKeditor
@@ -11284,6 +11317,7 @@ wp-admin/install.php?step=2
 wp-admin/install.php?step=1
 wp-admin/install-helper.php
 wp-admin/setup-config.php
+wp-admin/setup-config.php?step=1
 wp-app.log
 app.log
 localconf.php

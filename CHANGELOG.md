@@ -1,35 +1,42 @@
 Changelog:
 ----------
 
+- 1.8.2
+---------
+	Updated:  New logo made by Cyber_Ph4ntoM
+	Updated:  Code review
+	Updated:  Add multiple words in dichawk.txt
+---------
+
 - 1.8.1
 ---------
-	Updated: Style refont
-	Fixed: Mutliple bugs
+	Updated:  Style refont
+	Fixed:    Mutliple bugs
 ---------
 
 - 1.8
 ---------
-	Update: you can choose your backup file when you scan, EX:
+	Update:   you can choose your backup file when you scan, EX:
 		-b: default all backup file
 		-b .bck, .old, .bak: just these backups
 
 - 1.7.9
 ---------
-	Updated: dico.txt → dichawk.txt (dico.txt it was to simple for a personal dictionary :)
-	Fixed: Bug on parsing JS
+	Updated:  dico.txt → dichawk.txt (dico.txt it was to simple for a personal dictionary :)
+	Fixed:    Bug on parsing JS
 ---------
 
 - 1.7.8
 ---------
-	Fixed: Bug on the exclude function
-	Fixed: Bug on the bypass forbidden function
-	Added: News header value in bypass forbidden function
+	Fixed:    Bug on the exclude function
+	Fixed:    Bug on the bypass forbidden function
+	Added:    News header value in bypass forbidden function
 ---------
 
 - 1.7.7
 ---------
-	Updated: Rrefont helping style
-	Added: Notify when scan completed (Only work on Linux)
+	Updated:  Rrefont helping style
+	Added:    Notify when scan completed (Only work on Linux)
 ---------
 
 - 1.7.6

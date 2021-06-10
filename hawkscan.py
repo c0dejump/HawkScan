@@ -1,6 +1,10 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+__version__ = '1.8.2'
+__program__ = 'HawkScan'
+__author__ = 'https://github.com/c0dejump'
+
 #modules in standard library
 import requests
 import sys, os, re
@@ -39,7 +43,7 @@ from modules.banner import banner
 from modules.check_subdomain import subdomain
 from modules.terminal_size import terminal_size
 from modules.output import multiple_outputs
-from modules.resume import resume_scan
+from modules.resume import resume_options
 from modules.check_socketio import check_socketio
 from modules.send_notify import notify_scan_completed
 
@@ -711,6 +715,7 @@ def get_date():
     HOUR = "\033[35m[{}] \033[0m".format(hour_t)
     return HOUR
 
+
 def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=False, nLine=False):
     """
     tryUrl:
@@ -728,7 +733,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
     thread_score = 0
     score_next = 0
     waf_score = 0
-    percentage = lambda x, y: float(x) / float(y) * 100
+    percentage = lambda x, y: float(x) / float(y) * 100.00
     thread_i = 0
     stop_add_thread = False
     time_i = 120
@@ -736,10 +741,8 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
     waf = False
     error_bool = False
     tested_bypass = False
-    len_flush = 1
     for numbers in range(len_w):
-        thread_count = threading.active_count()
-        thread_all = thread_count - 1
+        thread_count = threading.active_count() - 1
         res = q.get()
         page = "/".join(res.split("/")[3:])
         #print("{} :: {}".format(res.split("/"), "/".join(res.split("/")[3:]))) #DEBUG
@@ -797,10 +800,6 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 bytes_len = "[{} bytes]".format(len_req)
 
                 display_res = res if tw > 110 else page
-                if len(page) > 50:
-                    len_flush = len(res) + 5 if tw > 120 else len(page[:10]) + 5
-                else:
-                    len_flush = len(res) + 5 if tw > 120 else len(page) + 5
 
                 #print(status_link) #DEBUG status response
                 if status_link == 200:
@@ -817,7 +816,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                         if "robots.txt" in res.split("/")[3:]:
                             print("{} {} {}".format(get_date(), PLUS, res))
                             for r in req.text.split("\n"):
-                                print("\t- {}".format(r))
+                                print("\t\u251c {}".format(r))
                         if js:
                             #try to found js keyword
                             parsing.get_javascript(res, req)
@@ -982,13 +981,19 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
             time_i = 60
             time_bool = False
         else:
-            if tw < 110:
-                sys.stdout.write("\033[34m {0}/{1} | {2:{3}}\033[0m\r".format(numbers*thread_all+nLine, len_w, page if len(page) < 50 else page[:10], len_flush))
-                sys.stdout.flush()
-            else:
-                sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3:} | {4:{5}}\033[0m\r".format(percentage(numbers+nLine, len_w)*thread_all, numbers*thread_all+nLine, len_w, thread_all, page if len(page) < 50 else page[:10], len_flush))
-                sys.stdout.flush()
+            Progress(numbers, len_w, thread_count, nLine, page, percentage, tw)
 
+
+def Progress(numbers, len_w, thread_count, nLine, page, percentage, tw):
+    """
+    Progress: just a function to print the scan progress
+    """
+    if tw < 110:
+        sys.stdout.write("\033[34m {0}/{1} | {2:{3}}\r\033[0m".format(numbers*thread_count+nLine, len_w, page if len(page) < 50 else page[:10], len(page) + 10))
+    else:
+        per = percentage(numbers+nLine, len_w)*thread
+        sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | {4}\033[0m\r".format(per, numbers*thread_count+nLine, len_w, thread_count, page if len(page) < 50 else page[:10]))
+        
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):
     """
@@ -1022,7 +1027,7 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
         forced = True
         while i_r < size_rec_list:
             url_rec = url + rec_list[i_r]
-            print("{}Entering in directory: {}".format(INFO, rec_list[i_r]))
+            print("{} Entering in directory: {}".format(INFO, rec_list[i_r]))
             print(LINE)
             with open(wordlist, "r") as payload:
                 links = payload.read().splitlines()
@@ -1055,14 +1060,14 @@ def start_scan(subdomains, r, stat, directory, u_agent, thread, manageDir, heade
     print(LINE)
     try:
         create_report(directory, header_)
-        print("{} The report has been created".format(PLUS))
+        print("\n{} The report has been created".format(PLUS))
     except:
-        print("{} An error occurred, the report cannot be created".format(WARNING))
+        print("\n{} An error occurred, the report cannot be created".format(WARNING))
 
 
-def create_dir_and_file(r, url, stat, u_agent, thread, subdomains, beforeStart):
+def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart):
     """
-    create_dir_and_file:
+    create_structure_scan:
     Create directory with the website name to keep a scan backup.
     """
     checkCms = check_cms()
@@ -1140,18 +1145,18 @@ def create_dir_and_file(r, url, stat, u_agent, thread, subdomains, beforeStart):
 if __name__ == '__main__':
     #arguments
     parser = argparse.ArgumentParser(add_help = True)
-    parser = argparse.ArgumentParser(description='\033[32m Version 1.8.1 | Contact: codejumpgame@gmail.com\033[0m')
+    parser = argparse.ArgumentParser(description='\033[32m Version 1.8.2 | contact: https://twitter.com/c0dejump\033[0m')
 
     group = parser.add_argument_group('\033[34m> General\033[0m')
     group.add_argument("-u", help="URL to scan \033[31m[required]\033[0m", dest='url')
     group.add_argument("-t", help="Number of threads to use for URL Fuzzing. \033[32mDefault: 20\033[0m", dest='thread', type=int, default=20, required=False)
     group.add_argument("--exclude", help="Exclude page, response code, response size. \033[33m(Exemples: --exclude 500,337b)\033[0m", required=False, dest="exclude", nargs="+")
-    group.add_argument("--auto", help="Automatic threads depending response to website. Max: 30", required=False, dest="auto", action='store_true')
+    group.add_argument("--auto", help="Automatic threads depending response to website. Max: 30 \033[33m(In progress...)\033[0m", required=False, dest="auto", action='store_true')
     group.add_argument("--update", help="For automatic update", required=False, dest="update", action='store_true')
 
     group = parser.add_argument_group('\033[34m> Wordlist Settings\033[0m')
     group.add_argument("-w", help="Wordlist used for Fuzzing the desired webite. \033[32mDefault: dichawk.txt\033[0m", dest='wordlist', default="dichawk.txt", required=False)
-    group.add_argument("-b", help="Adding prefix/suffix backup extensions during the scan. \033[33m(Exemples: exemple.com/~ex/, exemple.com/ex.php.bak...)\033[0m beware, take more longer", required=False, dest="backup", nargs="*", action="store")
+    group.add_argument("-b", help="Adding prefix/suffix backup extensions during the scan. \033[33m(Exemples: -b .bak, .old)\033[0m. \033[32mDefault: all extension in config.py\033[0m", required=False, dest="backup", nargs="*", action="store")
     group.add_argument("-p", help="Add prefix in wordlist to scan", required=False, dest="prefix")
 
     group = parser.add_argument_group('\033[34m> Request Settings\033[0m')
@@ -1235,6 +1240,6 @@ if __name__ == '__main__':
     stat = r.status_code
     if backup is not None:
         bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
-    resume_scan(url, thread, wordlist, recur, redirect, js, exclude, backup=False if backup == None else bckp)
+    resume_options(url, thread, wordlist, recur, redirect, js, exclude, backup=False if backup == None else bckp)
     print(LINE)
-    create_dir_and_file(r, url, stat, u_agent, thread, subdomains, beforeStart)
+    create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart)

@@ -6,6 +6,12 @@ from config import PLUS, WARNING, INFO, WAF
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
+def bypass_by_user_agent(req, res):
+	user_agent_list = {
+	"Googlebot": ""
+	}
+
+
 def bypass_waf(req, res):
 	"""
 	Bypass_waf: try if the waf can be bypass, using different payloads
@@ -60,6 +66,8 @@ def bypass_waf(req, res):
 				#win = True
 				print("{}Potential bypass WAF rate limit with: \033[36m{}\033[0m".format(WAF, headers))
 				return headers
+			"""else:
+				bypass_by_user_agent(req, res)"""
 		except:
 			traceback.print_exc()
 		#print("\033[31m[:(]\033[0m Our tests not bypass it, sorry")

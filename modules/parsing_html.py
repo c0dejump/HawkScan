@@ -48,12 +48,12 @@ class parsing_html:
             for req_key in reqtext:
                 req_value = req_key.split('"')
                 for rv in req_value:
-                    if s3_f in rv:
+                    if s3_f in rv: #TODO → and "dmoain" in rv
                         if not os.path.exists(directory + "/s3_links.txt"):
                             with open(directory + "/s3_links.txt", "a+") as s3_links:
                                 s3_links.write(str(rv+"\n"))
                         else:
-                            with open(directory + "/s3_links.txt", "a+") as read_links:
+                            with open(directory + "/s3_links.txt", "r+") as read_links:
                                 if any(rl.strip() == rv.strip() for rl in read_links.readlines()):
                                     pass
                                 else:

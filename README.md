@@ -1,6 +1,6 @@
 # HawkScan
 
-![alt tag](https://github.com/c0dejump/HawkScan/blob/master/static/logo.jpg)
+![alt tag](https://github.com/c0dejump/HawkScan/blob/master/static/hawkscan_logo.jpeg)
 
 Security Tool for Reconnaissance and Information Gathering on a website. (python 3.x)
 
@@ -15,8 +15,8 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
 
 # News
-**!** Updated: Style refont     
-**!** Fixed: dispay and feature bugs        
+**!** Updated: New logo made by Cyber_Ph4ntoM   
+**!** Updated: Code review        
 *(for more details go on CHANGELOG.md)*   
  
 # Installation

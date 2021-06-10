@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-def resume_scan(url, thread, wordlist, recur, redirect, js, exclude, backup):
+def resume_options(url, thread, wordlist, recur, redirect, js, exclude, backup):
     """
     resume_scan: Just a little resume of the options for the scan
     """
