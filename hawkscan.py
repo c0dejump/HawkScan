@@ -971,6 +971,7 @@ def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=
                 #errors = manager.error_check()#TODO
                 #error_bool = True
             q.task_done()
+            s.close()
         except Exception:
             #traceback.print_exc() #DEBUG
             pass
@@ -993,7 +994,7 @@ def Progress(numbers, len_w, thread_count, nLine, page, percentage, tw):
     else:
         per = percentage(numbers+nLine, len_w)*thread
         sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | {4}\033[0m\r".format(per, numbers*thread_count+nLine, len_w, thread_count, page if len(page) < 50 else page[:10]))
-        
+
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):
     """
