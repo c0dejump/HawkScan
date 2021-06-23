@@ -1,6 +1,13 @@
 Changelog:
 ----------
 
+- 1.8.3
+---------
+	Fixed: Bug in socketio module
+	Fixed: Add size bytes during th error scan
+	Added: Words in wordlist
+---------
+
 - 1.8.2
 ---------
 	Updated:  New logo made by Cyber_Ph4ntoM

@@ -214,6 +214,7 @@ wp-content/uploads/wp-file-manager-pro/
 wp-content/uploads/wp-file-manager-pro/fm_backup
 wp-admin.php
 wp-login.php
+wp-login.php?action=register
 wp-includes/
 wp-includes/ms-files.php
 wp-includes/certificates/
@@ -7073,6 +7074,9 @@ app/main.js
 app/bin
 app/composer.json
 app/composer.lock
+app/config/config_client.yml
+app/config/
+app/config/parameters.yml
 app/config/adminConf.json
 app/config/database.yml
 database.json
@@ -7218,6 +7222,7 @@ authenticatedy
 authentication
 authentication.php
 author
+author-sitemap.xml
 authorization.config
 authorized_keys
 authors
@@ -7774,6 +7779,7 @@ config/settings/production.yml
 configs/conf_bdd.ini
 configs/conf_zepass.ini
 configuration.ini
+configuration.json
 configuration.php
 configuration.php.bak
 configuration.php.dist
@@ -10485,6 +10491,7 @@ soft-admin
 soft_admin
 software
 sohoadmin
+solr/
 solr/admin/
 solutions
 source
@@ -13000,6 +13007,9 @@ SEF.php
 RFC822.php
 QuoteLatex.php
 postgresql
+pg_hba.conf
+pgadmin4.db
+postgresql.conf
 PostgreSQLStore.php
 Phphighlight.php
 PdfLatex.php

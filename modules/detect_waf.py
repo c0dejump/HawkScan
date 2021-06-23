@@ -1,10 +1,57 @@
 # -*- coding: utf-8 -*-
 import time
-import sys
+import sys, os
 import requests
-from config import PLUS, WARNING, LESS, LINE, FORBI, BACK, WAF
+from config import PLUS, WARNING, LESS, LINE, FORBI, BACK, WAF, INFO
+import wafw00f
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
+
+def detect_wafw00f(url, directory, thread):
+    """
+    WAF:
+    Detect if the website use a WAF with tools "wafw00f"
+    """
+    detect = False
+    message = ""
+    os.system("wafw00f {} > {}/waf.txt".format(url, directory))
+    with open(directory + "/waf.txt", "r+") as waf:
+        for w in waf:
+            if "behind" in w:
+                detect = True
+                message = w.replace("[+]","").replace("[*]","")
+            else:
+                pass
+        print(INFO + "WAF")
+        print(LINE)
+        if detect:
+            print(" {}{}".format(WARNING, message))
+            if thread >= 20:
+                try:
+                    confirm_thread = raw_input(" {} This website have a waf, are you sure to use {} threads ? [y:n] ".format(WARNING, thread))
+                except:
+                    confirm_thread = input(" {} This website have a waf, are you sure to use {} threads ? [y:n] ".format(WARNING, thread))
+                if confirm_thread == "y" or confirm_thread == "Y":
+                    print(LINE)
+                    pass
+                else:
+                    try:
+                        enter_thread = raw_input("{}Enter the number of threads: ".format(INFO))
+                    except:
+                        enter_thread = input("{}Enter the number of threads: ".format(INFO))
+                    if int(enter_thread) > 0:
+                        print(LINE)
+                        return int(enter_thread)
+                    else:
+                        print("If you enter 0 or less that's will doesn't work :)")
+                        sys.exit()
+            else:
+                print(LINE)
+        else:
+            print(" {} This website doesn't seem use WAF".format(LESS))
+            print(LINE)
+
 
 def req_test_false_positif(res, headers):
     url_base = res.split("/")[:3]

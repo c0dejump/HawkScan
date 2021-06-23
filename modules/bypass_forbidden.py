@@ -77,7 +77,7 @@ def other_bypass(url, page, req_url):
 		#print(req_payload.status_code) #DEBUG
 		#print("{}:{}".format(len(req_payload.content), len(req_url.content))) #DEBUG
 		if req_payload.status_code not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410] and len(req_payload.content) not in ranges:
-			print("{}[{}] Forbidden Bypass with : {}".format(BYP, req_payload.status_code, url_b))
+			print("{}[{}] Forbidden Bypass with : {} [{}]".format(BYP, req_payload.status_code, url_b, len(req_payload.content)))
 
 
 
@@ -91,8 +91,13 @@ def bypass_forbidden(res):
 	page = "/".join(res_page) if len(res_page) > 1 else "".join(res_page)
 	domain =  "/".join(res.split("/")[:3]) + "/"
 	req_res = requests.get(res, verify=False)
-	req_url = requests.get(url, verify=False)
-	if len(req_res.content) in range(len(req_url.content) - 50, len(req_url.content) + 50):
+	req_url = requests.get(urllib3, verify=False)
+	if req_url.status_code in [403, 401]:
+		original_url(res, page, url)
+		IP_authorization(res, url, domain, page)
+		#method(res, url) #TODO
+		other_bypass(url, page, req_url)
+	elif len(req_res.content) in range(len(req_url.content) - 50, len(req_url.content) + 50):
 		pass
 	else:
 		original_url(res, page, url)

@@ -15,9 +15,9 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
 
 # News
-**!** Updated: New logo made by Cyber_Ph4ntoM   
-**!** Updated: Little code review        
-**!** Updated: Add multiple words in dichawk.txt      
+    **!** Fixed: Bug in socketio module
+    **!** Fixed: Add size bytes during th error scan
+    **!** Added: Words in wordlist      
 *(for more details go on CHANGELOG.md)*   
  
 # Installation
@@ -59,9 +59,10 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 **P1 is the most important**
 
  - [~] Multiple exclude like: --exclude 403,1337b [P1]
+ - [ ] Better thread management [P1]
  - [ ] Multiple output (csv, json...) [P1]
  - [ ] Push results into DB [P1]
- - [ ] Pre-run to chck the waf sensitive (by proxy with 40 threads for exemple) [P2]
+ - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) [P2]
  - [ ] cse google search (buckets...) [P2]
  - [ ] On-the-fly writing report [P2]
  - [ ] Prefix filename (old_, copy of...) [P2]
@@ -137,7 +138,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     //With an exclude bytes number
      python hawkscan.py -u https://www.exemple.com/ --exclude 1337b 
 
-    //With two exclude
+    //With two excludes
      python hawkscan.py -u https://www.exemple.com/ --exclude 1337b,403
 
 ```
@@ -146,7 +147,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 Layno (https://github.com/Clayno/) [Technical helper]      
 Sanguinarius (https://twitter.com/sanguinarius_Bt) [Technical helper]  
 Jamb0n69 (https://twitter.com/jamb0n69) [Technical helper]           
-Cyber_Ph4ntoM (https://twitter.com/__PH4NTOM__) [Beta tester]
+Cyber_Ph4ntoM (https://twitter.com/__PH4NTOM__) [Beta tester & Logo Graphist]
 
 
 # Paypal

@@ -28,10 +28,9 @@ except:
 import threading
 from threading import Thread
 from fake_useragent import UserAgent
-import wafw00f   
 from report.creat_report import create_report
 #from report.creat_report_test import create_report_test
-from modules.detect_waf import verify_waf
+from modules.detect_waf import verify_waf, detect_wafw00f
 from modules.before_run import before_start
 from modules.parsing_html import parsing_html
 from modules.check_cms import check_cms
@@ -46,6 +45,7 @@ from modules.output import multiple_outputs
 from modules.resume import resume_options
 from modules.check_socketio import check_socketio
 from modules.send_notify import notify_scan_completed
+from modules.auto_update import auto_update
 
 
 try:
@@ -235,9 +235,9 @@ class filterManager:
             #print(req.text)
             #print(perc) #DEBUG percentage
             #print(multiple)
-            if perc >= 80:
+            if perc >= 75:
                 pass
-            elif perc > 50 and perc < 80:
+            elif perc > 50 and perc < 75:
                 print("{} {} {} [Potential exclude page with {}%]".format(HOUR, EXCL, res, perc))
             else:
                 exclude_bytes = "[{} bytes]".format(len(req.content))
@@ -269,24 +269,291 @@ class filterManager:
                         rec_list.append(result)
                         output_scan(directory, res, len(req.content), stats=200)
 
+class runFuzzing:
+    """
+    Class runFuzzing:
+    Run fuzzing of webpage
+    functions:
+    - tryUrl
+    """
+    error_score = 0
 
-def auto_update():
-    """
-    auto_update: for update the tool
-    """
-    updt = 0
-    print("{}Checking update...".format(INFO))
-    os.system("git pull origin master > /dev/null 2>&1 > git_status.txt")
-    with open("git_status.txt", "r") as gs:
-        for s in gs:
-            if "Already up to date" not in s:
-                updt = 1
-    if updt == 1:
-        print("{}A new version was be donwload\n".format(INFO))
-        os.system("cd ../ && rm -rf HawkScan && git clone https://github.com/c0dejump/HawkScan.git")
-    else:
-        print("{}Nothing update found".format(INFO))
-        os.system("rm -rf git_status.txt")
+    def test_errors(self):
+        error_score += 1
+
+    def tryUrl(self, i, q, threads, manager=False, directory=False, forced=False, u_agent=False, nLine=False):
+        """
+        tryUrl:
+        Test all URL contains in the dictionnary with multi-threading.
+        This script run functions:
+        - create_backup()
+        - dl()
+        - backup_ext()
+        - mail()
+        """
+        rf = runFuzzing()
+        filterM = filterManager()
+        s = requests.session()
+        s.verify=False
+        parsing = parsing_html()
+        thread_score = 0
+        score_next = 0
+        waf_score = 0
+        percentage = lambda x, y: float(x) / float(y) * 100.00
+        stop_add_thread = False
+        time_i = 120
+        time_bool = False
+        waf = False
+        error_bool = False
+        tested_bypass = False
+        for numbers in range(len_w):
+            thread_count = threading.active_count() - 1
+            res = q.get()
+            page = "/".join(res.split("/")[3:])
+            #print("{} :: {}".format(res.split("/"), "/".join(res.split("/")[3:]))) #DEBUG  
+
+            if auto and not stop_add_thread:
+                thrds, scores = defined_thread(threads, thread_score, score_next)
+                if scores == 1:
+                    thread_score += 1
+                if thrds == 1:
+                    threads += 1
+                    score_next += 1
+                    manager.add_thread(i, threads, manager)
+                #print("{}: {}".format(threading.currentThread().getName() ,thread_score))#DEBUG
+            try:
+                user_agent = {'User-agent': u_agent} if u_agent else {'User-agent': UserAgent().random} #for a random user-agent
+                try:
+                    forbi = False
+                    if ts: #if --timesleep option defined
+                        time.sleep(ts)
+                    req = defined_connect(s, res, user_agent, header_parsed)    
+
+                    waf = verify_waf(req, res, user_agent) if not forced else False
+                    #verfiy_waf function, to check if waf detected, True: detected # False: not detected    
+
+                    if waf:
+                        if not tested_bypass:
+                            try_bypass_waf = bypass_waf(req, res)
+                            #print(try_bypass_waf) #DEBUG
+                            #print(user_agent) #DEBUG
+                            if try_bypass_waf == False: # if not worked not repeat
+                                print("{}\033[31m[-]\033[0m Our tests not bypass it, sorry".format(BYP))
+                                tested_bypass = True
+                            elif try_bypass_waf and type(try_bypass_waf) is not bool:
+                                user_agent.update(try_bypass_waf)
+                        waf_score += 1
+                        time_bool = True
+                        if waf_score == 2:
+                            waf_score = 0
+                            if thread_count != 1:
+                                thread_count += 1
+                                stop_add_thread = True
+                                print("{}Auto-reconfig scan to prevent the WAF".format(WAF))
+                                manager.stop_thread()
+                            #TODO: potentialy use TOR (apt install tor, pip install torrequest) for next requests after that.
+                        #pass
+                    if backup:
+                        hidden_dir(res, user_agent, directory, forbi, get_date(), filterM)
+                    if redirect and req.history:
+                        status_link = [histo.status_code for histo in req.history]
+                    else:
+                        status_link = req.status_code if req != False else False
+                    redirect_link = req.url if req != False else False
+                    len_req = len(req.content) if req != False else False   
+
+                    bytes_len = "[{} bytes]".format(len_req)    
+
+                    display_res = res if tw > 110 else page 
+
+                    #print(status_link) #DEBUG status response
+                    if status_link == 200:
+                        if exclude:
+                            if type(req_p) == list and len(req_p) > 1:
+                                #print(len_req)
+                                filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                            elif type(req_p) == int:
+                                filterM.check_exclude_code(res, req, directory, get_date(), parsing)
+                            else:
+                                #print(req)
+                                filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                        else:            
+                            if "robots.txt" in res.split("/")[3:]:
+                                print("{} {} {}".format(get_date(), PLUS, res))
+                                for r in req.text.split("\n"):
+                                    print("\t\u251c {}\r".format(r))
+                            if js:
+                                #try to found js keyword
+                                parsing.get_javascript(res, req)
+                            # dl files and calcul size
+                            download_file = dl(res, req, directory)
+                            print("{} {} {:<15} {:<15}\r".format(get_date(), PLUS, bytes_len, display_res))
+                            output_scan(directory, res, len_req, stats=200)
+                            #check backup
+                            create_backup(res, directory, forbi)
+                            #add directory for recursif scan
+                            parsing.get_links(req, directory)
+                            #scrape all link
+                            if res[-1] == "/" and recur:
+                                if ".git" in res:
+                                    pass
+                                else:
+                                    spl = res.split("/")[3:]
+                                    result = "/".join(spl)
+                                    rec_list.append(result)
+                            #report.create_report_url(status_link, res, directory)
+                        if 'sitemap.xml' in res:
+                            parsing.sitemap(req, directory)
+                        parsing.search_s3(res, req, directory)
+                    elif status_link in [401, 403] and not forced:
+                        #pass
+                        if type(req_p) == list and len(req_p) > 1:
+                            filterM.check_multiple(req, res, directory, forbi, get_date(), parsing)
+                        elif type(req_p) == int:
+                            filterM.check_exclude_code(res, req, directory, get_date(), parsing)
+                        else:            
+                            bypass_forbidden(res)
+                            if res[-1] == "/" and recur:
+                                if ".htaccess" in res or ".htpasswd" in res or ".git" in res or "wp" in res:
+                                    output_scan(directory, res, len_req, stats=403)
+                                else:
+                                    spl = res.split("/")[3:]
+                                    result = "/".join(spl)
+                                    rec_list.append(result)
+                                    output_scan(directory, res, len_req, stats=403)
+                                #report.create_report_url(status_link, res, directory)
+                            if not forced:
+                                forbi = True
+                                print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m\r".format(get_date(), FORBI, bytes_len, display_res, status_link))
+                                create_backup(res, directory, forbi)
+                                output_scan(directory, res, len_req, stats=403)
+                                #report.create_report_url(status_link, res, directory)
+                            elif not forced and recur:
+                                pass
+                            else:
+                                print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m\r".format(get_date(), FORBI, bytes_len, display_res, status_link))
+                                output_scan(directory, res, len_req, stats=403)
+                                #pass
+                    elif status_link == 404:
+                        pass
+                    elif status_link == 405:
+                        if exclude:
+                            if type(req_p) == list and len(req_p) > 1:
+                                #print(len_req)
+                                filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                            elif type(req_p) == int:
+                                filterM.check_exclude_code(res, req, directory, get_date(), parsing)
+                            else:
+                                #print(req)
+                                filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                        else:
+                            print("{} {} {:<15} {:<15} [405] \r".format(get_date(), INFO, bytes_len, display_res))
+                        #report.create_report_url(status_link, res, directory)
+                    elif status_link == 301:
+                        if redirect:
+                            if exclude:
+                                if type(req_p) == list and len(req_p) > 1:
+                                    filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                                elif type(req_p) == int:
+                                    filterM.check_exclude_code(res, req, directory, get_date(), parsing)
+                                else:
+                                    filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                            else:                
+                                print("{} {} {}\033[33m => {}\033[0m 301 Moved Permanently\r".format(get_date(), LESS, display_res, redirect_link))
+                                parsing.search_s3(res, req, directory)
+                                output_scan(directory, res, len_req, stats=301)
+                                #report.create_report_url(status_link, res, directory) #TODO
+                    elif status_link == 302:
+                        if redirect:
+                            if exclude:
+                                if type(req_p) == list and len(req_p) > 1:
+                                    filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                                elif type(req_p) == int:
+                                    filterM.check_exclude_code(res, req, directory, get_date(), parsing)
+                                else:
+                                    filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                            else:                
+                                print("{} {} {}\033[33m => {}\033[0m 302 Moved Temporarily\r".format(get_date(), LESS, display_res, redirect_link))
+                                parsing.search_s3(res, req, directory)
+                                output_scan(directory, res, len_req, stats=302)
+                                #report.create_report_url(status_link, res, directory) #TODO
+                    elif status_link == 304:
+                        print("{}\033[33m[+] \033[0m {}\033[33m 304 Not modified \033[0m\r".format(get_date(), display_res))
+                        parsing.search_s3(res, req, directory)
+                        #report.create_report_url(status_link, res, directory) #TODO                
+                    elif status_link in [307, 308]:
+                        pass
+                    elif status_link in [400, 500]:
+                        #pass
+                        if exclude:
+                            if type(req_p) == list and len(req_p) > 1:
+                                filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                            elif type(req_p) == int:
+                                filterM.check_exclude_code(res, req, directory, get_date(), parsing)
+                            else:
+                                filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                        else:                
+                            server_error = "400" if status_link == 400 else "500"
+                            print("{} {} {:<15} {:<15} \033[33m{} Server Error\033[0m\r".format(get_date(), SERV_ERR, bytes_len, display_res, server_error))
+                            output_scan(directory, res, len_req, stats=status_link)
+                    elif status_link in [422, 423, 424, 425]:
+                        print("{} {} {} \033[33mError WebDAV\033[0m\r".format(get_date(), LESS, res if tw > 110 else page))
+                        #report.create_report_url(status_link, res, directory) #TODO
+                    elif status_link == 405:
+                        print("{} {} {}".format(get_date(), PLUS, display_res))
+                        #output_scan(directory, res, stats=405)
+                    elif status_link == 503:
+                        req_test_index = requests.get(url, verify=False) # take origin page url (index) to check if it's really unavailable
+                        if req_test_index.status_code == 503:
+                            manager.stop_thread()
+                            print("{}{} Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(get_date(), WARNING))
+                            time_bool = True
+                        else:
+                            pass
+                    elif status_link in [429, 522]:
+                        req_test_many = requests.get(url, verify=False)
+                        if req_test_many in [429, 522]:
+                            print("{} {} Too many requests, web service seem to be offline".format(get_date(), WARNING))
+                            print("STOP so many requests, we should wait a little...")
+                            time_bool = True
+                        else:
+                            pass
+                            #print("{}{}{} 429".format(HOUR, LESS, res))
+                    if backup != None:
+                        fbackp = backup_ext(s, res, page, directory, forbi, get_date(), parsing, filterM)
+                            #errors = manager.error_check() #TODO
+                            #error_bool = True
+                except Timeout:
+                    errors_n = rf.test_errors
+                    #traceback.print_exc() #DEBUG
+                    with open(directory + "/errors.txt", "a+") as write_error:
+                        write_error.write(res+"\n")
+                    #errors = manager.error_check() #TODO
+                    #error_bool = True
+                except Exception:
+                    #traceback.print_exc() #DEBUG
+                    with open(directory + "/errors.txt", "a+") as write_error:
+                        write_error.write(res+"\n")
+                    errors_n = rf.test_errors
+                    #errors = manager.error_check()#TODO
+                    #error_bool = True
+                q.task_done()
+            except Exception:
+                errors_n = rf.test_errors
+                #traceback.print_exc() #DEBUG
+                pass
+            if time_bool: #if a waf detected, stop for any seconds
+                while time_i != 0:
+                    time_i -= 1
+                    time.sleep(1)
+                time_i = 60
+                time_bool = False
+            else:
+                """try:
+                    print("Error: {}".format(error_score))
+                except:
+                    print("Error: 0")"""
+                Progress(numbers, len_w, thread_count, nLine, page, percentage, tw)
 
 
 def status(r, stat, directory, u_agent, thread, manageDir):
@@ -388,50 +655,6 @@ def status(r, stat, directory, u_agent, thread, manageDir):
         else:
             sys.exit()
 
-
-def detect_wafw00f(url, directory, thread):
-    """
-    WAF:
-    Detect if the website use a WAF with tools "wafw00f"
-    """
-    detect = False
-    message = ""
-    os.system("wafw00f {} > {}/waf.txt".format(url, directory))
-    with open(directory + "/waf.txt", "r+") as waf:
-        for w in waf:
-            if "behind" in w:
-                detect = True
-                message = w.replace("[+]","").replace("[*]","")
-            else:
-                pass
-        print(INFO + "WAF")
-        print(LINE)
-        if detect:
-            print(" {}{}".format(WARNING, message))
-            if thread >= 20:
-                try:
-                    confirm_thread = raw_input(" {} This website have a waf, are you sure to use {} threads ? [y:n] ".format(WARNING, thread))
-                except:
-                    confirm_thread = input(" {} This website have a waf, are you sure to use {} threads ? [y:n] ".format(WARNING, thread))
-                if confirm_thread == "y" or confirm_thread == "Y":
-                    print(LINE)
-                    pass
-                else:
-                    try:
-                        enter_thread = raw_input("{}Enter the number of threads: ".format(INFO))
-                    except:
-                        enter_thread = input("{}Enter the number of threads: ".format(INFO))
-                    if int(enter_thread) > 0:
-                        print(LINE)
-                        return int(enter_thread)
-                    else:
-                        print("If you enter 0 or less that's will doesn't work :)")
-                        sys.exit()
-            else:
-                print(LINE)
-        else:
-            print(" {} This website doesn't seem use WAF".format(LESS))
-            print(LINE)
 
 
 def create_backup(res, directory, forbi):
@@ -644,7 +867,7 @@ def scan_error(directory, forbi):
                         if error_status in [404, 406]:
                             pass
                         else:
-                            print("{}[{}] {}".format(INFO, req.status_code, error_link))
+                            print("{}[{}] {} ({} bytes)".format(INFO, req.status_code, error_link, len_req_error))
                             output_scan(directory, error_link, len_req_error, req.status_code)
                             errors_stat = True
                 except Exception:
@@ -716,284 +939,18 @@ def get_date():
     return HOUR
 
 
-def tryUrl(i, q, threads, manager=False, directory=False, forced=False, u_agent=False, nLine=False):
-    """
-    tryUrl:
-    Test all URL contains in the dictionnary with multi-threading.
-    This script run functions:
-    - create_backup()
-    - dl()
-    - backup_ext()
-    - mail()
-    """
-    filterM = filterManager()
-    s = requests.session()
-    s.verify=False
-    parsing = parsing_html()
-    thread_score = 0
-    score_next = 0
-    waf_score = 0
-    percentage = lambda x, y: float(x) / float(y) * 100.00
-    thread_i = 0
-    stop_add_thread = False
-    time_i = 120
-    time_bool = False
-    waf = False
-    error_bool = False
-    tested_bypass = False
-    for numbers in range(len_w):
-        thread_count = threading.active_count() - 1
-        res = q.get()
-        page = "/".join(res.split("/")[3:])
-        #print("{} :: {}".format(res.split("/"), "/".join(res.split("/")[3:]))) #DEBUG
-
-        if auto and not stop_add_thread:
-            thrds, scores = defined_thread(threads, thread_score, score_next)
-            if scores == 1:
-                thread_score += 1
-            if thrds == 1:
-                threads += 1
-                score_next += 1
-                manager.add_thread(i, threads, manager)
-            #print("{}: {}".format(threading.currentThread().getName() ,thread_score))#DEBUG
-        try:
-            user_agent = {'User-agent': u_agent} if u_agent else {'User-agent': UserAgent().random} #for a random user-agent
-            try:
-                forbi = False
-                if ts: #if --timesleep option defined
-                    time.sleep(ts)
-                req = defined_connect(s, res, user_agent, header_parsed)
-
-                waf = verify_waf(req, res, user_agent) if not forced else False
-                #verfiy_waf function, to check if waf detected, True: detected # False: not detected
-
-                if waf:
-                    if not tested_bypass:
-                        try_bypass_waf = bypass_waf(req, res)
-                        #print(try_bypass_waf) #DEBUG
-                        #print(user_agent) #DEBUG
-                        if try_bypass_waf == False: # if not worked not repeat
-                            print("{}\033[31m[-]\033[0m Our tests not bypass it, sorry".format(BYP))
-                            tested_bypass = True
-                        elif try_bypass_waf and type(try_bypass_waf) is not bool:
-                            user_agent.update(try_bypass_waf)
-                    waf_score += 1
-                    time_bool = True
-                    if waf_score == 2:
-                        waf_score = 0
-                        if thread_count != 1:
-                            thread_count += 1
-                            stop_add_thread = True
-                            print("{}Auto-reconfig scan to prevent the WAF".format(WAF))
-                            manager.stop_thread()
-                        #TODO: potentialy use TOR (apt install tor, pip install torrequest) for next requests after that.
-                    #pass
-                if backup:
-                    hidden_dir(res, user_agent, directory, forbi, get_date(), filterM)
-                if redirect and req.history:
-                    status_link = [histo.status_code for histo in req.history]
-                else:
-                    status_link = req.status_code if req != False else False
-                redirect_link = req.url if req != False else False
-                len_req = len(req.content) if req != False else False
-
-                bytes_len = "[{} bytes]".format(len_req)
-
-                display_res = res if tw > 110 else page
-
-                #print(status_link) #DEBUG status response
-                if status_link == 200:
-                    if exclude:
-                        if type(req_p) == list and len(req_p) > 1:
-                            #print(len_req)
-                            filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                        elif type(req_p) == int:
-                            filterM.check_exclude_code(res, req, directory, get_date(), parsing)
-                        else:
-                            #print(req)
-                            filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                    else:            
-                        if "robots.txt" in res.split("/")[3:]:
-                            print("{} {} {}".format(get_date(), PLUS, res))
-                            for r in req.text.split("\n"):
-                                print("\t\u251c {}".format(r))
-                        if js:
-                            #try to found js keyword
-                            parsing.get_javascript(res, req)
-                        # dl files and calcul size
-                        download_file = dl(res, req, directory)
-                        print("{} {} {:<15} {:<15}".format(get_date(), PLUS, bytes_len, display_res))
-                        output_scan(directory, res, len_req, stats=200)
-                        #check backup
-                        create_backup(res, directory, forbi)
-                        #add directory for recursif scan
-                        parsing.get_links(req, directory)
-                        #scrape all link
-                        if res[-1] == "/" and recur:
-                            if ".git" in res:
-                                pass
-                            else:
-                                spl = res.split("/")[3:]
-                                result = "/".join(spl)
-                                rec_list.append(result)
-                        #report.create_report_url(status_link, res, directory)
-                    if 'sitemap.xml' in res:
-                        parsing.sitemap(req, directory)
-                    parsing.search_s3(res, req, directory)
-                elif status_link in [401, 403] and not forced:
-                    #pass
-                    if type(req_p) == list and len(req_p) > 1:
-                        filterM.check_multiple(req, res, directory, forbi, get_date(), parsing)
-                    elif type(req_p) == int:
-                        filterM.check_exclude_code(res, req, directory, get_date(), parsing)
-                    else:            
-                        bypass_forbidden(res)
-                        if res[-1] == "/" and recur:
-                            if ".htaccess" in res or ".htpasswd" in res or ".git" in res or "wp" in res:
-                                output_scan(directory, res, len_req, stats=403)
-                            else:
-                                spl = res.split("/")[3:]
-                                result = "/".join(spl)
-                                rec_list.append(result)
-                                output_scan(directory, res, len_req, stats=403)
-                            #report.create_report_url(status_link, res, directory)
-                        if not forced:
-                            forbi = True
-                            print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m".format(get_date(), FORBI, bytes_len, display_res, status_link))
-                            create_backup(res, directory, forbi)
-                            output_scan(directory, res, len_req, stats=403)
-                            #report.create_report_url(status_link, res, directory)
-                        elif not forced and recur:
-                            pass
-                        else:
-                            print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m".format(get_date(), FORBI, bytes_len, display_res, status_link))
-                            output_scan(directory, res, len_req, stats=403)
-                            #pass
-                elif status_link == 404:
-                    pass
-                elif status_link == 405:
-                    if exclude:
-                        if type(req_p) == list and len(req_p) > 1:
-                            #print(len_req)
-                            filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                        elif type(req_p) == int:
-                            filterM.check_exclude_code(res, req, directory, get_date(), parsing)
-                        else:
-                            #print(req)
-                            filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                    else:
-                        print("{} {} {:<15} {:<15} [405]".format(get_date(), INFO, bytes_len, display_res))
-                    #report.create_report_url(status_link, res, directory)
-                elif status_link == 301:
-                    if redirect:
-                        if exclude:
-                            if type(req_p) == list and len(req_p) > 1:
-                                filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                            elif type(req_p) == int:
-                                filterM.check_exclude_code(res, req, directory, get_date(), parsing)
-                            else:
-                                filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                        else:                
-                            print("{} {} {}\033[33m => {}\033[0m 301 Moved Permanently".format(get_date(), LESS, display_res, redirect_link))
-                            parsing.search_s3(res, req, directory)
-                            output_scan(directory, res, len_req, stats=301)
-                            #report.create_report_url(status_link, res, directory) #TODO
-                elif status_link == 302:
-                    if redirect:
-                        if exclude:
-                            if type(req_p) == list and len(req_p) > 1:
-                                filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                            elif type(req_p) == int:
-                                filterM.check_exclude_code(res, req, directory, get_date(), parsing)
-                            else:
-                                filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                        else:                
-                            print("{} {} {}\033[33m => {}\033[0m 302 Moved Temporarily".format(get_date(), LESS, display_res, redirect_link))
-                            parsing.search_s3(res, req, directory)
-                            output_scan(directory, res, len_req, stats=302)
-                            #report.create_report_url(status_link, res, directory) #TODO
-                elif status_link == 304:
-                    print("{}\033[33m[+] \033[0m {}\033[33m 304 Not modified \033[0m".format(get_date(), display_res))
-                    parsing.search_s3(res, req, directory)
-                    #report.create_report_url(status_link, res, directory) #TODO                
-                elif status_link in [307, 308]:
-                    pass
-                elif status_link in [400, 500]:
-                    #pass
-                    if exclude:
-                        if type(req_p) == list and len(req_p) > 1:
-                            filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                        elif type(req_p) == int:
-                            filterM.check_exclude_code(res, req, directory, get_date(), parsing)
-                        else:
-                            filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                    else:                
-                        server_error = "400" if status_link == 400 else "500"
-                        print("{} {} {:<15} {:<15} \033[33m{} Server Error\033[0m".format(get_date(), SERV_ERR, bytes_len, display_res, server_error))
-                        output_scan(directory, res, len_req, stats=status_link)
-                elif status_link in [422, 423, 424, 425]:
-                    print("{} {} {} \033[33mError WebDAV\033[0m".format(get_date(), LESS, res if tw > 110 else page))
-                    #report.create_report_url(status_link, res, directory) #TODO
-                elif status_link == 405:
-                    print("{} {} {}".format(get_date(), PLUS, display_res))
-                    #output_scan(directory, res, stats=405)
-                elif status_link == 503:
-                    req_test_index = requests.get(url, verify=False) # take origin page url (index) to check if it's really unavailable
-                    if req_test_index.status_code == 503:
-                        manager.stop_thread()
-                        print("{}{} Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(get_date(), WARNING))
-                        time_bool = True
-                    else:
-                        pass
-                elif status_link in [429, 522]:
-                    req_test_many = requests.get(url, verify=False)
-                    if req_test_many in [429, 522]:
-                        print("{} {} Too many requests, web service seem to be offline".format(get_date(), WARNING))
-                        print("STOP so many requests, we should wait a little...")
-                        time_bool = True
-                    else:
-                        pass
-                        #print("{}{}{} 429".format(HOUR, LESS, res))
-                if backup != None:
-                    fbackp = backup_ext(s, res, page, directory, forbi, get_date(), parsing, filterM)
-                        #errors = manager.error_check() #TODO
-                        #error_bool = True
-            except Timeout:
-                #traceback.print_exc() #DEBUG
-                with open(directory + "/errors.txt", "a+") as write_error:
-                    write_error.write(res+"\n")
-                #errors = manager.error_check() #TODO
-                #error_bool = True
-            except Exception:
-                #traceback.print_exc() #DEBUG
-                with open(directory + "/errors.txt", "a+") as write_error:
-                    write_error.write(res+"\n")
-                #errors = manager.error_check()#TODO
-                #error_bool = True
-            q.task_done()
-            s.close()
-        except Exception:
-            #traceback.print_exc() #DEBUG
-            pass
-        if time_bool: #if a waf detected, stop for any seconds
-            while time_i != 0:
-                time_i -= 1
-                time.sleep(1)
-            time_i = 60
-            time_bool = False
-        else:
-            Progress(numbers, len_w, thread_count, nLine, page, percentage, tw)
-
 
 def Progress(numbers, len_w, thread_count, nLine, page, percentage, tw):
     """
     Progress: just a function to print the scan progress
     """
     if tw < 110:
-        sys.stdout.write("\033[34m {0}/{1} | {2:{3}}\r\033[0m".format(numbers*thread_count+nLine, len_w, page if len(page) < 50 else page[:10], len(page) + 10))
+        sys.stdout.write("\033[34m {0}/{1} | {2:{3}}\033[0m\r".format(numbers*thread_count+nLine, len_w, page if len(page) < 50 else page[:10], len(page) + 10))
+        sys.stdout.flush()
     else:
         per = percentage(numbers+nLine, len_w)*thread
         sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | {4}\033[0m\r".format(per, numbers*thread_count+nLine, len_w, thread_count, page if len(page) < 50 else page[:10]))
+        sys.stdout.flush()
 
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):
@@ -1003,18 +960,19 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
     """
     #report = create_report_test()
     #report.create_report_base(directory, header_)
+    runFuzz = runFuzzing()
     threads = 3 if auto else thread
     link_url = []
     hiddend = []
     with open(wordlist, "r") as payload:
         links = payload.read().splitlines()
-    state = links[nLine:] if nLine else links
+    state = links[nLine:] if nLine else links # For restar from the last line found in the dico
     for link in state:
-        link_url = url + prefix + link if prefix else url + link
+        link_url = url + prefix + link if prefix else url + link #url/prefix-words or url/words
         enclosure_queue.put(link_url)
     manager = ThreadManager(enclosure_queue)
     for i in range(threads):
-        worker = Thread(target=tryUrl, args=(i, enclosure_queue, threads, manager, directory, forced, u_agent, nLine))
+        worker = Thread(target=runFuzz.tryUrl, args=(i, enclosure_queue, threads, manager, directory, forced, u_agent, nLine))
         worker.setDaemon(True)
         worker.start()
     enclosure_queue.join()
@@ -1126,7 +1084,7 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
         beforeStart.check_localhost(url)
         beforeStart.check_vhost(dire, url)
         beforeStart.check_backup_domain(dire, url)
-        checkSocketio.run_socketio(url, directory)
+        checkSocketio.main_socketio(url)
         start_scan(subdomains, r, stat, directory, u_agent, thread, manageDir, header_, forbi)
     else:
         for de in dire_exists:
@@ -1146,7 +1104,7 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
 if __name__ == '__main__':
     #arguments
     parser = argparse.ArgumentParser(add_help = True)
-    parser = argparse.ArgumentParser(description='\033[32m Version 1.8.2 | contact: https://twitter.com/c0dejump\033[0m')
+    parser = argparse.ArgumentParser(description='\033[32m Version 1.8.3 | contact: https://twitter.com/c0dejump\033[0m')
 
     group = parser.add_argument_group('\033[34m> General\033[0m')
     group.add_argument("-u", help="URL to scan \033[31m[required]\033[0m", dest='url')
@@ -1207,7 +1165,7 @@ if __name__ == '__main__':
     banner()
 
     if update:
-        auto_update()
+        auto_update
 
 
     len_w = 0 #calcul wordlist size
