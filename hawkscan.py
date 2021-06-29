@@ -387,6 +387,7 @@ class runFuzzing:
                                 parsing.get_javascript(res, req)
                             # dl files and calcul size
                             download_file = dl(res, req, directory)
+                            clean_line()
                             print("{} {} {:<15} {:<15}\r".format(get_date(), PLUS, bytes_len, display_res))
                             output_scan(directory, res, len_req, stats=200)
                             #check backup
@@ -425,6 +426,7 @@ class runFuzzing:
                             if not forced:
                                 forbi = True
                                 print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m\r".format(get_date(), FORBI, bytes_len, display_res, status_link))
+                                clean_line()
                                 create_backup(res, directory, forbi)
                                 output_scan(directory, res, len_req, stats=403)
                                 #report.create_report_url(status_link, res, directory)
@@ -432,6 +434,7 @@ class runFuzzing:
                                 pass
                             else:
                                 print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m\r".format(get_date(), FORBI, bytes_len, display_res, status_link))
+                                clean_line()
                                 output_scan(directory, res, len_req, stats=403)
                                 #pass
                     elif status_link == 404:
@@ -859,7 +862,7 @@ def scan_error(directory, forbi):
                             if error_status in [404, 406]:
                                 pass
                             else:
-                                print("{}[{}] {} ({} bytes)".format(INFO, req.status_code, error_link, len_req_error))
+                                print("{}[{}] [{} bytes] {}".format(INFO, req.status_code, len_req_error, error_link))
                                 output_scan(directory, error_link, len_req_error, req.status_code)
                                 errors_stat = True
                     else: 
@@ -867,7 +870,7 @@ def scan_error(directory, forbi):
                         if error_status in [404, 406]:
                             pass
                         else:
-                            print("{}[{}] {} ({} bytes)".format(INFO, req.status_code, error_link, len_req_error))
+                            print("{}[{}] [{} bytes] {}".format(INFO, req.status_code, len_req_error, error_link))
                             output_scan(directory, error_link, len_req_error, req.status_code)
                             errors_stat = True
                 except Exception:
@@ -946,11 +949,13 @@ def Progress(numbers, len_w, thread_count, nLine, page, percentage, tw):
     """
     if tw < 110:
         sys.stdout.write("\033[34m {0}/{1} | {2:{3}}\033[0m\r".format(numbers*thread_count+nLine, len_w, page if len(page) < 50 else page[:10], len(page) + 10))
-        sys.stdout.flush()
     else:
         per = percentage(numbers+nLine, len_w)*thread
         sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | {4}\033[0m\r".format(per, numbers*thread_count+nLine, len_w, thread_count, page if len(page) < 50 else page[:10]))
-        sys.stdout.flush()
+
+
+def clean_line():
+    sys.stdout.write("\033[K") #clear line 
 
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):
