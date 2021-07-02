@@ -91,7 +91,7 @@ def bypass_forbidden(res):
 	page = "/".join(res_page) if len(res_page) > 1 else "".join(res_page)
 	domain =  "/".join(res.split("/")[:3]) + "/"
 	req_res = requests.get(res, verify=False)
-	req_url = requests.get(urllib3, verify=False)
+	req_url = requests.get(url, verify=False)
 	if req_url.status_code in [403, 401]:
 		original_url(res, page, url)
 		IP_authorization(res, url, domain, page)

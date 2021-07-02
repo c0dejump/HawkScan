@@ -64,7 +64,7 @@ class check_socketio:
             elif not found_socket and poutput:
                 print(" {} {}{}: {}".format(LESS, url, path, connect))
         if not found_socket:
-            print("\n {} Nothing Socketio found".format(LESS))
+            print(" {} Nothing Socketio found".format(LESS))
 
 
     def main_socketio(self, url):
@@ -73,7 +73,7 @@ class check_socketio:
             urls.append(url)
             urls.append(url.replace("www.", ""))
             for u in urls:
-                print("{} {}".format(INFO, u))
+                print(" {} {}".format(INFO, u))
                 self.run_socketio(u, poutput=False)
         else:
             self.run_socketio(url, poutput=True)

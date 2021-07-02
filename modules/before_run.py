@@ -217,12 +217,12 @@ class before_start:
         print("{}Check domain backup".format(INFO))
         print(LINE)
         backup_dn_ext = ["zip", "rar", "iso", "tar", "gz", "tgz", "tar.gz", "7z", "jar"]
+        found_bdn = False
         try:
             req_index = requests.get(url, verify=False, timeout=6, headers={"User-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"})
             len_index = len(req_index.content)
             domain = domain.split('.')[1] if len(domain.split('.')) > 2 else domain.split('.')[0]
             print("{}List of backup extension for domain {}: {}\nExemple: {}{}.zip\n".format(INFO, domain, backup_dn_ext, url, domain.split('.')[0]))
-            found_bdn = False
             for bdn in backup_dn_ext:
                 url_dn_ext = "{}{}.{}".format(url, domain.split('.')[0], bdn)
                 try:

@@ -1,6 +1,12 @@
 Changelog:
 ----------
 
+- 1.8.4
+---------
+	Fixed: Better display of live lines
+	Added: A new file to manage the modules to launches
+---------
+
 - 1.8.3
 ---------
 	Fixed: Bug in socketio module

@@ -24,6 +24,13 @@ adinfo
 adfs/
 sign-in
 admin.php
+~admin.php
+~admin.php/phplist
+phplist/admin/
+phplist/admin/locale/
+phplist/admin/auth/phplist_auth.inc
+locale/
+phplist/
 1.txt
 index.php
 index.php?-s
@@ -118,6 +125,8 @@ config.output
 config.types
 config.selected
 config.selector
+defaultconfig-new.inc
+defaultconfig
 .git/
 .git
 .git-rewrite/
@@ -2704,6 +2713,7 @@ server/node_modules/src/
 server/node_modules/keypress
 node_modules/
 node_modules/webpack-dev-server/
+node_modules/.bin/
 iguana/
 iis/
 iisstart/
@@ -5494,6 +5504,7 @@ files/admin_v2/scripts/.svn/prop-base
 .viminfo
 vim_settings.xml
 .vimrc
+.wafpickle-N
 .web
 .workspace/
 .wp-config.php.swp
@@ -10353,6 +10364,7 @@ setup
 setup.php
 setup.sql
 sftp-config.json
+config.gypi
 Sh3ll.php
 share
 shared
@@ -10690,6 +10702,8 @@ symfony/apps/frontend/config/routing.yml
 symfony/apps/frontend/config/settings.yml
 mvn-settings.xml
 symfony/config/databases.yml
+symfony_data/web/sf/
+symfony_data/
 Symlink.php
 Symlink.pl
 symphony/apps/frontend/config/app.yml
@@ -11342,6 +11356,13 @@ wp-config.php.swp
 wp-config.php.txt
 wp-config.php.zip
 wp-config.php~
+wp-config.php.txt
+wp-config.dev.php.txt
+wp-config2.php
+wp-config2.php.txt
+wp-config2.txt
+wp-config.txt
+wp-config-temp.php
 public_html/.well-known/
 .well-known/jwks.json
 .well-known/jwks
@@ -11396,6 +11417,7 @@ wp-login/
 wp-register
 wp-register.php
 wp-rss2
+wp-sitemap-users-1.xml
 wp.php
 wp.rar/
 wp.zip

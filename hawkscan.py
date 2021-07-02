@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = '1.8.2'
+__version__ = '1.8.4'
 __program__ = 'HawkScan'
 __author__ = 'https://github.com/c0dejump'
 
@@ -30,22 +30,23 @@ from threading import Thread
 from fake_useragent import UserAgent
 from report.creat_report import create_report
 #from report.creat_report_test import create_report_test
-from modules.detect_waf import verify_waf, detect_wafw00f
+from modules.detect_waf import verify_waf
 from modules.before_run import before_start
 from modules.parsing_html import parsing_html
-from modules.check_cms import check_cms
+#from modules.check_cms import check_cms
 from modules.bypass_waf import bypass_waf
 from modules.manage_dir import manage_dir
 from modules.bypass_forbidden import bypass_forbidden
-from modules.google_dorks import query_dork
+#from modules.google_dorks import query_dork
 from modules.banner import banner
 from modules.check_subdomain import subdomain
 from modules.terminal_size import terminal_size
 from modules.output import multiple_outputs
 from modules.resume import resume_options
-from modules.check_socketio import check_socketio
+#from modules.check_socketio import check_socketio
 from modules.send_notify import notify_scan_completed
 from modules.auto_update import auto_update
+from run_modules import check_modules
 
 
 try:
@@ -275,6 +276,7 @@ class runFuzzing:
     Run fuzzing of webpage
     functions:
     - tryUrl
+    - test_errors
     """
     error_score = 0
 
@@ -531,7 +533,7 @@ class runFuzzing:
                     #errors = manager.error_check() #TODO
                     #error_bool = True
                 except Exception:
-                    #traceback.print_exc() #DEBUG
+                    traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
                     errors_n = rf.test_errors
@@ -540,7 +542,7 @@ class runFuzzing:
                 q.task_done()
             except Exception:
                 errors_n = rf.test_errors
-                #traceback.print_exc() #DEBUG
+                traceback.print_exc() #DEBUG
                 pass
             if time_bool: #if a waf detected, stop for any seconds
                 while time_i != 0:
@@ -946,11 +948,11 @@ def Progress(numbers, len_w, thread_count, nLine, page, percentage, tw):
     """
     if tw < 110:
         sys.stdout.write("\033[34m {0}/{1} | {2}\033[0m\r".format(numbers*thread_count+nLine, len_w, page))
-        if len(page) > 5: sys.stdout.write("\033[K") #clear line 
+        if len(page) > 6: sys.stdout.write("\033[K") #clear line 
     else:
         per = percentage(numbers+nLine, len_w)*thread
         sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | {4}\033[0m\r".format(per, numbers*thread_count+nLine, len_w, thread_count, page))
-        if len(page) > 5: sys.stdout.write("\033[K") #clear line 
+        if len(page) > 6: sys.stdout.write("\033[K") #clear line 
 
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):
@@ -1024,14 +1026,14 @@ def start_scan(subdomains, r, stat, directory, u_agent, thread, manageDir, heade
         print("\n{} An error occurred, the report cannot be created".format(WARNING))
 
 
+
 def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart):
     """
     create_structure_scan:
     Create directory with the website name to keep a scan backup.
     """
-    checkCms = check_cms()
+    ram = check_modules()
     manageDir = manage_dir()
-    checkSocketio = check_socketio()
 
     now = datetime.now()
     today = now.strftime("_%Y-%m-%d")
@@ -1069,22 +1071,9 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
         directory = directory if not force_first_step else "sites/{}".format(dire_date)
         os.makedirs(directory) if not force_first_step else os.makedirs(directory) # creat the dir
         os.makedirs(directory+"/output/") if not force_first_step else os.makedirs("sites/{}/output/".format(directory))
-        beforeStart.get_header(url, directory)
-        beforeStart.get_dns(url, directory)
-        result, v = checkCms.detect_cms(url, directory)
-        if result:
-            checkCms.cve_cms(result, v)
-        dw = detect_wafw00f(url, directory, thread)
-        if dw:
-            thread = dw
-        beforeStart.wayback_check(dire, directory)
-        beforeStart.gitpast(url)
-        beforeStart.firebaseio(url)
-        query_dork(url, directory)
-        beforeStart.check_localhost(url)
-        beforeStart.check_vhost(dire, url)
-        beforeStart.check_backup_domain(dire, url)
-        checkSocketio.main_socketio(url)
+
+        ram.run_all_modules(beforeStart, url, directory, dire, thread)
+
         start_scan(subdomains, r, stat, directory, u_agent, thread, manageDir, header_, forbi)
     else:
         for de in dire_exists:

@@ -15,8 +15,8 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
 
 # News
-    **!** Fixed: Bug in socketio module
-    **!** Fixed: Add size bytes during th error scan
+    **!** Fixed: Bug with the live scan lines
+    **!** Added: A new file to manage the modules to launches
     **!** Added: Words in wordlist      
 *(for more details go on CHANGELOG.md)*   
  
@@ -58,13 +58,12 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 # TODO 
 **P1 is the most important**
 
- - [~] Multiple exclude like: --exclude 403,1337b [P1]
+ - [~] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Usage](https://github.com/c0dejump/HawkScan/#usage))
+ - [~] Multiple output (csv, json...) [P1] [In progress]
  - [ ] Better thread management [P1]
- - [ ] Multiple output (csv, json...) [P1]
  - [ ] Push results into DB [P1]
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) [P2]
  - [ ] cse google search (buckets...) [P2]
- - [ ] On-the-fly writing report [P2]
  - [ ] Prefix filename (old_, copy of...) [P2]
  - [ ] Multiple website scanning [P2]
  - [ ] Check HTTP headers/ssl security [P3]
