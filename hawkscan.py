@@ -1108,7 +1108,7 @@ if __name__ == '__main__':
     group.add_argument("-p", help="Add prefix in wordlist to scan", required=False, dest="prefix")
 
     group = parser.add_argument_group('\033[34m> Request Settings\033[0m')
-    group.add_argument("-H", help="Modify header. \033[33m(Exemple: -H \"cookie: test\")\033[0m", required=False, dest="header_", type=str)
+    group.add_argument("-H", help="Modify header. \033[33m(Exemple: -H \"cookie:test\")\033[0m", required=False, dest="header_", type=str)
     group.add_argument("-a", help="Choice user-agent. \033[32mDefault: Random\033[0m", dest='user_agent', required=False)
     group.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
     group.add_argument("--auth", help="HTTP authentification. \033[33m(Exemples: --auth admin:admin)\033[0m", required=False, dest="auth")
