@@ -58,7 +58,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 # TODO 
 **P1 is the most important**
 
- - [~] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Usage](https://github.com/c0dejump/HawkScan/#usage))
+ - [~] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))
  - [~] Multiple output (csv, json...) [P1] [In progress]
  - [ ] Better thread management [P1]
  - [ ] Push results into DB [P1]
