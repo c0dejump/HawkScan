@@ -533,7 +533,7 @@ class runFuzzing:
                     #errors = manager.error_check() #TODO
                     #error_bool = True
                 except Exception:
-                    traceback.print_exc() #DEBUG
+                    #traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
                     errors_n = rf.test_errors
@@ -542,7 +542,7 @@ class runFuzzing:
                 q.task_done()
             except Exception:
                 errors_n = rf.test_errors
-                traceback.print_exc() #DEBUG
+                #traceback.print_exc() #DEBUG
                 pass
             if time_bool: #if a waf detected, stop for any seconds
                 while time_i != 0:
@@ -1072,7 +1072,7 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
         os.makedirs(directory) if not force_first_step else os.makedirs(directory) # creat the dir
         os.makedirs(directory+"/output/") if not force_first_step else os.makedirs("sites/{}/output/".format(directory))
 
-        ram.run_all_modules(beforeStart, url, directory, dire, thread)
+        ram.run_all_modules(beforeStart, url, directory, dire, thread) # Run all modules
 
         start_scan(subdomains, r, stat, directory, u_agent, thread, manageDir, header_, forbi)
     else:
