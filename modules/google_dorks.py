@@ -1,14 +1,13 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-try:
-    from degoogle import dg
-except:
-    from modules.degoogle import dg
+
 import sys
 import requests
 from config import WARNING, INFO, LINE
 import time
 import traceback
+from googlesearch import search 
+
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
@@ -33,7 +32,7 @@ def query_dork(domain, directory):
     key_break = False
     found = False
     answer_yes = False
-    print(INFO + "GOOGLE DORK")
+    print("\033[36m GOOGLE DORK \033[0m")
     print(LINE)
     if 'www' in domain:
         direct = domain.split('.')
@@ -64,29 +63,29 @@ def query_dork(domain, directory):
     '"{}" language:bash pwd'.format(domain),
     'site:http://box.com "{}"'.format(domain)
     ]
-    degoogler = dg()
     for query in queries:
         print("{}{}\n".format(INFO, query))
-        degoogler.query = query
-        results = degoogler.run()
         try:
-            for result in results:
+            for j in search(query, tld="com", num=5, stop=5, pause=2.0):
                 try:
-                    req_url_found = requests.get(result['url'], verify=False, timeout=3)
-                    if req_url_found.status_code not in [404, 408, 503, 405, 428, 412, 429]:
-                        print(" \033[32m[{}]\033[0m {}".format(req_url_found.status_code, result['url']))
-                        with open(directory+"/site/{}/google_dorks.txt".format(directory), "a+") as raw:
-                            raw.write("{}\n".format(result['url']))
+                    req_url_found = requests.get(j, verify=False, timeout=4)
+                    if req_url_found.status_code not in [404, 408, 503, 405, 428, 412, 429, 403, 401]:
+                        print(" \033[32m[{}]\033[0m {}".format(req_url_found.status_code, j))
+                        try:
+                            with open(directory+"/site/{}/google_dorks.txt".format(directory), "a+") as raw:
+                                raw.write("{}\n".format(j))
+                        except:
+                            pass
                     elif req_url_found.status_code in [403, 401]:
-                        print(" \033[31m[{}]\033[0m {}".format(req_url_found.status_code, result['url']))
+                        print(" \033[31m[{}]\033[0m {}".format(req_url_found.status_code, j))
                     else:
-                        print(" \033[31m[{}]\033[0m {}".format(req_url_found.status_code, result['url']))
+                        print(" \033[31m[{}]\033[0m {}".format(req_url_found.status_code, j))
                 except:
-                    print("{}Error with URL {}".format(WARNING, result['url']))
+                    #traceback.print_exc() #DEBUG
+                    print("{}Error with URL {}".format(WARNING, j))
+            print("")
         except:
-            #traceback.print_exc()
-            pass
-        print("")
+            print("{} Google captcha seem to be activated, try it later...\n".format(WARNING))
     print(LINE)
 
 
@@ -98,6 +97,7 @@ def query_dork(domain, directory):
 
     print(LINE)"""#TODO
 
-"""if __name__ == '__main__':
-    domain = "https://www..fr/" #DEBUG
-    query_dork(domain)"""
+if __name__ == '__main__':
+    domain = "https://www.tesla.com/" #DEBUG
+    directory = "test"
+    query_dork(domain, "test")

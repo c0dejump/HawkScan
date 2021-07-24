@@ -8,6 +8,7 @@ WARNING = "!"
 INFO = "i"
 BYP = "b"""
 
+
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 def post(res): req_p = requests.post(res, verify=False, allow_redirects=False); return req_p.status_code, "post"
@@ -21,14 +22,14 @@ def method(res):
 	Ex: OPTIONS /admin
 	"""
 	result_list = []
-	for funct in [post, put, patch]:
+	for funct in [post, put, patch, options]:
 		try:
 			result_list.append(funct(res))
 		except:
 			pass
 	for rs, type_r in result_list:
 		if rs not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500]:
-			print("{} Forbidden Bypass with this requests type: {}".fromat(BYP, type_r))
+			print("{} Forbidden Bypass with this requests type: {}".format(BYP, type_r))
 
 
 def original_url(res, page, url):
@@ -44,23 +45,9 @@ def original_url(res, page, url):
 def IP_authorization(res, url, domain, page):
 	# Ex: http://lpage.com/admin header="X-Custom-IP-Authorization": 127.0.0.1
 	headers_type = [
-	"X-Originating-IP", 
-	"X-Forwarded",
-	"Forwarded",
-	"Forwarded-For",
-	"Forwarded-For-IP",
-	"X-Forwarder-For",
-	"X-Forwarded-For",
-	"X-Forwarded-For-Original",
-	"X-Forwarded-By",
-	"X-Forwarded-Host",
-	"X-Remote-IP",
-	"X-Remote-Addr",
-	"X-Client-IP",
-	"Client-IP",
-	"Access-Control-Allow-Origin",
-	"Origin",
-	"X-Custom-IP-Authorization",
+	"X-Originating-IP", "X-Forwarded", "Forwarded", "Forwarded-For", "Forwarded-For-IP", "X-Forwarder-For", "X-Forwarded-For", "X-Forwarded-For-Original",
+	"X-Forwarded-By", "X-Forwarded-Host", "X-Remote-IP", "X-Remote-Addr", "X-Client-IP", "Client-IP", "Access-Control-Allow-Origin", "Origin",
+	"X-Custom-IP-Authorization"
 	]
 	try:
 		website_ip = socket.gethostbyname(domain)

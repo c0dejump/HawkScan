@@ -23,23 +23,17 @@ def detect_wafw00f(url, directory, thread):
                 message = w.replace("[+]","").replace("[*]","")
             else:
                 pass
-        print(INFO + "WAF")
+        print("\033[36m WAF \033[0m")
         print(LINE)
         if detect:
             print(" {}{}".format(WARNING, message))
-            if thread >= 20:
-                try:
-                    confirm_thread = raw_input(" {} This website have a waf, are you sure to use {} threads ? [y:n] ".format(WARNING, thread))
-                except:
-                    confirm_thread = input(" {} This website have a waf, are you sure to use {} threads ? [y:n] ".format(WARNING, thread))
+            if thread >= 40:
+                confirm_thread = input(" {} This website have a waf, are you sure to use {} threads ? [y:n] ".format(WARNING, thread))
                 if confirm_thread == "y" or confirm_thread == "Y":
                     print(LINE)
                     pass
                 else:
-                    try:
-                        enter_thread = raw_input("{}Enter the number of threads: ".format(INFO))
-                    except:
-                        enter_thread = input("{}Enter the number of threads: ".format(INFO))
+                    enter_thread = input("{}Enter the number of threads: ".format(INFO))
                     if int(enter_thread) > 0:
                         print(LINE)
                         return int(enter_thread)

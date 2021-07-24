@@ -7,6 +7,7 @@ from config import PLUS, WARNING, INFO, WAF
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 def bypass_by_user_agent(req, res):
+	#TODO
 	user_agent_list = {
 	"Googlebot": ""
 	}
@@ -39,7 +40,7 @@ def bypass_waf(req, res):
 	"Origin",
 	"Timing-Allow-Origin"
 	]
-	options = [website_ip, domain, "127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2"]
+	options = [website_ip, domain, "127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0","::1","0:0:0:0:0:0:0:1"]
 	for hb in header_base:
 		for o in options:
 			headers = {
@@ -51,10 +52,12 @@ def bypass_waf(req, res):
 				#print(vrfy)
 				if vrfy == False:
 					#win = True
-					print("{}Potential bypass WAF rate limit with: \033[36m{}\033[0m".format(WAF, headers))
+					for h in headers:
+						print("{}Potential bypass WAF rate limit with option:\033[36m -H \"{}:{}\" \033[0m".format(WAF, h, headers[h]))
 					return headers
 			except Exception:
-				traceback.print_exc()
+				pass
+				#traceback.print_exc()
 	if not win:
 		try:
 			headers = {
@@ -64,7 +67,8 @@ def bypass_waf(req, res):
 			vrfy = verify_waf(req, res, headers, display)
 			if vrfy == False:
 				#win = True
-				print("{}Potential bypass WAF rate limit with: \033[36m{}\033[0m".format(WAF, headers))
+				for h in headers:
+					print("{}Potential bypass WAF rate limit with option:\033[36m -H \"{}:{}\" \033[0m".format(WAF, h, headers[h]))
 				return headers
 			"""else:
 				bypass_by_user_agent(req, res)"""

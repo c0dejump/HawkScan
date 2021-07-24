@@ -17,8 +17,8 @@ class before_start:
 
     def get_header(self, url, directory):
         """Get header of website (cookie, link, etc...)"""
-        r = requests.get(url, allow_redirects=False, verify=False, headers={"User-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"})
-        print(INFO + "HEADER")
+        r = requests.get(url, allow_redirects=False, verify=False)
+        print("\033[36m HEADER\033[0m")
         print(LINE)
         print("  {} \n".format(r.headers).replace(',','\n'))
         print(LINE)
@@ -29,14 +29,13 @@ class before_start:
     def gitpast(self, url):
         """
         Github: check github informations
-        Pastebin: check pastebin information #TODO
         """
-        print("{}Check in Github".format(INFO))
+        print("\033[36m Check in Github \033[0m")
         print(LINE)
         url = url.split(".")[1] if "www" in url else url.split("/")[2]
         url = "{}".format(url)
         print("search: {}\n".format(url))
-        types = ["Commits", "Issues", "Code", "Repositories", "Marketplace", "Topics", "Wikis", "Users"]
+        types = ["Commits", "Issues", "Repositories", "Topics", "Wikis", "Users", "Code"]
         try:
             for t in types:
                 github = "https://github.com/search?q={}&type={}".format(url, t)
@@ -56,7 +55,7 @@ class before_start:
     def get_dns(self, url, directory):
         """Get DNS informations"""
         port = 0
-        print(INFO + "DNS information")
+        print("\033[36m DNS information \033[0m")
         print(LINE)
         try:
             if "https" in url:
@@ -96,7 +95,7 @@ class before_start:
             dire = "{}-{}".format(parse_domain[0], parse_domain[1]) if len(parse_domain) > 2 else "{}".format(parse_domain[0])
         else:
             dire = "{}".format(parse_domain[1])
-        print("{}Firebaseio Check".format(INFO))
+        print("\033[36m Firebaseio Check \033[0m")
         print(LINE)
         url = 'https://{}.firebaseio.com/.json'.format(dire.split(".")[0])
         print("Target: {}\n".format(url))
@@ -128,7 +127,7 @@ class before_start:
         Check in a wayback machine to found old file on the website or other things...
         Use "waybacktool"
         """
-        print("{}Wayback Check".format(INFO))
+        print("\033[36m Wayback Check \033[0m")
         print(LINE)
         print(url + "\n")
         try:
@@ -167,12 +166,12 @@ class before_start:
         """
         list_test = ["127.0.0.1", "localhost"]
         localhost = False
-        print("{}Try localhost host".format(INFO))
+        print("\033[36m Try localhost host \033[0m")
         print(LINE)
         for lt in list_test:
             header = {"Host": lt}
             try:
-                req = requests.get(url, headers=header, verify=False, timeout=10)
+                req = requests.get(url, headers=header, verify=False, timeout=8)
                 if req.status_code == 200:
                     print(" {} You can potentialy try bf directories with this option '-H \"Host:{}\"' ".format(PLUS, lt))
                     localhost = True
@@ -190,17 +189,18 @@ class before_start:
         check_ip:
         Check the host ip if this webpage is different or not
         """
-        print("{}Check Vhosts misconfiguration".format(INFO))
+        print("\033[36m Check Vhosts misconfiguration \033[0m")
         print(LINE)
         try:
-            req_index = requests.get(url, verify=False, headers={"User-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"})
+            req_index = requests.get(url, verify=False, timeout=5)
             len_index = len(req_index.content)
             retrieve_ip = False
             dom = socket.gethostbyname(domain)
-            ips = ["https://{}/".format(dom), "http://{}/".format(dom), "http://www2.{}/".format(domain), "http://www3.{}/".format(domain)]
+            ips = ["https://{}/".format(dom), "http://{}/".format(dom), "http://www2.{}/".format(domain), "http://www3.{}/".format(domain), "https://www2.{}/".format(domain),
+            "https://www3.{}/".format(domain)]
             for ip in ips:
                 try:
-                    req_ip = requests.get(ip, verify=False, timeout=6)
+                    req_ip = requests.get(ip, verify=False, timeout=5)
                     if req_ip.status_code not in [404, 403, 425, 503, 500, 400] and len(req_ip.content) != len_index:
                         retrieve_ip = True
                         print(" {} The host IP seem to be different, check it: {} ".format(PLUS, ip))
@@ -214,12 +214,13 @@ class before_start:
 
 
     def check_backup_domain(self, domain, url):
-        print("{}Check domain backup".format(INFO))
+        print("\033[36m Check domain backup \033[0m")
         print(LINE)
         backup_dn_ext = ["zip", "rar", "iso", "tar", "gz", "tgz", "tar.gz", "7z", "jar"]
         found_bdn = False
+        len_response = 0
         try:
-            req_index = requests.get(url, verify=False, timeout=6, headers={"User-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"})
+            req_index = requests.get(url, verify=False, timeout=6)
             len_index = len(req_index.content)
             domain = domain.split('.')[1] if len(domain.split('.')) > 2 else domain.split('.')[0]
             print("{}List of backup extension for domain {}: {}\nExemple: {}{}.zip\n".format(INFO, domain, backup_dn_ext, url, domain.split('.')[0]))
@@ -228,8 +229,10 @@ class before_start:
                 try:
                     req_dn_ext = requests.get(url_dn_ext, verify=False, timeout=6)
                     if req_dn_ext.status_code not in [404, 403, 401, 500, 400, 425] and len(req_dn_ext.content) not in range(len_index - 10, len_index + 10):
-                        print(" {} {} found ({}b)".format(PLUS, url_dn_ext, len(req_dn_ext.text)))
-                        found_bdn = True
+                        if len(req_dn_ext.content) not in range(len_response - 10, len_response + 10):
+                            print(" {} {} found ({}b)".format(PLUS, url_dn_ext, len(req_dn_ext.text)))
+                            len_response = len(req_dn_ext.content)
+                            found_bdn = True
                 except:
                     pass
         except:
@@ -245,7 +248,7 @@ class before_start:
         Test_timeout: just a little function for test if the connection is good or not
         """
         try:
-            req_timeout = requests.get(url, timeout=30, verify=False, headers={"User-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"})
+            req_timeout = requests.get(url, timeout=30, verify=False)
         except Timeout:
             print("{}Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(WARNING))
             time.sleep(180)

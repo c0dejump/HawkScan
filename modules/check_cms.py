@@ -12,12 +12,12 @@ class check_cms:
         CMS:
         Detect if the website use a CMS
         """
-        print(INFO + "CMS")
+        print("\033[36m CMS \033[0m")
         print(LINE)
         try:
             whatscms_url = "https://whatcms.org/APIEndpoint/Detect?key=1481ff2f874c4942a734d9c499c22b6d8533007dd1f7005c586ea04efab2a3277cc8f2&url={}".format(url)
             req = requests.get(whatscms_url, timeout=1, allow_redirects=False, verify=False)
-            if "Not Found" in req.text:
+            if "Not Found" in req.text or "Theme not detected" in req.text:
                 with open(directory + "/cms.txt", "w+") as cms_write:
                     cms_write.write("this website does not seem to use a CMS")
                 print(" {} This website does not seem to use a CMS \n".format(LESS))
@@ -56,7 +56,7 @@ class check_cms:
             if 'WordPress' in req.text:
                 version =  v.replace('.','')
                 site = "https://wpvulndb.com/wordpresses/{}".format(version)
-                req = requests.get(site)
+                req = requests.get(site, verify=False)
                 soup = BeautifulSoup(req.text, "html.parser")
                 search = soup.find_all('tr')
                 if search:
@@ -69,7 +69,7 @@ class check_cms:
         elif 'WordPress' in req.text:
             version =  v.replace('.','')
             site = "https://wpvulndb.com/wordpresses/{}".format(version)
-            req = requests.get(site)
+            req = requests.get(site, verify=False)
             soup = BeautifulSoup(req.text, "html.parser")
             search = soup.find_all('tr')
             if search:

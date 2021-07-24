@@ -62,6 +62,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [~] Multiple output (csv, json...) [P1] [In progress]
  - [ ] Better thread management [P1]
  - [ ] Push results into DB [P1]
+ - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder [P2]
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) [P2]
  - [ ] cse google search (buckets...) [P2]
  - [ ] Prefix filename (old_, copy of...) [P2]
@@ -85,13 +86,13 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 ``` 
 > General:
     -u URL                URL to scan [required]
-    -t THREAD             Number of threads to use for URL Fuzzing. Default: 20
+    -t THREAD             Number of threads to use for URL Fuzzing. Default: 30
     --exclude EXCLUDE [EXCLUDE ...] Exclude page, response code, response size. (Exemples: --exclude 500,337b)   
     --auto                Automatic threads depending response to website. Max: 30
     --update              For automatic update
 
 > Wordlist Settings:
-    -w WORDLIST           Wordlist used for Fuzzing the desired webite. Default: dico.txt     
+    -w WORDLIST           Wordlist used for Fuzzing the desired webite. Default: dichawk.txt     
     -b                    Adding prefix/suffix backup extensions during the scan. (Exemples: exemple.com/~ex/, exemple.com/ex.php.bak...) beware, take more longer
     -p PREFIX             Add prefix in wordlist to scan
 
@@ -160,5 +161,3 @@ This script use "WafW00f" to detect the WAF in the first step (https://github.co
 This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Sublist3r)
 
 This script use "waybacktool" to check in waybackmachine (https://github.com/Rhynorater/waybacktool)
-
-This script use "degoogle" to check google dork queries (https://github.com/deepseagirl/degoogle)

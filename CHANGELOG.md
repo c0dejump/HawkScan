@@ -1,22 +1,37 @@
 Changelog:
 ----------
 
+- 1.8.6
+---------
+	Fixed:	 Any bugs: Thread modification, header parameters, bypass forbidden & any others...
+	Added: 	 google module in requirements/setup
+	Updated: Deleted degoogle modules/script, google dork works now with the "googlesearch" module
+	Updated: A little style modification
+	Updated: Default thread now 30
+---------
+
+- 1.8.5:
+---------
+	Added: 	A new restriction bypass feature, that test "post,put,patch & option" requests methods on a restriction page
+	Fixed: 	The little style display problems
+---------
+
 - 1.8.4
 ---------
-	Fixed: Better display of live lines
-	Added: A new file to manage the modules to launches
+	Fixed: 	Better display of live lines
+	Added: 	A new file to manage the modules to launches
 ---------
 
 - 1.8.3
 ---------
-	Fixed: Bug in socketio module
-	Fixed: Add size bytes during th error scan
-	Added: Words in wordlist
+	Fixed: 	Bug in socketio module
+	Fixed: 	Add size bytes during th error scan
+	Added: 	Words in wordlist
 ---------
 
 - 1.8.2
 ---------
-	Updated:  New logo made by Cyber_Ph4ntoM
+	Updated: New logo made by Cyber_Ph4ntoM
 	Updated:  Code review
 	Updated:  Add multiple words in dichawk.txt
 ---------

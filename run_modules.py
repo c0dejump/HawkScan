@@ -14,6 +14,10 @@ class check_modules:
 
         checkCms = check_cms()
         checkSocketio = check_socketio()
+        prescan = False
+        if prescan:
+            dw = detect_wafw00f(url, directory, thread)
+            pre_scan(dw, url)
 
         beforeStart.get_header(url, directory)
         beforeStart.get_dns(url, directory)
@@ -21,8 +25,6 @@ class check_modules:
         if result:
             checkCms.cve_cms(result, v)
         dw = detect_wafw00f(url, directory, thread)
-        if dw:
-            thread = dw
         beforeStart.wayback_check(dire, directory)
         beforeStart.gitpast(url)
         beforeStart.firebaseio(url)
@@ -31,5 +33,7 @@ class check_modules:
         beforeStart.check_vhost(dire, url)
         beforeStart.check_backup_domain(dire, url)
         checkSocketio.main_socketio(url)
+        if dw:
+            return dw
 
         ########## Personal modules ##########

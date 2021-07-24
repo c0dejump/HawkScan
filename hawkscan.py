@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = '1.8.4'
+__version__ = '1.8.6'
 __program__ = 'HawkScan'
 __author__ = 'https://github.com/c0dejump'
 
@@ -29,21 +29,17 @@ import threading
 from threading import Thread
 from fake_useragent import UserAgent
 from report.creat_report import create_report
-#from report.creat_report_test import create_report_test
 from modules.detect_waf import verify_waf
 from modules.before_run import before_start
 from modules.parsing_html import parsing_html
-#from modules.check_cms import check_cms
 from modules.bypass_waf import bypass_waf
 from modules.manage_dir import manage_dir
 from modules.bypass_forbidden import bypass_forbidden
-#from modules.google_dorks import query_dork
 from modules.banner import banner
 from modules.check_subdomain import subdomain
 from modules.terminal_size import terminal_size
 from modules.output import multiple_outputs
 from modules.resume import resume_options
-#from modules.check_socketio import check_socketio
 from modules.send_notify import notify_scan_completed
 from modules.auto_update import auto_update
 from run_modules import check_modules
@@ -55,6 +51,7 @@ except:
     enclosure_queue = Queue.Queue()
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':ADH-AES128-SHA256'
 
 rec_list = []
 #list to append url and then recursif scan
@@ -123,7 +120,7 @@ class filterManager:
         """
         req_bytes = len(req.content)
         exclude_bytes = "[{} bytes]".format(req_bytes)
-        filterM = filterManager()
+        #filterM = filterManager()
         list_exclude = {}
         for l_exclude in req_p:
             list_exclude[l_exclude] = False
@@ -132,11 +129,11 @@ class filterManager:
             try:
                 if int(m_exclude):
                     #print(m_exclude)
-                    check_code = filterM.check_exclude_code(res, req, directory, HOUR, parsing, multiple=True)
+                    check_code = self.check_exclude_code(res, req, directory, HOUR, parsing, multiple=True)
                     if check_code:
                         list_exclude[m_exclude] = True
             except:
-                check_page = filterM.check_exclude_page(req, res, directory, forbi, HOUR, parsing, size_bytes, multiple=m_exclude)
+                check_page = self.check_exclude_page(req, res, directory, forbi, HOUR, parsing, size_bytes, multiple=m_exclude)
                 if check_page:
                     list_exclude[m_exclude] = True
         #print(list_exclude)
@@ -293,7 +290,6 @@ class runFuzzing:
         - backup_ext()
         - mail()
         """
-        rf = runFuzzing()
         filterM = filterManager()
         s = requests.session()
         s.verify=False
@@ -344,16 +340,8 @@ class runFuzzing:
                                 tested_bypass = True
                             elif try_bypass_waf and type(try_bypass_waf) is not bool:
                                 user_agent.update(try_bypass_waf)
-                        waf_score += 1
                         time_bool = True
-                        if waf_score == 2:
-                            waf_score = 0
-                            if thread_count != 1:
-                                thread_count += 1
-                                stop_add_thread = True
-                                print("{}Auto-reconfig scan to prevent the WAF".format(WAF))
-                                manager.stop_thread()
-                            #TODO: potentialy use TOR (apt install tor, pip install torrequest) for next requests after that.
+                        #TODO: if waf_score == X: manager.stop_thread() & re-create with the bypass or potentialy use TOR (apt install tor, pip install torrequest) for next requests after that.
                         #pass
                     if backup:
                         hidden_dir(res, user_agent, directory, forbi, get_date(), filterM)
@@ -526,7 +514,7 @@ class runFuzzing:
                             #errors = manager.error_check() #TODO
                             #error_bool = True
                 except Timeout:
-                    errors_n = rf.test_errors
+                    errors_n =self.test_errors
                     #traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
@@ -536,14 +524,14 @@ class runFuzzing:
                     #traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
-                    errors_n = rf.test_errors
+                    errors_n = self.test_errors
                     #errors = manager.error_check()#TODO
                     #error_bool = True
                 q.task_done()
             except Exception:
-                errors_n = rf.test_errors
+                errors_n = self.test_errors
                 #traceback.print_exc() #DEBUG
-                pass
+                q.task_done()
             if time_bool: #if a waf detected, stop for any seconds
                 while time_i != 0:
                     time_i -= 1
@@ -876,7 +864,7 @@ def scan_error(directory, forbi):
                     pass
                     #traceback.print_exc()
                 sys.stdout.write("\033[34m[i] {}\033[0m\r".format(error_link))
-                sys.stdout.flush()
+                if len(error_link) > 6: sys.stdout.write("\033[K")
             if errors_stat == False:
                 print("{} Nothing error error need to be fixed".format(PLUS))
         os.system("rm {}".format(path_error))
@@ -916,8 +904,12 @@ def defined_thread(thread, i, score_next):
 def defined_connect(s, res, user_agent=False, header_parsed=False):
     allow_redirection = True if stat == 301 or stat == 302 or redirect else False
     authent = (auth.split(":")[0], auth.split(":")[1]) if auth else False
-
-    header = header_parsed if header_parsed else user_agent
+    if header_parsed:
+        for h in header_parsed:
+            for u in user_agent:
+                header = {"{}".format(h):"{}".format(header_parsed[h]), "{}".format(u):"{}".format(user_agent[u])}
+    else:
+        header = user_agent
 
     JS_error = ["You need to enable JavaScript to run this app", "JavaScript Required", "without JavaScript enabled",
     "This website requires JavaScript", "Please enable JavaScript", "Loading"]
@@ -951,7 +943,7 @@ def Progress(numbers, len_w, thread_count, nLine, page, percentage, tw):
         if len(page) > 6: sys.stdout.write("\033[K") #clear line 
     else:
         per = percentage(numbers+nLine, len_w)*thread
-        sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | {4}\033[0m\r".format(per, numbers*thread_count+nLine, len_w, thread_count, page))
+        sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | {4}\033[0m\r".format(per, numbers*thread_count+nLine, len_w, thread_count, page if len(page) < 70 else page.split("/")[-3:-1]))
         if len(page) > 6: sys.stdout.write("\033[K") #clear line 
 
 
@@ -1072,7 +1064,9 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
         os.makedirs(directory) if not force_first_step else os.makedirs(directory) # creat the dir
         os.makedirs(directory+"/output/") if not force_first_step else os.makedirs("sites/{}/output/".format(directory))
 
-        ram.run_all_modules(beforeStart, url, directory, dire, thread) # Run all modules
+        mods = ram.run_all_modules(beforeStart, url, directory, dire, thread) # Run all modules
+        if mods:
+            thread = mods
 
         start_scan(subdomains, r, stat, directory, u_agent, thread, manageDir, header_, forbi)
     else:
@@ -1093,11 +1087,11 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
 if __name__ == '__main__':
     #arguments
     parser = argparse.ArgumentParser(add_help = True)
-    parser = argparse.ArgumentParser(description='\033[32m Version 1.8.3 | contact: https://twitter.com/c0dejump\033[0m')
+    parser = argparse.ArgumentParser(description='\033[32m Version 1.8.6 | contact: https://twitter.com/c0dejump\033[0m')
 
     group = parser.add_argument_group('\033[34m> General\033[0m')
     group.add_argument("-u", help="URL to scan \033[31m[required]\033[0m", dest='url')
-    group.add_argument("-t", help="Number of threads to use for URL Fuzzing. \033[32mDefault: 20\033[0m", dest='thread', type=int, default=20, required=False)
+    group.add_argument("-t", help="Number of threads to use for URL Fuzzing. \033[32mDefault: 20\033[0m", dest='thread', type=int, default=30, required=False)
     group.add_argument("--exclude", help="Exclude page, response code, response size. \033[33m(Exemples: --exclude 500,337b)\033[0m", required=False, dest="exclude", nargs="+")
     group.add_argument("--auto", help="Automatic threads depending response to website. Max: 30 \033[33m(In progress...)\033[0m", required=False, dest="auto", action='store_true')
     group.add_argument("--update", help="For automatic update", required=False, dest="update", action='store_true')
@@ -1113,6 +1107,7 @@ if __name__ == '__main__':
     group.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
     group.add_argument("--auth", help="HTTP authentification. \033[33m(Exemples: --auth admin:admin)\033[0m", required=False, dest="auth")
     group.add_argument("--timesleep", help="To define a timesleep/rate-limit if app is unstable during scan.", required=False, dest="ts", type=float, default=0)
+    group.add_argument("--proxie", help="Defined a proxies during scan \033[33m(Exemples: --proxie http,localhost)\033[0m", required=False, dest="proxie")
 
     group = parser.add_argument_group('\033[34m> Tips\033[0m')
     group.add_argument("-r", help="Recursive dir/files", required=False, dest="recursif", action='store_true')
@@ -1145,6 +1140,7 @@ if __name__ == '__main__':
     auth = results.auth
     force_first_step = results.force_first_step
     notify = results.notify
+    proxie = results.proxie
 
     if len(sys.argv) < 2:
         print("{}URL target is missing, try using -u <url> or -h for help".format(INFO))
@@ -1188,6 +1184,6 @@ if __name__ == '__main__':
     stat = r.status_code
     if backup is not None:
         bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
-    resume_options(url, thread, wordlist, recur, redirect, js, exclude, backup=False if backup == None else bckp)
+    resume_options(url, thread, wordlist, recur, redirect, js, exclude, header=False if header_ == None else header_, backup=False if backup == None else bckp)
     print(LINE)
     create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart)

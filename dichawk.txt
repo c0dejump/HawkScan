@@ -1,6 +1,7 @@
 ?
 *
 :
+robots.txt
 ?wsdl
 ws
 ws/
@@ -10,7 +11,6 @@ ws/
 ;/..;/
 ;/..;/manager
 %3F.jsp
-robots.txt
 maint.html
 koolix/
 koolix
@@ -604,6 +604,7 @@ config/deploy.rb
 config/production.rb
 config/services.yaml
 config/services.xml
+config/services.php
 accueil/
 modman
 usercontrols/
@@ -796,6 +797,8 @@ Creatives/
 D/
 DEMO/
 Default/
+default/default.settings.php
+default/settings.php
 Demo/
 default.settings.php
 default.services.yml
@@ -1133,6 +1136,7 @@ api/GetUserV1
 api/GetUserV2
 api/GetUserVBeta
 api/debug
+api/.env
 api.prod
 aplicacion/
 apollo/
@@ -5138,6 +5142,8 @@ config.asp
 .empty-folder
 .env
 .env.laradock
+.env.test
+.env.test.local
 vendor/.env
 lib/.env
 lab/.env
@@ -8088,6 +8094,8 @@ docker-compose-dev.yml
 docker-compose-local.yml
 docker-compose.yml
 docker-composer.yml
+docker_configs/supervisord.conf
+docker_configs/default.conf
 Dockerfile
 docs
 docs/CHANGELOG.html
@@ -9931,6 +9939,8 @@ phpunit
 phpunit.phar
 phpunit.xml
 phpunit.xml.dist
+travis.phpunit.xml.dist
+travis.phpunit.xml
 phymyadmin
 phymyadmin/
 physican/login.do
@@ -10463,6 +10473,8 @@ sites.xml
 sites/default/files/
 sites/default/
 sites/default/private
+sites/default/settings.php
+sites/default/default.settings.php
 sites/all/libraries/fckeditor
 sites/all/modules/fckeditor
 Sites/Knowledge/Membership/Inspired/ViewCode.%EXT%
@@ -10890,6 +10902,7 @@ tips
 title
 TMP
 tmp
+tmp/users.txt
 tmp/
 tmp/2.php
 tmp/access.log
