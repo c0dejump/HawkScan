@@ -15,10 +15,13 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
 
 # News
-    **!** Fixed: Bug with the live scan lines
-    **!** Added: A new file to manage the modules to launches
-    **!** Added: Words in wordlist      
-*(for more details go on CHANGELOG.md)*   
+    Fixed bugs
+    Added google module in requirements/setup
+    Deleted degoogle modules/script, google dork works now with the "googlesearch" module
+    Updated a little style modification and fixed the line display bug
+    Default thread now 30
+    Added new restriction bypass feature, that test "post,put,patch & option" requests methods on a restriction page
+*(for more details go on CHANGELOG.md)* 
  
 # Installation
 ``` 
