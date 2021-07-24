@@ -27,7 +27,7 @@ def detect_wafw00f(url, directory, thread):
         print(LINE)
         if detect:
             print(" {}{}".format(WARNING, message))
-            if thread >= 40:
+            if thread >= 30:
                 confirm_thread = input(" {} This website have a waf, are you sure to use {} threads ? [y:n] ".format(WARNING, thread))
                 if confirm_thread == "y" or confirm_thread == "Y":
                     print(LINE)
