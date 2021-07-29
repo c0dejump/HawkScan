@@ -661,6 +661,7 @@ modules/
 themes/
 backup/
 backup.sql
+hsqldb/
 hsqldb;
 hsqldb
 hsqldb%0a
@@ -5168,6 +5169,10 @@ tools/.env
 v1/.env
 administrator/.env
 laravel/.env
+vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+laravel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+laravel/vendor/phpunit/src/Util/PHP/eval-stdin.php
+vendor/phpunit/src/Util/PHP/eval-stdin.php
 .env.php
 .env.sample.php
 .environment
@@ -8707,6 +8712,7 @@ include/fckeditor/
 include_admin.%EXT%
 includes
 includes/adovbs.inc
+includes/init.inc.php
 includes/configure.php~
 includes/fckeditor/editor/filemanager/browser/default/connectors/asp/connector.asp
 includes/fckeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx
@@ -10584,6 +10590,8 @@ sshadmin/
 ssl_admin
 ssodad
 SSODAD
+ssp
+simplesamlphp
 sspadmin
 sswadmin
 stadmin
@@ -10868,6 +10876,7 @@ testimonials
 testing
 testproxy.php
 tests/phpunit_report.xml
+UnitTests
 testweb
 text
 text-base/etc/passwd
@@ -11186,6 +11195,7 @@ var/mysql.log
 var/run/utmp
 vftpd
 var/spool/cron/crontabs/root
+miniserv.conf
 var/webmin/miniserv.log
 var/www/log/access_log
 var/www/log/error_log
@@ -12777,6 +12787,7 @@ io.asp
 inline.php
 init.php
 init.do
+init.d
 info.inc.php
 index.tpl
 index.js

@@ -371,13 +371,13 @@ class runFuzzing:
                             if "robots.txt" in res.split("/")[3:]:
                                 print("{} {} {}".format(get_date(), PLUS, res))
                                 for r in req.text.split("\n"):
-                                    print("\t\u251c {}\r".format(r))
+                                    print("\t\u251c {}".format(r))
                             if js:
                                 #try to found js keyword
                                 parsing.get_javascript(res, req)
                             # dl files and calcul size
                             download_file = dl(res, req, directory)
-                            print("{} {} {:<15} {:<15}\r".format(get_date(), PLUS, bytes_len, display_res))
+                            print("{} {} {:<15} {:<15}".format(get_date(), PLUS, bytes_len, display_res))
                             output_scan(directory, res, len_req, stats=200)
                             #check backup
                             create_backup(res, directory, forbi)
@@ -395,7 +395,7 @@ class runFuzzing:
                         if 'sitemap.xml' in res:
                             parsing.sitemap(req, directory)
                         parsing.search_s3(res, req, directory)
-                    elif status_link in [401, 403] and not forced:
+                    elif status_link in [401, 403]:
                         #pass
                         if type(req_p) == list and len(req_p) > 1:
                             filterM.check_multiple(req, res, directory, forbi, get_date(), parsing)
@@ -414,14 +414,14 @@ class runFuzzing:
                                 #report.create_report_url(status_link, res, directory)
                             if not forced:
                                 forbi = True
-                                print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m\r".format(get_date(), FORBI, bytes_len, display_res, status_link))
+                                print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m".format(get_date(), FORBI, bytes_len, display_res, status_link))
                                 create_backup(res, directory, forbi)
                                 output_scan(directory, res, len_req, stats=403)
                                 #report.create_report_url(status_link, res, directory)
                             elif not forced and recur:
                                 pass
                             else:
-                                print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m\r".format(get_date(), FORBI, bytes_len, display_res, status_link))
+                                print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m".format(get_date(), FORBI, bytes_len, display_res, status_link))
                                 output_scan(directory, res, len_req, stats=403)
                                 #pass
                     elif status_link == 404:
@@ -437,7 +437,7 @@ class runFuzzing:
                                 #print(req)
                                 filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                         else:
-                            print("{} {} {:<15} {:<15} [405] \r".format(get_date(), INFO, bytes_len, display_res))
+                            print("{} {} {:<15} {:<15} [405]".format(get_date(), INFO, bytes_len, display_res))
                         #report.create_report_url(status_link, res, directory)
                     elif status_link == 301:
                         if redirect:
@@ -463,12 +463,12 @@ class runFuzzing:
                                 else:
                                     filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                             else:                
-                                print("{} {} {}\033[33m => {}\033[0m 302 Moved Temporarily\r".format(get_date(), LESS, display_res, redirect_link))
+                                print("{} {} {}\033[33m => {}\033[0m 302 Moved Temporarily".format(get_date(), LESS, display_res, redirect_link))
                                 parsing.search_s3(res, req, directory)
                                 output_scan(directory, res, len_req, stats=302)
                                 #report.create_report_url(status_link, res, directory) #TODO
                     elif status_link == 304:
-                        print("{}\033[33m[+] \033[0m {}\033[33m 304 Not modified \033[0m\r".format(get_date(), display_res))
+                        print("{}\033[33m[+] \033[0m {}\033[33m 304 Not modified \033[0m".format(get_date(), display_res))
                         parsing.search_s3(res, req, directory)
                         #report.create_report_url(status_link, res, directory) #TODO                
                     elif status_link in [307, 308]:
@@ -484,7 +484,7 @@ class runFuzzing:
                                 filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                         else:                
                             server_error = "400" if status_link == 400 else "500"
-                            print("{} {} {:<15} {:<15} \033[33m{} Server Error\033[0m\r".format(get_date(), SERV_ERR, bytes_len, display_res, server_error))
+                            print("{} {} {:<15} {:<15} \033[33m{} Server Error\033[0m".format(get_date(), SERV_ERR, bytes_len, display_res, server_error))
                             output_scan(directory, res, len_req, stats=status_link)
                     elif status_link in [422, 423, 424, 425]:
                         print("{} {} {} \033[33mError WebDAV\033[0m\r".format(get_date(), LESS, res if tw > 110 else page))
@@ -864,7 +864,7 @@ def scan_error(directory, forbi):
                     pass
                     #traceback.print_exc()
                 sys.stdout.write("\033[34m[i] {}\033[0m\r".format(error_link))
-                if len(error_link) > 6: sys.stdout.write("\033[K")
+                sys.stdout.write("\033[K")
             if errors_stat == False:
                 print("{} Nothing error error need to be fixed".format(PLUS))
         os.system("rm {}".format(path_error))
@@ -940,11 +940,11 @@ def Progress(numbers, len_w, thread_count, nLine, page, percentage, tw):
     """
     if tw < 110:
         sys.stdout.write("\033[34m {0}/{1} | {2}\033[0m\r".format(numbers*thread_count+nLine, len_w, page))
-        if len(page) > 6: sys.stdout.write("\033[K") #clear line 
+        sys.stdout.write("\033[K") #clear line 
     else:
         per = percentage(numbers+nLine, len_w)*thread
         sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | {4}\033[0m\r".format(per, numbers*thread_count+nLine, len_w, thread_count, page if len(page) < 70 else page.split("/")[-3:-1]))
-        if len(page) > 6: sys.stdout.write("\033[K") #clear line 
+        sys.stdout.write("\033[K") #clear line 
 
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):
@@ -1179,7 +1179,7 @@ if __name__ == '__main__':
             req_exclude = requests.get(exclude[0], verify=False)
             req_p = req_exclude.text
     beforeStart = before_start()        
-    beforeStart.test_timeout(url)
+    beforeStart.test_timeout(url, first=True)
     r = requests.get(url, allow_redirects=False, verify=False, timeout=6)
     stat = r.status_code
     if backup is not None:
