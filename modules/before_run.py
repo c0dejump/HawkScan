@@ -133,7 +133,8 @@ class before_start:
         try:
             os.system('python3 tools/waybacktool/waybacktool.py pull --host {} | python3 tools/waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
         except Exception:
-            traceback.print_exc()
+            pass
+            #traceback.print_exc()
         try:
             statinfo = os.path.getsize(directory + "/wayback.txt")
         except:
@@ -243,7 +244,7 @@ class before_start:
 
 
 
-    def test_timeout(self, url):
+    def test_timeout(self, url, first=False):
         """
         Test_timeout: just a little function for test if the connection is good or not
         """
@@ -251,6 +252,13 @@ class before_start:
             req_timeout = requests.get(url, timeout=30, verify=False)
         except Timeout:
             print("{}Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(WARNING))
-            time.sleep(180)
+            if first:
+                next_step = input("Do you want continue ?: [y:N] ")
+                if next_step in ["y", "Y"]:
+                    pass
+                else:
+                    sys.exit()
+            else:
+                time.sleep(180)
         except requests.exceptions.ConnectionError:
             pass
