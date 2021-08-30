@@ -1,9 +1,12 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = '1.8.6'
+__version__ = '1.9'
 __program__ = 'HawkScan'
-__author__ = 'https://github.com/c0dejump'
+__author__ = 'codejump'
+__twitter__ = 'https://twitter.com/c0dejump'
+__projects__ = 'https://github.com/c0dejump'
+
 
 #modules in standard library
 import requests
@@ -273,12 +276,7 @@ class runFuzzing:
     Run fuzzing of webpage
     functions:
     - tryUrl
-    - test_errors
     """
-    error_score = 0
-
-    def test_errors(self):
-        error_score += 1
 
     def tryUrl(self, i, q, threads, manager=False, directory=False, forced=False, u_agent=False, nLine=False):
         """
@@ -290,6 +288,12 @@ class runFuzzing:
         - backup_ext()
         - mail()
         """
+        global n
+        n = 0
+
+        global n_error
+        n_error = 0
+
         filterM = filterManager()
         s = requests.session()
         s.verify=False
@@ -305,6 +309,7 @@ class runFuzzing:
         error_bool = False
         tested_bypass = False
         for numbers in range(len_w):
+            n += 1
             thread_count = threading.active_count() - 1
             res = q.get()
             page = "/".join(res.split("/")[3:])
@@ -514,7 +519,7 @@ class runFuzzing:
                             #errors = manager.error_check() #TODO
                             #error_bool = True
                 except Timeout:
-                    errors_n =self.test_errors
+                    n_error += 1
                     #traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
@@ -524,12 +529,12 @@ class runFuzzing:
                     #traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
-                    errors_n = self.test_errors
+                    n_error += 1
                     #errors = manager.error_check()#TODO
                     #error_bool = True
                 q.task_done()
             except Exception:
-                errors_n = self.test_errors
+                n_error += 1
                 #traceback.print_exc() #DEBUG
                 q.task_done()
             if time_bool: #if a waf detected, stop for any seconds
@@ -539,11 +544,7 @@ class runFuzzing:
                 time_i = 60
                 time_bool = False
             else:
-                """try:
-                    print("Error: {}".format(error_score))
-                except:
-                    print("Error: 0")"""
-                Progress(numbers, len_w, thread_count, nLine, page, percentage, tw)
+                Progress(len_w, thread_count, nLine, page, percentage, tw)
 
 
 def status(r, stat, directory, u_agent, thread, manageDir):
@@ -687,7 +688,12 @@ def output_scan(directory, res, size_res, stats):
     """
     mo = multiple_outputs()
     directory = output if output else directory
-    mo.raw_output(directory, res, stats, size_res)
+    if output_type == "csv":
+        mo.csv_output(directory, res, stats, size_res)
+    elif output_type == "json":
+        mo.json_output(directory, res, stats, size_res)
+    else:
+        mo.raw_output(directory, res, stats, size_res)
 
 
 
@@ -934,16 +940,16 @@ def get_date():
 
 
 
-def Progress(numbers, len_w, thread_count, nLine, page, percentage, tw):
+def Progress(len_w, thread_count, nLine, page, percentage, tw):
     """
     Progress: just a function to print the scan progress
     """
     if tw < 110:
-        sys.stdout.write("\033[34m {0}/{1} | {2}\033[0m\r".format(numbers*thread_count+nLine, len_w, page))
+        sys.stdout.write("\033[34m {0}/{1} | Errors: {2} | {3}\033[0m\r".format(n, len_w, n_error, page))
         sys.stdout.write("\033[K") #clear line 
     else:
-        per = percentage(numbers+nLine, len_w)*thread
-        sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | {4}\033[0m\r".format(per, numbers*thread_count+nLine, len_w, thread_count, page if len(page) < 70 else page.split("/")[-3:-1]))
+        per = percentage(n+nLine, len_w)
+        sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | Errors: {4} | {5}\033[0m\r".format(per, n+nLine, len_w, thread_count, n_error, page if len(page) < 70 else page.split("/")[-3:-1]))
         sys.stdout.write("\033[K") #clear line 
 
 
@@ -961,15 +967,19 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
     with open(wordlist, "r") as payload:
         links = payload.read().splitlines()
     state = links[nLine:] if nLine else links # For restar from the last line found in the dico
-    for link in state:
-        link_url = url + prefix + link if prefix else url + link #url/prefix-words or url/words
-        enclosure_queue.put(link_url)
-    manager = ThreadManager(enclosure_queue)
-    for i in range(threads):
-        worker = Thread(target=runFuzz.tryUrl, args=(i, enclosure_queue, threads, manager, directory, forced, u_agent, nLine))
-        worker.setDaemon(True)
-        worker.start()
-    enclosure_queue.join()
+    try:
+        for link in state:
+            link_url = url + prefix + link if prefix else url + link #url/prefix-words or url/words
+            enclosure_queue.put(link_url)
+        manager = ThreadManager(enclosure_queue)
+        for i in range(threads):
+            worker = Thread(target=runFuzz.tryUrl, args=(i, enclosure_queue, threads, manager, directory, forced, u_agent, nLine))
+            worker.setDaemon(True)
+            worker.start()
+        enclosure_queue.join()
+    except:
+        print(" {}Canceled by keyboard interrupt (Ctrl-C)".format(WARNING))
+        sys.exit()
     """
         Recursif: For recursif scan
     """
@@ -1087,7 +1097,7 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
 if __name__ == '__main__':
     #arguments
     parser = argparse.ArgumentParser(add_help = True)
-    parser = argparse.ArgumentParser(description='\033[32m Version 1.8.6 | contact: https://twitter.com/c0dejump\033[0m')
+    parser = argparse.ArgumentParser(description='\033[32m Version 1.9 | contact: https://twitter.com/c0dejump\033[0m')
 
     group = parser.add_argument_group('\033[34m> General\033[0m')
     group.add_argument("-u", help="URL to scan \033[31m[required]\033[0m", dest='url')
@@ -1118,6 +1128,7 @@ if __name__ == '__main__':
 
     group = parser.add_argument_group('\033[34m> Export Settings\033[0m')
     group.add_argument("-o", help="Output to site_scan.txt (default in website directory)", required=False, dest="output")
+    group.add_argument("-of", help="Output file format. Available formats: json, csv, txt ", required=False, dest="output_type")
 
     results = parser.parse_args()
                                      
@@ -1130,6 +1141,7 @@ if __name__ == '__main__':
     recur = results.recursif
     prefix = results.prefix
     output = results.output
+    output_type = results.output_type
     backup = results.backup
     header_ = results.header_
     exclude = results.exclude 

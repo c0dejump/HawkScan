@@ -57,14 +57,14 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [x] Check backup domain name (ex: www.domain.com/domain.zip)
  - [x] Check socketio connection
  - [x] Notify when scan completed (Only work on Linux)
+ - [x] Multiple output format. Available formats: json, csv, txt
  
 # TODO 
 **P1 is the most important**
 
  - [~] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))
- - [~] Multiple output (csv, json...) [P1] [In progress]
  - [ ] Better thread management [P1]
- - [ ] Push results into DB [P1]
+ - [ ] Push results into DB [P2]
  - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder [P2]
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) [P2]
  - [ ] cse google search (buckets...) [P2]
@@ -82,7 +82,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
   
 ```
      
-    usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE] [--timesleep TS] [--auto] [--js] [--auth AUTH] [-ffs] [--notify]  
+    usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE] [--timesleep TS] [--auto] [--js] [--auth AUTH] [-ffs] [--notify] [-o OUTPUT] [-of OUTPUT_TYPE]   
  
 ```
 
@@ -114,7 +114,8 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     --notify              For receveid notify when the scan finished (only work on linux)
 
 > Export Settings:                    
-    -o OUTPUT             Output to site_scan.txt (default in website directory)            
+    -o OUTPUT             Output to site_scan.txt (default in website directory)     
+    -of OUTPUT_TYPE       Output file format. Available formats: json, csv, txt           
 ```
 
 # Exemples

@@ -66,7 +66,7 @@ def query_dork(domain, directory):
     for query in queries:
         print("{}{}\n".format(INFO, query))
         try:
-            for j in search(query, tld="com", num=5, stop=5, pause=2.0):
+            for j in search(query, tld="com", num=5, stop=5, pause=2.5):
                 try:
                     req_url_found = requests.get(j, verify=False, timeout=4)
                     if req_url_found.status_code not in [404, 408, 503, 405, 428, 412, 429, 403, 401]:

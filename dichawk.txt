@@ -245,6 +245,8 @@ v2/apis/
 *.log
 .vagrant
 config.public.php
+public.php/webdav
+public.php
 secure_notes/
 groups.xml
 wp-config.php
@@ -1139,6 +1141,7 @@ api/GetUserVBeta
 api/debug
 api/.env
 api.prod
+testapi/
 aplicacion/
 apollo/
 apollo13/
@@ -5145,6 +5148,9 @@ config.asp
 .env.laradock
 .env.test
 .env.test.local
+.env.dev
+api.env
+api/api.env
 vendor/.env
 lib/.env
 lab/.env
@@ -5155,6 +5161,7 @@ core/app/.env
 core/Database/.env
 database/.env
 config/.env
+config/.env.dev
 assets/.env
 app/.env
 apps/.env
@@ -7261,6 +7268,8 @@ awstats/
 awstats
 awstats.old/cgi-bin/awstats.pl
 webstats/awstats.pl
+aws-keys
+aws-keys.bak
 axis2
 axis1/axis1-admin/
 axis2/axis2-admin/
@@ -8102,6 +8111,7 @@ docker-composer.yml
 docker_configs/supervisord.conf
 docker_configs/default.conf
 Dockerfile
+Docker/api/api.env
 docs
 docs/CHANGELOG.html
 docs/changelog.txt
@@ -11441,6 +11451,7 @@ wp-register
 wp-register.php
 wp-rss2
 wp-sitemap-users-1.xml
+wp-signup.php
 wp.php
 wp.rar/
 wp.zip

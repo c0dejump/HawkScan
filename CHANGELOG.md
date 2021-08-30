@@ -1,6 +1,23 @@
 Changelog:
 ----------
 
+- 1.9
+---------
+	Fixed: Fixed percentage & line count bug during scan
+	Added: Display errors number in live during scan 
+---------
+
+- 1.8.8
+---------
+	Added: Output file format function. Available formats: json, csv, txt
+---------
+
+- 1.8.7
+---------
+	Fixed: Reduction of false positives number
+	Added: Header of Hawkscan when your typing "head hawkscan.py"
+---------
+
 - 1.8.6
 ---------
 	Fixed:	 Any bugs: Thread modification, header parameters, bypass forbidden & any others...

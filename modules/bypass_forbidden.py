@@ -14,7 +14,7 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 def post(res): req_p = requests.post(res, verify=False, allow_redirects=False); return req_p.status_code, "post"
 def put(res): req_pt = requests.put(res, verify=False, allow_redirects=False); return req_pt.status_code, "put"
 def patch(res): req_ptch = requests.patch(res, verify=False, allow_redirects=False); return req_ptch.status_code, "patch"
-def options(res): req_o = requests.options(res, verify=False, allow_redirects=False); return req_o.status_code, "options"
+#def options(res): req_o = requests.options(res, verify=False, allow_redirects=False); return req_o.status_code, "options"
 
 def method(res):
 	""" 
@@ -22,14 +22,14 @@ def method(res):
 	Ex: OPTIONS /admin
 	"""
 	result_list = []
-	for funct in [post, put, patch, options]:
+	for funct in [post, put, patch]:
 		try:
 			result_list.append(funct(res))
 		except:
 			pass
 	for rs, type_r in result_list:
-		if rs not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500]:
-			print("{} Forbidden Bypass with this requests type: {}".format(BYP, type_r))
+		if rs not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501]:
+			print("{} Forbidden page {} Bypass with this requests type: {} [{}]".format(BYP, res, type_r, rs))
 
 
 def original_url(res, page, url):
@@ -59,7 +59,7 @@ def IP_authorization(res, url, domain, page):
 			headers = {h : ip}
 			req_ip = requests.get(res, verify=False, headers=headers, allow_redirects=False)
 			if req_ip.status_code not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410]:
-				print("{}[{}] {} Forbidden Bypass with: {}".format(BYP, req_ip.status_code, url+page, header))
+				print("{}[{}] {} Forbidden Bypass with: {}".format(BYP, req_ip.status_code, url+page, headers))
 
 
 def other_bypass(url, page, req_url):
