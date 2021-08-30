@@ -15,12 +15,11 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
 
 # News
-    Fixed bugs
-    Added google module in requirements/setup
-    Deleted degoogle modules/script, google dork works now with the "googlesearch" module
-    Updated a little style modification and fixed the line display bug
-    Default thread now 30
-    Added new restriction bypass feature, that test "post,put,patch & option" requests methods on a restriction page
+    Fixed percentage & line count bug during scan
+    Display errors number in live during scan 
+    Output file format function. Available formats: json, csv, txt
+    Reduction of false positives number
+    Header of Hawkscan when your typing "head hawkscan.py"
 *(for more details go on CHANGELOG.md)* 
  
 # Installation
