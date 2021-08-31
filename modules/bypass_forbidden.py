@@ -47,7 +47,7 @@ def IP_authorization(res, url, domain, page):
 	headers_type = [
 	"X-Originating-IP", "X-Forwarded", "Forwarded", "Forwarded-For", "Forwarded-For-IP", "X-Forwarder-For", "X-Forwarded-For", "X-Forwarded-For-Original",
 	"X-Forwarded-By", "X-Forwarded-Host", "X-Remote-IP", "X-Remote-Addr", "X-Client-IP", "Client-IP", "Access-Control-Allow-Origin", "Origin",
-	"X-Custom-IP-Authorization"
+	"X-Custom-IP-Authorization", "X-Forwarded-For "
 	]
 	try:
 		website_ip = socket.gethostbyname(domain)

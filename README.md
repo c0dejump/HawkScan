@@ -20,6 +20,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     Output file format function. Available formats: json, csv, txt
     Reduction of false positives number
     Header of Hawkscan when your typing "head hawkscan.py"
+    Multiple website scanning
 *(for more details go on CHANGELOG.md)* 
  
 # Installation
@@ -57,6 +58,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [x] Check socketio connection
  - [x] Notify when scan completed (Only work on Linux)
  - [x] Multiple output format. Available formats: json, csv, txt
+ - [x] Multiple website scanning
  
 # TODO 
 **P1 is the most important**
@@ -68,26 +70,24 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) [P2]
  - [ ] cse google search (buckets...) [P2]
  - [ ] Prefix filename (old_, copy of...) [P2]
- - [ ] Multiple website scanning [P2]
  - [ ] Check HTTP headers/ssl security [P3]
  - [ ] Anonymous routing through some proxy (http/s proxy list) [P3]
- - [ ] Check source code and verify leak or sensitive data in the Github [P3]
+ - [ ] Check source code and verify leak or sensitive data in the Github // Other tool ? [P3]
  - [ ] Analyse html code webpage [P3] => really necessary?
- - [ ] Check phpmyadmin version [P3]
  - [ ] Scan API endpoints/informations leaks [ASAP]
- - [ ] Active JS on website 2.0 (full js) + Webengine for MacOS [ASAP]
 
 # Usage
   
 ```
      
-    usage: hawkscan.py [-h] [-u URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE] [--timesleep TS] [--auto] [--js] [--auth AUTH] [-ffs] [--notify] [-o OUTPUT] [-of OUTPUT_TYPE]   
+    usage: hawkscan.py [-h] [-u URL] [-f FILE_URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE] [--timesleep TS] [--auto] [--js] [--auth AUTH] [-ffs] [--notify] [-o OUTPUT] [-of OUTPUT_TYPE]   
  
 ```
 
 ``` 
 > General:
     -u URL                URL to scan [required]
+    -f FILE_URL           file with multiple URLs to scan
     -t THREAD             Number of threads to use for URL Fuzzing. Default: 30
     --exclude EXCLUDE [EXCLUDE ...] Exclude page, response code, response size. (Exemples: --exclude 500,337b)   
     --auto                Automatic threads depending response to website. Max: 30

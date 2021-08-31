@@ -49,10 +49,6 @@ class check_socketio:
 
     def run_socketio(self, url, poutput):
         found_socket = False
-        if poutput:
-            print(LINE)
-            print("\033[36m Check for websockets \033[0m")
-            print(LINE)
         for path in socketio_paths:
             connect = self.connect(url, path)
             if type(connect) == bool and connect == True:
@@ -68,9 +64,9 @@ class check_socketio:
 
 
     def main_socketio(self, url):
+        print("\033[36m Check for websockets \033[0m")
+        print(LINE)
         if "www." in url:
-            print("\033[36m Check for websockets \033[0m")
-            print(LINE)
             urls = []
             urls.append(url)
             urls.append(url.replace("www.", ""))

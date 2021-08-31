@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = '1.9'
+__version__ = '1.9.1'
 __program__ = 'HawkScan'
 __author__ = 'codejump'
 __twitter__ = 'https://twitter.com/c0dejump'
@@ -76,8 +76,6 @@ class ThreadManager:
     """
     workers = []
 
-    errors_score = 0
-
     lock = threading.Lock()
 
     def __init__(self, queue):
@@ -99,12 +97,6 @@ class ThreadManager:
         t, e = self.workers[0]
         e = e.set() # put event to set True for stop thread
         del self.workers[0]
-
-    def error_check(self):
-        #TODO
-        with lock:
-            errors_score += 1
-            return errors_score
 
 
 class filterManager:
@@ -516,26 +508,20 @@ class runFuzzing:
                             #print("{}{}{} 429".format(HOUR, LESS, res))
                     if backup != None:
                         fbackp = backup_ext(s, res, page, directory, forbi, get_date(), parsing, filterM)
-                            #errors = manager.error_check() #TODO
-                            #error_bool = True
                 except Timeout:
                     n_error += 1
                     #traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
-                    #errors = manager.error_check() #TODO
-                    #error_bool = True
                 except Exception:
-                    #traceback.print_exc() #DEBUG
+                    n_error += 1
+                    traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
-                    n_error += 1
-                    #errors = manager.error_check()#TODO
-                    #error_bool = True
                 q.task_done()
             except Exception:
                 n_error += 1
-                #traceback.print_exc() #DEBUG
+                traceback.print_exc() #DEBUG
                 q.task_done()
             if time_bool: #if a waf detected, stop for any seconds
                 while time_i != 0:
@@ -690,8 +676,10 @@ def output_scan(directory, res, size_res, stats):
     directory = output if output else directory
     if output_type == "csv":
         mo.csv_output(directory, res, stats, size_res)
+        mo.raw_output(directory, res, stats, size_res)
     elif output_type == "json":
         mo.json_output(directory, res, stats, size_res)
+        mo.raw_output(directory, res, stats, size_res)
     else:
         mo.raw_output(directory, res, stats, size_res)
 
@@ -969,7 +957,7 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
     state = links[nLine:] if nLine else links # For restar from the last line found in the dico
     try:
         for link in state:
-            link_url = url + prefix + link if prefix else url + link #url/prefix-words or url/words
+            link_url = "{}{}{}".format(url, prefix, link) if prefix else "{}{}".format(url, link) #url/prefix-words or url/words
             enclosure_queue.put(link_url)
         manager = ThreadManager(enclosure_queue)
         for i in range(threads):
@@ -977,8 +965,8 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
             worker.setDaemon(True)
             worker.start()
         enclosure_queue.join()
-    except:
-        print(" {}Canceled by keyboard interrupt (Ctrl-C)".format(WARNING))
+    except KeyboardInterrupt:
+        print(" {}Canceled by keyboard interrupt (Ctrl-C) ".format(INFO))
         sys.exit()
     """
         Recursif: For recursif scan
@@ -989,7 +977,7 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
         i_r = 0
         forced = True
         while i_r < size_rec_list:
-            url_rec = url + rec_list[i_r]
+            url_rec = "{}{}".format(url, rec_list[i_r])
             print("{} Entering in directory: {}".format(INFO, rec_list[i_r]))
             print(LINE)
             with open(wordlist, "r") as payload:
@@ -999,7 +987,7 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
                     worker.setDaemon(True)
                     worker.start()
                 for link in links:
-                    link_url = url + prefix + link if prefix else url + link
+                    link_url = "{}{}{}".format(url, prefix, link) if prefix else "{}{}".format(url, link)
                     enclosure_queue.put(link_url)
                 enclosure_queue.join()
                 i_r = i_r + 1
@@ -1026,6 +1014,7 @@ def start_scan(subdomains, r, stat, directory, u_agent, thread, manageDir, heade
         print("\n{} The report has been created".format(PLUS))
     except:
         print("\n{} An error occurred, the report cannot be created".format(WARNING))
+    print(LINE)
 
 
 
@@ -1094,6 +1083,19 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
         start_scan(subdomains, r, stat, new_directory, u_agent, thread, manageDir, header_, forbi)
 
 
+def main(url):
+    beforeStart = before_start()
+    beforeStart.test_timeout(url, first=True)
+    r = requests.get(url, allow_redirects=False, verify=False, timeout=6)
+    stat = r.status_code
+    if backup is not None:
+        bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
+    resume_options(url, thread, wordlist, recur, redirect, js, exclude, header=False if header_ == None else header_, backup=False if backup == None else bckp)
+    print(LINE)
+    create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart)
+
+
+
 if __name__ == '__main__':
     #arguments
     parser = argparse.ArgumentParser(add_help = True)
@@ -1101,23 +1103,24 @@ if __name__ == '__main__':
 
     group = parser.add_argument_group('\033[34m> General\033[0m')
     group.add_argument("-u", help="URL to scan \033[31m[required]\033[0m", dest='url')
+    group.add_argument("-f", help="file with multiple URLs to scan", dest='file_url', required=False)
     group.add_argument("-t", help="Number of threads to use for URL Fuzzing. \033[32mDefault: 20\033[0m", dest='thread', type=int, default=30, required=False)
-    group.add_argument("--exclude", help="Exclude page, response code, response size. \033[33m(Exemples: --exclude 500,337b)\033[0m", required=False, dest="exclude", nargs="+")
+    group.add_argument("--exclude", help="Exclude page, response code, response size. \033[33mEx: --exclude 500,337b\033[0m", required=False, dest="exclude", nargs="+")
     group.add_argument("--auto", help="Automatic threads depending response to website. Max: 30 \033[33m(In progress...)\033[0m", required=False, dest="auto", action='store_true')
     group.add_argument("--update", help="For automatic update", required=False, dest="update", action='store_true')
 
     group = parser.add_argument_group('\033[34m> Wordlist Settings\033[0m')
     group.add_argument("-w", help="Wordlist used for Fuzzing the desired webite. \033[32mDefault: dichawk.txt\033[0m", dest='wordlist', default="dichawk.txt", required=False)
-    group.add_argument("-b", help="Adding prefix/suffix backup extensions during the scan. \033[33m(Exemples: -b .bak, .old)\033[0m. \033[32mDefault: all extension in config.py\033[0m", required=False, dest="backup", nargs="*", action="store")
+    group.add_argument("-b", help="Adding prefix/suffix backup extensions during the scan. \033[33mEx: -b .bak, .old\033[0m. \033[32mDefault: all extension in config.py\033[0m", required=False, dest="backup", nargs="*", action="store")
     group.add_argument("-p", help="Add prefix in wordlist to scan", required=False, dest="prefix")
 
     group = parser.add_argument_group('\033[34m> Request Settings\033[0m')
-    group.add_argument("-H", help="Modify header. \033[33m(Exemple: -H \"cookie:test\")\033[0m", required=False, dest="header_", type=str)
+    group.add_argument("-H", help="Modify header. \033[33mEx: -H \"cookie:test\"\033[0m", required=False, dest="header_", type=str)
     group.add_argument("-a", help="Choice user-agent. \033[32mDefault: Random\033[0m", dest='user_agent', required=False)
     group.add_argument("--redirect", help="For scan with redirect response (301/302)", dest='redirect', required=False, action='store_true')
-    group.add_argument("--auth", help="HTTP authentification. \033[33m(Exemples: --auth admin:admin)\033[0m", required=False, dest="auth")
+    group.add_argument("--auth", help="HTTP authentification. \033[33mEx: --auth admin:admin)\033[0m", required=False, dest="auth")
     group.add_argument("--timesleep", help="To define a timesleep/rate-limit if app is unstable during scan.", required=False, dest="ts", type=float, default=0)
-    group.add_argument("--proxie", help="Defined a proxies during scan \033[33m(Exemples: --proxie http,localhost)\033[0m", required=False, dest="proxie")
+    group.add_argument("--proxie", help="Defined a proxies during scan \033[33mEx: --proxie http,localhost\033[0m [Not implemented]", required=False, dest="proxie")
 
     group = parser.add_argument_group('\033[34m> Tips\033[0m')
     group.add_argument("-r", help="Recursive dir/files", required=False, dest="recursif", action='store_true')
@@ -1127,12 +1130,13 @@ if __name__ == '__main__':
     group.add_argument("--notify", help="For receveid notify when the scan finished (work only on linux)", required=False, dest="notify", action='store_true')
 
     group = parser.add_argument_group('\033[34m> Export Settings\033[0m')
-    group.add_argument("-o", help="Output to site_scan.txt (default in website directory)", required=False, dest="output")
+    group.add_argument("-o", help="Output different path (default in website directory). \033[33mEx: -o /tmp/toto.com will create a directory in /tmp/toto.com/output/raw.txt\033[0m", required=False, dest="output")
     group.add_argument("-of", help="Output file format. Available formats: json, csv, txt ", required=False, dest="output_type")
 
     results = parser.parse_args()
                                      
     url = results.url
+    file_url = results.file_url
     wordlist = results.wordlist
     subdomains = results.subdomains
     thread = results.thread
@@ -1164,9 +1168,12 @@ if __name__ == '__main__':
     if update:
         auto_update
 
-
     len_w = 0 #calcul wordlist size
-    url = url + "/" if url.split("/")[-1] != "" else url
+
+    with open(wordlist, 'r') as words:
+        for l in words:
+            len_w += 1
+
     if header_:
         s = header_.split(";")
         for c in s:
@@ -1175,14 +1182,11 @@ if __name__ == '__main__':
             elif "=" in c:
                 c = c.split("=", 1)
             header_parsed.update([(c[0],c[1])])
-    with open(wordlist, 'r') as words:
-        for l in words:
-            len_w += 1
+
     if exclude:
         exclude = exclude[0].split(",")
         if len(exclude) > 1:
             req_p = exclude
-            #TODO
         elif "b" in exclude[0][-1] and int(exclude[0][0]):
             req_p = exclude
         elif len(exclude[0]) < 5: #Defined if it's int for response http code or strings for url
@@ -1190,12 +1194,13 @@ if __name__ == '__main__':
         else:
             req_exclude = requests.get(exclude[0], verify=False)
             req_p = req_exclude.text
-    beforeStart = before_start()        
-    beforeStart.test_timeout(url, first=True)
-    r = requests.get(url, allow_redirects=False, verify=False, timeout=6)
-    stat = r.status_code
-    if backup is not None:
-        bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
-    resume_options(url, thread, wordlist, recur, redirect, js, exclude, header=False if header_ == None else header_, backup=False if backup == None else bckp)
-    print(LINE)
-    create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart)
+
+    if file_url:
+        #For scan multiple website to one time
+        with open(file_url, "r") as f_url:
+            for f in f_url.read().splitlines():
+                url = f + "/" if f.split("/")[-1] != "" else f
+                main(url)
+    else:
+        url = url + "/" if url.split("/")[-1] != "" else url
+        main(url)

@@ -21,24 +21,9 @@ def bypass_waf(req, res):
 	domain = res.split("/")[2]
 	website_ip = socket.gethostbyname(domain) # take ip website
 	header_base = [
-	"X-Originating-IP", 
-	"X-Forwarded",
-	"Forwarded",
-	"Forwarded-For",
-	"Forwarded-For-IP",
-	"X-Forwarder-For",
-	"X-Forwarded-For",
-	"X-Forwarded-For-Original",
-	"X-Forwarded-By",
-	"X-Forwarded-Host",
-	"X-Remote-IP",
-	"X-Remote-Addr",
-	"X-Client-IP",
-	"Client-IP",
-	"Cookie",
-	"Access-Control-Allow-Origin",
-	"Origin",
-	"Timing-Allow-Origin"
+	"X-Originating-IP", "X-Forwarded","Forwarded","Forwarded-For","Forwarded-For-IP","X-Forwarder-For","X-Forwarded-For","X-Forwarded-For-Original",
+	"X-Forwarded-By","X-Forwarded-Host","X-Remote-IP","X-Remote-Addr","X-Client-IP","Client-IP","Cookie","Access-Control-Allow-Origin","Origin",
+	"Timing-Allow-Origin","X-Forwarded-For "
 	]
 	options = [website_ip, domain, "127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0","::1","0:0:0:0:0:0:0:1"]
 	for hb in header_base:

@@ -1,6 +1,12 @@
 Changelog:
 ----------
 
+- 1.9.1
+---------
+	Added: 	 Option "-f" for scanninn multiple website to one time. Ex: ```-f urls_file.txt```
+	Updated: Clean code & directory
+---------
+
 - 1.9
 ---------
 	Fixed: Fixed percentage & line count bug during scan
@@ -9,7 +15,7 @@ Changelog:
 
 - 1.8.8
 ---------
-	Added: Output file format function. Available formats: json, csv, txt
+	Added: Output file format function. Available formats: json, csv, txt. Ex: ```-of json```, ```-o /tmp/Target -of csv```
 ---------
 
 - 1.8.7

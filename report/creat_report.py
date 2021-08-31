@@ -122,10 +122,10 @@ def create_report(directory, cookie_):
     <head>
         <meta charset="utf-8" />
         <title>Hawkscan Report</title>
-        <link href="charte.css" rel="stylesheet">
-        <link href="page.css" rel="stylesheet">
+        <link href="html/fonts/charte.css" rel="stylesheet">
+        <link href="html/fonts/page.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <script src="scripts/scripts.js"></script>
+        <script src="html/scripts/scripts.js"></script>
     </head>
 
     <body>

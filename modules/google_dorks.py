@@ -76,6 +76,7 @@ def query_dork(domain, directory):
                                 raw.write("{}\n".format(j))
                         except:
                             pass
+                            #traceback.print_exc() #DEBUG
                     elif req_url_found.status_code in [403, 401]:
                         print(" \033[31m[{}]\033[0m {}".format(req_url_found.status_code, j))
                     else:
@@ -86,6 +87,7 @@ def query_dork(domain, directory):
             print("")
         except:
             print("{} Google captcha seem to be activated, try it later...\n".format(WARNING))
+            break
     print(LINE)
 
 
