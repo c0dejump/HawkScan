@@ -215,6 +215,10 @@ class before_start:
 
 
     def check_backup_domain(self, domain, url):
+        """
+        check_backup_domain:
+        Check the backup domain, like exemple.com/exemple.zip
+        """
         print("\033[36m Check domain backup \033[0m")
         print(LINE)
         backup_dn_ext = ["zip", "rar", "iso", "tar", "gz", "tgz", "tar.gz", "7z", "jar"]

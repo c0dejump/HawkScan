@@ -18,24 +18,22 @@ class parsing_html:
         """
         Get_links: get all links on webpage during the scan
         """
-        if len(req.content) > 0:
-            #print("{}:{}".format(req, req.url)) #DEBUG
-            req_text = req.text
-            soup = BeautifulSoup(req_text, "html.parser")
-            search = soup.find_all('a')
-            if search:
-                for s in search:
-                    link = s.get("href")
-                    try:
-                        if re.match(r'http(s)', link):
-                            with open(directory + "/links.txt", "a+") as links:
-                                links.write(str(link+"\n"))
-                        else:
-                            pass
-                    except:
+        #print("{}:{}".format(req, req.url)) #DEBUG
+        req_text = req.text
+        soup = BeautifulSoup(req_text, "html.parser")
+        search = soup.find_all('a')
+        if search:
+            for s in search:
+                link = s.get("href")
+                try:
+                    if re.match(r'http(s)', link):
+                        with open(directory + "/links.txt", "a+") as links:
+                            links.write(str(link+"\n"))
+                    else:
                         pass
-        else:
-            pass
+                except:
+                    pass
+
 
 
     def search_s3(self, res, req, directory):
@@ -60,9 +58,10 @@ class parsing_html:
                                     try:
                                         req_s3 = requests.get(rv, verify=False)
                                         if req_s3.status_code == 200:
-                                            print("{}[200] Potentialy s3 buckets found: {}".format(S3, rv))
+                                            print("{}[200] Potentialy s3 buckets found: {} in {}".format(S3, rv, res))
                                             read_links.write(rv + "\n")
                                     except:
+                                        print("{} Error with the URL {}".format(S3, rv))
                                         pass
                                         #traceback.print_exc()
 

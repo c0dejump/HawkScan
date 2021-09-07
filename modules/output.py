@@ -6,6 +6,12 @@ import json
 import csv
 
 class multiple_outputs:
+    """
+    multiple_outputs:
+    To export in multiple file format.
+    Available: txt, json, csv
+    TODO: other format
+    """
 
     def raw_output(self, directory, res, stats, size_res):
         if not os.path.exists(directory+"/output/"):

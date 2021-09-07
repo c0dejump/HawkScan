@@ -48,10 +48,14 @@ class check_socketio:
 
 
     def run_socketio(self, url, poutput):
+        """
+        run_socketio:
+        Try socketio connection
+        """
         found_socket = False
         for path in socketio_paths:
             connect = self.connect(url, path)
-            if type(connect) == bool and connect == True:
+            if type(connect) == bool and connect:
                 print(" {} {}{} found !".format(PLUS, url, path))
                 domain = url.split("/")[2] if not "www" in url else ".".join(url.split("/")[2].split(".")[1:])
                 print(" {} Try this \"\033[36msudo apt install npm -y && npx wscat -c ws://{}/socket.io/?transport=websocket\033[0m\" \n If you have a 30X redirection you can try with 'wss://'".format(INFO, domain))

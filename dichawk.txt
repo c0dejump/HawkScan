@@ -221,6 +221,8 @@ wp-content/uploads/gravity_forms/logs/index.html
 wp-content/uploads/gravity_forms/logs/
 wp-content/uploads/wp-file-manager-pro/
 wp-content/uploads/wp-file-manager-pro/fm_backup
+wp-content/uploads/file-manager/log.txt
+wp-content/uploads/file-manager/
 wp-admin.php
 wp-login.php
 wp-login.php?action=register

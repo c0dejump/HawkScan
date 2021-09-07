@@ -14,10 +14,15 @@ class check_modules:
 
         checkCms = check_cms()
         checkSocketio = check_socketio()
+
+        """
+        In Progress
+        #TODO
         prescan = False
         if prescan:
             dw = detect_wafw00f(url, directory, thread)
             pre_scan(dw, url)
+        """
 
         beforeStart.get_header(url, directory)
         beforeStart.get_dns(url, directory)
