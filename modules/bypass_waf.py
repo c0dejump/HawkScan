@@ -58,8 +58,9 @@ def bypass_waf(req, res):
 			"""else:
 				bypass_by_user_agent(req, res)"""
 		except:
-			traceback.print_exc()
-		#print("\033[31m[:(]\033[0m Our tests not bypass it, sorry")
+			pass
+			#traceback.print_exc()
+		print("\033[31m[:(]\033[0m Our tests not bypass it, sorry")
 	return win
 
 """if __name__ == '__main__':

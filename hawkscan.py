@@ -30,7 +30,10 @@ except:
     import queue as Queue
 import threading
 from threading import Thread
-from fake_useragent import UserAgent
+try:
+    from fake_useragent import UserAgent
+except:
+    UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko"
 from report.creat_report import create_report
 from modules.detect_waf import verify_waf
 from modules.before_run import before_start
@@ -340,8 +343,6 @@ class runFuzzing:
                         time_bool = True
                         #TODO: if waf_score == X: manager.stop_thread() & re-create with the bypass or potentialy use TOR (apt install tor, pip install torrequest) for next requests after that.
                         #pass
-                    if backup:
-                        prefix_backup(res, user_agent, directory, forbi, get_date(), filterM)
                     if redirect and req.history:
                         status_link = [histo.status_code for histo in req.history]
                     else:
@@ -373,6 +374,7 @@ class runFuzzing:
                             if 'sitemap.xml' in res:
                                 parsing.sitemap(req, directory)
 
+
                             if len(req.content) > 0:
                                 dl(res, req, directory) # dl files and calcul size
                                 parsing.search_s3(res, req, directory) #try to found S3 buckets
@@ -391,6 +393,9 @@ class runFuzzing:
                                     result = "/".join(spl)
                                     rec_list.append(result)
                             #report.create_report_url(status_link, res, directory) #TODO
+                            vim_backup(s, res, user_agent)
+                            if backup != None and backup == []:
+                                scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing)
                     elif status_link in [401, 403]:
                         if type(req_p) == list and len(req_p) > 1:
                             filterM.check_multiple(req, res, directory, forbi, get_date(), parsing)
@@ -398,6 +403,7 @@ class runFuzzing:
                             filterM.check_exclude_code(res, req, directory, get_date(), parsing)
                         else:            
                             bypass_forbidden(res)
+                            vim_backup(s, res, user_agent)
                             if res[-1] == "/" and recur:
                                 if ".htaccess" in res or ".htpasswd" in res or ".git" in res or "wp" in res:
                                     output_scan(directory, res, len_req, stats=403)
@@ -416,9 +422,9 @@ class runFuzzing:
                             elif not forced and recur:
                                 pass
                             else:
-                                print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m".format(get_date(), FORBI, bytes_len, display_res, status_link))
-                                output_scan(directory, res, len_req, stats=403)
-                                #pass
+                                """print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m".format(get_date(), FORBI, bytes_len, display_res, status_link))
+                                output_scan(directory, res, len_req, stats=403)"""
+                                pass
                     elif status_link == 404:
                         pass
                     elif status_link == 405:
@@ -432,6 +438,7 @@ class runFuzzing:
                                 #print(req)
                                 filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                         else:
+                            vim_backup(s, res, user_agent)
                             print("{} {} {:<15} {:<15} [405]".format(get_date(), INFO, bytes_len, display_res))
                         #report.create_report_url(status_link, res, directory)
                     elif status_link == 301:
@@ -480,7 +487,8 @@ class runFuzzing:
                                 filterM.check_exclude_code(res, req, directory, get_date(), parsing)
                             else:
                                 filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
-                        else:                
+                        else:
+                            vim_backup(s, res, user_agent)          
                             server_error = "400" if status_link == 400 else "500"
                             print("{} {} {:<15} {:<15} \033[33m{} Server Error\033[0m".format(get_date(), SERV_ERR, bytes_len, display_res, server_error))
                             output_scan(directory, res, len_req, stats=status_link)
@@ -507,22 +515,10 @@ class runFuzzing:
                         else:
                             pass
                             #print("{}{}{} 429".format(HOUR, LESS, res))
-                    if backup != None:
-                        if backup[0] == "min":
-                            bckp = MINI_B
-                        else:
-                            bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
+                    if backup:
+                        if "min" in backup or "all" in backup:
+                            scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing)
 
-                        size_check = 0
-
-                        for exton in bckp:
-
-                            global extension_bck
-                            extension_bck = exton
-
-                            Progress(len_w, thread_count, nLine, page, percentage, tw)
-                            size_bckp = suffix_backup(s, res, page, exton, size_check, directory, forbi, get_date(), parsing, filterM)
-                            size_check = size_check if size_bckp == None else size_bckp
                 except Timeout:
                     n_error += 1
                     #traceback.print_exc() #DEBUG
@@ -546,6 +542,23 @@ class runFuzzing:
                 time_bool = False
             else:
                 Progress(len_w, thread_count, nLine, page, percentage, tw)
+
+
+def scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing):
+
+    prefix_backup(res, user_agent, directory, forbi, get_date(), filterM)
+
+    if len(backup) > 0 and backup[0] == "min":
+        bckp = MINI_B  
+    else:
+        bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
+    size_check = 0
+
+    for exton in bckp:
+
+        Progress(len_w, thread_count, nLine, page, percentage, tw, extension_bck=exton)
+        size_bckp = suffix_backup(s, res, page, exton, size_check, directory, forbi, get_date(), parsing, filterM)
+        size_check = size_check if size_bckp == None else size_bckp
 
 
 def status(r, stat, directory, u_agent, thread, manageDir):
@@ -680,6 +693,18 @@ def output_scan(directory, res, size_res, stats):
         mo.raw_output(directory, res, stats, size_res)
     else:
         mo.raw_output(directory, res, stats, size_res)
+
+
+def vim_backup(s, res, user_agent):
+    for e in ["txt", "php"]:
+        if e in res:
+            pars = res.split("/")
+            vb = ".{}.swp".format(pars[-1])
+            vim_b = "{}{}/".format(url, vb) if pars[-1] == "" else "{}{}".format(url, vb)
+            req_vb = s.get(vim_b, headers=user_agent, allow_redirects=False, verify=False, timeout=10)
+            if req_vb.status_code not in [404, 403, 401, 500, 406]:
+                print("woooow my fucking god !")
+                print("{} {} [{} bytes] Potential backup vim found {:<15}".format(get_date(), PLUS, len(req_vb.text), vim_b if tw > 120 else vb))
 
 
 
@@ -927,7 +952,7 @@ def get_date():
 
 
 
-def Progress(len_w, thread_count, nLine, page, percentage, tw):
+def Progress(len_w, thread_count, nLine, page, percentage, tw, extension_bck=False):
     """
     Progress: just a function to print the scan progress
     """
@@ -1090,8 +1115,8 @@ def main(url):
     r = requests.get(url, allow_redirects=False, verify=False, timeout=6)
     stat = r.status_code
     if backup is not None:
-        if backup[0] == "min":
-            bckp = MINI_B
+        if len(backup) > 0 and backup[0] == "min":
+            bckp = MINI_B  
         else:
             bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
     resume_options(url, thread, wordlist, recur, redirect, js, exclude, header=False if header_ == None else header_, backup=False if backup == None else bckp)

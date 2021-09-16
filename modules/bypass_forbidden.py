@@ -28,7 +28,7 @@ def method(res):
 		except:
 			pass
 	for rs, type_r in result_list:
-		if rs not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501]:
+		if rs not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501]:
 			print("{} Forbidden page {} Bypass with this requests type: {} [{}]".format(BYP, res, type_r, rs))
 
 
@@ -38,7 +38,7 @@ def original_url(res, page, url):
 	"X-Originating-URL": page
 	}
 	req_ou = requests.get(res, verify=False, headers=header, allow_redirects=False)
-	if req_ou.status_code not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410]:
+	if req_ou.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410]:
 		print("{}[{}] {} Forbidden Bypass with: 'X-Originating-URL: {}'".format(BYP, req_ou.status_code, url+page, page))
 
 
@@ -59,7 +59,7 @@ def IP_authorization(res, url, domain, page):
 		for ip in ips_type:
 			headers = {h : ip}
 			req_ip = requests.get(res, verify=False, headers=headers, allow_redirects=False)
-			if req_ip.status_code not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410]:
+			if req_ip.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410]:
 				print("{}[{}] {} Forbidden Bypass with: {}".format(BYP, req_ip.status_code, url+page, headers))
 
 
@@ -77,7 +77,7 @@ def other_bypass(url, page, req_url):
 		req_payload = requests.get(url_b, verify=False, allow_redirects=False)
 		#print(req_payload.status_code) #DEBUG
 		#print("{}:{}".format(len(req_payload.content), len(req_url.content))) #DEBUG
-		if req_payload.status_code not in [403, 401, 404, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410] and len(req_payload.content) not in ranges:
+		if req_payload.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410] and len(req_payload.content) not in ranges:
 			print("{}[{}] Forbidden Bypass with : {} [{}]".format(BYP, req_payload.status_code, url_b, len(req_payload.content)))
 
 

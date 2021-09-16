@@ -9208,6 +9208,8 @@ Mail/smtp/Admin/smadv.%EXT%
 mailadmin
 mailform.%EXT%
 mailman
+mailman/admin/mailman/members
+mailman_service/admin/mailman
 mailman/options/
 mailman/listinfo
 mailman/admin/
