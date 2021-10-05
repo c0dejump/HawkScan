@@ -20,5 +20,5 @@ def resume_options(url, thread, wordlist, recur, redirect, js, exclude, header, 
  \033[36m Javascript Check:       \033[0m {}
  \033[36m Backup extension:       \033[0m {}
  \033[36m Exclude option:         \033[0m {}
-___________________________________________________________________
+\033[31m___________________________________________________________________\033[0m
     """.format(url, header_, thread, wordlist, recur_, redirect_, js_, backup_, exclude_))

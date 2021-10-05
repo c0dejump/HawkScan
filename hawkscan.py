@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = '1.9.1'
+__version__ = '1.9.3'
 __program__ = 'HawkScan'
 __author__ = 'codejump'
 __twitter__ = 'https://twitter.com/c0dejump'
@@ -209,7 +209,7 @@ class filterManager:
                     print("{} {} {:<15} {:<15}".format(HOUR, PLUS, exclude_bytes, res))
                     if js and req_bytes > 0:
                         parsing.get_javascript(res, req)
-                elif req_bytes != req_len and req.status_code == 403:
+                elif req_bytes != req_len and req.status_code in [401, 403]:
                     print("{} {} {:<15} {:<15}".format(HOUR, FORBI, exclude_bytes, res))
                 elif req_bytes != req_len and req.status_code in [500, 502, 400, 422, 423, 424, 425]:
                     print("{} {} {:<15} {:<15} \033[33m{} Server Error\033[0m".format(HOUR, SERV_ERR, exclude_bytes, res, req.status_code))
@@ -231,7 +231,7 @@ class filterManager:
             #print(req.text)
             #print(perc) #DEBUG percentage
             #print(multiple)
-            if perc >= 75:
+            if perc >= 75 or perc == 67:
                 pass
             elif perc > 50 and perc < 75:
                 print("{} {} {} [Potential exclude page with {}%]".format(HOUR, EXCL, res, perc))
@@ -239,7 +239,6 @@ class filterManager:
                 exclude_bytes = "[{} bytes]".format(len(req.content))
                 if req.status_code in [403, 401, 429]:
                     bypass_forbidden(res)
-                    pass
                 elif req.status_code in [500, 400, 422, 423, 424, 425]:
                     if multiple:
                         return True
@@ -303,6 +302,7 @@ class runFuzzing:
         time_bool = False
         waf = False
         tested_bypass = False
+
         for numbers in range(len_w):
             n += 1
             thread_count = threading.active_count() - 1
@@ -397,11 +397,16 @@ class runFuzzing:
                             if backup != None and backup == []:
                                 scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing)
                     elif status_link in [401, 403]:
-                        if type(req_p) == list and len(req_p) > 1:
-                            filterM.check_multiple(req, res, directory, forbi, get_date(), parsing)
-                        elif type(req_p) == int:
-                            filterM.check_exclude_code(res, req, directory, get_date(), parsing)
-                        else:            
+                        if exclude:
+                            if type(req_p) == list and len(req_p) > 1:
+                                #print(len_req)
+                                filterM.check_multiple(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                            elif type(req_p) == int:
+                                filterM.check_exclude_code(res, req, directory, get_date(), parsing)
+                            else:
+                                #print(req)
+                                filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                        else:           
                             bypass_forbidden(res)
                             vim_backup(s, res, user_agent)
                             if res[-1] == "/" and recur:
@@ -696,15 +701,21 @@ def output_scan(directory, res, size_res, stats):
 
 
 def vim_backup(s, res, user_agent):
-    for e in ["txt", "php"]:
+    for e in [".txt", ".php", ".html", ".js"]:
         if e in res:
             pars = res.split("/")
             vb = ".{}.swp".format(pars[-1])
             vim_b = "{}{}/".format(url, vb) if pars[-1] == "" else "{}{}".format(url, vb)
             req_vb = s.get(vim_b, headers=user_agent, allow_redirects=False, verify=False, timeout=10)
-            if req_vb.status_code not in [404, 403, 401, 500, 406]:
-                print("woooow my fucking god !")
-                print("{} {} [{} bytes] Potential backup vim found {:<15}".format(get_date(), PLUS, len(req_vb.text), vim_b if tw > 120 else vb))
+            if req_vb.status_code not in [404, 403, 401, 500, 406] and len(req_vb.content) != len(req_vb.content):
+                if exclude:
+                    if exclude != len(req_vb.text) and len(req_vb.text) != 0:
+                        print("woooow my fucking god !")
+                        print("{} {} [{} bytes] Potential backup vim found {:<15}".format(get_date(), PLUS, len(req_vb.text), vim_b))
+                else:
+                    if len(req_vb.text) != 0:
+                        print("woooow my fucking god !")
+                        print("{} {} [{} bytes] Potential backup vim found {:<15}".format(get_date(), PLUS, len(req_vb.text), vim_b))
 
 
 
@@ -789,9 +800,10 @@ def suffix_backup(s, res, page, exton, size_check, directory, forbi, HOUR, parsi
             else:
                 filterM.check_exclude_page(req_b, res_b, directory, forbi, HOUR, parsing) 
         else:
-            bypass_forbidden(res)
-            print("{}{}{}".format(HOUR, FORBI, res_b))
+            #bypass_forbidden(res_b)
+            print("{} {} {}".format(HOUR, FORBI, res_b))
             output_scan(directory, res_b, 403)
+            #pass
     else:
         if exclude:
             if len(exclude) > 1:
@@ -979,6 +991,13 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
     threads = 3 if auto else thread
     link_url = []
     hiddend = []
+
+    index_req = requests.get(url, verify=False, allow_redirects=False)
+
+    global index_len
+    index_len = len(index_req.content)
+
+
     with open(wordlist, "r") as payload:
         links = payload.read().splitlines()
     state = links[nLine:] if nLine else links # For restar from the last line found in the dico
@@ -993,8 +1012,11 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
             worker.start()
         enclosure_queue.join()
     except KeyboardInterrupt:
-        print(" {}Canceled by keyboard interrupt (Ctrl-C) ".format(INFO))
-        sys.exit()
+        if not file_url:
+            print(" {}Canceled by keyboard interrupt (Ctrl-C) ".format(INFO))
+            sys.exit()
+        else:
+            print(" {}Canceled by keyboard interrupt (Ctrl-C), next site ".format(INFO))
     """
         Recursif: For recursif scan
     """
@@ -1089,9 +1111,10 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
         os.makedirs(directory) if not force_first_step else os.makedirs(directory) # creat the dir
         os.makedirs(directory+"/output/") if not force_first_step else os.makedirs("sites/{}/output/".format(directory))
 
-        mods = ram.run_all_modules(beforeStart, url, directory, dire, thread) # Run all modules
-        if mods:
-            thread = mods
+        if not file_url:
+            mods = ram.run_all_modules(beforeStart, url, directory, dire, thread) # Run all modules
+            if mods:
+                thread = mods
 
         start_scan(subdomains, r, stat, directory, u_agent, thread, manageDir, header_, forbi)
     else:
@@ -1229,6 +1252,7 @@ if __name__ == '__main__':
         with open(file_url, "r") as f_url:
             for f in f_url.read().splitlines():
                 url = f + "/" if f.split("/")[-1] != "" else f
+                print("{} Type ctrl+c to pass next website".format(INFO))
                 main(url)
     else:
         url = url + "/" if url.split("/")[-1] != "" else url

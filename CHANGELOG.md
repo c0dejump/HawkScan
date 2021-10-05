@@ -1,9 +1,20 @@
 Changelog:
 ----------
 
+- 1.9.3
+---------
+	Upadted: New banner
+	Fixed:	 Multiple website with file which contain url
+
+- 1.9.2:
+---------
+	Updated: code review & optimisation
+	Updated: Multiple new paths/words in dichawk.txt
+---------
+
 - 1.9.1
 ---------
-	Added: 	 Option "-f" for scanninn multiple website to one time. Ex: ```-f urls_file.txt```
+	Added: 	 Option "-f" for scanning multiple website to one time. Ex: ```-f urls_file.txt```
 	Updated: Clean code & directory
 ---------
 

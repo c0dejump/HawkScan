@@ -54,11 +54,14 @@ def req_test_false_positif(res, headers):
     """
     url_base = res.split("/")[:3]
     url_send = '/'.join(url_base)+"/"
-    req_test_w = requests.get(url_send, allow_redirects=False, verify=False)
-    req_test_waf = requests.get(url_send, headers=headers, allow_redirects=True, verify=False)
-    #print("Reponse test false positive: {}".format(req_test_waf)) #DEBUG
-    if req_test_w.status_code == req_test_waf.status_code:
-        return req_test_waf
+    try:
+        req_test_w = requests.get(url_send, allow_redirects=False, verify=False)
+        req_test_waf = requests.get(url_send, allow_redirects=True, verify=False)
+        #print("Reponse test false positive: {}".format(req_test_waf)) #DEBUG
+        if req_test_w.status_code == req_test_waf.status_code:
+            return req_test_waf
+    except:
+        pass
 
 
 def verify_waf(req, res, headers, display=True):
