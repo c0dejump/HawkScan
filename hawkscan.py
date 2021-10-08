@@ -970,14 +970,14 @@ def Progress(len_w, thread_count, nLine, page, percentage, tw, extension_bck=Fal
     """
     if tw < 110 and backup == None:
         sys.stdout.write("\033[34m {0}/{1} | Errors: {2} | {3}\033[0m\r".format(n, len_w, n_error, page if len(page) < 70 else page.split("/")[-3:-1]))
-        if len(page) > 30: sys.stdout.write("\033[K") #clear line
+        if len(page) > 25: sys.stdout.write("\033[K") #clear line
     elif backup != None:
         sys.stdout.write("\033[34m {0}/{1} | Errors: {2} | {3} | {4}\033[0m\r".format(n, len_w, n_error, extension_bck, page if len(page) < 70 else page.split("/")[-3:-1]))
-        if len(page) > 30: sys.stdout.write("\033[K") #clear line
+        if len(page) > 25: sys.stdout.write("\033[K") #clear line
     else:
         per = percentage(n+nLine, len_w)
-        sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | Errors: {4} | {5}\033[0m\r".format(per, n+nLine, len_w, thread_count, n_error, page if len(page) < 70 else page.split("/")[-3:-1]))
-        if len(page) > 30: sys.stdout.write("\033[K") #clear line 
+        sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | Errors: {3} | {4}\033[0m\r".format(per, n+nLine, len_w, n_error, page if len(page) < 70 else page.split("/")[-3:-1]))
+        if len(page) > 25: sys.stdout.write("\033[K") #clear line 
 
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):

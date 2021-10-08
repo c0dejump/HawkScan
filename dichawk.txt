@@ -172,6 +172,10 @@ obj/
 obj/Debug/
 obj/Debug/GLOSS2
 obj/Debug/Package/GLOSS2.SetParameters.xml
+xmpp/tests/.svn/entries
+xmpp/tests/.svn/
+xmpp/tests/
+xmpp/
 router.php
 phparea
 php-source
@@ -10629,7 +10633,7 @@ start.%EXT%
 start.html
 startServer.log
 static
-static/..%252f..%252f..%252f..%252f..%252f..%252f..%252f..%252fetc/passwd
+static/..%252f..%252f..%252f..%252fetc/passwd
 statistics
 statistics.jsp
 Statistik/
