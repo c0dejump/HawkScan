@@ -45,6 +45,8 @@ getfile.do
 getenv.jsp
 ;index.jsp
 ../index.js
+index.asp::$DATA
+admin::$INDEX_ALLOCATION/portal
 install.properties
 ?static=1&order=asc
 static../.git/config
@@ -170,6 +172,10 @@ obj/
 obj/Debug/
 obj/Debug/GLOSS2
 obj/Debug/Package/GLOSS2.SetParameters.xml
+xmpp/tests/.svn/entries
+xmpp/tests/.svn/
+xmpp/tests/
+xmpp/
 router.php
 phparea
 php-source
@@ -226,6 +232,8 @@ wp-content/uploads/file-manager/
 wp-admin.php
 wp-login.php
 wp-login.php?action=register
+wp-login.php?action=enter_recovery_mode
+wp-login.php?action=enter_recovery_mode&rm_token=yfj8Sp2kynyGSLXIJAlpAK&rm_key=l3JHzZeZiCaff7XpUpIhQ4
 wp-includes/
 wp-includes/ms-files.php
 wp-includes/certificates/
@@ -609,6 +617,9 @@ config/production.rb
 config/services.yaml
 config/services.xml
 config/services.php
+config/sync/core.extension.yml
+core/core.services.yml
+config/sync/swiftmailer.transport.yml
 accueil/
 modman
 usercontrols/
@@ -795,6 +806,7 @@ CHANGELOG/
 Computers/
 ContactUs/
 Content/
+content/new
 content-paywall/api/accesslevel
 content-paywall/api/
 content-paywall/
@@ -1034,6 +1046,8 @@ advertise/
 advertisement/
 advertising/
 adview/
+viewvc
+cgi-bin/viewvc.cgi
 advil/
 advisories/
 aeh/
@@ -8114,6 +8128,7 @@ docker_configs/supervisord.conf
 docker_configs/default.conf
 Dockerfile
 Docker/api/api.env
+ocs
 docs
 docs/CHANGELOG.html
 docs/changelog.txt
@@ -9208,6 +9223,8 @@ Mail/smtp/Admin/smadv.%EXT%
 mailadmin
 mailform.%EXT%
 mailman
+mailman/admin/mailman/members
+mailman_service/admin/mailman
 mailman/options/
 mailman/listinfo
 mailman/admin/
@@ -10319,6 +10336,7 @@ Server
 server-info
 server-info.htm
 server.log.jsp
+balancer-manager
 server-status
 server-status/
 server-status?auto
@@ -10615,7 +10633,7 @@ start.%EXT%
 start.html
 startServer.log
 static
-static/..%252f..%252f..%252f..%252f..%252f..%252f..%252f..%252fetc/passwd
+static/..%252f..%252f..%252f..%252fetc/passwd
 statistics
 statistics.jsp
 Statistik/
@@ -11140,6 +11158,7 @@ var/lib/mysql/my.cnf
 var/lib/mysql/mysql/user.MYD
 user.MYD
 var/local/www/conf/php.ini
+conf/extra/httpd-info.conf
 var/log/apache2/access_log
 var/log/apache2/access.log
 var/log/apache2/error_log
