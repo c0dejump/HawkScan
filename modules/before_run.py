@@ -138,9 +138,9 @@ class before_start:
         try:
             statinfo = os.path.getsize(directory + "/wayback.txt")
         except:
-            print(" {} Nothing wayback found ".format(LESS))
+            print(" {} No wayback found ".format(LESS))
         if statinfo < 1 :
-            print(" {} Nothing wayback found".format(LESS))
+            print(" {} No wayback found".format(LESS))
         else:
             with open(directory + "/wayback.txt", "r+") as wayback:
                 wb_read = wayback.read().splitlines()
@@ -172,7 +172,7 @@ class before_start:
         for lt in list_test:
             header = {"Host": lt}
             try:
-                req = requests.get(url, headers=header, verify=False, timeout=8)
+                req = requests.get(url, headers=header, verify=False, timeout=10)
                 if req.status_code == 200:
                     print(" {} You can potentialy try bf directories with this option '-H \"Host:{}\"' ".format(PLUS, lt))
                     localhost = True
@@ -193,7 +193,7 @@ class before_start:
         print("\033[36m Check Vhosts misconfiguration \033[0m")
         print(LINE)
         try:
-            req_index = requests.get(url, verify=False, timeout=5)
+            req_index = requests.get(url, verify=False, timeout=10)
             len_index = len(req_index.content)
             retrieve_ip = False
             dom = socket.gethostbyname(domain)
@@ -201,7 +201,7 @@ class before_start:
             "https://www3.{}/".format(domain)]
             for ip in ips:
                 try:
-                    req_ip = requests.get(ip, verify=False, timeout=5)
+                    req_ip = requests.get(ip, verify=False, timeout=10)
                     if req_ip.status_code not in [404, 403, 425, 503, 500, 400] and len(req_ip.content) != len_index:
                         retrieve_ip = True
                         print(" {} The host IP seem to be different, check it: {} ".format(PLUS, ip))
@@ -225,14 +225,14 @@ class before_start:
         found_bdn = False
         len_response = 0
         try:
-            req_index = requests.get(url, verify=False, timeout=6)
+            req_index = requests.get(url, verify=False, timeout=10)
             len_index = len(req_index.content)
             domain = domain.split('.')[1] if len(domain.split('.')) > 2 else domain.split('.')[0]
             print("{}List of backup extension for domain {}: {}\nExemple: {}{}.zip\n".format(INFO, domain, backup_dn_ext, url, domain.split('.')[0]))
             for bdn in backup_dn_ext:
                 url_dn_ext = "{}{}.{}".format(url, domain.split('.')[0], bdn)
                 try:
-                    req_dn_ext = requests.get(url_dn_ext, verify=False, timeout=6)
+                    req_dn_ext = requests.get(url_dn_ext, verify=False, timeout=10)
                     if req_dn_ext.status_code not in [404, 403, 401, 500, 400, 425] and len(req_dn_ext.content) not in range(len_index - 10, len_index + 10):
                         if len(req_dn_ext.content) not in range(len_response - 10, len_response + 10):
                             print(" {} {} found ({}b)".format(PLUS, url_dn_ext, len(req_dn_ext.text)))
@@ -243,7 +243,7 @@ class before_start:
         except:
             pass
         if not found_bdn:
-            print(" {} Nothing backup domain name found".format(LESS))
+            print(" {} No backup domain name found".format(LESS))
         print(LINE)
 
 

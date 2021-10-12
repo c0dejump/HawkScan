@@ -11,9 +11,9 @@ BYP = "b"""
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
-def post(res): req_p = requests.post(res, verify=False, allow_redirects=False); return req_p.status_code, "post"
-def put(res): req_pt = requests.put(res, verify=False, allow_redirects=False); return req_pt.status_code, "put"
-def patch(res): req_ptch = requests.patch(res, verify=False, allow_redirects=False); return req_ptch.status_code, "patch"
+def post(res): req_p = requests.post(res, verify=False, allow_redirects=False, timeout=10); return req_p.status_code, "post"
+def put(res): req_pt = requests.put(res, verify=False, allow_redirects=False, timeout=10); return req_pt.status_code, "put"
+def patch(res): req_ptch = requests.patch(res, verify=False, allow_redirects=False, timeout=10); return req_ptch.status_code, "patch"
 #def options(res): req_o = requests.options(res, verify=False, allow_redirects=False); return req_o.status_code, "options"
 
 def method(res):
@@ -28,7 +28,7 @@ def method(res):
 		except:
 			pass
 	for rs, type_r in result_list:
-		if rs not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 502]:
+		if rs not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 502, 307]:
 			print("{} Forbidden page {} Bypass with this requests type: {} [{}b]".format(BYP, res, type_r, rs))
 
 
@@ -37,8 +37,8 @@ def original_url(res, page, url):
 	header = {
 	"X-Originating-URL": page
 	}
-	req_ou = requests.get(res, verify=False, headers=header, allow_redirects=False)
-	if req_ou.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502]:
+	req_ou = requests.get(res, verify=False, headers=header, allow_redirects=False, timeout=10)
+	if req_ou.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502, 307]:
 		print("{}[{}] {} Forbidden Bypass with: 'X-Originating-URL: {}'".format(BYP, req_ou.status_code, url+page, page))
 
 
@@ -58,8 +58,8 @@ def IP_authorization(res, url, domain, page):
 	for h in headers_type:
 		for ip in ips_type:
 			headers = {h : ip}
-			req_ip = requests.get(res, verify=False, headers=headers, allow_redirects=False)
-			if req_ip.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502]:
+			req_ip = requests.get(res, verify=False, headers=headers, allow_redirects=False, timeout=10)
+			if req_ip.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502, 307]:
 				print("{}[{}] {} Forbidden Bypass with: {}".format(BYP, req_ip.status_code, url+page, headers))
 
 
@@ -74,10 +74,10 @@ def other_bypass(url, page, req_url):
 	ranges = range(len_req_url - 50, len_req_url + 50) if len_req_url < 100000 else range(len_req_url - 1000, len_req_url + 1000)
 	for p in payl:
 		url_b = url + p
-		req_payload = requests.get(url_b, verify=False, allow_redirects=False)
+		req_payload = requests.get(url_b, verify=False, allow_redirects=False, timeout=10)
 		#print(req_payload.status_code) #DEBUG
 		#print("{}:{}".format(len(req_payload.content), len(req_url.content))) #DEBUG
-		if req_payload.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502] and len(req_payload.content) not in ranges:
+		if req_payload.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502, 307] and len(req_payload.content) not in ranges:
 			print("{}[{}] Forbidden Bypass with : {} [{}b]".format(BYP, req_payload.status_code, url_b, len(req_payload.content)))
 
 
@@ -91,8 +91,8 @@ def bypass_forbidden(res):
 	url = "/".join(url_split) + "/"
 	page = "/".join(res_page) if len(res_page) > 1 else "".join(res_page)
 	domain =  "/".join(res.split("/")[:3]) + "/"
-	req_res = requests.get(res, verify=False)
-	req_url = requests.get(url, verify=False)
+	req_res = requests.get(res, verify=False, timeout=10)
+	req_url = requests.get(url, verify=False, timeout=10)
 	if req_url.status_code in [403, 401]:
 		original_url(res, page, url)
 		IP_authorization(res, url, domain, page)

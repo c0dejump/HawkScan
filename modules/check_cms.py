@@ -16,7 +16,7 @@ class check_cms:
         print(LINE)
         try:
             whatscms_url = "https://whatcms.org/APIEndpoint/Detect?key=1481ff2f874c4942a734d9c499c22b6d8533007dd1f7005c586ea04efab2a3277cc8f2&url={}".format(url)
-            req = requests.get(whatscms_url, timeout=1, allow_redirects=False, verify=False)
+            req = requests.get(whatscms_url, timeout=10, allow_redirects=False, verify=False)
             if "Not Found" in req.text or "Theme not detected" in req.text:
                 with open(directory + "/cms.txt", "w+") as cms_write:
                     cms_write.write("this website does not seem to use a CMS")
@@ -50,7 +50,7 @@ class check_cms:
         Check CVE with cms and version detected by the function 'detect_cms'.
         """
         url_comp = "https://www.cvedetails.com/version-search.php?vendor={}&product=&version={}".format(result, v)
-        req = requests.get(url_comp, allow_redirects=True, verify=False)
+        req = requests.get(url_comp, allow_redirects=True, verify=False, timeout=10)
         if not "matches" in req.text:
             print(" {} CVE found ! \n{}{}\n".format(WARNING, WARNING, url_comp))
             if 'WordPress' in req.text:

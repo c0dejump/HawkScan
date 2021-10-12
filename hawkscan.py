@@ -393,8 +393,8 @@ class runFuzzing:
                                     result = "/".join(spl)
                                     rec_list.append(result)
                             #report.create_report_url(status_link, res, directory) #TODO
-                            vim_backup(s, res, user_agent)
                             if backup != None and backup == []:
+                                vim_backup(s, res, user_agent)
                                 scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing)
                     elif status_link in [401, 403]:
                         if exclude:
@@ -408,7 +408,6 @@ class runFuzzing:
                                 filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                         else:           
                             bypass_forbidden(res)
-                            vim_backup(s, res, user_agent)
                             if res[-1] == "/" and recur:
                                 if ".htaccess" in res or ".htpasswd" in res or ".git" in res or "wp" in res:
                                     output_scan(directory, res, len_req, stats=403)
@@ -430,6 +429,8 @@ class runFuzzing:
                                 """print("{} {} {:<15} {:<15} \033[31m{} Forbidden \033[0m".format(get_date(), FORBI, bytes_len, display_res, status_link))
                                 output_scan(directory, res, len_req, stats=403)"""
                                 pass
+                            if backup != None and backup == []:
+                                vim_backup(s, res, user_agent)
                     elif status_link == 404:
                         pass
                     elif status_link == 405:
@@ -443,7 +444,6 @@ class runFuzzing:
                                 #print(req)
                                 filterM.check_exclude_page(req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                         else:
-                            vim_backup(s, res, user_agent)
                             print("{} {} {:<15} {:<15} [405]".format(get_date(), INFO, bytes_len, display_res))
                         #report.create_report_url(status_link, res, directory)
                     elif status_link == 301:
@@ -531,13 +531,13 @@ class runFuzzing:
                         write_error.write(res+"\n")
                 except Exception:
                     n_error += 1
-                    #traceback.print_exc() #DEBUG
+                    traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
                 q.task_done()
             except Exception:
                 n_error += 1
-                #traceback.print_exc() #DEBUG
+                traceback.print_exc() #DEBUG
                 q.task_done()
             if time_bool: #if a waf detected, stop for any seconds
                 while time_i != 0:
@@ -710,11 +710,9 @@ def vim_backup(s, res, user_agent):
             if req_vb.status_code not in [404, 403, 401, 500, 406] and len(req_vb.content) != len(req_vb.content):
                 if exclude:
                     if exclude != len(req_vb.text) and len(req_vb.text) != 0:
-                        print("woooow my fucking god !")
                         print("{} {} [{} bytes] Potential backup vim found {:<15}".format(get_date(), PLUS, len(req_vb.text), vim_b))
                 else:
                     if len(req_vb.text) != 0:
-                        print("woooow my fucking god !")
                         print("{} {} [{} bytes] Potential backup vim found {:<15}".format(get_date(), PLUS, len(req_vb.text), vim_b))
 
 
@@ -865,7 +863,7 @@ def scan_error(directory, forbi):
             print("{}[{}] Errors detected".format(INFO, error_count))
             for error_link in read_links.read().splitlines():
                 try:
-                    req = requests.get(error_link, verify=False, timeout=13) if not auth else requests.get(error_link, verify=False, auth=(auth.split(":")[0], auth.split(":")[1]), timeout=13)
+                    req = requests.get(error_link, verify=False, timeout=10) if not auth else requests.get(error_link, verify=False, auth=(auth.split(":")[0], auth.split(":")[1]), timeout=10)
                     len_req_error = len(req.content)
                     if exclude:
                         if type(req_p) == int:
@@ -968,16 +966,18 @@ def Progress(len_w, thread_count, nLine, page, percentage, tw, extension_bck=Fal
     """
     Progress: just a function to print the scan progress
     """
+    progress_print = "\033[34m 100% - {0}/{1} | T:{2} | Errors: {3} | {4}\033[0m\r".format(n+nLine, len_w, thread_count, n_error, page if len(page) < 60 else page.split("/")[-3:-1])
+    little_progress_print = "\033[34m {0}/{1} | Errors: {2} | {3}\033[0m\r".format(n, len_w, n_error, page if len(page) < 70 else page.split("/")[-3:-1])
     if tw < 110 and backup == None:
-        sys.stdout.write("\033[34m {0}/{1} | Errors: {2} | {3}\033[0m\r".format(n, len_w, n_error, page if len(page) < 70 else page.split("/")[-3:-1]))
-        if len(page) > 30: sys.stdout.write("\033[K") #clear line
+        sys.stdout.write(little_progress_print)
+        if len(little_progress_print) > 40: sys.stdout.write("\033[K") #clear line
     elif backup != None:
-        sys.stdout.write("\033[34m {0}/{1} | Errors: {2} | {3} | {4}\033[0m\r".format(n, len_w, n_error, extension_bck, page if len(page) < 70 else page.split("/")[-3:-1]))
-        if len(page) > 30: sys.stdout.write("\033[K") #clear line
+        sys.stdout.write("\033[34m {0}/{1} | Errors: {2} | {3} | {4}\033[0m\r".format(n, len_w, n_error, extension_bck, page if len(page) < 60 else page.split("/")[-3:-1]))
+        if len(little_progress_print) > 40: sys.stdout.write("\033[K") #clear line
     else:
         per = percentage(n+nLine, len_w)
-        sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | Errors: {4} | {5}\033[0m\r".format(per, n+nLine, len_w, thread_count, n_error, page if len(page) < 70 else page.split("/")[-3:-1]))
-        if len(page) > 30: sys.stdout.write("\033[K") #clear line 
+        sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | Errors: {4} | {5}\033[0m\r".format(per, n+nLine, len_w, thread_count, n_error, page if len(page) < 60 else page.split("/")[-3:-1]))
+        if len(progress_print) > 50: sys.stdout.write("\033[K") #clear line 
 
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):
@@ -1135,7 +1135,7 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
 def main(url):
     beforeStart = before_start()
     beforeStart.test_timeout(url, first=True)
-    r = requests.get(url, allow_redirects=False, verify=False, timeout=6)
+    r = requests.get(url, allow_redirects=False, verify=False, timeout=10)
     stat = r.status_code
     if backup is not None:
         if len(backup) > 0 and backup[0] == "min":

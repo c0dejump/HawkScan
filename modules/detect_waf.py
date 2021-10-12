@@ -55,8 +55,8 @@ def req_test_false_positif(res, headers):
     url_base = res.split("/")[:3]
     url_send = '/'.join(url_base)+"/"
     try:
-        req_test_w = requests.get(url_send, allow_redirects=False, verify=False)
-        req_test_waf = requests.get(url_send, allow_redirects=True, verify=False)
+        req_test_w = requests.get(url_send, allow_redirects=False, verify=False, timeout=10)
+        req_test_waf = requests.get(url_send, allow_redirects=True, verify=False, timeout=10)
         #print("Reponse test false positive: {}".format(req_test_waf)) #DEBUG
         if req_test_w.status_code == req_test_waf.status_code:
             return req_test_waf
