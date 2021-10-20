@@ -11,7 +11,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Usage](https://github.com/c0dejump/HawkScan/#usage)
 - [Exemples](https://github.com/c0dejump/HawkScan/#exemples)
 - [Thanks](https://github.com/c0dejump/HawkScan/#thanks)
-- [Donations](https://github.com/c0dejump/HawkScan/#paypal)
+- [Donations](https://github.com/c0dejump/HawkScan/#donations)
 - [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
 
 # News v1.9.x
@@ -156,11 +156,11 @@ Jamb0n69 (https://twitter.com/jamb0n69) [Technical helper]
 Cyber_Ph4ntoM (https://twitter.com/__PH4NTOM__) [Beta tester & Logo Graphist]
 
 
-# Paypal
+# Donations
 
 https://www.paypal.me/c0dejump
 
-or if you want buy me a coffee :)
+Or if you want buy me a coffee :)
 
 https://ko-fi.com/c0dejump
 
