@@ -1,6 +1,16 @@
 Changelog:
 ----------
 
+- 1.9.5
+---------
+	Fixed: A pass on the source code, more speedy
+---------
+
+- 1.9.4
+---------
+	Added: 	Function "vim_backup" to test backup vim during scan when any -b option
+---------
+
 - 1.9.3
 ---------
 	Upadted: New banner

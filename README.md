@@ -14,13 +14,16 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Donations](https://github.com/c0dejump/HawkScan/#paypal)
 - [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
 
-# News
+# News v1.9.x
     Fixed percentage & line count bug during scan
     Display errors number in live during scan 
     Output file format function. Available formats: json, csv, txt
     Reduction of false positives number
     Header of Hawkscan when your typing "head hawkscan.py"
     Multiple website scanning
+    New banner
+    Add vim backup test
+    Add coffee page
 *(for more details go on CHANGELOG.md)* 
  
 # Installation
@@ -63,7 +66,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 # TODO 
 **P1 is the most important**
 
- - [~] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))
+ [WIP] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))
  - [ ] Better thread management [P1]
  - [ ] Push results into DB [P2]
  - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder [P2]
@@ -156,6 +159,10 @@ Cyber_Ph4ntoM (https://twitter.com/__PH4NTOM__) [Beta tester & Logo Graphist]
 # Paypal
 
 https://www.paypal.me/c0dejump
+
+or if you want buy me a coffee :)
+
+https://ko-fi.com/c0dejump
 
 ## Tools used
 

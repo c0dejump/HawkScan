@@ -35,7 +35,6 @@ class parsing_html:
                     pass
 
 
-
     def search_s3(self, res, req, directory):
         """
         search_s3: Check on source page if a potentialy "s3 amazon bucket" is there

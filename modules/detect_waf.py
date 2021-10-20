@@ -47,7 +47,7 @@ def detect_wafw00f(url, directory, thread):
             print(LINE)
 
 
-def req_test_false_positif(res, headers):
+def req_test_false_positif(s, res, headers):
     """
     req_test_false_positif:
     Function to test if the first response is a FP or not
@@ -55,21 +55,21 @@ def req_test_false_positif(res, headers):
     url_base = res.split("/")[:3]
     url_send = '/'.join(url_base)+"/"
     try:
-        req_test_w = requests.get(url_send, allow_redirects=False, verify=False, timeout=10)
-        req_test_waf = requests.get(url_send, allow_redirects=True, verify=False, timeout=10)
+        req_test_w = s.get(url_send, allow_redirects=False, verify=False, timeout=10)
+        req_test_waf = s.get(url_send, allow_redirects=True, verify=False, timeout=10)
         #print("Reponse test false positive: {}".format(req_test_waf)) #DEBUG
         if req_test_w.status_code == req_test_waf.status_code:
             return req_test_waf
     except:
         pass
 
-
-def verify_waf(req, res, headers, display=True):
+#@timeit
+def verify_waf(s, req, res, headers, display=True):
     """
     Function verify if there is a WAF to instable website
     """
     #360
-    req_test = req_test_false_positif(res, headers)
+    req_test = req_test_false_positif(s, res, headers)
     if req_test:
         req_response = req_test.text
         if req_test.status_code == 493 or "wzws-waf-cgi" in req_response or "X-Powered-By-360wzb" in req_test.headers:
