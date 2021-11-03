@@ -21662,3 +21662,5 @@ ADOdb.php
 .canna
 .backup
 .Blog.ini.php
+.hi
+.sic.php
