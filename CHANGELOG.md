@@ -1,6 +1,11 @@
 Changelog:
 ----------
 
+- 1.9.6
+---------
+	Fixed: any bugs
+---------
+
 - 1.9.5
 ---------
 	Fixed: A pass on the source code, more speedy
@@ -13,7 +18,7 @@ Changelog:
 
 - 1.9.3
 ---------
-	Upadted: New banner
+	Updated: New banner
 	Fixed:	 Multiple website with file which contain url
 
 - 1.9.2:

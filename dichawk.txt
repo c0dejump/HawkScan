@@ -11422,6 +11422,7 @@ public_html/.well-known/
 .well-known/jwks
 .well-known/
 .well-known/openid-configuration
+.well-known/openid/conf
 .well-known/acme-challenge/
 .well-known/pki-validation/
 .well-known/security.txt
@@ -11851,6 +11852,8 @@ tax_classes.php
 stats_customers.php
 source_editor.js
 server_info.php
+server-webapp
+server-web
 ru_RU.php
 pasteword.js
 packingslip.php
