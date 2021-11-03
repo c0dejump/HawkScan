@@ -532,13 +532,13 @@ class runFuzzing:
                         write_error.write(res+"\n")
                 except Exception:
                     n_error += 1
-                    traceback.print_exc() #DEBUG
+                    #traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
                 q.task_done()
             except Exception:
                 n_error += 1
-                traceback.print_exc() #DEBUG
+                #traceback.print_exc() #DEBUG
                 q.task_done()
             if time_bool: #if a waf detected, stop for any seconds
                 while time_i != 0:
