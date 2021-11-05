@@ -1,6 +1,6 @@
 # HawkScan
 
-![alt tag](https://github.com/c0dejump/HawkScan/blob/master/static/hawkscan_logo.jpeg)
+![alt tag](https://github.com/c0dejump/HawkScan/blob/master/static/logo_hawkscan.jpeg)
 
 Security Tool for Reconnaissance and Information Gathering on a website. (python 3.x)
 
@@ -62,6 +62,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [x] Notify when scan completed (Only work on Linux)
  - [x] Multiple output format. Available formats: json, csv, txt
  - [x] Multiple website scanning
+ - [x] Prefix filename (old_, copy of...)
  
 # TODO 
 **P1 is the most important**
@@ -72,7 +73,6 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder [P2]
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) [P2]
  - [ ] cse google search (buckets...) [P2]
- - [ ] Prefix filename (old_, copy of...) [P2]
  - [ ] Check HTTP headers/ssl security [P3]
  - [ ] Anonymous routing through some proxy (http/s proxy list) [P3]
  - [ ] Check source code and verify leak or sensitive data in the Github // Other tool ? [P3]

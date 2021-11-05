@@ -1,6 +1,11 @@
 Changelog:
 ----------
 
+- 1.9.7
+---------
+	Updated: New logo !
+---------
+
 - 1.9.6
 ---------
 	Fixed:	 Any bugs
