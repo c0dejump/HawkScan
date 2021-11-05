@@ -107,13 +107,13 @@ class parsing_html:
         regex = r'''((https?:)?[/]{1,2}[^'\"> ]{5,})|(\.(get|post|ajax|load)\s*\(\s*['\"](https?:)?[/]{1,2}[^'\"> ]{5,})'''
         if ".js" in url:
             for keyword_match in INTERESTING_KEY:
-                if keyword_match in text.decode('utf-8'):
+                if keyword_match in text.decode('utf-8', errors="ignore"):
                     print("{}Potentialy keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, url))
             for socketio_ in SOCKET_END:
-                if socketio_ in text.decode('utf-8'):
+                if socketio_ in text.decode('utf-8', errors="ignore"):
                     print("{}Potentialy socketio endpoint found \033[33m[{}] \033[0min {}".format(JS, socketio_, url))
         else:
-            matches = re.findall(regex, text.decode('utf-8'))
+            matches = re.findall(regex, text.decode('utf-8', errors="ignore"))
             for match in matches:
                 #print(match[0]) #DEBUG
                 if not any('{}'.format(ext) in match[0] for ext in UNINTERESTING_EXTENSIONS) and url_index in match[0] and ".js" in match[0]:
@@ -123,7 +123,7 @@ class parsing_html:
                         if keyword_match in req_js.text:
                             print("{}Potentialy keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, match[0]))
         for k, v in REGEX_.items():
-            values_found = re.findall(v, text.decode('utf-8'))
+            values_found = re.findall(v, text.decode('utf-8', errors="ignore"))
             if values_found:
                 for v in values_found:
                     print("{}Keyword found \033[33m[{}] \033[0min {} with value \033[32m[{}] \033[0".format(JS, k, url, v))

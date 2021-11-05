@@ -62,7 +62,7 @@ class check_socketio:
                 self.disconnect()
                 found_socket = True
             elif not found_socket and poutput:
-                print(" {} {}{}: {}".format(LESS, url, path, connect))
+                print(" \033[33m\u251c \033[0m {}{}: {}".format(url, path, connect))
         if not found_socket:
             print(" {} Nothing Socketio found".format(LESS))
 

@@ -33,7 +33,7 @@ def detect_wafw00f(url, directory, thread):
                     print(LINE)
                     pass
                 else:
-                    enter_thread = input("{}Enter the number of threads: ".format(INFO))
+                    enter_thread = input(" {} Enter the number of threads: ".format(INFO))
                     if int(enter_thread) > 0:
                         print(LINE)
                         return int(enter_thread)

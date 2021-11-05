@@ -10906,6 +10906,8 @@ testimonials
 testing
 testproxy.php
 tests/phpunit_report.xml
+tests/phpunit/Makefile
+tests/phpunit/
 UnitTests
 testweb
 text

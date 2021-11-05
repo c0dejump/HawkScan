@@ -3,7 +3,7 @@
 
 import sys
 import requests
-from config import WARNING, INFO, LINE
+from config import WARNING, INFO, LINE, INFO_MOD
 import time
 import traceback
 from googlesearch import search 
@@ -64,7 +64,7 @@ def query_dork(domain, directory):
     'site:http://box.com "{}"'.format(domain)
     ]
     for query in queries:
-        print("{}{}\n".format(INFO, query))
+        print("  {}{}\n".format(INFO_MOD, query))
         try:
             for j in search(query, tld="com", num=5, stop=5, pause=2.6):
                 try:
@@ -83,10 +83,10 @@ def query_dork(domain, directory):
                         print(" \033[31m[{}]\033[0m {}".format(req_url_found.status_code, j))
                 except:
                     #traceback.print_exc() #DEBUG
-                    print("{}Error with URL {}".format(WARNING, j))
+                    print("  {}Error with URL {}".format(WARNING, j))
             print("")
         except:
-            print("{} Google captcha seem to be activated, try it later...\n".format(WARNING))
+            print("  {} Google captcha seem to be activated, try it later...\n".format(WARNING))
             break
     print(LINE)
 

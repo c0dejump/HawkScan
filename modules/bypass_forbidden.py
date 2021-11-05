@@ -9,7 +9,7 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 def post(res): req_p = requests.post(res, verify=False, allow_redirects=False, timeout=10); return req_p.status_code, "post"
 def put(res): req_pt = requests.put(res, verify=False, allow_redirects=False, timeout=10); return req_pt.status_code, "put"
 def patch(res): req_ptch = requests.patch(res, verify=False, allow_redirects=False, timeout=10); return req_ptch.status_code, "patch"
-#def options(res): req_o = requests.options(res, verify=False, allow_redirects=False); return req_o.status_code, "options"
+def options(res): req_o = requests.options(res, verify=False, allow_redirects=False, timeout=10); return req_o.status_code, "options"
 
 
 def method(res):
@@ -38,7 +38,7 @@ def original_url(s, res, page, url):
 		print("{}[{}] {} Forbidden Bypass with: 'X-Originating-URL: {}'".format(BYP, req_ou.status_code, url+page, page))
 
 
-def IP_authorization(s, res, url, domain, page):
+def IP_authorization(s, res, url, domain, page, exclude_len):
 	# Ex: http://lpage.com/admin header="X-Custom-IP-Authorization": 127.0.0.1
 	headers_type = [
 	"X-Originating-IP", "X-Forwarded", "Forwarded", "Forwarded-For", "Forwarded-For-IP", "X-Forwarder-For", "X-Forwarded-For", "X-Forwarded-For-Original",
@@ -55,11 +55,17 @@ def IP_authorization(s, res, url, domain, page):
 		for ip in ips_type:
 			headers = {h : ip}
 			req_ip = s.get(res, verify=False, headers=headers, allow_redirects=False, timeout=10)
-			if req_ip.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502, 307] and len(req_ip.content) > 0:
-				print("{}[{}] {} Forbidden Bypass with: {}".format(BYP, req_ip.status_code, url+page, headers))
+			len_req_ip = len(req_ip.content)
+			ranges = range(len_req_ip - 50, len_req_ip + 50) if len_req_ip < 100000 else range(len_req_ip - 1000, len_req_ip + 1000)
+			if req_ip.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502, 307] and len(req_ip.content) not in ranges and len(req_ip.content) > 0:
+				if exclude_len:
+					if exclude_len != len_req_ip:
+						print("{}[{}] {} Forbidden Bypass with: {}".format(BYP, req_ip.status_code, url+page, headers))
+				else:
+					print("{}[{}] {} Forbidden Bypass with: {}".format(BYP, req_ip.status_code, url+page, headers))
 
 
-def other_bypass(s, url, page, req_url):
+def other_bypass(s, url, page, req_url, exclude_len):
 	"""
 	other_bypass: all other known bypass
 	"""
@@ -74,10 +80,14 @@ def other_bypass(s, url, page, req_url):
 		#print(req_payload.status_code) #DEBUG
 		#print("{}:{}".format(len(req_payload.content), len(req_url.content))) #DEBUG
 		if req_payload.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502, 307] and len(req_payload.content) not in ranges and len(req_payload.content) > 0:
-			print("{}[{}] Forbidden Bypass with : {} [{}b]".format(BYP, req_payload.status_code, url_b, len(req_payload.content)))
+			if exclude_len:
+				if exclude_len != len(req_payload.content):
+					print("{}[{}] Forbidden Bypass with : {} [{}b]".format(BYP, req_payload.status_code, url_b, len(req_payload.content)))
+			else:
+				print("{}[{}] Forbidden Bypass with : {} [{}b]".format(BYP, req_payload.status_code, url_b, len(req_payload.content)))
 
 #@timeit #Debug
-def bypass_forbidden(res, s):
+def bypass_forbidden(res, s, exclude_len=False):
 	"""
 	Bypass_forbidden: function for try to bypass code response 403/forbidden
 	"""
@@ -90,16 +100,16 @@ def bypass_forbidden(res, s):
 	req_url = s.get(url, verify=False, timeout=10)
 	if req_url.status_code in [403, 401]:
 		original_url(s, res, page, url)
-		IP_authorization(s, res, url, domain, page)
+		IP_authorization(s, res, url, domain, page, exclude_len)
 		method(res)
-		other_bypass(s, url, page, req_url)
+		other_bypass(s, url, page, req_url, exclude_len)
 	elif len(req_res.content) in range(len(req_url.content) - 50, len(req_url.content) + 50):
 		pass
 	else:
 		original_url(s, res, page, url)
-		IP_authorization(s, res, url, domain, page)
+		IP_authorization(s, res, url, domain, page, exclude_len)
 		method(res)
-		other_bypass(s, url, page, req_url)
+		other_bypass(s, url, page, req_url, exclude_len)
 
 
 """if __name__ == '__main__':

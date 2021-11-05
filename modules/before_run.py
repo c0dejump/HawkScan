@@ -8,7 +8,7 @@ import traceback
 from requests.exceptions import Timeout
 import time
 # External
-from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
+from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK, INFO_MOD
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
@@ -44,9 +44,9 @@ class before_start:
                 search = soup.find('a', {"class":"menu-item selected"})
                 if search:
                     for s in search.find("span"):
-                        print("  {}{}: {}".format(INFO, t, s))
+                        print("  {}{}: {}".format(INFO_MOD, t, s))
                 else:
-                    print("  {}{}: not found".format(INFO, t))
+                    print("  {}{}: not found".format(INFO_MOD, t))
         except:
             print("{}You need connection to check the github".format(WARNING))
         print("\n" + LINE)
@@ -68,9 +68,9 @@ class before_start:
             conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=url)
             conn.connect((url, port))
             cert = conn.getpeercert()
-            print(" Organization: {}".format(cert['subject']))
-            print(" DNS: {}".format(cert['subjectAltName']))
-            print(" SerialNumber: {}".format(cert['serialNumber']))
+            print(" \u251c Organization: {}".format(cert['subject']))
+            print(" \u251c DNS: {}".format(cert['subjectAltName']))
+            print(" \u251c SerialNumber: {}".format(cert['serialNumber']))
             conn.close()
             with open(directory + '/dns_info.csv', 'w+') as file:
                 file.write(str(cert).replace(',','\n').replace('((','').replace('))',''))
@@ -98,7 +98,7 @@ class before_start:
         print("\033[36m Firebaseio Check \033[0m")
         print(LINE)
         url = 'https://{}.firebaseio.com/.json'.format(dire.split(".")[0])
-        print("Target: {}\n".format(url))
+        print(" Target: {}\n".format(url))
         try:
             r = requests.get(url, verify=False).json()
             if 'error' in r.keys():
@@ -161,9 +161,8 @@ class before_start:
 
 
     def check_localhost(self, url):
-        #TODO
         """
-        CHeck_localhost: Function which try automatically if it's possible scanning with "localhost" host for discovery other files/directories
+        Check_localhost: Function which try automatically if it's possible scanning with "localhost" host for discovery other files/directories
         """
         list_test = ["127.0.0.1", "localhost"]
         localhost = False
@@ -174,7 +173,7 @@ class before_start:
             try:
                 req = requests.get(url, headers=header, verify=False, timeout=10)
                 if req.status_code == 200:
-                    print(" {} You can potentialy try bf directories with this option '-H \"Host:{}\"' ".format(PLUS, lt))
+                    print(" \033[32m\u251c\033[0m You can potentialy try bf directories with this option '-H \"Host:{}\"' ".format(lt))
                     localhost = True
                 else:
                     pass
@@ -204,11 +203,11 @@ class before_start:
                     req_ip = requests.get(ip, verify=False, timeout=10)
                     if req_ip.status_code not in [404, 403, 425, 503, 500, 400] and len(req_ip.content) != len_index:
                         retrieve_ip = True
-                        print(" {} The host IP seem to be different, check it: {} ".format(PLUS, ip))
+                        print(" \033[32m\u251c\033[0m The host IP seem to be different, check it: {} ".format(ip))
                 except:
                     pass
             if not retrieve_ip:
-                print(" {} This IP Not seem different host".format(LESS))
+                print(" {} IPs do not appear to be different from the host".format(LESS))
             print(LINE)
         except:
             pass
@@ -228,7 +227,7 @@ class before_start:
             req_index = requests.get(url, verify=False, timeout=10)
             len_index = len(req_index.content)
             domain = domain.split('.')[1] if len(domain.split('.')) > 2 else domain.split('.')[0]
-            print("{}List of backup extension for domain {}: {}\nExemple: {}{}.zip\n".format(INFO, domain, backup_dn_ext, url, domain.split('.')[0]))
+            print(" {}List of backup extension for domain {}: {}\nExemple: {}{}.zip\n".format(INFO, domain, backup_dn_ext, url, domain.split('.')[0]))
             for bdn in backup_dn_ext:
                 url_dn_ext = "{}{}.{}".format(url, domain.split('.')[0], bdn)
                 try:

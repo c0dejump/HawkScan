@@ -137,7 +137,7 @@ s,     """
         if False not in list_exclude.values():
             if req.status_code in [403, 401]:
                 print("{} {} {:<15} {:<15} ".format(HOUR, FORBI, exclude_bytes, res))
-                bypass_forbidden(res, s)
+                bypass_forbidden(res, s, exclude[:-1] if "b" in exclude else False)
             else:
                 print("{} {} {:<15} {:<15}  [{}]".format(HOUR, PLUS, exclude_bytes, res, req.status_code))
             for l_exclude in req_p:
@@ -231,14 +231,14 @@ s,     """
             #print(req.text)
             #print(perc) #DEBUG percentage
             #print(multiple)
-            if perc >= 75 or perc == 67:
+            if perc >= 80:
                 pass
-            elif perc > 50 and perc < 75:
+            elif perc > 50 and perc < 80:
                 print("{} {} {} [Potential exclude page with {}%]".format(HOUR, EXCL, res, perc))
             else:
                 exclude_bytes = "[{} bytes]".format(len(req.content))
                 if req.status_code in [403, 401, 429]:
-                    bypass_forbidden(res, s)
+                    bypass_forbidden(res, s, exclude[:-1] if "b" in exclude else False)
                 elif req.status_code in [500, 400, 422, 423, 424, 425]:
                     if multiple:
                         return True
@@ -397,7 +397,6 @@ class runFuzzing:
                                 scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing)
                     elif status_link in [401, 403]:
                         if exclude:
-                            bypass_forbidden(res, s)
                             if type(req_p) == list and len(req_p) > 1:
                                 #print(len_req)
                                 filterM.check_multiple(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
@@ -532,13 +531,13 @@ class runFuzzing:
                         write_error.write(res+"\n")
                 except Exception:
                     n_error += 1
-                    traceback.print_exc() #DEBUG
+                    #traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
                 q.task_done()
             except Exception:
                 n_error += 1
-                traceback.print_exc() #DEBUG
+                #traceback.print_exc() #DEBUG
                 q.task_done()
             if time_bool: #if a waf detected, stop for any seconds
                 while time_i != 0:
@@ -1154,7 +1153,7 @@ def main(url):
 if __name__ == '__main__':
     #arguments
     parser = argparse.ArgumentParser(add_help = True)
-    parser = argparse.ArgumentParser(description='\033[32m Version 1.9.1 | contact: https://twitter.com/c0dejump\033[0m')
+    parser = argparse.ArgumentParser(description='\033[32m Version 1.9.6 | contact: https://twitter.com/c0dejump\033[0m')
 
     group = parser.add_argument_group('\033[34m> General\033[0m')
     group.add_argument("-u", help="URL to scan \033[31m[required]\033[0m", dest='url')

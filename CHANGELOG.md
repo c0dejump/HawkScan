@@ -3,7 +3,8 @@ Changelog:
 
 - 1.9.6
 ---------
-	Fixed: any bugs
+	Fixed:	 Any bugs
+	Updated: Little style modifications
 ---------
 
 - 1.9.5

@@ -39,7 +39,7 @@ class check_cms:
                     print(LINE)
                     return False, False;
         except:
-            print("{}You need connection to check the CMS".format(WARNING))
+            print(" {} You need connection to check the CMS".format(WARNING))
             print(LINE)
             return False, False;
                 
@@ -80,7 +80,7 @@ class check_cms:
                     print("{}{} : {}".format(WARNING, dates, detail))
                     print(LINE)
             else:
-                print(" {} Nothing wpvunldb found \n".format(LESS))
+                print(" {} Nothing wpvunldb found ".format(LESS))
                 print(LINE)
         else:
             print(" {} Nothing CVE found \n".format(LESS))
