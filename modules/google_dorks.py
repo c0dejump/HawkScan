@@ -84,6 +84,7 @@ def query_dork(domain, directory):
                 except:
                     #traceback.print_exc() #DEBUG
                     print("  {}Error with URL {}".format(WARNING, j))
+                sys.stdout.write("\033[34m[i] Tape ctrl+c to pass\033[0m\r")
             print("")
         except:
             print("  {} Google captcha seem to be activated, try it later...\n".format(WARNING))

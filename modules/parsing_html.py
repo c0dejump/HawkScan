@@ -60,7 +60,7 @@ class parsing_html:
                                             print("{}[200] Potentialy s3 buckets found: {} in {}".format(S3, rv, res))
                                             read_links.write(rv + "\n")
                                     except:
-                                        print("{} Error with the URL {}".format(S3, rv))
+                                        #print("{} Error with the URL {}".format(S3, rv))
                                         pass
                                         #traceback.print_exc()
 
@@ -100,8 +100,8 @@ class parsing_html:
          => interesting ? false positive ?
         """
         INTERESTING_KEY = ['ApiKey', 'appKey', '_public_key', '_TOKEN', '_PASSWORD', '_DATABASE', 
-        'SECRET_KEY', 'client_secret', '_secret', 'api_key', 'APPKey', 'apiSettings', 'sourceMappingURL', 'private_key']
-        SOCKET_END = ["socket.io", "socketio", "socket", "websocket", "app.module.ts"]
+        'SECRET_KEY', '_secret', 'api_key', 'APPKey', 'apiSettings', 'sourceMappingURL', 'private_key', 'JWT_SECRET', 'api_secret_key']
+        SOCKET_END = ["socket.io", "socketio", "socket", "websocket", "app.module.ts", "ws://", "wss://"]
         text = req.content
         url = req.url
         regex = r'''((https?:)?[/]{1,2}[^'\"> ]{5,})|(\.(get|post|ajax|load)\s*\(\s*['\"](https?:)?[/]{1,2}[^'\"> ]{5,})'''

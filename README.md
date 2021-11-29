@@ -15,6 +15,9 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
 
 # News v1.9.x
+    New LOGO by @__PH4NTOM__!
+    New ways to bypass forbidden (Thanks @yunem_se !)
+    New socketio endpoints & New words in dichawk.txt
     Fixed percentage & line count bug during scan
     Display errors number in live during scan 
     Output file format function. Available formats: json, csv, txt
@@ -69,6 +72,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
  [WIP] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))
  - [ ] Better thread management [P1]
+ - [ ] Add a function to test multiple diff directories like "url/toto/, url/titi, url/tutu"
  - [ ] Push results into DB [P2]
  - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder [P2]
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) [P2]

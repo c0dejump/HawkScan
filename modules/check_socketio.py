@@ -13,7 +13,7 @@ from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
 
 
 socketio_paths = [
-            "socket.io", "socketio", "io", "socket", "signalr", "xmpp-websocket", "websocket"
+            "socket.io", "socketio", "io", "socket", "signalr", "xmpp-websocket", "websocket", ".ws", "ws"
         ]
 
 
@@ -64,7 +64,7 @@ class check_socketio:
             elif not found_socket and poutput:
                 print(" \033[33m\u251c \033[0m {}{}: {}".format(url, path, connect))
         if not found_socket:
-            print(" {} Nothing Socketio found".format(LESS))
+            print(" \033[33m{}\033[0m Nothing Socketio found".format(LESS))
 
 
     def main_socketio(self, url):
@@ -75,7 +75,7 @@ class check_socketio:
             urls.append(url)
             urls.append(url.replace("www.", ""))
             for u in urls:
-                print(" {} {}".format(INFO, u))
+                print(" \033[34m\u251c\033[0m {}".format(u))
                 self.run_socketio(u, poutput=False)
         else:
             self.run_socketio(url, poutput=True)

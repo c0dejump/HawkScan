@@ -1,9 +1,22 @@
 Changelog:
 ----------
 
+- 1.9.9
+---------
+	New: Cloudflare protection detection in live
+	Updated: Bugs correction with backup extension scan
+---------
+
+- 1.9.8
+---------
+	Updated: New ways to bypass forbidden (Thanks @yunem_se !)
+	Updated: New socketio endpoints
+	Updated: New words in dichawk.txt
+---------
+
 - 1.9.7
 ---------
-	Updated: New logo !
+	Updated: New logo by @__PH4NTOM__!
 ---------
 
 - 1.9.6

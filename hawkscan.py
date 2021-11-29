@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = '1.9.7'
+__version__ = '1.9.9'
 __program__ = 'HawkScan'
 __author__ = 'codejump'
 __twitter__ = 'https://twitter.com/c0dejump'
@@ -135,7 +135,7 @@ s,     """
                     list_exclude[m_exclude] = True
         #print(list_exclude)
         if False not in list_exclude.values():
-            if req.status_code in [403, 401]:
+            if req.status_code in [403, 401] and not forced:
                 print("{} {} {:<15} {:<15} ".format(HOUR, FORBI, exclude_bytes, res))
                 bypass_forbidden(res, s, exclude[:-1] if "b" in exclude else False)
             else:
@@ -297,7 +297,7 @@ class runFuzzing:
         #waf_score = 0
         percentage = lambda x, y: float(x) / float(y) * 100.00
         stop_add_thread = False
-        time_i = 120
+        time_i = 60
         time_bool = False
         waf = False
         tested_bypass = False
@@ -339,7 +339,7 @@ class runFuzzing:
                                 tested_bypass = True
                             elif try_bypass_waf and type(try_bypass_waf) is not bool:
                                 user_agent.update(try_bypass_waf)
-                        time_bool = True
+                        time_wait(time_i)
                         #TODO: if waf_score == X: manager.stop_thread() & re-create with the bypass or potentialy use TOR (apt install tor, pip install torrequest) for next requests after that.
                         #pass
                     if redirect and req.history:
@@ -392,7 +392,7 @@ class runFuzzing:
                                     result = "/".join(spl)
                                     rec_list.append(result)
                             #report.create_report_url(status_link, res, directory) #TODO
-                            if backup != None and backup == []:
+                            if backup != None:
                                 vim_backup(s, res, user_agent)
                                 scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing)
                     elif status_link in [401, 403]:
@@ -508,22 +508,24 @@ class runFuzzing:
                         if req_test_index.status_code == 503:
                             #manager.stop_thread() #TODO
                             print("{}{} Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(get_date(), WARNING))
-                            time_bool = True
+                            time_wait(time_i)
                         else:
                             pass
                     elif status_link in [429, 522]:
-                        req_test_many = s.get(url, verify=False, timeout=10, allow_redirects=False)
-                        if req_test_many in [429, 522]:
-                            print("{} {} Too many requests, web service seem to be offline".format(get_date(), WARNING))
-                            print("STOP so many requests, we should wait a little...")
-                            time_bool = True
+                        if "Just a moment" in req.text:
+                            print("{} {} Cloudflare protection activated, wait 60s please".format(get_date(), WARNING))
+                            time_wait(time_i)
                         else:
-                            pass
-                            #print(" {}{}{} 429".format(get_date(), LESS, res))
+                            req_test_many = s.get(url, verify=False, timeout=10, allow_redirects=False)
+                            if req_test_many in [429, 522]:
+                                print("{} {} Too many requests, web service seem to be offline".format(get_date(), WARNING))
+                                print("{} {} STOP so many requests, we should wait a little...".format(get_date(), WARNING))
+                                time_wait(time_i)
+                            else:
+                                pass
                     if backup:
                         if "min" in backup or "all" in backup:
                             scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing)
-
                 except Timeout:
                     n_error += 1
                     #traceback.print_exc() #DEBUG
@@ -539,14 +541,14 @@ class runFuzzing:
                 n_error += 1
                 #traceback.print_exc() #DEBUG
                 q.task_done()
-            if time_bool: #if a waf detected, stop for any seconds
-                while time_i != 0:
-                    time_i -= 1
-                    time.sleep(1)
-                time_i = 60
-                time_bool = False
-            else:
-                Progress(len_w, thread_count, nLine, page, percentage, tw)
+            Progress(len_w, thread_count, nLine, page, percentage, tw)
+
+
+def time_wait(time_i):
+    while time_i != 0:
+        time_i -= 1
+        time.sleep(1)
+        sys.stdout.write(" Time Remaining: {}\r".format(time_i))
 
 
 def scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing):
@@ -556,12 +558,14 @@ def scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_cou
     if len(backup) > 0 and backup[0] == "min":
         bckp = MINI_B  
     else:
-        bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
+        if len(backup) == 1:
+            for bck in backup:
+                bckp = bck.split(",")
+        else:
+            bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
     size_check = 0
 
     for exton in bckp:
-
-        Progress(len_w, thread_count, nLine, page, percentage, tw, extension_bck=exton)
         size_bckp = suffix_backup(s, res, page, exton, size_check, directory, forbi, get_date(), parsing, filterM)
         size_check = size_check if size_bckp == None else size_bckp
 
@@ -964,17 +968,14 @@ def get_date():
     return HOUR
 
 
-def Progress(len_w, thread_count, nLine, page, percentage, tw, extension_bck=False):
+def Progress(len_w, thread_count, nLine, page, percentage, tw):
     """
     Progress: just a function to print the scan progress
     """
     progress_print = "\033[34m 100% - {0}/{1} | T:{2} | Errors: {3} | {4}\033[0m\r".format(n+nLine, len_w, thread_count, n_error, page if len(page) < 60 else page.split("/")[-3:-1])
     little_progress_print = "\033[34m {0}/{1} | Errors: {2} | {3}\033[0m\r".format(n, len_w, n_error, page if len(page) < 70 else page.split("/")[-3:-1])
-    if tw < 110 and backup == None:
+    if tw < 110:
         sys.stdout.write(little_progress_print)
-        if len(little_progress_print) > 40: sys.stdout.write("\033[K") #clear line
-    elif backup != None:
-        sys.stdout.write("\033[34m {0}/{1} | Errors: {2} | {3} | {4}\033[0m\r".format(n, len_w, n_error, extension_bck, page if len(page) < 60 else page.split("/")[-3:-1]))
         if len(little_progress_print) > 40: sys.stdout.write("\033[K") #clear line
     else:
         per = percentage(n+nLine, len_w)
@@ -1153,7 +1154,7 @@ def main(url):
 if __name__ == '__main__':
     #arguments
     parser = argparse.ArgumentParser(add_help = True)
-    parser = argparse.ArgumentParser(description='\033[32m Version 1.9.7 | contact: https://twitter.com/c0dejump\033[0m')
+    parser = argparse.ArgumentParser(description='\033[32m Version 1.9.9 | contact: https://twitter.com/c0dejump\033[0m')
 
     group = parser.add_argument_group('\033[34m> General\033[0m')
     group.add_argument("-u", help="URL to scan \033[31m[required]\033[0m", dest='url')
@@ -1213,7 +1214,7 @@ if __name__ == '__main__':
     proxie = results.proxie
 
     if len(sys.argv) < 2:
-        print("{}URL target is missing, try using -u <url> or -h for help".format(INFO))
+        print("{}URL target is missing, try using -u <url> \n".format(INFO))
         parser.print_help()
         sys.exit()
 

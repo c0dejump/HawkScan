@@ -32,6 +32,7 @@ phplist/admin/auth/phplist_auth.inc
 locale/
 phplist/
 1.txt
+.mdf
 index.php
 index.php?-s
 index.php.sample
@@ -78,6 +79,7 @@ annonces.php
 connexion/
 connexion.php
 secret.php
+htaccess
 .htpasswd/
 .htaccess/
 .HTACCESS
@@ -112,6 +114,8 @@ projetcommandes.php.mine
 projetcommandes.php
 project_error.log
 project_access.log
+project_management
+project_management.php
 SymfonyRequirements.php
 requirements.php
 _fragment
@@ -167,6 +171,7 @@ defaultconfig
 .github/
 .github
 .github/workflows/
+.rdp
 bundles.php
 obj/
 obj/Debug/
@@ -297,6 +302,7 @@ wp-content/index.php
 ConfigCache.php
 Filesystem.php
 WebServer.php
+webservers
 webserver.xm
 Security.php
 security.php
@@ -664,6 +670,7 @@ kube-apiserver.log
 basic_auth.csv
 config.source
 10-flannel.conf
+webroot
 app/webroot/
 app/webroot/files/
 webroot/uploads
@@ -911,6 +918,8 @@ page-sitemap.xml
 sitemap_index.xml
 SiteMap/
 sitemap.xml
+sitetext-2
+sitetext
 SiteServer/
 Sites/
 Software/
@@ -1055,6 +1064,7 @@ aerobics/
 afegir/
 affiliate/
 affiliates/
+filings
 africa/
 agafar/
 agenda/
@@ -1260,6 +1270,7 @@ babylon5/
 bacchus/
 bach/
 back/
+back/login.php
 backissues/
 back-up/
 backdoor/
@@ -1659,6 +1670,8 @@ charon/
 chart/
 chat/
 check/
+checklists
+checklists.php
 cheese/
 chelsea/
 chem/
@@ -1938,6 +1951,7 @@ dasha/
 dat/
 data/
 data/amazon/
+data/plugins
 database/
 databases/
 data/runtime/mtmp/system
@@ -2019,6 +2033,7 @@ dev60cgi/
 devel/
 develop/
 developement/
+webdevelopment
 developer/
 developers/
 development/
@@ -2275,11 +2290,17 @@ executables/
 exiar/
 expert/
 experts/
+TicketTracker
 exploits/
 explorer/
 export/
 express/
 extension/
+extension/manifest.json
+extension/background.js
+extension/popup/public/js/controls.js
+manifest.json
+background.js
 external/
 externes/
 externos/
@@ -2686,6 +2707,7 @@ horses/
 horus/
 host/
 hosting/
+hosting/discovery
 hosts/
 hotdog/
 hotels/
@@ -3292,10 +3314,6 @@ money/
 money1/
 monitor/
 monitors/
-monkey/
-monopoly/
-montana/
-montreal/
 moocow/
 mookie/
 moomoo/
@@ -3312,7 +3330,6 @@ mostrar/
 mostres/
 mot/
 mother/
-moto-news/
 moto1/
 mount/
 mountain/
@@ -3497,6 +3514,7 @@ os/
 oscar/
 osiris/
 other/
+other_services
 others/
 ou812/
 out/
@@ -3706,6 +3724,7 @@ portal/jolokia
 portal/jolokia/list
 portal/trace
 portal/heapdump
+portal_themes
 porter/
 portfolio/
 portland/
@@ -3941,6 +3960,8 @@ reports/
 reprints/
 republic/
 request/
+requestinfo
+requestinfo.php
 requests/
 requests/secure/
 ID3/
@@ -4477,6 +4498,10 @@ syndication/
 sys/
 sysfail-ftp
 sysadmin/
+system-requirements
+systemrequirements
+systemrequirements.php
+system-requirements.php
 system/
 system/config.ini
 system_web/
@@ -4876,6 +4901,7 @@ volunteer/
 voodoo/
 vote/
 vpn/
+.ovpn
 w/
 w3/
 w3c/
@@ -4912,6 +4938,7 @@ webhits/
 weblog/
 weblogic/
 weblogs/
+weblogsinc
 webmail/
 webmaste/
 webmaster/
@@ -5329,6 +5356,7 @@ dataSources.local.xml
 .jshintrc
 .keep
 .keys.yml
+.keychain
 keys/
 keys
 httpd.pid
@@ -5942,6 +5970,11 @@ accounts.rb
 accounts.txt
 accounts.xml
 Accounts/
+accounts/api
+accounts/api/v1_0/
+accounts/api/v1_0/accounts/
+accounts/api/v1_0/accounts/config
+accounts/health_check
 accounts/login
 accounts/login.%EXT%
 accounts/login.htm
@@ -6093,6 +6126,8 @@ Admin.shtml
 admin.shtml
 admin.srf
 admin.woa
+admin/console/v1/user/auth/getEnvId
+admin/console/v1/user/auth/getToken
 admin/.config
 admin/.htaccess
 admin/?/login
@@ -7203,6 +7238,7 @@ archive.tar.gz
 archive.zip
 archiver
 archives
+archived
 Archi~1/
 archi~1/
 arrow
@@ -7234,6 +7270,8 @@ asynchbeans/docs/
 AT-admin.cgi
 atlassian-ide-plugin.xml
 atom
+news.atom
+.atom
 attachmentedit.%EXT%
 audio
 auth
@@ -7369,6 +7407,8 @@ bbadmin
 bbadmin/
 BBApp
 bbemail
+email-security
+email-security.php
 bbpre
 bbs/admin/login
 bbs/admin_index.asp
@@ -7405,6 +7445,8 @@ bigdump.php
 BigDump/
 billing
 billing/killer.php
+prod.exs
+prod.secret.exs
 bin
 Bin/
 bin/config.sh
@@ -7447,6 +7489,7 @@ blank
 blocks
 blog
 Blog
+blogs/news.atom
 blog/error_log
 blog/fckeditor
 blog/wp-content/backup-db/
@@ -7858,6 +7901,8 @@ content
 content.%EXT%
 content/debug.log
 content_admin
+content_security
+content_security.php
 contentadmin
 contents
 CONTRIBUTING.md
@@ -7880,11 +7925,13 @@ cookie
 cookie.php
 CookieExample
 cookies
+cookies_info
 coppermine
 COPYING
 copyright
 core
 core/fragments/moduleInfo.phtml
+fragments
 corporate
 count_admin
 Counter
@@ -7974,6 +8021,7 @@ dashboard.%EXT%
 dat
 data
 data-nseries.tsv
+data-recovery
 data.mdb
 data.sql
 data.sqlite
@@ -8166,9 +8214,12 @@ download/users.csv
 downloader
 downloader/cache.cfg
 downloader/connect.cfg
+downloads1
 Downloads
 downloads
 downloads/dom.php
+download-managers
+download-managers.php
 dp
 DP
 dpadmin.%EXT%
@@ -9359,6 +9410,7 @@ messages
 StockWebservice/stockendpoint
 StockWebservice/
 webcontent/
+container
 META-INF
 META-INF/context.xml
 meta_login/
@@ -10101,6 +10153,8 @@ programs
 progra~1
 Progra~1
 project-admins/
+project-management/
+project-management.php
 project.xml
 projects
 promo
@@ -10307,6 +10361,8 @@ searchreplacedb2cli.php
 searchresults.%EXT%
 searchresults.html
 secret
+secret_token
+secret_token.rb
 Secret
 Secret/
 secretadmin
@@ -10410,6 +10466,7 @@ setup
 setup.php
 setup.sql
 sftp-config.json
+sftp.json
 config.gypi
 Sh3ll.php
 share
@@ -11543,6 +11600,8 @@ yonetim.html
 yonetim.php
 yum.log
 zabbix/
+zabbix.php
+zabbix.php?action=dashboard.list
 conf-available/php7.0-fpm.conf
 conf-available/
 zebra.conf
@@ -12106,6 +12165,8 @@ en.php
 effects.js
 edituser.php
 downloads.php
+downloads-off
+downloads-off.php
 default_raw.php
 database.mysqli.php
 contacts.php
@@ -13475,6 +13536,7 @@ cpp.php
 cpp.js
 courier.php
 control_panel.php
+control_panel
 contatti.php
 contactus.php
 connector.py
@@ -15136,6 +15198,8 @@ domlog.nsf
 documentation.txt
 document_product.php
 document_general.php
+document_management
+document_management.php
 div.php
 div.js
 display_wishlist.tpl
@@ -17795,6 +17859,7 @@ mplayerhq.hu
 move_site.php
 most_seen_news.php
 more_links.php
+more_info.php
 morc.txt
 mootools.bgiframe.js
 mootools.ajax.js
@@ -18540,6 +18605,7 @@ help_bbcode.php
 help_attachments.php
 help_about.php
 help_0.php
+help_rootview
 hejri_calendar.php
 heike.bmp
 heb_setup.php
@@ -19301,6 +19367,8 @@ dateparser.php
 datafile_func.php
 databackup.php
 data_role_cache.php
+data_protection
+data_protection.php
 data_ranks.php
 data_modules_ucp.php
 data_modules_mcp.php
