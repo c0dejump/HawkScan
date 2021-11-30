@@ -553,7 +553,7 @@ def time_wait(time_i):
 
 def scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing):
 
-    prefix_backup(res, user_agent, directory, forbi, get_date(), filterM)
+    prefix_backup(s, res, user_agent, directory, forbi, get_date(), filterM, parsing)
 
     if len(backup) > 0 and backup[0] == "min":
         bckp = MINI_B  
@@ -821,7 +821,7 @@ def suffix_backup(s, res, page, exton, size_check, directory, forbi, HOUR, parsi
             print("{}{} {}".format(HOUR, res_b if tw > 120 else page_b, req_b.status_code))
 
 
-def prefix_backup(res, user_agent, directory, forbi, HOUR, filterM):
+def prefix_backup(s, res, user_agent, directory, forbi, HOUR, filterM, parsing):
     """
     prefix_backup:
     Like the function 'suffix_backup' but check if the type backup dir like '~articles/' exist.
@@ -839,7 +839,7 @@ def prefix_backup(res, user_agent, directory, forbi, HOUR, filterM):
         if status_tild not in [404, 403, 500, 400, 301, 302]:
             if exclude:
                 if len(exclude) > 1:
-                    filterM.check_multiple(s, req_tild, res_b, directory, forbi, HOUR, parsing, size_bytes=len(req_tild.content))
+                    filterM.check_multiple(s, req_tild, res, directory, forbi, HOUR, parsing, size_bytes=len(req_tild.content))
                 elif type(req_p) == int:
                     filterM.check_exclude_code(s, res, req_tild, directory, HOUR, parsing)
                 else:
