@@ -1,6 +1,15 @@
 Changelog:
 ----------
 
+- 2.0
+---------
+	Redefining priorities/tasks
+	New: Display the current bypass number during scan ("CB:")
+	New: Easter egg for xmas :)
+	Updated: Fix any bugs
+
+---------
+
 - 1.9.9
 ---------
 	New: Cloudflare protection detection in live

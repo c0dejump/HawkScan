@@ -6,10 +6,10 @@ from config import PLUS, WARNING, INFO, BYP
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
-def post(res): req_p = requests.post(res, verify=False, allow_redirects=False, timeout=10); return req_p.status_code, "post"
-def put(res): req_pt = requests.put(res, verify=False, allow_redirects=False, timeout=10); return req_pt.status_code, "put"
-def patch(res): req_ptch = requests.patch(res, verify=False, allow_redirects=False, timeout=10); return req_ptch.status_code, "patch"
-def options(res): req_o = requests.options(res, verify=False, allow_redirects=False, timeout=10); return req_o.status_code, "options"
+def post(res): req_p = requests.post(res, verify=False, allow_redirects=False, timeout=10); return req_p.status_code, "post", len(req_p.content)
+def put(res): req_pt = requests.put(res, verify=False, allow_redirects=False, timeout=10); return req_pt.status_code, "put", len(req_pt.content)
+def patch(res): req_ptch = requests.patch(res, verify=False, allow_redirects=False, timeout=10); return req_ptch.status_code, "patch", len(req_ptch.content)
+def options(res): req_o = requests.options(res, verify=False, allow_redirects=False, timeout=10); return req_o.status_code, "options", len(req_o.content)
 
 
 def method(res):
@@ -18,14 +18,16 @@ def method(res):
 	Ex: OPTIONS /admin
 	"""
 	result_list = []
-	for funct in [post, put, patch]:
+	for funct in [post, put, patch, options]:
 		try:
 			result_list.append(funct(res))
 		except:
 			pass
-	for rs, type_r in result_list:
-		if rs not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 502, 307]:
-			print("{} Forbidden page {} Bypass with this requests type: {} [{}b]".format(BYP, res, type_r, rs))
+			#traceback.print_exc()
+			#sys.exit()
+	for rs, type_r, len_req in result_list:
+		if rs not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 502, 307] and len_req != 0:
+			print("{}[{}] Forbidden page {} Bypass with this requests type: {}".format(BYP, rs, res, type_r))
 
 
 def original_url(s, res, page, url):
@@ -70,7 +72,7 @@ def other_bypass(s, url, page, req_url, exclude_len):
 	other_bypass: all other known bypass
 	"""
 	payl = [page+"/.", "/"+page+"/", "./"+page+"/./", "%2e/"+page, page+"/.;/", ".;/"+page, page+"..;", page+"/;/", page+"..%3B",
-	page+"/%3B", page+".%3B/", page+"~", page+"/..;/", page+"%20", page+"%09", page+"%00", page+"??", page+"#"] #http://exemple.com/+page+bypass
+	page+"/%3B", page+".%3B/", page+"~", page+"/..;/", page+"%20", page+"%09", page+"%00", page+"??", page+"#", page+"/*", page+"/*/"] #http://exemple.com/+page+bypass
 
 	len_req_url = len(req_url.content)
 	ranges = range(len_req_url - 50, len_req_url + 50) if len_req_url < 100000 else range(len_req_url - 1000, len_req_url + 1000)

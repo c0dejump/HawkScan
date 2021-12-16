@@ -236,6 +236,7 @@ wp-content/uploads/file-manager/log.txt
 wp-content/uploads/file-manager/
 wp-admin.php
 wp-login.php
+wp-login.php?normal=1
 wp-login.php?action=register
 wp-login.php?action=enter_recovery_mode
 wp-login.php?action=enter_recovery_mode&rm_token=yfj8Sp2kynyGSLXIJAlpAK&rm_key=l3JHzZeZiCaff7XpUpIhQ4
@@ -245,6 +246,7 @@ wp-includes/certificates/
 wp-content/
 wp-includes/wlwmanifest.xml
 wp-json/
+wp-json/th/v1/user_generation
 wp-json/wp/v2/users
 wp-json/wp/v2/posts
 wp/v2/settings
@@ -689,6 +691,9 @@ hsqldb
 hsqldb%0a
 %0d%0atest
 graphql/
+_graphql
+__graphql
+___graphql
 graphql/console/
 graphql.php
 graphiql/
@@ -1270,7 +1275,6 @@ babylon5/
 bacchus/
 bach/
 back/
-back/login.php
 backissues/
 back-up/
 backdoor/
@@ -5327,12 +5331,14 @@ dataSources.local.xml
 .idea/encodings.xml
 .idea/misc.xml
 .idea/modules.xml
+.idea/sqldialects.xml
 .idea/scopes/scope_settings.xml
 .idea/Sites.iml
 .idea/sqlDataSources.xml
 .idea/tasks.xml
 .idea/uiDesigner.xml
 .idea/vcs.xml
+.idea/.gitignore
 .idea/woaWordpress.iml
 .idea/workspace(2).xml
 .idea/workspace(3).xml
@@ -11443,6 +11449,7 @@ Wordpress/
 WordPress/
 WP
 wp-admin/maint/
+wp-admin/import.php
 wp-rdf.php
 wp-admin/maint/repair.php
 wp-admin/c99.php
@@ -11477,6 +11484,7 @@ wp-config2.txt
 wp-config.txt
 wp-config-temp.php
 public_html/.well-known/
+jwks.json
 .well-known/jwks.json
 .well-known/jwks
 .well-known/

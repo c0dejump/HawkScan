@@ -14,54 +14,48 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Donations](https://github.com/c0dejump/HawkScan/#donations)
 - [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
 
-# News v1.9.x
-    New LOGO by @__PH4NTOM__!
-    New ways to bypass forbidden (Thanks @yunem_se !)
-    New socketio endpoints & New words in dichawk.txt
-    Fixed percentage & line count bug during scan
-    Display errors number in live during scan 
-    Output file format function. Available formats: json, csv, txt
-    Reduction of false positives number
-    Header of Hawkscan when your typing "head hawkscan.py"
-    Multiple website scanning
-    New banner
-    Add vim backup test
-    Add coffee page
+# News v2.x
+    - Redefining priorities/tasks
+    - Display the current bypass number during scan ("CB:")
+    - Easter egg for xmas :)
 *(for more details go on CHANGELOG.md)* 
  
 # Installation
 ``` 
 
-       git clone https://github.com/c0dejump/HawkScan.git && sudo python3 HawkScan/setup.py install
-
-       pip(3) install -r requirements.txt 
-    Or:    
-       sudo python3 -m pip install -r requirements.txt
+       - git clone https://github.com/c0dejump/HawkScan.git && sudo python3 HawkScan/setup.py install
+       
+       - pip(3) install -r requirements.txt 
+    
+       - python3 -m pip install -r requirements.txt
 
 ``` 
 
 # Special features
- - [x] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
+
+## Before scan
  - [x] Check header information
  - [x] Check DNS information
- - [x] Check email in the website and in same time if emails leaked (report)
- - [x] CMS detection + version and vulns
- - [x] Backup system (if the script stopped, it take again in same place)
- - [x] WAF detection and Response error to WAF + Testing bypass it
  - [x] Check Github
- - [x] Option --exclude to exclude page, code error, bytes
- - [x] Option rate-limit if app is unstable (--timesleep)
+ - [x] CMS detection + version and vulns
  - [x] Check in waybackmachine
  - [x] Check if DataBase firebaseio existe and accessible
- - [x] Search S3 buckets in source code page
  - [x] Testing if it's possible scanning with "localhost" host
- - [x] Try differents bypass for 403 code error
- - [x] JS parsing and analysis (option --js)
  - [x] Check Google Dork 
  - [x] Check Host IP
- - [x] Auto resize relative to window
  - [x] Check backup domain name (ex: www.domain.com/domain.zip)
  - [x] Check socketio connection
+
+## During - After scan
+ - [x] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
+ - [x] Backup system (if the script stopped, it take again in same place)
+ - [x] WAF detection and Response error to WAF + Testing bypass it
+ - [x] Option --exclude to exclude page, code error, bytes
+ - [x] Option rate-limit if app is unstable (--timesleep)
+ - [x] Search S3 buckets in source code page
+ - [x] Try differents bypass for 403/401 code error
+ - [x] JS parsing and analysis (option --js)
+ - [x] Auto resize relative to window
  - [x] Notify when scan completed (Only work on Linux)
  - [x] Multiple output format. Available formats: json, csv, txt
  - [x] Multiple website scanning
@@ -71,17 +65,16 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 **P1 is the most important**
 
  [WIP] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))
- - [ ] Better thread management [P1]
- - [ ] Add a function to test multiple diff directories like "url/toto/, url/titi, url/tutu"
+ - [ ] asyncio instead of threading ? [PX]
  - [ ] Push results into DB [P2]
- - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder [P2]
- - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) [P2]
+ - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder (like) // interesting ? [P2]
+ - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) // add proxy funtion [P2]
  - [ ] cse google search (buckets...) [P2]
- - [ ] Check HTTP headers/ssl security [P3]
+ - [ ] Check HTTP headers/ssl security: securityheaders; digicert ? [P3]
  - [ ] Anonymous routing through some proxy (http/s proxy list) [P3]
  - [ ] Check source code and verify leak or sensitive data in the Github // Other tool ? [P3]
- - [ ] Analyse html code webpage [P3] => really necessary?
- - [ ] Scan API endpoints/informations leaks [ASAP]
+ - [ ] Analyse html code webpage [P3] => really necessary ?
+ - [ ] Scan API endpoints/informations leaks [P3]
 
 # Usage
   
@@ -164,7 +157,7 @@ Cyber_Ph4ntoM (https://twitter.com/__PH4NTOM__) [Beta tester & Logo Graphist]
 
 https://www.paypal.me/c0dejump
 
-Or if you want buy me a coffee :)
+Or if you want to offer me a coffee :)
 
 https://ko-fi.com/c0dejump
 
