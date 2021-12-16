@@ -33,7 +33,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
 # Special features
 
-## Before scan
+### Before scan
  - [x] Check header information
  - [x] Check DNS information
  - [x] Check Github
@@ -46,7 +46,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [x] Check backup domain name (ex: www.domain.com/domain.zip)
  - [x] Check socketio connection
 
-## During - After scan
+### During - After scan
  - [x] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
  - [x] Backup system (if the script stopped, it take again in same place)
  - [x] WAF detection and Response error to WAF + Testing bypass it
