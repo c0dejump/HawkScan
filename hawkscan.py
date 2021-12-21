@@ -138,7 +138,7 @@ s,     """
                     list_exclude[m_exclude] = True
         #print(list_exclude)
         if False not in list_exclude.values():
-            if req.status_code in [403, 401] and not forced:
+            if req.status_code in [403, 401]:
                 print("{} {} {:<15} {:<15} ".format(HOUR, FORBI, exclude_bytes, res))
                 bypass_forbidden(res, s, exclude[:-1] if "b" in exclude else False)
             else:
@@ -179,7 +179,7 @@ s,     """
                 output_scan(directory, res, req_bytes, 200)
 
 
-    def check_exclude_page(self, s, req, res, directory, forbi, HOUR, parsing=False, size_bytes=False, multiple=False):
+    def check_exclude_page(self, s, req, res, directory, forbi, HOUR, bp_current, parsing=False, size_bytes=False, multiple=False):
         """
         Check_exclude_page:  
         If scan blog, or social network etc.. you can activate this option to pass profil/false positive pages or response status code.
@@ -372,7 +372,7 @@ class runFuzzing:
                                 filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
                             else:
                                 #print(req)
-                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
                         else:            
                             if "robots.txt" in res.split("/")[3:]:
                                 print("{} {} {}".format(get_date(), PLUS, res))
@@ -416,7 +416,7 @@ class runFuzzing:
                                 filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
                             else:
                                 #print(req)
-                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
                         else:         
                             if res[-1] == "/" and recur:
                                 bp_current += 1
@@ -459,7 +459,7 @@ class runFuzzing:
                                 filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
                             else:
                                 #print(req)
-                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
                         else:
                             print("{} {} {:<15} {:<15} [405]".format(get_date(), INFO, bytes_len, display_res))
                         #report.create_report_url(status_link, res, directory)
@@ -471,7 +471,7 @@ class runFuzzing:
                                 elif type(req_p) == int:
                                     filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
                                 else:
-                                    filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                                    filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
                             else:                
                                 print("{} {} {}\033[33m => {}\033[0m 301 Moved Permanently\r".format(get_date(), LESS, display_res, redirect_link))
                                 if len(req.content) > 0:
@@ -486,7 +486,7 @@ class runFuzzing:
                                 elif type(req_p) == int:
                                     filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
                                 else:
-                                    filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                                    filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
                             else:                
                                 print("{} {} {}\033[33m => {}\033[0m 302 Moved Temporarily".format(get_date(), LESS, display_res, redirect_link))
                                 if len(req.content) > 0:
@@ -508,7 +508,7 @@ class runFuzzing:
                             elif type(req_p) == int:
                                 filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
                             else:
-                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
+                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
                         else:
                             vim_backup(s, res, user_agent)          
                             server_error = "400" if status_link == 400 else "500"
@@ -549,13 +549,13 @@ class runFuzzing:
                         write_error.write(res+"\n")
                 except Exception:
                     n_error += 1
-                    traceback.print_exc() #DEBUG
+                    #traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
                 q.task_done()
             except Exception:
                 n_error += 1
-                traceback.print_exc() #DEBUG
+                #traceback.print_exc() #DEBUG
                 q.task_done()
             Progress(len_w, thread_count, nLine, page, percentage, tw, bp_current)
 
@@ -992,11 +992,11 @@ def Progress(len_w, thread_count, nLine, page, percentage, tw, bp_current):
     little_progress_print = "\033[34m {0}/{1} | Errors: {2} | Cb: {3} | {4}\033[0m\r".format(n, len_w, n_error, bp_current, page if len(page) < 70 else page.split("/")[-3:-1])
     if tw < 110:
         sys.stdout.write(little_progress_print)
-        if len(little_progress_print) > 40: sys.stdout.write("\033[K") #clear line
+        if len(little_progress_print) > 42: sys.stdout.write("\033[K") #clear line
     else:
         per = percentage(n+nLine, len_w)
         sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | Errors: {4} | CB: {5} | {6}\033[0m\r".format(per, n+nLine, len_w, thread_count, n_error, bp_current, page if len(page) < 60 else page.split("/")[-3:-1]))
-        if len(progress_print) > 70: sys.stdout.write("\033[K") #clear line 
+        if len(progress_print) > 60: sys.stdout.write("\033[K") #clear line 
 
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):

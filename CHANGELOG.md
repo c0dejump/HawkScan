@@ -4,6 +4,7 @@ Changelog:
 - 2.0
 ---------
 	Redefining priorities/tasks
+	New: Let's debug certificate subdomains results
 	New: Display the current bypass number during scan ("CB:")
 	New: Easter egg for xmas :)
 	Updated: Fix any bugs

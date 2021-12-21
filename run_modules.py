@@ -26,6 +26,7 @@ class check_modules:
 
         beforeStart.get_header(url, directory)
         beforeStart.get_dns(url, directory)
+        beforeStart.letsdebug(url)
         result, v = checkCms.detect_cms(url, directory)
         if result:
             checkCms.cve_cms(result, v)

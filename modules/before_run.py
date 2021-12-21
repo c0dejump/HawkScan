@@ -84,6 +84,45 @@ class before_start:
         print(LINE)
 
 
+    def letsdebug(self, url):
+        """
+        letsdebug: Get certificate of the website and potentialy found old certificate with old subdomain
+        """
+        print("\033[36m Let's Debug information \033[0m")
+        print(LINE)
+        wait_finish = True
+        list_result = []
+        string_result = ""
+        domain = ".".join(url.split("/")[2].split(".")[1:]) if len(url.split("/")[2].split(".")) == 3 else ".".join(url.split("/")[2].split(".")[0:])
+        url_ld = "https://letsdebug.net/"
+        print(" {} {}".format(INFO_MOD, domain))
+        datas = {"domain":domain,"method":"http-01"}
+        req = requests.post(url_ld, data=datas, allow_redirects=True, verify=False)
+        url_debug = "{}?debug=y".format(req.url)
+        while wait_finish:
+            res = requests.get(url_debug, verify=False)
+            if "please wait" in res.text:
+                time.sleep(1)
+            else:
+                wait_finish = False
+        soup = BeautifulSoup(res.text, "html.parser")
+        search = soup.find('div', {"id":"RateLimit-Debug"})
+        if search:
+            for s in search:
+                    if s != None and s != "\n":
+                        string_result += str(s)
+            result = re.findall(r'\[.*?\]', string_result)
+            for r in result:
+                r = r.replace("[","").replace("]","")
+                if r not in list_result:
+                    list_result.append(r)
+            for rl in list_result:
+                print(" {} {}".format(INFO_MOD, rl))
+        else:
+            print(" {} Nothing certificate subdomain found".format(INFO_MOD))
+        print(LINE)
+
+
     def firebaseio(self, url):
         """
         Firebaseio: To check db firebaseio

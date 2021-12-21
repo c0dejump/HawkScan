@@ -16,6 +16,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
 # News v2.x
     - Redefining priorities/tasks
+    - Let's debug certificate subdomains results
     - Display the current bypass number during scan ("CB:")
     - Easter egg for xmas :)
 *(for more details go on CHANGELOG.md)* 
