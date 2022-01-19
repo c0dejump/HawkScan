@@ -1,6 +1,6 @@
 from modules.check_cms import check_cms
 from modules.check_socketio import check_socketio
-from modules.google_dorks import query_dork
+from modules.google_dorks import query_dork, query_cse
 from modules.detect_waf import detect_wafw00f
 
 class check_modules:
@@ -33,6 +33,7 @@ class check_modules:
         dw = detect_wafw00f(url, directory, thread)
         beforeStart.wayback_check(dire, directory)
         beforeStart.gitpast(url)
+        query_cse(url, directory)
         query_dork(url, directory)
         beforeStart.firebaseio(url)
         beforeStart.check_localhost(url)

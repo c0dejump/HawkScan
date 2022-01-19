@@ -872,6 +872,8 @@ logs/java.log
 vi-logs/
 application/logs/
 application/logs
+application.ini
+applications.ini
 M/
 M_images/
 Main/
@@ -2669,6 +2671,7 @@ heinlein/
 helen/
 hell/
 hello/
+hello/test
 hello1/
 helloworld/
 help/
@@ -5105,6 +5108,8 @@ zxcvbnm/
 %EXT%
 %ff/
 ///../../data/config/microsrv.cfg
+addressbookserver.php
+sabredav/addressbookserver.php
 .7z
 .access
 .addressbook
@@ -5223,6 +5228,8 @@ tools/.env
 v1/.env
 administrator/.env
 laravel/.env
+cfreal
+hello/cfreal
 vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
 laravel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
 laravel/vendor/phpunit/src/Util/PHP/eval-stdin.php
@@ -11463,11 +11470,14 @@ wp-app.log
 app.log
 localconf.php
 local.php
+blog/wp-config.php
+blog/wp-config.php.bkp
 wp-config-local.php
 wp-config.%EXT%
 wp-config.inc
 wp-config.old
 wp-config.php.bak
+wp-config.php.bkp
 wp-config.php.dist
 wp-config.php.inc
 wp-config.php.old

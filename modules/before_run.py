@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import sys, re, os
-import ssl, OpenSSL
+import ssl
 import socket
 import traceback
 from requests.exceptions import Timeout
@@ -244,6 +244,7 @@ class before_start:
                         retrieve_ip = True
                         print(" \033[32m\u251c\033[0m The host IP seem to be different, check it: {} ".format(ip))
                 except:
+                    print(" \033[33m\u251c\033[0m The host IP have a problem, check it manualy please: {} ".format(ip))
                     pass
             if not retrieve_ip:
                 print(" {} IPs do not appear to be different from the host".format(LESS))

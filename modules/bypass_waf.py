@@ -25,7 +25,7 @@ def bypass_waf(req, res):
 	"X-Forwarded-By","X-Forwarded-Host","X-Remote-IP","X-Remote-Addr","X-Client-IP","Client-IP","Cookie","Access-Control-Allow-Origin","Origin",
 	"Timing-Allow-Origin","X-Forwarded-For "
 	]
-	options = [website_ip, domain, "127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0","::1","0:0:0:0:0:0:0:1"]
+	options = [website_ip, domain, "127.0.0.1", "127.0.0.2", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "localhost", "0.0.0.0","::1","0:0:0:0:0:0:0:1"]
 	for hb in header_base:
 		for o in options:
 			headers = {
@@ -60,7 +60,6 @@ def bypass_waf(req, res):
 		except:
 			pass
 			#traceback.print_exc()
-		print("\033[31m[:(]\033[0m Our tests not bypass it, sorry")
 	return win
 
 """if __name__ == '__main__':

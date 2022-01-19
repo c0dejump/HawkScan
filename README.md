@@ -19,6 +19,8 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     - Let's debug certificate subdomains results
     - Display the current bypass number during scan ("CB:")
     - Easter egg for xmas :)
+    - Option -nfs (not first step) to pass the first recon steps
+    - Google CSE before scan
 *(for more details go on CHANGELOG.md)* 
  
 # Installation
@@ -46,6 +48,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [x] Check Host IP
  - [x] Check backup domain name (ex: www.domain.com/domain.zip)
  - [x] Check socketio connection
+ - [x] cse google search (buckets...)
 
 ### During - After scan
  - [x] Test backup/old file on all the files found (index.php.bak, index.php~ ...)
@@ -70,7 +73,6 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] Push results into DB [P2]
  - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder (like) // interesting ? [P2]
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) // add proxy funtion [P2]
- - [ ] cse google search (buckets...) [P2]
  - [ ] Check HTTP headers/ssl security: securityheaders; digicert ? [P3]
  - [ ] Anonymous routing through some proxy (http/s proxy list) [P3]
  - [ ] Check source code and verify leak or sensitive data in the Github // Other tool ? [P3]
@@ -109,7 +111,8 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 > Tips:            
     -r                    Recursive dir/files      
     -s SUBDOMAINS         Subdomain tester         
-    --js                  For try to found keys or token in the javascript page  
+    --js                  For try to found keys or token in the javascript page
+    --nfs                 Not the first step of scan during the first running (waf, vhosts, wayback etc...)    
     --ffs                 Force the first step of scan during the first running (waf, vhosts, wayback etc...)              
     --notify              For receveid notify when the scan finished (only work on linux)
 

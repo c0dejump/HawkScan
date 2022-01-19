@@ -10,7 +10,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="HawkScan",
-    version="2.0",
+    version="2.1",
     author="c0dejump",
     author_email="codejumpgame@gmail.com",
     description="Security Tool for Reconnaissance and Information Gathering on a website. (python 3.x)",
@@ -33,7 +33,7 @@ setup(
         'python-engineio==3.14.2',
         'python-socketio[client]==4.6.0',
         'google',
-        'notify-py'
+        'notifypy'
     ],
     project_urls={
         "Bug Tracker": "https://github.com/c0dejump/HawkScan/issues",

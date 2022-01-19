@@ -282,7 +282,7 @@ def verify_waf(s, req, res, headers, display=True):
                 print("{}Huawei WAF detected : {} ".format(WAF, res))
             return True
         #Imperva Incapsula
-        elif "Powered By Incapsula" in req_response or "Incapsula incident ID" in req_response or "_Incapsula_Resource" in req_response or \
+        elif "Incapsula incident ID" in req_response or \
             "subject=WAF Block Page" in req_response:
             if display:
                 print("{}Imperva Incapsula WAF detected : {} ".format(WAF, res))

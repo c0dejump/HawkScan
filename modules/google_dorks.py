@@ -3,11 +3,11 @@
 
 import sys
 import requests
-from config import WARNING, INFO, LINE, INFO_MOD
+from config import WARNING, INFO, LINE, INFO_MOD, LESS, PLUS
 import time
 import traceback
 from googlesearch import search 
-
+import json
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
@@ -91,15 +91,33 @@ def query_dork(domain, directory):
     print(LINE)
 
 
-"""def query_cse(domain, directory):
-    https://cse.google.com/cse?cx=002972716746423218710:veac6ui3rio#gsc.q=domain
-    url_cse = "https://cse.google.com/cse?cx=002972716746423218710:veac6ui3rio#gsc.q={}".format(domain)
-    print(INFO + "CSE")
+def query_cse(domain, directory):
+    if 'www' in domain:
+        direct = domain.split('.')
+        director = direct[1]
+        domain = "{}.{}".format(direct[1], direct[2].replace("/",""))
+    else:
+        direct = domain.split('/')
+        director = direct[2]
+        domain = director
+    print("\033[36m CSE \033[0m")
+    print(LINE)
+    url_cse = "https://cse.google.com/cse/element/v1?rsz=filtered_cse&num=10&hl=en&source=gcsc&gss=.com&cselibv=ff97a008b4153450&cx=002972716746423218710:veac6ui3rio&q={}&safe=off&cse_tok=AJvRUv3XH0l4xPTPMKG2vDufyCnn:1642524958919&sort=&exp=csqr,cc&oq={}&gs_l=partner-generic.12...0.0.4.4958.0.0.0.0.0.0.0.0..0.0.csems,nrl=13...0.0jj1....34.partner-generic..0.0.0.&cseclient=hosted-page-client&callback=google.search.cse.api1886".format(domain, domain)
+    req_cse = requests.get(url_cse, verify=False)
+    text = req_cse.text
+    cse_json = text.replace("google.search.cse.api1886(","").replace(")", "").replace("/*O_o*/", "").replace(";","").strip()
+    if "we can't process" in cse_json:
+        print("{} Blocked by the google WAF".format(WARNING))
+    else:
+        cse_result_decod = json.loads(cse_json)
+        try: 
+            crd = cse_result_decod["cursor"]["resultCount"]
+            print(" {}{} Result found, go on https://cse.google.com/cse?cx=002972716746423218710:veac6ui3rio#gsc.q={}".format(PLUS, crd, domain))
+        except:
+            print(" {}No result found".format(LESS))       
     print(LINE)
 
-    print(LINE)"""#TODO
-
 """if __name__ == '__main__':
-    domain = "https://www.tesla.com/" #DEBUG
+    domain = "login-securite.com" #DEBUG
     directory = "test"
-    query_dork(domain, "test")"""
+    query_cse(domain, "test")"""

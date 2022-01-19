@@ -2,6 +2,8 @@ requests
 pyopenssl
 queuelib
 fake_useragent
+beautifulsoup4
+wafw00f
 argparse
 bs4
 dnspython
@@ -11,4 +13,4 @@ sockets
 python-engineio==3.14.2 
 python-socketio[client]==4.6.0
 google
-notify-py
+notifypy

@@ -1,6 +1,13 @@
 Changelog:
 ----------
 
+- 2.1
+---------
+	New: Option -nfs (not first step) to pass the first recon steps
+	Fixed: Any bug with the download file and bypass forbidden when differents options
+	New: Google cse search (buckets...)
+---------
+
 - 2.0
 ---------
 	Redefining priorities/tasks

@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = '2.0'
+__version__ = '2.1'
 __program__ = 'HawkScan'
 __author__ = 'codejump'
 __twitter__ = 'https://twitter.com/c0dejump'
@@ -59,7 +59,7 @@ except:
     enclosure_queue = Queue.Queue()
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
-requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':ADH-AES128-SHA256'
+#requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':ADH-AES128-SHA256'
 
 rec_list = []
 #list to append url and then recursif scan
@@ -113,7 +113,7 @@ class filterManager:
     - check_exclude_code
 s,     - check_exclude_page
 s,     """
-    def check_multiple(self, s, req, res, directory, forbi, HOUR, parsing=False, size_bytes=False):
+    def  check_multiple(self, s, req, res, directory, forbi, HOUR, parsing=False, size_bytes=False):
         """
         Check_multiple: check multiple exclude, ex:
         --exclude 500,1337b,https://www.exemple.com
@@ -129,7 +129,7 @@ s,     """
             try:
                 if int(m_exclude):
                     #print(m_exclude)
-                    check_code = self.check_exclude_code(s, res, req, directory, HOUR, parsing, multiple=True)
+                    check_code = self.check_exclude_code(s, res, req, directory, HOUR, bp_current, parsing, multiple=True)
                     if check_code:
                         list_exclude[m_exclude] = True
             except:
@@ -140,7 +140,9 @@ s,     """
         if False not in list_exclude.values():
             if req.status_code in [403, 401]:
                 print("{} {} {:<15} {:<15} ".format(HOUR, FORBI, exclude_bytes, res))
+                bp_current += 1
                 bypass_forbidden(res, s, exclude[:-1] if "b" in exclude else False)
+                bp_current -= 1
             else:
                 print("{} {} {:<15} {:<15}  [{}]".format(HOUR, PLUS, exclude_bytes, res, req.status_code))
             for l_exclude in req_p:
@@ -148,10 +150,10 @@ s,     """
 
 
 
-    def check_exclude_code(self, s, res, req, directory, HOUR, parsing=False, multiple=False):
+    def check_exclude_code(self, s, res, req, directory, HOUR, bp_current, parsing=False, multiple=False):
         """
         check_exclude_code: 
-        You can activate this option to pass the response status code, ex:
+        You can activate this option to pass the  bp_current,response status code, ex:
         --exclude 500
         """
         req_bytes = len(req.content)
@@ -174,12 +176,12 @@ s,     """
                 return True
             else:
                 print("{} {} {:<15} {:<15}".format(HOUR, PLUS, exclude_bytes, res))
-                if js and req_bytes > 0:
-                    parsing.get_javascript(res, req)
+                if req_bytes > 0:
+                    html_actions(directory, res, req, parsing)
                 output_scan(directory, res, req_bytes, 200)
 
 
-    def check_exclude_page(self, s, req, res, directory, forbi, HOUR, bp_current, parsing=False, size_bytes=False, multiple=False):
+    def check_exclude_page(self, s, req, res, directory, forbi, HOUR, parsing=False, size_bytes=False, multiple=False):
         """
         Check_exclude_page:  
         If scan blog, or social network etc.. you can activate this option to pass profil/false positive pages or response status code.
@@ -211,8 +213,8 @@ s,     """
                     pass
                 elif req_bytes != req_len and req.status_code == 200:
                     print("{} {} {:<15} {:<15}".format(HOUR, PLUS, exclude_bytes, res))
-                    if js and req_bytes > 0:
-                        parsing.get_javascript(res, req)
+                    if req_bytes > 0:
+                        html_actions(directory, res, req, parsing)
                 elif req_bytes != req_len and req.status_code in [401, 403]:
                     print("{} {} {:<15} {:<15}".format(HOUR, FORBI, exclude_bytes, res))
                 elif req_bytes != req_len and req.status_code in [500, 502, 400, 422, 423, 424, 425]:
@@ -254,8 +256,8 @@ s,     """
                     if multiple:
                         return True
                     else:
-                        if js and size_bytes > 0:
-                            parsing.get_javascript(res, req)
+                        if size_bytes > 0:
+                            html_actions(directory, res, req, parsing)
                         print("{} {} {:<15} {:<15}".format(HOUR, PLUS, exclude_bytes, res))
                 #check backup
                 create_backup(res, directory, forbi)
@@ -369,10 +371,10 @@ class runFuzzing:
                                 #print(len_req)
                                 filterM.check_multiple(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                             elif type(req_p) == int:
-                                filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
+                                filterM.check_exclude_code(s, res, req, directory, get_date(), bp_current, parsing)
                             else:
                                 #print(req)
-                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
+                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                         else:            
                             if "robots.txt" in res.split("/")[3:]:
                                 print("{} {} {}".format(get_date(), PLUS, res))
@@ -382,13 +384,8 @@ class runFuzzing:
                             if 'sitemap.xml' in res:
                                 parsing.sitemap(req, directory)
 
-
                             if len(req.content) > 0:
-                                dl(res, req, directory) # dl files and calcul size
-                                parsing.search_s3(res, req, directory) #try to found S3 buckets
-                                parsing.get_links(req, directory) #scrape all link
-                                if js:
-                                    parsing.get_javascript(res, req) #try to found js keyword
+                                html_actions(directory, res, req, parsing)
 
                             print("{} {} {:<15} {:<15}".format(get_date(), PLUS, bytes_len, display_res))
                             output_scan(directory, res, len_req, stats=200) #check backup
@@ -413,10 +410,10 @@ class runFuzzing:
                                 #print(len_req)
                                 filterM.check_multiple(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                             elif type(req_p) == int:
-                                filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
+                                filterM.check_exclude_code(s, res, req, directory, get_date(), bp_current, parsing)
                             else:
                                 #print(req)
-                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
+                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                         else:         
                             if res[-1] == "/" and recur:
                                 bp_current += 1
@@ -456,10 +453,10 @@ class runFuzzing:
                                 #print(len_req)
                                 filterM.check_multiple(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                             elif type(req_p) == int:
-                                filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
+                                filterM.check_exclude_code(s, res, req, directory, get_date(), bp_current, parsing)
                             else:
                                 #print(req)
-                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
+                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                         else:
                             print("{} {} {:<15} {:<15} [405]".format(get_date(), INFO, bytes_len, display_res))
                         #report.create_report_url(status_link, res, directory)
@@ -469,9 +466,9 @@ class runFuzzing:
                                 if type(req_p) == list and len(req_p) > 1:
                                     filterM.check_multiple(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                                 elif type(req_p) == int:
-                                    filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
+                                    filterM.check_exclude_code(s, res, req, directory, get_date(), bp_current, parsing)
                                 else:
-                                    filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
+                                    filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                             else:                
                                 print("{} {} {}\033[33m => {}\033[0m 301 Moved Permanently\r".format(get_date(), LESS, display_res, redirect_link))
                                 if len(req.content) > 0:
@@ -484,9 +481,9 @@ class runFuzzing:
                                 if type(req_p) == list and len(req_p) > 1:
                                     filterM.check_multiple(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                                 elif type(req_p) == int:
-                                    filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
+                                    filterM.check_exclude_code(s, res, req, directory, get_date(), bp_current, parsing)
                                 else:
-                                    filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
+                                    filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                             else:                
                                 print("{} {} {}\033[33m => {}\033[0m 302 Moved Temporarily".format(get_date(), LESS, display_res, redirect_link))
                                 if len(req.content) > 0:
@@ -506,9 +503,9 @@ class runFuzzing:
                             if type(req_p) == list and len(req_p) > 1:
                                 filterM.check_multiple(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                             elif type(req_p) == int:
-                                filterM.check_exclude_code(s, res, req, directory, get_date(), parsing)
+                                filterM.check_exclude_code(s, res, req, directory, get_date(), bp_current, parsing)
                             else:
-                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), bp_current, parsing, size_bytes=len_req)
+                                filterM.check_exclude_page(s, req, res, directory, forbi, get_date(), parsing, size_bytes=len_req)
                         else:
                             vim_backup(s, res, user_agent)          
                             server_error = "400" if status_link == 400 else "500"
@@ -565,6 +562,14 @@ def time_wait(time_i):
         time_i -= 1
         time.sleep(1)
         sys.stdout.write(" Time Remaining for thread: {}\r".format(time_i))
+
+
+def html_actions(directory, res, req, parsing):
+    dl(res, req, directory) # dl files and calcul size
+    parsing.search_s3(res, req, directory) #try to found S3 buckets
+    parsing.get_links(req, directory) #scrape all link
+    if js:
+        parsing.get_javascript(res, req) #try to found js keyword
 
 
 def scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing):
@@ -685,8 +690,8 @@ def create_backup(res, directory, forbi):
 
 def dl(res, req, directory):
     """ Download files """
-    extensions = ['.json', '.txt', '.html', '.jsp', '.xml', '.aspx', '.zip', '.old', '.bak', 
-    '.sql', '.js', '.asp', '.ini', '.rar', '.dat', '.log', '.backup', '.dll', '.save', '.BAK', '.inc', '.md']
+    #extensions = ['.json', '.txt', '.html', '.jsp', '.xml', '.aspx', '.zip', '.old', '.bak', 
+    #'.sql', '.js', '.asp', '.ini', '.rar', '.dat', '.log', '.backup', '.dll', '.save', '.BAK', '.inc', '.md', ".info"]
     d_files = directory + "/files/"
     if not os.path.exists(d_files):
         os.makedirs(d_files)
@@ -694,13 +699,12 @@ def dl(res, req, directory):
     rep = anti_sl[3:]
     result = rep[-1]
     p_file = d_files + result
-    for exts in extensions:
-        if exts in result:
-            with open(p_file, 'w+') as fichier:
-                try:
-                    fichier.write(str(req.text))
-                except:
-                    pass
+    if "." in result:
+        with open(p_file, 'w+') as fichier:
+            try:
+                fichier.write(str(req.text))
+            except:
+                pass
 
 
 def output_scan(directory, res, size_res, stats):
@@ -784,24 +788,30 @@ def suffix_backup(s, res, page, exton, size_check, directory, forbi, HOUR, parsi
                 if len(exclude) > 1:
                     filterM.check_multiple(s, req_b, res_b, directory, forbi, HOUR, parsing, size_bytes=size_bytes)
                 elif type(req_p) == int:
-                    filterM.check_exclude_code(s, res_b, req_b, directory, HOUR, parsing)
+                    filterM.check_exclude_code(s, res_b, req_b, directory, HOUR, bp_current, parsing)
                 else:
                     filterM.check_exclude_page(s, req_b, res_b, directory, forbi, HOUR, parsing)
-                    with open(r_files, 'w+') as fichier_bak:
-                        fichier_bak.write(str(soup))
+                    try:
+                        with open(r_files, 'w+') as fichier_bak:
+                            fichier_bak.write(str(soup))
+                    except:
+                        pass
                     #print("{} {} {} ({} bytes)".format(HOUR, PLUS, res_b, size_bytes))
             else:
                 print("{} {} {:<15} {:<15}".format(HOUR, PLUS, size_bytes_b, res_b if tw > 120 else page_b))
-                with open(r_files, 'w+') as fichier_bak:
-                    fichier_bak.write(str(soup))
-                output_scan(directory, res_b, size_bytes, 200)
+                try:
+                    with open(r_files, 'w+') as fichier_bak:
+                        fichier_bak.write(str(soup))
+                    output_scan(directory, res_b, size_bytes, 200)
+                except:
+                    pass
             return size_bytes
         else:
             if exclude:
                 if len(exclude) > 1:
                     filterM.check_multiple(s, req_b, res_b, directory, forbi, HOUR, parsing, size_bytes=size_bytes)
                 elif type(req_p) == int:
-                    filterM.check_exclude_code(s, res, req_b, directory, HOUR, parsing)
+                    filterM.check_exclude_code(s, res, req_b, directory, HOUR, bp_current, parsing)
                 else:
                     filterM.check_exclude_page(s, req_b, res_b, directory, forbi, HOUR, parsing) 
             else:
@@ -817,7 +827,7 @@ def suffix_backup(s, res, page, exton, size_check, directory, forbi, HOUR, parsi
             if len(exclude) > 1:
                 filterM.check_multiple(s, req_b, res_b, directory, forbi, HOUR, parsing, size_bytes=size_bytes)
             elif type(req_p) == int:
-                filterM.check_exclude_code(s, res, req_b, directory, HOUR, parsing)
+                filterM.check_exclude_code(s, res, req_b, directory, HOUR, bp_current, parsing)
             else:
                 filterM.check_exclude_page(s, req_b, res_b, directory, forbi, HOUR, parsing) 
         else:
@@ -830,7 +840,7 @@ def suffix_backup(s, res, page, exton, size_check, directory, forbi, HOUR, parsi
             if len(exclude) > 1:
                 filterM.check_multiple(s, req_b, res_b, directory, forbi, HOUR, parsing, size_bytes=size_bytes)
             elif type(req_p) == int:
-                filterM.check_exclude_code(s, res, req_b, directory, HOUR, parsing)
+                filterM.check_exclude_code(s, res, req_b, directory, HOUR, bp_current, parsing)
             else:
                 filterM.check_exclude_page(s, req_b, res_b, directory, forbi, HOUR, parsing)
         else:
@@ -857,7 +867,7 @@ def prefix_backup(s, res, user_agent, directory, forbi, HOUR, filterM, parsing):
                 if len(exclude) > 1:
                     filterM.check_multiple(s, req_tild, res, directory, forbi, HOUR, parsing, size_bytes=len(req_tild.content))
                 elif type(req_p) == int:
-                    filterM.check_exclude_code(s, res, req_tild, directory, HOUR, parsing)
+                    filterM.check_exclude_code(s, res, req_tild, directory, HOUR, bp_current, parsing)
                 else:
                     filterM.check_exclude_page(s, req_tild, res, directory, forbi, HOUR)
             else:
@@ -958,7 +968,11 @@ def defined_connect(s, res, user_agent=False, header_parsed=False):
             for u in user_agent:
                 header = {"{}".format(h):"{}".format(header_parsed[h]), "{}".format(u):"{}".format(user_agent[u])}
     else:
-        header = user_agent
+        if user_agent:
+            for u in user_agent:
+                header = {"Cache-Control": "no-cache", "{}".format(u):"{}".format(user_agent[u])}
+        else:
+            header = {"Cache-Control": "no-cache", "Pragma": "no-cache"}
 
     JS_error = ["You need to enable JavaScript to run this app", "JavaScript Required", "without JavaScript enabled",
     "This website requires JavaScript", "Please enable JavaScript", "Loading"]
@@ -992,11 +1006,11 @@ def Progress(len_w, thread_count, nLine, page, percentage, tw, bp_current):
     little_progress_print = "\033[34m {0}/{1} | Errors: {2} | Cb: {3} | {4}\033[0m\r".format(n, len_w, n_error, bp_current, page if len(page) < 70 else page.split("/")[-3:-1])
     if tw < 110:
         sys.stdout.write(little_progress_print)
-        if len(little_progress_print) > 42: sys.stdout.write("\033[K") #clear line
+        if len(little_progress_print) > 36: sys.stdout.write("\033[K") #clear line
     else:
         per = percentage(n+nLine, len_w)
         sys.stdout.write("\033[34m {0:.2f}% - {1}/{2} | T:{3} | Errors: {4} | CB: {5} | {6}\033[0m\r".format(per, n+nLine, len_w, thread_count, n_error, bp_current, page if len(page) < 60 else page.split("/")[-3:-1]))
-        if len(progress_print) > 60: sys.stdout.write("\033[K") #clear line 
+        if len(progress_print) > 55: sys.stdout.write("\033[K") #clear line 
 
 
 def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=False):
@@ -1123,14 +1137,14 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
             found_dire = True
             dire_exists.append(ld)
 
-    if not found_dire or force_first_step:
+    if not found_dire or force_first_step and not not_first_step:
         creat_other = False
         dire_date = "{}{}".format(dire, today_hour)
         directory = directory if not force_first_step else "sites/{}".format(dire_date)
         os.makedirs(directory) if not force_first_step else os.makedirs(directory) # creat the dir
         os.makedirs(directory+"/output/") if not force_first_step else os.makedirs("sites/{}/output/".format(directory))
 
-        if not file_url:
+        if not file_url and not not_first_step:
             mods = ram.run_all_modules(beforeStart, url, directory, dire, thread) # Run all modules
             if mods:
                 thread = mods
@@ -1197,6 +1211,7 @@ if __name__ == '__main__':
     group.add_argument("-r", help="Recursive dir/files", required=False, dest="recursif", action='store_true')
     group.add_argument("-s", help="Subdomain tester", dest='subdomains', required=False)
     group.add_argument("--js", help="For try to found keys or token in the javascript page", required=False, dest="javascript", action='store_true')
+    group.add_argument("--nfs", help="Not the first step of scan during the first running (waf, vhosts, wayback etc...)", required=False, dest="not_first_step", action='store_true')
     group.add_argument("--ffs", help="Force the first step of scan during the first running (waf, vhosts, wayback etc...)", required=False, dest="force_first_step", action='store_true')
     group.add_argument("--notify", help="For receveid notify when the scan finished (work only on linux)", required=False, dest="notify", action='store_true')
 
@@ -1225,6 +1240,7 @@ if __name__ == '__main__':
     update = results.update
     js = results.javascript
     auth = results.auth
+    not_first_step = results.not_first_step
     force_first_step = results.force_first_step
     notify = results.notify
     proxie = results.proxie

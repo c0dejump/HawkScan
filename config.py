@@ -21,4 +21,4 @@ EXT_B = ['.db', '.swp', '.yml', '.xsd', '.xml', '.wml', '.bkp', '.rar', '.zip', 
             '.save', '.atom', '.action', '_backup', '.backup', '.config', '?stats=1', '/authorize/', '.md', '.gz', 
             '.txt', '~', '%01', "(1)"]
 
-MINI_B = ['(1)', '.bkp', '.bak', '.bac', '.BAK', '.NEW', '.old', '_bak', '_old', '.bak1', '_backup', '.backup', '~']
+MINI_B = ['.bkp', '.bak', '.bac', '.BAK', '.NEW', '.old', '_bak', '_old', '.bak1', '_backup', '.backup', '~']
