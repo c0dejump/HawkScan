@@ -6,6 +6,7 @@ Changelog:
 	New: Option -nfs (not first step) to pass the first recon steps
 	Fixed: Any bug with the download file and bypass forbidden when differents options
 	New: Google cse search (buckets...)
+	New: Add LICENSE & PyPI version and stats
 ---------
 
 - 2.0

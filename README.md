@@ -1,5 +1,9 @@
 # HawkScan
 
+[![PyPI version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=py&type=6&v=2.1&x2=0)](https://pypi.org/project/hawkscan)
+[![PyPI Statistics](https://img.shields.io/pypi/dm/hawkscan.svg)](https://pypistats.org/packages/hawkscan)
+
+
 ![alt tag](https://github.com/c0dejump/HawkScan/blob/master/static/logo_hawkscan.jpeg)
 
 Security Tool for Reconnaissance and Information Gathering on a website. (python 3.x)
