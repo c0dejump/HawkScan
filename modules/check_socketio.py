@@ -68,7 +68,7 @@ class check_socketio:
 
 
     def main_socketio(self, url):
-        print("\033[36m Check for websockets \033[0m")
+        print("\033[36m Websockets \033[0m")
         print(LINE)
         if "www." in url:
             urls = []

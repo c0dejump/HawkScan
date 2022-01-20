@@ -33,7 +33,7 @@ def query_dork(domain, directory):
     key_break = False
     found = False
     answer_yes = False
-    print("\033[36m GOOGLE DORK \033[0m")
+    print("\033[36m Google Dork \033[0m")
     print(LINE)
     if 'www' in domain:
         direct = domain.split('.')
@@ -101,9 +101,11 @@ def query_cse(domain, directory):
         direct = domain.split('/')
         director = direct[2]
         domain = director
-    print("\033[36m CSE \033[0m")
+    print("\033[36m Google CSE \033[0m")
     print(LINE)
-    url_cse = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBNVyJ7mixhF-MJ9RA8oDn4RzDye6fqTBg&cx=002972716746423218710:veac6ui3rio&q={}".format(domain)
+    api_key = "AIzaSyBNVyJ7mixhF-MJ9RA8oDn4RzDye6fqTBg"
+    url_cse = "https://www.googleapis.com/customsearch/v1?key={}&cx=002972716746423218710:veac6ui3rio&q={}".format(api_key, domain)
+    #you can add your own API KEY for more requests (for this is limited to 100 requests)
     req_cse = requests.get(url_cse, verify=False)
     text = req_cse.text
     #print(text) #DEBUG

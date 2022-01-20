@@ -30,7 +30,7 @@ class before_start:
         """
         Github: check github informations
         """
-        print("\033[36m Check in Github \033[0m")
+        print("\033[36m Github \033[0m")
         print(LINE)
         url = url.split(".")[1] if "www" in url else url.split("/")[2]
         url = "{}".format(url)
@@ -134,7 +134,7 @@ class before_start:
             dire = "{}-{}".format(parse_domain[0], parse_domain[1]) if len(parse_domain) > 2 else "{}".format(parse_domain[0])
         else:
             dire = "{}".format(parse_domain[1])
-        print("\033[36m Firebaseio Check \033[0m")
+        print("\033[36m Firebaseio \033[0m")
         print(LINE)
         url = 'https://{}.firebaseio.com/.json'.format(dire.split(".")[0])
         print(" Target: {}\n".format(url))
@@ -166,7 +166,7 @@ class before_start:
         Check in a wayback machine to found old file on the website or other things...
         Use "waybacktool"
         """
-        print("\033[36m Wayback Check \033[0m")
+        print("\033[36m Wayback \033[0m")
         print(LINE)
         print(url + "\n")
         try:
@@ -205,7 +205,7 @@ class before_start:
         """
         list_test = ["127.0.0.1", "localhost"]
         localhost = False
-        print("\033[36m Try localhost host \033[0m")
+        print("\033[36m Localhost host \033[0m")
         print(LINE)
         for lt in list_test:
             header = {"Host": lt}
@@ -228,7 +228,7 @@ class before_start:
         check_ip:
         Check the host ip if this webpage is different or not
         """
-        print("\033[36m Check Vhosts misconfiguration \033[0m")
+        print("\033[36m Vhosts misconfiguration \033[0m")
         print(LINE)
         try:
             req_index = requests.get(url, verify=False, timeout=10)
