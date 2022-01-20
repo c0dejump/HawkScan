@@ -87,7 +87,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
   
 ```
      
-    usage: hawkscan.py [-h] [-u URL] [-f FILE_URL] [-w WORDLIST] [-s SUBDOMAINS] [-t THREAD] [-a USER_AGENT] [--redirect] [-r] [-p PREFIX] [-o OUTPUT] [--cookie COOKIE_] [--exclude EXCLUDE] [--timesleep TS] [--auto] [--js] [--auth AUTH] [-ffs] [--notify] [-o OUTPUT] [-of OUTPUT_TYPE]   
+    usage: hawkscan.py [-h] [-u URL] [-f FILE_URL] [-t THREAD] [--exclude EXCLUDE [EXCLUDE ...]] [--auto] [--update] [-w WORDLIST] [-b [BACKUP ...]] [-p PREFIX] [-H HEADER_] [-a USER_AGENT] [--redirect] [--auth AUTH] [--timesleep TS] [--proxie PROXIE] [-r] [-s SUBDOMAINS] [--js] [--nfs] [--ffs] [--notify] [-o OUTPUT] [-of OUTPUT_TYPE]    
  
 ```
 

@@ -5933,6 +5933,7 @@ aboutus.%EXT%
 abstractsadmin
 acceptance_config.yml
 funders.yml
+bitbucket-pipelines.yml
 acceso
 acceso.php
 access
@@ -7858,6 +7859,7 @@ config.yml
 Config/
 config/apc.php
 config/app.yml
+config/app_env.yml
 config/AppData.config
 config/aws.yml
 config/banned_words.txt
