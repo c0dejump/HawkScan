@@ -3097,6 +3097,7 @@ logan/
 logfile/
 logfiles/
 logger/
+logger/logger.js
 logging/
 logical/
 logo/
@@ -7222,8 +7223,11 @@ app_dev.php
 app_dev.php/_configurator/final
 app_dev.php/reviews/
 appadmin
+.appcache
 appcache.manifest
 manifest.appcache
+manifest.appcache.php
+demo.appcache
 AppInstallStatusServlet
 apple
 applet
@@ -8054,6 +8058,7 @@ database.log
 database.mdb
 database.php
 database.sql
+database.sql.zip
 database.sqlite
 database.txt
 database.yml
@@ -9693,6 +9698,12 @@ proc/
 proc/interrupts
 proc/cpuinfo
 proc/meminfoorders.csv
+proc/self/cwd/index.php
+proc/self/
+proc/self/cwd/
+proc/self/cwd/main.py
+proc/self/environ
+proc/sched_debug
 orders.log
 orders.sql
 orders.sql.gz
@@ -10985,6 +10996,7 @@ testweb
 text
 text-base/etc/passwd
 etc/at.allow
+etc/mysql/my.cnf
 thank-you.%EXT%
 thanks.%EXT%
 ThankYou.%EXT%
@@ -11372,8 +11384,11 @@ WEB-INF
 WEB-INF	./web.xml
 WEB-INF/config.xml
 WEB-INF/web.xml
+WEB-INF/portlet.xml
 ./WEB-INF/web.xml
 .//WEB-INF/web.xml
+.//WEB-INF/portlet.xml
+.//WEB-INF/weblogic.xml
 WEB-INF/classes
 WEB-INF/classes/1/4/1.class
 WEB-INF/applicationContext.xml

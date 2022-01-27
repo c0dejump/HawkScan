@@ -1,6 +1,12 @@
 Changelog:
 ----------
 
+- 2.2
+---------
+	New: Wiki created !
+	Fixed: any bugs and redesign titles pre-scan
+---------
+
 - 2.1
 ---------
 	New: Option -nfs (not first step) to pass the first recon steps

@@ -728,19 +728,18 @@ def vim_backup(s, res, user_agent):
     """
     vim_backup: Testing backup vim like ".plop.swp"
     """
-    for e in [".txt", ".php", ".html", ".js"]:
-        if e in res:
-            pars = res.split("/")
-            vb = ".{}.swp".format(pars[-1])
-            vim_b = "{}{}/".format(url, vb) if pars[-1] == "" else "{}{}".format(url, vb)
-            req_vb = s.get(vim_b, headers=user_agent, allow_redirects=False, verify=False, timeout=10)
-            if req_vb.status_code not in [404, 403, 401, 500, 406] and len(req_vb.content) != len(req_vb.content):
-                if exclude:
-                    if exclude != len(req_vb.text) and len(req_vb.text) != 0:
-                        print("{} {} [{} bytes] Potential backup vim found {:<15}".format(get_date(), PLUS, len(req_vb.text), vim_b))
-                else:
-                    if len(req_vb.text) != 0:
-                        print("{} {} [{} bytes] Potential backup vim found {:<15}".format(get_date(), PLUS, len(req_vb.text), vim_b))
+    if "." in res:
+        pars = res.split("/")
+        vb = ".{}.swp".format(pars[-1])
+        vim_b = "{}{}/".format(url, vb) if pars[-1] == "" else "{}{}".format(url, vb)
+        req_vb = s.get(vim_b, headers=user_agent, allow_redirects=False, verify=False, timeout=10)
+        if req_vb.status_code not in [404, 403, 401, 500, 406] and len(req_vb.content) != len(req_vb.content):
+            if exclude:
+                if exclude != len(req_vb.text) and len(req_vb.text) != 0:
+                    print("{} {} [{} bytes] Potential backup vim found {:<15}".format(get_date(), PLUS, len(req_vb.text), vim_b))
+            else:
+                if len(req_vb.text) != 0:
+                    print("{} {} [{} bytes] Potential backup vim found {:<15}".format(get_date(), PLUS, len(req_vb.text), vim_b))
 
 
 

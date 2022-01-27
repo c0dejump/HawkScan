@@ -51,7 +51,8 @@ def query_dork(domain, directory):
     'budget site:{} filetype:pdf'.format(domain),
     'site:{} ext:action OR ext:adr OR ext:ascx OR ext:asmx OR ext:axd OR ext:backup OR ext:bak OR ext:bkf OR ext:bkp OR ext:bok OR ext:achee OR ext:cfg OR ext:cfm OR ext:cgi OR ext:cnf OR ext:conf OR ext:config OR ext:crt OR ext:csr OR ext:csv OR ext:dat OR ext:doc OR ext:docx OR ext:eml OR ext:env OR ext:exe OR ext:gz OR ext:ica OR ext:inf OR ext:ini OR ext:java'.format(domain),
     'site:{} ext:json OR ext:key OR ext:log OR ext:lst OR ext:mai OR ext:mbox OR ext:mbx OR ext:md OR ext:mdb OR ext:nsf OR ext:old OR ext:oraext: OR ext:pac OR ext:passwd OR ext:pcf OR ext:pem OR ext:pgp OR ext:pl OR ext:plist OR ext:pwd OR ext:rdp OR ext:reg OR ext:rtf OR ext:skr OR ext:sql OR ext:swf OR ext:tpl'.format(domain),
-    'site:{} ext:txt OR ext:url OR ext:wml OR ext:xls OR ext:xlsx OR ext:xml OR ext:xsd OR ext:yml OR ext:NEW OR ext:save'.format(domain),
+    'site:{} ext:txt OR ext:url OR ext:wml OR ext:xls OR ext:xlsx OR ext:xml OR ext:xsd OR ext:yml OR ext:NEW OR ext:save OR ext:ppt'.format(domain),
+    'site:{} filetype:xls inurl:"email.xls"'.format(domain),
     'site:{} intitle:"index of"'.format(domain),
     'site:{} intitle:"index of" .env'.format(domain),
     'intitle:"Dashboard [Jenkins]" {}'.format(domain),
@@ -61,8 +62,8 @@ def query_dork(domain, directory):
     'site:http://sharecode.io "{}"'.format(domain),
     'site:http://bitbucket.org "{}"'.format(domain),
     'site:*.atlassian.net "{}"'.format(domain),
-    '"{}" language:bash pwd'.format(domain),
-    'site:http://box.com "{}"'.format(domain)
+    #'"{}" language:bash pwd'.format(domain),
+    #'site:http://box.com "{}"'.format(domain)
     ]
     for query in queries:
         print("  {}{}   (Tape ctrl+c to pass)\n".format(INFO_MOD, query))
@@ -118,7 +119,7 @@ def query_cse(domain, directory):
         print(" {}{} Result found, go on https://cse.google.com/cse?cx=002972716746423218710:veac6ui3rio#gsc.q={}".format(PLUS, res["totalResults"], domain))
     except:
         #traceback.print_exc()
-        print(" {}No result found".format(LESS))       
+        print(" {}No Results".format(LESS))       
     print(LINE)
 
 """if __name__ == '__main__':

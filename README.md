@@ -17,6 +17,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Thanks](https://github.com/c0dejump/HawkScan/#thanks)
 - [Donations](https://github.com/c0dejump/HawkScan/#donations)
 - [Tools used](https://github.com/c0dejump/HawkScan/#tools-used)
+- [Wiki](https://github.com/c0dejump/HawkScan/wiki)
 
 # News v2.x
     - Redefining priorities/tasks
@@ -25,6 +26,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     - Easter egg for xmas :)
     - Option -nfs (not first step) to pass the first recon steps
     - Google CSE before scan
+    - Creation of WIKI
 *(for more details go on CHANGELOG.md)* 
  
 # Installation
@@ -74,6 +76,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
  [WIP] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))
  - [ ] asyncio instead of threading ? [PX]
+ - [ ] Re-build resport scan [P1]
  - [ ] Push results into DB [P2]
  - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder (like) // interesting ? [P2]
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) // add proxy funtion [P2]

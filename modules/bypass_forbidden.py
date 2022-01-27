@@ -91,7 +91,7 @@ def other_bypass(s, url, page, req_url, exclude_len):
 #@timeit #Debug
 def bypass_forbidden(res, s, exclude_len=False):
 	"""
-	Bypass_forbidden: function for try to bypass code response 403/forbidden
+	Bypass_forbidden: function for try to bypass code response 403/401
 	"""
 	res_page = res.split("/")[3:]
 	url_split = res.split("/")[:3]
