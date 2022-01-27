@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = '2.1'
+__version__ = '2.2'
 __program__ = 'HawkScan'
 __author__ = 'codejump'
 __twitter__ = 'https://twitter.com/c0dejump'
@@ -1183,7 +1183,7 @@ def main(url):
 if __name__ == '__main__':
     #arguments
     parser = argparse.ArgumentParser(add_help = True)
-    parser = argparse.ArgumentParser(description='\033[32m Version 2.0 | contact: https://twitter.com/c0dejump\033[0m')
+    parser = argparse.ArgumentParser(description='\033[32m Version 2.2 | contact: https://twitter.com/c0dejump\033[0m')
 
     group = parser.add_argument_group('\033[34m> General\033[0m')
     group.add_argument("-u", help="URL to scan \033[31m[required]\033[0m", dest='url')
