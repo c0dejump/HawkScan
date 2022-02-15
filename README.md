@@ -1,6 +1,6 @@
 # HawkScan
 
-[![PyPI version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=py&type=6&v=2.1&x2=0)](https://pypi.org/project/hawkscan)
+[![PyPI version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=py&type=6&v=2.2&x2=0)](https://pypi.org/project/hawkscan)
 [![PyPI Statistics](https://img.shields.io/pypi/dm/hawkscan.svg)](https://pypistats.org/packages/hawkscan)
 [![Twitter](https://img.shields.io/twitter/follow/c0dejump?label=c0dejump&style=social)](https://twitter.com/intent/follow?screen_name=c0dejump)
 
