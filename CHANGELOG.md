@@ -1,10 +1,12 @@
 Changelog:
 ----------
 
+
 - 2.2
 ---------
 	New: Wiki created !
 	Fixed: any bugs and redesign titles pre-scan
+	Changed: waybacktool module deleted by a personal module (less slow)
 ---------
 
 - 2.1

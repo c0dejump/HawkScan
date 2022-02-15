@@ -54,7 +54,6 @@ def query_dork(domain, directory):
     'site:{} ext:txt OR ext:url OR ext:wml OR ext:xls OR ext:xlsx OR ext:xml OR ext:xsd OR ext:yml OR ext:NEW OR ext:save OR ext:ppt'.format(domain),
     'site:{} filetype:xls inurl:"email.xls"'.format(domain),
     'site:{} intitle:"index of"'.format(domain),
-    'site:{} intitle:"index of" .env'.format(domain),
     'intitle:"Dashboard [Jenkins]" {}'.format(domain),
     '"{}" inurl:gitlab OR site:pastebin.com OR site:github.com'.format(domain),
     #'site:http://prezi.com "{}"'.format(domain),

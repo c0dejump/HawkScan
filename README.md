@@ -2,6 +2,7 @@
 
 [![PyPI version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=py&type=6&v=2.1&x2=0)](https://pypi.org/project/hawkscan)
 [![PyPI Statistics](https://img.shields.io/pypi/dm/hawkscan.svg)](https://pypistats.org/packages/hawkscan)
+[![Twitter](https://img.shields.io/twitter/follow/c0dejump?label=c0dejump&style=social)](https://twitter.com/intent/follow?screen_name=c0dejump)
 
 
 ![alt tag](https://github.com/c0dejump/HawkScan/blob/master/static/logo_hawkscan.jpeg)
@@ -76,6 +77,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
  [WIP] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))
  - [ ] asyncio instead of threading ? [PX]
+ - [ ] Add crt.sh to check potential hidden subdomain (with letdebug module ?) [P1]
  - [ ] Re-build resport scan [P1]
  - [ ] Push results into DB [P2]
  - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder (like) // interesting ? [P2]
@@ -177,5 +179,3 @@ https://ko-fi.com/c0dejump
 This script use "WafW00f" to detect the WAF in the first step (https://github.com/EnableSecurity/wafw00f)
 
 This script use "Sublist3r" to scan subdomains (https://github.com/aboul3la/Sublist3r)
-
-This script use "waybacktool" to check in waybackmachine (https://github.com/Rhynorater/waybacktool)

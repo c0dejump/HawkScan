@@ -167,38 +167,32 @@ class before_start:
         """
         Wayback_check:
         Check in a wayback machine to found old file on the website or other things...
-        Use "waybacktool"
         """
         print("\033[36m Wayback \033[0m")
         print(LINE)
         print(url + "\n")
+        url_wayb = "http://web.archive.org/cdx/search?url=*.{}/*&output=list&fl=original,statuscode&collapse=urlkey&filter=!statuscode:404".format(url)
         try:
-            os.system('python3 tools/waybacktool/waybacktool.py pull --host {} | python3 tools/waybacktool/waybacktool.py check > {}/wayback.txt'.format(url, directory))
-        except Exception:
-            pass
-            #traceback.print_exc()
-        try:
-            statinfo = os.path.getsize(directory + "/wayback.txt")
-        except:
-            print(" {} No wayback found ".format(LESS))
-        if statinfo < 1 :
-            print(" {} No wayback found".format(LESS))
-        else:
-            with open(directory + "/wayback.txt", "r+") as wayback:
-                wb_read = wayback.read().splitlines()
-                for wb in wb_read:
-                    wb_res = list(wb.split(","))
-                    try:
-                        if wb_res[1] == " 200":
-                            print("{}{}{}".format(PLUS, wb_res[0], wb_res[1]))
-                        elif wb_res[1] == " 301" or wb_res[1] == " 302":
-                            print("{}{}{}".format(LESS, wb_res[0], wb_res[1]))
-                        elif wb_res[1] == " 404" or wb_res[1] == " 403":
-                            pass
-                        else:
-                            print("{}{}{}".format(INFO, wb_res[0], wb_res[1]))
-                    except:
+            req_way = requests.get(url_wayb, verify=False)
+            urls_w = req_way.text.split("\n")
+            #print(urls_w)
+            for url_w in urls_w:
+                try:
+                    status_c = url_w.split(" ")[1]
+                    if status_c == '200':
+                        print("  \033[32m\u251c\033[0m {} \033[32m{}".format(url_w.split(" ")[0], status_c))
+                    elif status_c in ['403', '401']:
+                        print("  \033[31m\u251c\033[0m {} \033[31m{}".format(url_w.split(" ")[0], status_c))
+                    elif status_c in ['301', '302']:
+                        print("  \033[33m\u251c\033[0m {} \033[33m{}".format(url_w.split(" ")[0], status_c))
+                    else:
                         pass
+                except:
+                    pass
+
+        except:
+            traceback.print_exc() 
+            print(" {} An error occurred please check manually ".format(LESS))
         print(LINE)
 
 

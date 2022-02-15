@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = '2.2'
+__version__ = '2.2 '
 __program__ = 'HawkScan'
 __author__ = 'codejump'
 __twitter__ = 'https://twitter.com/c0dejump'
@@ -1032,7 +1032,7 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
 
     with open(wordlist, "r") as payload:
         links = payload.read().splitlines()
-    state = links[nLine:] if nLine else links # For restar from the last line found in the dico
+    state = links[nLine:] if nLine else links # For restart from the last line found in the dico
     try:
         for link in state:
             link_url = "{}{}{}".format(url, prefix, link) if prefix else "{}{}".format(url, link) #url/prefix-words or url/words

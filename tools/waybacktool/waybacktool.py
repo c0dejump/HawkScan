@@ -28,9 +28,9 @@ args = parser.parse_args()
 
 def waybackurls(host, with_subs):
     if with_subs:
-        url = 'http://web.archive.org/cdx/search/cdx?url=*.%s/*&output=list&fl=original&collapse=urlkey' % host
+        url = 'http://web.archive.org/cdx/search?url=*.%s/*&output=list&fl=original&collapse=urlkey&filter=!statuscode:404' % host
     else:
-        url = 'http://web.archive.org/cdx/search/cdx?url=%s/*&output=list&fl=original&collapse=urlkey' % host
+        url = 'http://web.archive.org/cdx/search/cdx?url=%s/*&output=list&fl=original&collapse=urlkey&filter=!statuscode:404' % host
     r = requests.get(url)   
     if args.outputfile:
         j = open(args.outputfile, "w")
