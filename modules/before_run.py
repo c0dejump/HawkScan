@@ -179,14 +179,16 @@ class before_start:
             for url_w in urls_w:
                 try:
                     status_c = url_w.split(" ")[1]
-                    if status_c == '200':
-                        print("  \033[32m\u251c\033[0m {} \033[32m{}".format(url_w.split(" ")[0], status_c))
-                    elif status_c in ['403', '401']:
-                        print("  \033[31m\u251c\033[0m {} \033[31m{}".format(url_w.split(" ")[0], status_c))
-                    elif status_c in ['301', '302']:
-                        print("  \033[33m\u251c\033[0m {} \033[33m{}".format(url_w.split(" ")[0], status_c))
-                    else:
-                        pass
+                    if "css" not in url_w.split(" ")[0] and "jpg" not in url_w.split(" ")[0] and "png" not in url_w.split(" ")[0] and \
+                     "jpeg" not in url_w.split(" ")[0] and "svg" not in url_w.split(" ")[0] and "JPG" not in url_w.split(" ")[0] and "gif" not in url_w.split(" ")[0]:
+                        if status_c == '200':
+                            print("  \033[32m\u251c\033[0m {} \033[32m{}".format(url_w.split(" ")[0], status_c))
+                        elif status_c in ['403', '401']:
+                            print("  \033[31m\u251c\033[0m {} \033[31m{}".format(url_w.split(" ")[0], status_c))
+                        elif status_c in ['301', '302']:
+                            print("  \033[33m\u251c\033[0m {} \033[33m{}".format(url_w.split(" ")[0], status_c))
+                        else:
+                            pass
                 except:
                     pass
 
