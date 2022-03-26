@@ -73,7 +73,7 @@ def query_dork(domain, directory):
                     if req_url_found.status_code not in [404, 408, 503, 405, 428, 412, 429, 403, 401]:
                         print(" \033[32m[{}]\033[0m {}".format(req_url_found.status_code, j))
                         try:
-                            with open(directory+"/site/{}/google_dorks.txt".format(directory), "a+") as raw:
+                            with open(directory+"/{}".format(directory), "a+") as raw:
                                 raw.write("{}\n".format(j))
                         except:
                             pass

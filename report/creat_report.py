@@ -97,7 +97,7 @@ def create_report(directory, cookie_):
             wayback = ""
             with open(directory + "/wayback.txt", "r") as waybacks:
                 for wb in waybacks.read().splitlines():
-                    w = wb.split(",")
+                    w = wb.split(" ")
                     w_status = w[1]
                     wayback += """
                         <tr>

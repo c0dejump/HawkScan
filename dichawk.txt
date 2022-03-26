@@ -654,6 +654,7 @@ ww2/
 www_app/
 ajaxpackagesave
 audit.log
+modsec_audit.log
 info.php
 info_omniview.php
 info.txt
@@ -11483,6 +11484,8 @@ wp-admin/install.php?step=1
 wp-admin/install-helper.php
 wp-admin/setup-config.php
 wp-admin/setup-config.php?step=1
+wp-admin/upload_index.php?auth=hash
+wp-admin/upload_index.php
 wp-app.log
 app.log
 localconf.php

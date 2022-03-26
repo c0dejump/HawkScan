@@ -1,6 +1,10 @@
 Changelog:
 ----------
 
+- 2.3
+---------
+	New: Add proxy function (--proxy proxy.lst)
+---------
 
 - 2.2
 ---------

@@ -6,10 +6,10 @@ from config import PLUS, WARNING, INFO, BYP
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
-def post(res): req_p = requests.post(res, verify=False, allow_redirects=False, timeout=10); return req_p.status_code, "post", len(req_p.content)
-def put(res): req_pt = requests.put(res, verify=False, allow_redirects=False, timeout=10); return req_pt.status_code, "put", len(req_pt.content)
-def patch(res): req_ptch = requests.patch(res, verify=False, allow_redirects=False, timeout=10); return req_ptch.status_code, "patch", len(req_ptch.content)
-def options(res): req_o = requests.options(res, verify=False, allow_redirects=False, timeout=10); return req_o.status_code, "options", len(req_o.content)
+def post(res): req_p = requests.post(res, verify=False, allow_redirects=False, timeout=10); return req_p.status_code, "POST", len(req_p.content)
+def put(res): req_pt = requests.put(res, verify=False, allow_redirects=False, timeout=10); return req_pt.status_code, "PUT", len(req_pt.content)
+def patch(res): req_ptch = requests.patch(res, verify=False, allow_redirects=False, timeout=10); return req_ptch.status_code, "PATCH", len(req_ptch.content)
+def options(res): req_o = requests.options(res, verify=False, allow_redirects=False, timeout=10); return req_o.status_code, "OPTIONS", len(req_o.content)
 
 
 def method(res):
@@ -89,10 +89,11 @@ def other_bypass(s, url, page, req_url, exclude_len):
 				print("{}[{}] Forbidden Bypass with : {} [{}b]".format(BYP, req_payload.status_code, url_b, len(req_payload.content)))
 
 #@timeit #Debug
-def bypass_forbidden(res, s, exclude_len=False):
+def bypass_forbidden(res, exclude_len=False):
 	"""
 	Bypass_forbidden: function for try to bypass code response 403/401
 	"""
+	s = requests.session()
 	res_page = res.split("/")[3:]
 	url_split = res.split("/")[:3]
 	url = "/".join(url_split) + "/"

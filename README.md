@@ -21,6 +21,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 - [Wiki](https://github.com/c0dejump/HawkScan/wiki)
 
 # News v2.x
+    - Add proxy function
     - Redefining priorities/tasks
     - Let's debug certificate subdomains results
     - Display the current bypass number during scan ("CB:")
@@ -71,7 +72,9 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [x] Multiple output format. Available formats: json, csv, txt
  - [x] Multiple website scanning
  - [x] Prefix filename (old_, copy of...)
- 
+ - [x] Anonymous routing through some proxy (http/s proxy list)
+
+
 # TODO 
 **P1 is the most important**
 
@@ -83,7 +86,6 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder (like) // interesting ? [P2]
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) // add proxy funtion [P2]
  - [ ] Check HTTP headers/ssl security: securityheaders; digicert ? [P3]
- - [ ] Anonymous routing through some proxy (http/s proxy list) [P3]
  - [ ] Check source code and verify leak or sensitive data in the Github // Other tool ? [P3]
  - [ ] Analyse html code webpage [P3] => really necessary ?
  - [ ] Scan API endpoints/informations leaks [P3]

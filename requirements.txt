@@ -3,7 +3,6 @@ pyopenssl
 queuelib
 fake_useragent
 beautifulsoup4
-wafw00f
 argparse
 bs4
 dnspython
