@@ -199,7 +199,7 @@ class before_start:
                     pass
 
         except:
-            traceback.print_exc() 
+            #traceback.print_exc() 
             print(" {} An error occurred please check manually ".format(LESS))
         print(LINE)
 

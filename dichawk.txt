@@ -4526,6 +4526,7 @@ config/dashboard.config
 config/soapConfig.xml
 config/CommandLine/Env
 soapConfig.xml
+antinstall-config.xml
 web.xml
 env-config.js
 env-config
@@ -4663,6 +4664,7 @@ toggle/
 tom/
 tomato/
 tomcat/
+tomcatwar.jsp
 manager/
 manager/html
 manager/text
@@ -5236,6 +5238,7 @@ vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
 laravel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
 laravel/vendor/phpunit/src/Util/PHP/eval-stdin.php
 vendor/phpunit/src/Util/PHP/eval-stdin.php
+.changes
 .env.php
 .env.sample.php
 .environment
@@ -5935,7 +5938,10 @@ aboutus.%EXT%
 abstractsadmin
 acceptance_config.yml
 funders.yml
+server/bitbucket-pipeline.yml
 bitbucket-pipelines.yml
+bitbucket.properties
+pipe.yml
 acceso
 acceso.php
 access
@@ -7553,6 +7559,7 @@ build
 build.local.xml
 build.sh
 build.xml
+build.properties
 build/build.properties
 build/buildinfo.properties
 build_config_private.ini
@@ -7666,6 +7673,7 @@ changelog.md
 ChangeLog.txt
 Changelog.txt
 changelog.txt
+RELEASING.md
 CHANGES
 CHANGES.html
 CHANGES.md
@@ -7809,6 +7817,7 @@ conf/tomcat-users.xml
 tomcat-users.xml
 conf/tomcat8.conf
 conf/web.xml
+conf/repository-keystore.jceks
 conferences
 config
 Config
@@ -8189,6 +8198,7 @@ doadmin
 doc
 doc/en/changes.html
 doc/stable.version
+dev.yml
 docker-compose-dev.yml
 docker-compose-local.yml
 docker-compose.yml
@@ -8197,6 +8207,7 @@ docker_configs/supervisord.conf
 docker_configs/default.conf
 Dockerfile
 Docker/api/api.env
+.dockerignore
 ocs
 docs
 docs/CHANGELOG.html
@@ -9138,6 +9149,7 @@ localsettings.php.swp
 localsettings.php.txt
 localsettings.php~
 _next/
+prod.yml
 log
 log-in
 log-in.php
@@ -11907,6 +11919,7 @@ widgets.php
 tiny_mce_popup.js
 tiny_mce.js
 theme.js
+theme.json
 spellchecker.php
 search_result.tpl
 register_account.tpl

@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import csv
 import sys, re, os
-from config import S3, JS
+from config import S3, JS, WARNING
 import traceback
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
@@ -35,10 +35,11 @@ class parsing_html:
                     pass
 
 
-    def search_s3(self, res, req, directory):
+    def html_recon(self, res, req, directory):
         """
         search_s3: Check on source page if a potentialy "s3 amazon bucket" is there
         """
+        path_disclosure = ["file://", "tmp/", "var/www", "/usr/", "var/lib", "srv/www", "srv/data", "var/opt"]
         s3_keyword = ["S3://", "s3-", "amazonaws", "aws."]
         for s3_f in s3_keyword:
             reqtext = req.text.split(" ")
@@ -63,6 +64,11 @@ class parsing_html:
                                         #print("{} Error with the URL {}".format(S3, rv))
                                         pass
                                         #traceback.print_exc()
+        for pad in path_disclosure:
+            #regex
+            m = re.search(r"{}[a-zA-z/]+".format(pad), req.text)
+            if m:
+                print(" {}Possible path disclosure \033[34m{}\033[0m in {}".format(WARNING, m.group(0), res))
 
 
     def sitemap(self, req, directory):

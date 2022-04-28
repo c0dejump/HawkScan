@@ -3,7 +3,9 @@ Changelog:
 
 - 2.3
 ---------
-	New: Add proxy function (--proxy proxy.lst)
+	Started: Add proxy function (--proxy proxy.lst) [In progress]
+	New: Adding path disclosure recon
+	New: Detecting potential hidden directory
 ---------
 
 - 2.2

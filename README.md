@@ -29,6 +29,8 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     - Option -nfs (not first step) to pass the first recon steps
     - Google CSE before scan
     - Creation of WIKI
+    - Detecting potential path disclosure into html webpage
+    - Detecting potential hidden directory
 *(for more details go on CHANGELOG.md)* 
  
 # Installation
@@ -72,13 +74,14 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [x] Multiple output format. Available formats: json, csv, txt
  - [x] Multiple website scanning
  - [x] Prefix filename (old_, copy of...)
- - [x] Anonymous routing through some proxy (http/s proxy list)
+ - [x] Detecting potential path disclosure into html webpage
 
 
 # TODO 
 **P1 is the most important**
 
  [WIP] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))
+ [WIP] Anonymous routing through some proxy (http/s proxy list) [P1] [In progress] 
  - [ ] asyncio instead of threading ? [PX]
  - [ ] Add crt.sh to check potential hidden subdomain (with letdebug module ?) [P1]
  - [ ] Re-build resport scan [P1]
@@ -87,7 +90,6 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) // add proxy funtion [P2]
  - [ ] Check HTTP headers/ssl security: securityheaders; digicert ? [P3]
  - [ ] Check source code and verify leak or sensitive data in the Github // Other tool ? [P3]
- - [ ] Analyse html code webpage [P3] => really necessary ?
  - [ ] Scan API endpoints/informations leaks [P3]
 
 # Usage
