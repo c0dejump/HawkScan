@@ -80,7 +80,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 # TODO 
 **P1 is the most important**
 
- [WIP] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))
+ [WIP] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))   
  [WIP] Anonymous routing through some proxy (http/s proxy list) [P1] [In progress] 
  - [ ] asyncio instead of threading ? [PX]
  - [ ] Add crt.sh to check potential hidden subdomain (with letdebug module ?) [P1]
@@ -89,7 +89,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
  - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder (like) // interesting ? [P2]
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) // add proxy funtion [P2]
  - [ ] Check HTTP headers/ssl security: securityheaders; digicert ? [P3]
- - [ ] Check source code and verify leak or sensitive data in the Github // Other tool ? [P3]
+ - [ ] Check source code and verify leak or sensitive data in Github // Other tool ? [P3]
  - [ ] Scan API endpoints/informations leaks [P3]
 
 # Usage
