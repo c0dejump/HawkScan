@@ -6,6 +6,7 @@ Changelog:
 	Started: Add proxy function (--proxy proxy.lst) [In progress]
 	New: Adding path disclosure recon
 	New: Detecting potential hidden directory
+	Updated: dichawk endpoints
 ---------
 
 - 2.2

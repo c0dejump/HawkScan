@@ -522,7 +522,7 @@ class runFuzzing:
                         #output_scan(directory, res, stats=405)
                     elif status_link == 503:
                         req_test_index = requests.get(url, verify=False) # take origin page url (index) to check if it's really unavailable
-                        if req_test_index.status_code == 503:
+                        if req_test_index.status_code == 503 and not forced:
                             #manager.stop_thread() #TODO
                             print("{}{} Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(get_date(), WARNING))
                             time_wait(time_i)
