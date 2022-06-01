@@ -64,6 +64,8 @@ except:
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 #requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':ADH-AES128-SHA256'
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
 
 rec_list = []
 #list to append url and then recursif scan
@@ -98,7 +100,7 @@ class ThreadManager:
         #print(self.workers[0])
         t_event = threading.Event()
         worker = threading.Thread(target=thread_wrapper, args=(i, self.queue, threads, manager, t_event))
-        worker.setDaemon(True)
+        worker.daemon = True
         worker.start()
         self.workers.append((worker, t_event))
 
@@ -1067,7 +1069,7 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
         manager = ThreadManager(enclosure_queue)
         for i in range(threads):
             worker = Thread(target=runFuzz.tryUrl, args=(i, enclosure_queue, threads, manager, directory, forced, u_agent, nLine))
-            worker.setDaemon(True)
+            worker.daemon = True
             worker.start()
         enclosure_queue.join()
     except KeyboardInterrupt:
@@ -1092,7 +1094,7 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
                 links = payload.read().splitlines()
                 for i in range(threads):
                     worker = Thread(target=runFuzz.tryUrl, args=(i, enclosure_queue, threads, manager, directory, forced, u_agent, nLine))
-                    worker.setDaemon(True)
+                    worker.daemon = True
                     worker.start()
                 for link in links:
                     link_url = "{}{}{}".format(url, prefix, link) if prefix else "{}{}".format(url, link)
