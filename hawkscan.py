@@ -562,6 +562,8 @@ class runFuzzing:
                 q.task_done()
             Progress(len_w, thread_count, nLine, page, percentage, tw, bp_current)
 
+def tryUrl(*args):
+    return runFuzzing().tryUrl(*args)
 
 def time_wait(time_i):
     while time_i != 0:
