@@ -176,7 +176,7 @@ s,     """
         elif req_st in [500, 400, 422, 423, 424, 425]:
             print("{} {} {:<15} {:<15} \033[33m{} Server Error\033[0m".format(HOUR, SERV_ERR, exclude_bytes, res, req.status_code))
             if js and req_bytes > 0:
-                parsing.get_javascript(res, req)
+                parsing.get_javascript(res, req, directory)
         else:
             if multiple:
                 return True
@@ -227,7 +227,7 @@ s,     """
                     print("{} {} {:<15} {:<15} \033[33m{} Server Error\033[0m".format(HOUR, SERV_ERR, exclude_bytes, res, req.status_code))
                 elif req_bytes != req_len and req.status_code in [301, 302]:
                     if js and size_bytes > 0:
-                        parsing.get_javascript(res, req)
+                        parsing.get_javascript(res, req, directory)
         else:
             multiple = False if multiple == "0b" else multiple
             if redirect or stat == 301 or stat == 302:
@@ -575,7 +575,7 @@ def html_actions(directory, res, req, parsing):
     parsing.html_recon(res, req, directory) #try to found S3 buckets
     parsing.get_links(req, directory) #scrape all link
     if js:
-        parsing.get_javascript(res, req) #try to found js keyword
+        parsing.get_javascript(res, req, directory) #try to found js keyword
 
 
 def scan_backup(s, res, user_agent, directory, forbi, filterM, len_w, thread_count, nLine, page, percentage, tw, parsing):
@@ -653,9 +653,9 @@ def status(r, stat, directory, u_agent, thread, manageDir):
         pass
     elif stat == 404:
         try:
-            not_found = raw_input("{} not found/ forced ? [y/N]: ".format(LESS))
+            not_found = raw_input("{} URL return 404 response / forced ? [y/N]: ".format(LESS))
         except:
-            not_found = input("{} not found/ forced ? [y/N]: ".format(LESS))
+            not_found = input("{} URL return 404 response / forced ? [y/N]: ".format(LESS))
         if not_found == "y" or not_found == "Y":
             forced = True
             check_words(url, wordlist, directory, u_agent, thread, forced)
@@ -663,9 +663,9 @@ def status(r, stat, directory, u_agent, thread, manageDir):
             sys.exit()
     elif stat in [403, 401]:
         try:
-            fht = raw_input(FORBI + " forbidden/ forced ? [y/N]: ")
+            fht = raw_input(FORBI + " URL return {} response / forced ? [y/N]: ".format(stat))
         except:
-            fht = input(FORBI + " forbidden/ forced ? [y/N]: ")
+            fht = input(FORBI + " URL return {} response / forced ? [y/N]: ".format(stat))
         if fht == "y" or fht == "Y":
             forced = True
             check_words(url, wordlist, directory, u_agent, thread, forced)
@@ -673,9 +673,9 @@ def status(r, stat, directory, u_agent, thread, manageDir):
             sys.exit()
     else:
         try:
-            not_found = raw_input("{} not found/ forced ? [y/N]: ".format(LESS))
+            not_found = raw_input("{} URL return {} response / forced ? [y/N]: ".format(LESS, stat))
         except:
-            not_found = input("{} not found/ forced ? [y/N]: ".format(LESS))
+            not_found = input("{} URL return {} response / forced ? [y/N]: ".format(LESS, stat))
         if not_found == "y" or not_found == "Y":
             forced = True
             check_words(url, wordlist, directory, u_agent, thread, forced)
@@ -791,7 +791,7 @@ def suffix_backup(s, res, page, exton, size_check, directory, forbi, HOUR, parsi
             pass
         elif size_bytes != size_check:
             if js and size_bytes > 0:
-                parsing.get_javascript(res, req_b)
+                parsing.get_javascript(res, req_b, directory)
             if exclude:
                 if len(exclude) > 1:
                     filterM.check_multiple(s, req_b, res_b, directory, forbi, HOUR, parsing, size_bytes=size_bytes)
