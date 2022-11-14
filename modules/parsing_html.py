@@ -7,6 +7,7 @@ import sys, re, os
 from config import S3, JS, WARNING
 import traceback
 
+
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -78,7 +79,7 @@ class parsing_html:
             file.write(str(soup).replace(' ','\n'))
             
 
-    def get_javascript(self, url, req):
+    def get_javascript(self, url, req, directory):
         """search potentialy sensitive keyword in javascript"""
         REGEX_ = {
             "AMAZON_URL_1":r"[a-z0-9.-]+\.s3-[a-z0-9-]\\.amazonaws\.com",
@@ -106,7 +107,23 @@ class parsing_html:
          => interesting ? false positive ?
         """
         INTERESTING_KEY = ['ApiKey', 'appKey', '_public_key', '_TOKEN', '_PASSWORD', '_DATABASE', 
-        'SECRET_KEY', '_secret', 'api_key', 'APPKey', 'apiSettings', 'sourceMappingURL', 'private_key', 'JWT_SECRET', 'api_secret_key']
+        'SECRET_KEY', '_secret', 'api_key', 'APPKey', 'apiSettings', 'sourceMappingURL', 'private_key', 'JWT_SECRET',
+        'api_secret_key', 'access_key', 'access_token', 'admin_pass', 'admin_user', 'algolia_admin_key', 'algolia_api_key', 
+        'alias_pass', 'alicloud_access_key', 'amazon_secret_access_key', 'amazonaws', 'ansible_vault_password', 'aos_key',
+        'api_key', 'api_key_secret', 'api_key_sid', 'api_secret', 'api.googlemaps AIza', 'apidocs', 'apikey', 'apiSecret',
+        'app_debug', 'app_id', 'app_key', 'app_log_level', 'app_secret', 'appkey', 'appkeysecret', 'application_key', 
+        'appsecret', 'appspot', 'auth_token', 'authorizationToken', 'authsecret', 'aws_access', 'aws_access_key_id', 'aws_bucket', 'aws_key', 
+        'aws_secret', 'aws_secret_key', 'aws_token', 'AWSSecretKey', 'b2_app_key', 'bashrc password', 'bintray_apikey', 'bintray_gpg_password', 
+        'bintray_key', 'bintraykey', 'bluemix_api_key', 'bluemix_pass', 'browserstack_access_key', 'bucket_password', 'bucketeer_aws_access_key_id', 
+        'bucketeer_aws_secret_access_key', 'built_branch_deploy_key', 'bx_password', 'cache_driver', 'cache_s3_secret_key', 'cattle_access_key', 
+        'cattle_secret_key', 'certificate_password', 'ci_deploy_password', 'client_secret', 'client_zpk_secret_key', 'clojars_password', 'cloud_api_key', 
+        'cloud_watch_aws_access_key', 'cloudant_password', 'cloudflare_api_key', 'cloudflare_auth_key', 'cloudinary_api_secret', 'cloudinary_name', 'codecov_token', 
+        'conn.login', 'connectionstring', 'consumer_key', 'consumer_secret', 'credentials', 'cypress_record_key', 'database_password', 'database_schema_test', 
+        'datadog_api_key', 'datadog_app_key', 'db_password', 'db_server', 'db_username', 'dbpasswd', 'dbpassword', 'dbuser', 'deploy_password', 'digitalocean_ssh_key_body', 
+        'digitalocean_ssh_key_ids', 'docker_hub_password', 'docker_key', 'docker_pass', 'docker_passwd', 'docker_password', 'dockerhub_password', 'dockerhubpassword', 
+        'dot-files', 'dotfiles', 'droplet_travis_password', 'dynamoaccesskeyid', 'dynamosecretaccesskey', 'elastica_host', 'elastica_port', 'elasticsearch_password', 
+        'encryption_key', 'encryption_password', 'env.heroku_api_key', 'env.sonatype_password', 'eureka.awssecretkey']
+
         SOCKET_END = ["socket.io", "socketio", "socket", "websocket", "app.module.ts", "ws://", "wss://"]
         text = req.content
         url = req.url
@@ -114,7 +131,15 @@ class parsing_html:
         if ".js" in url:
             for keyword_match in INTERESTING_KEY:
                 if keyword_match in text.decode('utf-8', errors="ignore"):
-                    print("{}Potentialy keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, url))
+                    try:
+                        with open("{}/js.txt".format(directory), 'w+') as js_write:
+                            js_link = open("{}/js.txt".format(directory), 'r')
+                            if "{}::{}".format(url, keyword_match) not in js_link.read():
+                                print("{}Potentialy keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, url))
+                                js_write.write("{}::{}\n".format(url, keyword_match))
+                            js_link.close()
+                    except:
+                        traceback.print_exc()
             for socketio_ in SOCKET_END:
                 if socketio_ in text.decode('utf-8', errors="ignore"):
                     print("{}Potentialy socketio endpoint found \033[33m[{}] \033[0min {}".format(JS, socketio_, url))
@@ -127,12 +152,31 @@ class parsing_html:
                     #print(match[0]) #DEBUG
                     for keyword_match in INTERESTING_KEY:
                         if keyword_match in req_js.text:
-                            print("{}Potentialy keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, match[0]))
+                            #print("{}Potentialy keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, match[0]))
+                            try:
+                                with open("{}/js.txt".format(directory), 'a+') as js_write:
+                                    js_link = open("{}/js.txt".format(directory), 'r')
+                                    #print(js_link.read())
+                                    if "{}::{}".format(match[0], keyword_match) not in js_link.read():
+                                        print("{}Potentialy keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, match[0]))
+                                        js_write.write("{}::{}\n".format(match[0], keyword_match))
+                                    js_link.close()
+                            except:
+                                traceback.print_exc()
+
         for k, v in REGEX_.items():
             values_found = re.findall(v, text.decode('utf-8', errors="ignore"))
             if values_found:
                 for v in values_found:
-                    print("{}Keyword found \033[33m[{}] \033[0min {} with value \033[32m[{}] \033[0".format(JS, k, url, v))
+                    try:
+                        with open("{}/js.txt".format(directory), 'a+') as js_write:
+                            js_link = open("{}/js.txt".format(directory), 'r')
+                            if "{}::{}::{}".format(k, url, v) not in js_link.read():
+                                print("{}Keyword found \033[33m[{}] \033[0min {} with value \033[32m[{}] \033[0".format(JS, k, url, v))
+                                js_write.write("{}::{}::{}\n".format(url, k, v))
+                            js_link.close()
+                    except:
+                        traceback.print_exc()
 
 
                         
