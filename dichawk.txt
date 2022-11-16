@@ -250,6 +250,10 @@ wp-json/th/v1/user_generation
 wp-json/wp/v2/users
 wp-json/wp/v2/posts
 wp/v2/settings
+wp-json/wp/v2/sensei-messages/
+wp-json/wp/v2/sensei-messages/1
+wp-json/wp/v2/sensei-messages/2
+wp-json/wp/v2/sensei-messages/20
 wp-json/wp/v2/settings
 wp-json/yoast/v1/
 wp-activate.php
@@ -631,6 +635,9 @@ config/services.xml
 config/services.php
 config/sync/core.extension.yml
 core/core.services.yml
+core/config/install/core.extension.yml
+core/config/install/
+core/config/
 config/sync/swiftmailer.transport.yml
 accueil/
 modman
@@ -874,11 +881,15 @@ Login/
 Logs/
 logs/
 logs/java.log
+logs/error.log.1
+logs/access.log.1
 vi-logs/
 application/logs/
 application/logs
 application.ini
 applications.ini
+modsecurity/modsecurity.conf
+modsecurity.conf
 M/
 M_images/
 Main/
@@ -1069,6 +1080,9 @@ advertising/
 adview/
 viewvc
 cgi-bin/viewvc.cgi
+cdn-cgi/trace
+cdn-cgi/
+cdn-cgi/rum
 advil/
 advisories/
 aeh/
@@ -3650,6 +3664,8 @@ phpbb/
 phpbb/install
 phpMyAdmin/
 phpmyadmin/
+phpMyAdmin/setup
+phpMyAdmin/setup/index.php
 phpSQLiteAdmin
 phppgadmin/
 piano/
@@ -6414,6 +6430,8 @@ nfs/
 ng-cli-backup.json
 nginx_template.conf
 ngx_pagespeed_beacon/
+template/nginx.tmpl
+nginx.tmpl
 nia.cache
 nimcache/
 nlia.cache
@@ -8122,6 +8140,7 @@ admin88
 admin888
 admin99
 admin_
+admin.php?_page=1
 admin_04
 admin_05
 admin_0ec
@@ -8752,6 +8771,7 @@ apidocs/
 api-doc/
 api-docs
 api-docs/
+api-debug.log
 apibuild.pyc
 oauth/token
 api/method
@@ -10110,6 +10130,7 @@ enteradmin
 enterprise
 entertainment
 environment.rb
+environment.js
 epsadmin
 err
 err.log
@@ -11397,6 +11418,7 @@ nginx_status
 nginx.log
 rh/
 nginx/cache/
+nginx/nginx.conf
 monit/bin/monit
 monit/conf/
 monit/man/
@@ -11420,7 +11442,7 @@ null
 null.htw
 nusoap
 nwadmin
-nwp-content/plugins/disqus-comment-system/disqus.php
+wp-content/plugins/disqus-comment-system/disqus.php
 o
 oauth
 oauth.%EXT%
