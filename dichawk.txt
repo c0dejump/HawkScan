@@ -52,6 +52,7 @@ install.properties
 ?static=1&order=asc
 static../.git/config
 static../config.js
+static../settings.py
 contact/
 conf.d/mod_evasive.conf
 conf.d/default.conf
@@ -241,6 +242,10 @@ wp-login.php?action=register
 wp-login.php?action=enter_recovery_mode
 wp-login.php?action=enter_recovery_mode&rm_token=yfj8Sp2kynyGSLXIJAlpAK&rm_key=l3JHzZeZiCaff7XpUpIhQ4
 wp-includes/
+wp-includes/sym404/root/
+wp-includes/sym404/root/etc/passwd
+sym404/
+sym404/root/
 wp-includes/ms-files.php
 wp-includes/certificates/
 wp-content/
@@ -613,6 +618,11 @@ images/
 image/
 scripts/
 assets/
+assets/app.js
+assets../
+assets../static/app.js
+assets../settings.py
+assets../settings/
 upload/
 mail/
 nrotc/
@@ -890,6 +900,7 @@ application.ini
 applications.ini
 modsecurity/modsecurity.conf
 modsecurity.conf
+cblr/
 M/
 M_images/
 Main/
@@ -1275,6 +1286,8 @@ aupa/
 aurrera/
 austin/
 auth/
+auth/cert/smartcard.xhtml
+auth/cert/
 author/
 authors/
 auto/
@@ -2281,6 +2294,9 @@ errata/
 erreala/
 error/
 errors/
+errors_php.txt
+errors.php
+errors_php
 ersatz/
 es/
 es_ES/
@@ -2752,6 +2768,8 @@ htmls/
 oa_html/
 OA_HTML/
 OA_HTML/bin/sqlnet.log
+OA_HTML/AppsLocalLogin.jsp
+OA_HTML/ibeCAcpSSOReg.jsp
 hu/
 humor/
 hunter/
@@ -3659,6 +3677,7 @@ photogallery/
 photography/
 photos/
 php/
+php/include/
 phpBB2/
 phpbb/
 phpbb/install
@@ -4199,16 +4218,19 @@ sessions/
 set/
 setting/
 settings/
+settings.txt
 settings/site.ini
 local.settings.json
 local.settings
 content/search
 content/advancedsearch
+HelpTheHelpDesk.jsdbx
 ezinfo/copyright
 setup/
 seven/
 seven7/
 sf/
+geoserver
 shadow/
 shadow1/
 shalom/
@@ -4374,6 +4396,7 @@ sprite/
 spunky/
 spyware/
 sql/
+sql/users.sql
 sqladmin/
 squires/
 src/
@@ -4936,6 +4959,7 @@ vpn/
 w/
 w3/
 w3c/
+w3c/p3p.xml
 walker/
 wallpapers/
 wally/
@@ -5390,6 +5414,7 @@ app-service.yaml
 app.yaml
 app/__pycache__/
 app/bootstrap.php.cache
+bootstrap.php.cache
 app/cache/
 app/config/core.php
 app/config/database.php
@@ -6027,6 +6052,7 @@ deadjoe
 debug/pprof
 debug/pprof/heap
 debug/pprof/trace
+debug/pprof/goroutine?debug=1
 demo/ojspext/events/globals.jsa
 denglu/
 depcomp
@@ -6285,6 +6311,10 @@ js/envconfig.js
 js/prepod.js
 js/prod.js
 js/qa.js
+js/config.development.js
+js/config.production.js
+config.production.js
+config.development.js
 jscripts/
 jsp/viewer/snoop.jsp
 jspm_packages/
@@ -6336,6 +6366,7 @@ login-gulp.js
 login.json
 logs/proxy_access_ssl_log
 logs/proxy_error_log
+logs/user.txt
 logstash/
 ltmain.sh
 luac.out
@@ -8043,6 +8074,8 @@ admin/login.html
 admin/login.jsp
 admin/login.php
 @admin/login.php
+admin/settings.php
+admin/dashboard.php
 @admin/
 admin/login.py
 admin/login.rb
@@ -9316,6 +9349,8 @@ siteindex
 siteinfo
 blog/_wpeprivate/config.json
 wpeprivate/config.json
+private/config.json
+private/install.xml
 blogs
 bluadmin
 bmadmin
@@ -9580,6 +9615,7 @@ common.inc
 common.xml
 common/config/api.ini
 common/config/db.ini
+common/queryconfig.action
 community
 compadmin
 company
@@ -11100,6 +11136,7 @@ mailman_service/admin/mailman
 mailman/options/
 mailman/listinfo
 mailman/admin/
+mailman/create
 main
 main.%EXT%
 main.mdb
@@ -12002,6 +12039,7 @@ pub
 usenet
 public
 Public/
+public/%2e%2e/
 public_html
 public_html/robots.txt
 publication_list.xml
@@ -12387,6 +12425,9 @@ siteadmin/login.html
 siteadmin/login.php
 sitedown.%EXT%
 sitemanager.xml
+sitemanager
+sitemanager/login.php
+sitemanager/startup.sh
 sitemap
 sites
 sites.ini
@@ -13035,6 +13076,8 @@ var/backups/
 var/cache/
 var/log/
 var/logs/
+var/logs/dev.log
+var/logs/prod.log
 var/sessions/
 apache.log
 var/adm/log/xferlog
@@ -13633,6 +13676,7 @@ eventlogs
 embed.js
 LICENSES.php
 INSTALL.php
+install.xml
 File.php
 validate.js
 sv.js
@@ -14828,6 +14872,7 @@ eAccelerator.php
 dutch.php
 document.php
 dispatcher.php
+dispatch.php
 disablehandles.htc
 directory.php
 details_up.php

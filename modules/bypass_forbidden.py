@@ -45,14 +45,14 @@ def IP_authorization(s, res, url, domain, page, exclude_len):
 	headers_type = [
 	"X-Originating-IP", "X-Forwarded", "Forwarded", "Forwarded-For", "Forwarded-For-IP", "X-Forwarder-For", "X-Forwarded-For", "X-Forwarded-For-Original",
 	"X-Forwarded-By", "X-Forwarded-Host", "X-Remote-IP", "X-Remote-Addr", "X-Client-IP", "Client-IP", "Access-Control-Allow-Origin", "Origin",
-	"X-Custom-IP-Authorization", "X-Forwarded-For "
+	"X-Custom-IP-Authorization", "X-Forwarded-For ", "Host"
 	]
 	
 	try:
 		website_ip = socket.gethostbyname(domain)
-		ips_type  = [website_ip, "127.0.0.1", "127.0.0.2", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0","::1","0:0:0:0:0:0:0:1"]
+		ips_type  = [website_ip, "127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0", "localhost", "192.168.1.1", "::1","0:0:0:0:0:0:0:1", "127.0.0.2"]
 	except:
-		ips_type  = ["127.0.0.1", "127.0.0.2", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "localhost", "0.0.0.0","::1","0:0:0:0:0:0:0:1"]
+		ips_type  = ["127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0", "localhost", "192.168.1.1", "::1","0:0:0:0:0:0:0:1", "127.0.0.2"]
 	for h in headers_type:
 		for ip in ips_type:
 			headers = {h : ip}
