@@ -27,7 +27,7 @@ def method(res):
 			#sys.exit()
 	for rs, type_r, len_req in result_list:
 		if rs not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 502, 307] and len_req != 0:
-			print("{}[{}] Forbidden page {} Bypass with this requests type: {}".format(BYP, rs, res, type_r))
+			print("{}[{}] Forbidden page {} Bypass with this requests type: {} [{}]".format(BYP, rs, res, type_r, len_req))
 
 
 def original_url(s, res, page, url):
