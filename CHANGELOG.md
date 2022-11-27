@@ -1,6 +1,12 @@
 Changelog:
 ----------
 
+- 2.3.1
+---------
+	Updated: dichawk endpoints
+	Updated: JS sensitives endpoints
+---------
+
 - 2.3
 ---------
 	Started: Add proxy function (--proxy proxy.lst) [In progress]
