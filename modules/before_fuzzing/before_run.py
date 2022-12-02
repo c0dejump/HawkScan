@@ -297,7 +297,7 @@ class before_start:
         Test_timeout: just a little function for test if the connection is good or not
         """
         try:
-            req_timeout = requests.get(url, timeout=30, verify=False)
+            req_timeout = requests.get(url, timeout=30, verify=False, headers={'User-agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko'})
         except Timeout:
             print("{}Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(WARNING))
             if first:

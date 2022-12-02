@@ -1,7 +1,7 @@
 import requests
 import socket
 import traceback
-from modules.detect_waf import verify_waf
+from modules.waf.detect_waf import verify_waf
 from config import PLUS, WARNING, INFO, WAF
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)

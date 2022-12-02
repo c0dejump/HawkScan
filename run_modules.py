@@ -1,7 +1,7 @@
-from modules.check_cms import check_cms
-from modules.check_socketio import check_socketio
-from modules.google_dorks import query_dork, query_cse
-from modules.detect_waf import detect_wafw00f
+from modules.before_fuzzing.check_cms import check_cms
+from modules.before_fuzzing.check_socketio import check_socketio
+from modules.before_fuzzing.google_dorks import query_dork, query_cse
+from modules.waf.detect_waf import detect_wafw00f
 
 class check_modules:
     """

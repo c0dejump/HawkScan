@@ -392,6 +392,7 @@ wp-includes/category-template.php
 wp-includes/canonical.php
 wp-includes/author-template.php
 wp-includes/admin-bar.php
+wp-content/themes/theme-internal_ss/blocks/ajax/b.php
 wp-content/themes/twentyten/tag.php
 wp-content/themes/twentyten/single.php
 wp-content/themes/twentyten/sidebar.php
@@ -646,6 +647,7 @@ config/services.yaml
 config/services.xml
 config/services.php
 config/sync/core.extension.yml
+common-config/v1/config/
 core/core.services.yml
 core/config/install/core.extension.yml
 core/config/install/
@@ -8013,6 +8015,9 @@ admin/config.php
 admin/config
 admin/config/media/libraries_ui
 admin/config/media/
+admin/config/services/fastly/config
+admin/config/services/fastly/register
+admin/reports/dblog
 administrator/webconfig.txt.php
 admin/controlpanel
 admin/controlpanel.%EXT%
@@ -13444,6 +13449,7 @@ jwks.json
 .well-known/autoconfig/
 .well-known/sshfp
 .well-known/mta-sts.txt
+.well-known/oauth-authorization-server
 keybase.txt
 pf-ws/authn/flows/
 pf-ws/authn/
