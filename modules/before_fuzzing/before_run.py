@@ -265,7 +265,7 @@ class before_start:
         """
         print("\033[36m Domain backup \033[0m")
         print(LINE)
-        backup_dn_ext = ["zip", "rar", "iso", "tar", "gz", "tgz", "tar.gz", "7z", "jar", "sql.gz"]
+        backup_dn_ext = ["zip", "rar", "iso", "tar", "gz", "tgz", "tar.gz", "7z", "jar", "sql.gz", "log"]
         found_bdn = False
         len_response = 0
         try:

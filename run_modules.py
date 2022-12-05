@@ -21,7 +21,7 @@ class check_modules:
         prescan = False
         if prescan:
             dw = detect_wafw00f(url, directory, thread)
-            pre_scan(dw, url)
+            pre_scan(dw, url) ## pre-check waf sensitivity
         """
 
         beforeStart.get_header(url, directory)

@@ -1,3 +1,4 @@
+
 from notifypy import Notify
 
 
@@ -9,3 +10,6 @@ def notify_scan_completed():
 	notification.title = "Hawkscan"
 	notification.message = "Scan completed"
 	notification.send()
+
+if __name__ == '__main__':
+	notify_scan_completed()

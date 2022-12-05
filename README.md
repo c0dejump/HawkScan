@@ -81,14 +81,14 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 **P1 is the most important**
 
  [WIP] Multiple exclude like: --exclude 403,1337b [P1] [In progress] (see [Exemples](https://github.com/c0dejump/HawkScan/#exemples))   
- [WIP] Anonymous routing through some proxy (http/s proxy list) [P1] [In progress] 
+ [WIP] Anonymous routing through some proxy (http/s proxy list) [P1] [In progress]
+ [WIP] Re-build resport scan [P1]
+ [WIP] HExHTTP replace "header information" before scan
  - [ ] asyncio instead of threading ? [PX]
- - [ ] Add crt.sh to check potential hidden subdomain (with letdebug module ?) [P1]
- - [ ] Re-build resport scan [P1]
+ - [ ] Add crt.sh to check potential hidden subdomain (with letdebug module ?) [PX]
  - [ ] Push results into DB [P2]
  - [ ] If re-scan a website with an existing folder, just doing a diff btw the scan to the folder (like) // interesting ? [P2]
  - [ ] Pre-run to check the waf sensitive (by proxy with 40 threads for exemple) // add proxy funtion [P2]
- - [ ] Check HTTP headers/ssl security: securityheaders; digicert ? [P3]
  - [ ] Check source code and verify leak or sensitive data in Github // Other tool ? [P3]
  - [ ] Scan API endpoints/informations leaks [P3]
 
@@ -111,7 +111,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 
 > Wordlist Settings:
     -w WORDLIST           Wordlist used for Fuzzing the desired webite. Default: dichawk.txt     
-    -b                    Adding prefix/suffix backup extensions during the scan. (Exemples: exemple.com/~ex/, exemple.com/ex.php.bak...) beware, take more longer
+    -b                    Adding prefix/suffix backup extensions during the scan. (Exemples: exemple.com/~ex/, exemple.com/ex.php.bak...) /!\ beware, take more longer
     -p PREFIX             Add prefix in wordlist to scan
 
 > Request Settings:             
@@ -124,7 +124,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 > Tips:            
     -r                    Recursive dir/files      
     -s SUBDOMAINS         Subdomain tester         
-    --js                  For try to found keys or token in the javascript page
+    --js                  For try to found keys, token, sensitive endpoints... in the javascript page
     --nfs                 Not the first step of scan during the first running (waf, vhosts, wayback etc...)    
     --ffs                 Force the first step of scan during the first running (waf, vhosts, wayback etc...)              
     --notify              For receveid notify when the scan finished (only work on linux)
@@ -150,7 +150,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
      python hawkscan.py -u https://www.exemple.com/ -b
 
     //With an exclude page
-     python hawkscan.py -u https://www.exemple.com/ --exclude https://www.exemple.com/profile.php?id=1
+     python hawkscan.py -u https://www.exemple.com/ --exclude profile.php
 
     //With an exclude response code
      python hawkscan.py -u https://www.exemple.com/ --exclude 403
@@ -158,7 +158,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     //With an exclude bytes number
      python hawkscan.py -u https://www.exemple.com/ --exclude 1337b 
 
-    //With two excludes
+    //With two excludes type
      python hawkscan.py -u https://www.exemple.com/ --exclude 1337b,403
 
 ```
