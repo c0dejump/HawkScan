@@ -38,10 +38,11 @@ class parsing_html:
 
     def html_recon(self, res, req, directory):
         """
-        search_s3: Check on source page if a potentialy "s3 amazon bucket" is there
+        Check if S3 buckets and path disclosure are in html page
         """
-        path_disclosure = ["file://", "tmp/", "var/www", "/usr/", "var/lib", "srv/www", "srv/data", "var/opt"]
+        path_disclosure = ["file://", "tmp/", "var/www", "/usr/", "var/lib", "srv/www", "srv/data", "var/opt", "file:///", "var/run"]
         s3_keyword = ["S3://", "s3-", "amazonaws", "aws."]
+        
         for s3_f in s3_keyword:
             reqtext = req.text.split(" ")
             for req_key in reqtext:

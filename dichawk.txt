@@ -217,6 +217,10 @@ openx/www/admin/stats.php
 webservice/CCORE/system
 admin/adminer.php
 wp-itapi.php
+_push-release.sh
+tmp/wp-errors.log
+wc-logs/
+wp-errors.log
 wp-admin/
 wp-admin/js/
 wp-admin/load-scripts.php
@@ -7130,6 +7134,7 @@ htpasswd.fi
 .htaccess.sample
 .htaccess.save
 .htaccess.txt
+htaccess.txt
 .htaccess_extra
 .htaccess_orig
 .htaccess_sc
@@ -11062,6 +11067,7 @@ log/log.txt
 log/production.log
 log/server.log
 log/test.log
+log/debug.log
 test.log
 queue.log
 log_1.txt
@@ -11171,6 +11177,9 @@ logs/logs.txt
 logs/logs.php
 logs/logs.jsp
 LOGS/
+logs/php7.2-fpm.log
+logs/php8.0-fpm.log
+logs/error.log
 logs/access.log
 logs/access_log
 logs/error_log

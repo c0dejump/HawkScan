@@ -34,10 +34,12 @@ except:
 import threading
 from threading import Thread
 
+from fake_useragent import UserAgent
 try:
-    from fake_useragent import UserAgent
-except:
+    UserAgent = UserAgent()
+except Exception:
     UserAgent = ["Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko", "c0dejump", "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"]
+
 from static.banner import banner
 
 from report.creat_report import create_report
@@ -278,7 +280,7 @@ class filterManager:
                     if req_bytes > 0:
                         html_actions(directory, res, req, parsing)
                 elif req_bytes != req_len and req.status_code in [401, 403]:
-                    print("{} {} {:<13}{:<10}f".format(HOUR, FORBI, exclude_bytes, res))
+                    print("{} {} {:<13}{:<10}".format(HOUR, FORBI, exclude_bytes, res))
                 elif req_bytes != req_len and req.status_code in [500, 502, 400, 422, 423, 424, 425]:
                     print("{} {} {:<13}{:<10} \033[33m{} Server Error\033[0m".format(HOUR, SERV_ERR, exclude_bytes, res, req.status_code))
                 elif req_bytes != req_len and req.status_code in [301, 302]:
@@ -398,7 +400,8 @@ class runFuzzing:
                     manager.add_thread(i, threads, manager)
                 #print("{}: {}".format(threading.currentThread().getName() ,thread_score))#DEBUG
             try:
-                user_agent = {'User-agent': u_agent} if u_agent else {'User-agent': UserAgent().random} #for a random user-agent
+                user_agent_r = random.choice(UserAgent) if type(UserAgent) == list else UserAgent.random
+                user_agent = {'User-agent': u_agent} if u_agent else {'User-agent': user_agent_r} #for a random user-agent
                 try:
                     forbi = False
                     if ts: #if --timesleep option defined
@@ -458,8 +461,8 @@ class runFuzzing:
                                     rec_list.append(result)
                             #report.create_report_url(status_link, res, directory) #TODO
                         if backup != None:
-                            vim_backup(s, url, res, user_agent)
-                            scan_backup(s, url, res, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
+                            vim_backup(s, url, res, user_agent, exclude)
+                            scan_backup(s, url, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
                     elif status_link in [401, 403]:
                         two_verify = s.get(url, verify=False)
 
@@ -499,8 +502,8 @@ class runFuzzing:
                                 output_scan(directory, res, len_req, stats=403)"""
                                 pass
                             if backup != None and backup == []:
-                                vim_backup(s, url, res, user_agent)
-                                scan_backup(s, url, res, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
+                                vim_backup(s, url, res, user_agent, exclude)
+                                scan_backup(s, url, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
                     elif status_link == 404:
                         pass
                     elif status_link == 405:
@@ -543,7 +546,7 @@ class runFuzzing:
                         if exclude:
                             filterM.exclude_type(req_p, s, req, res, directory, forbi, get_date(), bp_current, parsing, len_req)
                         else:
-                            vim_backup(s, url, res, user_agent)
+                            vim_backup(s, url, res, user_agent, exclude)
                             if len(req.content) > 0:
                                 html_actions(directory, res, req, parsing)          
                             print("{} {} {:<13}{:<10} \033[33m{} Server Error\033[0m".format(get_date(), SERV_ERR, bytes_len, display_res, status_link))
@@ -577,7 +580,7 @@ class runFuzzing:
                             else:
                                 pass
                     if backup:
-                        scan_backup(s, url, res, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
+                        scan_backup(s, url, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
                 except Timeout:
                     n_error += 1
                     #traceback.print_exc() #DEBUG
@@ -1006,7 +1009,8 @@ def create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart
 def main(url):
     beforeStart = before_start()
     beforeStart.test_timeout(url, first=True)
-    r = requests.get(url, allow_redirects=False, verify=False, timeout=15, headers={'User-agent': UserAgent().random})
+    user_agent_r = random.choice(UserAgent) if type(UserAgent) == list else UserAgent.random
+    r = requests.get(url, allow_redirects=False, verify=False, timeout=15, headers={'User-agent': user_agent_r})
     stat = r.status_code
     if backup is not None:
         if len(backup) > 0 and backup[0] == "min":
