@@ -178,6 +178,7 @@ Or if you want to offer me a coffee :)
 
 https://ko-fi.com/c0dejump
 
+
 ## Tools used
 
 This script use "WafW00f" to detect the WAF in the first step (https://github.com/EnableSecurity/wafw00f)

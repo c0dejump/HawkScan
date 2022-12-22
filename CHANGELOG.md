@@ -1,6 +1,16 @@
 Changelog:
 ----------
 
+- 2.5
+---------
+	Updated: half of the code has been refactored/reorganized
+	Updated: dichawk endpoints
+	Updated: JS sensitives endpoints
+	Updated: Exclude option (referer to Readme)
+	Fixed: ANy error with exclude option
+	New: Download all js link with specific keyword found
+---------
+
 - 2.3.1
 ---------
 	Updated: dichawk endpoints
