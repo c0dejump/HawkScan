@@ -40,7 +40,7 @@ class parsing_html:
         """
         Check if S3 buckets and path disclosure are in html page
         """
-        path_disclosure = ["file://", "tmp/", "var/www", "/usr/", "var/lib", "srv/www", "srv/data", "var/opt", "file:///", "var/run"]
+        path_disclosure = ["file://", "tmp/", "var/www", "/usr/", "var/lib", "srv/www", "srv/data", "var/opt", "file:///", "var/run", "firebase"]
         s3_keyword = ["S3://", "s3-", "amazonaws", "aws."]
         
         for s3_f in s3_keyword:
@@ -123,7 +123,7 @@ class parsing_html:
         'datadog_api_key', 'datadog_app_key', 'db_password', 'db_server', 'db_username', 'dbpasswd', 'dbpassword', 'dbuser', 'deploy_password', 'digitalocean_ssh_key_body', 
         'digitalocean_ssh_key_ids', 'docker_hub_password', 'docker_key', 'docker_pass', 'docker_passwd', 'docker_password', 'dockerhub_password', 'dockerhubpassword', 
         'dot-files', 'dotfiles', 'droplet_travis_password', 'dynamoaccesskeyid', 'dynamosecretaccesskey', 'elastica_host', 'elastica_port', 'elasticsearch_password', 
-        'encryption_key', 'encryption_password', 'env.heroku_api_key', 'env.sonatype_password', 'eureka.awssecretkey']
+        'encryption_key', 'encryption_password', 'env.heroku_api_key', 'env.sonatype_password', 'eureka.awssecretkey', 'apex', 'aura', 'firebase']
 
         SOCKET_END = ["socket.io", "socketio", "socket", "websocket", "app.module.ts", "ws://", "wss://"]
         text = req.content

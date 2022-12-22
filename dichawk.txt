@@ -46,6 +46,7 @@ getfile.do
 getenv.jsp
 ;index.jsp
 ../index.js
+ngsw.json
 index.asp::$DATA
 admin::$INDEX_ALLOCATION/portal
 install.properties
@@ -274,6 +275,7 @@ wp-content/uploads/wpcf7-submissions/
 v2/apis/auth/_resource
 v2/apis/auth/
 v2/apis/
+voxapi
 *.log
 .vagrant
 config.public.php
@@ -624,7 +626,10 @@ pages.php
 images/
 image/
 scripts/
+env-specific.js
 assets/
+assets/config.js
+assets/env-specific.js
 assets/app.js
 assets../
 assets../static/app.js
@@ -734,6 +739,7 @@ old/
 old-versions/
 .old
 users/
+users/forgotten_password
 login/
 password/
 register/
@@ -1211,6 +1217,8 @@ api/GetUserV2
 api/GetUserVBeta
 api/debug
 api/.env
+api/snapshots/:key
+api/snapshots/
 api.prod
 testapi/
 aplicacion/
@@ -1292,6 +1300,9 @@ auditoria/
 august/
 aupa/
 aurrera/
+sfsites/aura
+aura
+s/sfsites/aura
 austin/
 auth/
 auth/cert/smartcard.xhtml
@@ -1322,6 +1333,8 @@ back-up/
 backdoor/
 backend/
 dashboard/stream
+dashboard/snapshot
+dashboard/snapshot/:key
 back_office/
 back_office/dashboard/
 back_office/uploader/
@@ -2888,6 +2901,7 @@ insurance/
 intel/
 interactive/
 interface/
+interface_config.js
 intern/
 internal/
 international/
@@ -3811,6 +3825,7 @@ pressroom/
 presto/
 preston/
 preview/
+preview_bar
 pricing/
 primer/
 primero/
@@ -4441,6 +4456,9 @@ statistic/
 statistics/
 stats/
 stats.json
+jk_status
+jk_status?cmd=dump
+jk_status?opt=0
 status/
 status?full
 status?json
@@ -5147,6 +5165,8 @@ zxcvbnm/
 ///../../data/config/microsrv.cfg
 addressbookserver.php
 sabredav/addressbookserver.php
+.busted
+.buckconfig
 .apt_generated/
 .architect
 .aws/credentials
@@ -5163,6 +5183,8 @@ sabredav/addressbookserver.php
 .circleci/
 .circleci/.firebase.secrets.json
 .circleci/.firebase.secrets.json.enc
+.firebase
+.vscode
 .circleci/config.yml
 .codeclimate.yml
 .coffee_history
@@ -5178,6 +5200,7 @@ sabredav/addressbookserver.php
 .db.yaml
 .dub
 .eggs/
+.env.local
 .env.dev.local
 .env.development.local
 .env.development.sample
@@ -6268,6 +6291,7 @@ influxdb/
 ingress.yaml
 inspector
 install-log.txt
+js-log.ashx
 install-sh
 install/index.php?upgrade/
 install_manifest.txt
@@ -7013,6 +7037,8 @@ config.asp
 .domain
 .drone.yml
 .DS_Store
+.pnp
+.pnp.js
 .dump
 .eclipse
 .editorconfig
@@ -9000,6 +9026,7 @@ app.manifest
 manifest-production.json
 ccnet.config
 app.js
+aura_prod.js
 app.dev.js
 config-auth
 app/.htaccess
@@ -9884,6 +9911,7 @@ testoauth2.php
 oauth2.php
 oauth-credentials.json
 oauth.json
+authDump.json
 token.json
 credentials.json
 credentials.ini
@@ -11254,12 +11282,16 @@ manual/index.html
 manuallogin/
 manuals
 map-data.json
+data.json
+data_auth.json
+data_clear.json
 map
 map.%EXT%
 map_admin
 mapadmin
 mapix/doc/en/changes.html
 mapix/mapix/doc/en/changes.html
+sample_employees_csv.csv
 mapping
 mappings
 maps
