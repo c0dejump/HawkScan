@@ -183,7 +183,7 @@ class filterManager:
                 for rh in req.headers:
                     if "location" in rh or "Location" in rh:
                         loc = req.headers[rh]
-                        redirect_link = loc if "http" in loc else "{}{}".format(url, loc)
+                        redirect_link = loc if "http" in loc.split("/")[0] else "{}{}".format(url, loc)
                         req_loc = s.get(loc, verify=False, allow_redirects=False)
                         if "/".join(res.split("/")[1:]) == "/".join(loc.split("/")[1:-1]) and len(req_loc.content) != index_len and not "." in loc:
                             print(" \033[33m[<>]\033[0m {} redirect to \033[33m{}\033[0m [\033[33mPotential Hidden Directory\033[0m]".format(res, loc))
@@ -224,7 +224,7 @@ class filterManager:
             for rh in req.headers:
                 if "location" in rh or "Location" in rh:
                     loc = req.headers[rh]
-                    redirect_link = loc if "http" in loc else "{}{}".format(url, loc)
+                    redirect_link = loc if "http" in loc.split("/")[0] else "{}{}".format(url, loc)
                     req_loc = s.get(redirect_link, verify=False, allow_redirects=False)
                     if "/".join(res.split("/")[1:]) == "/".join(loc.split("/")[1:-1]) and len(req_loc.content) != index_len and not "." in loc:
                         print(" \033[33m[<>]\033[0m {} redirect to \033[33m{}\033[0m [\033[33mPotential Hidden Directory\033[0m]".format(res, loc))
@@ -515,20 +515,20 @@ class runFuzzing:
                                 html_actions(directory, res, req, parsing)
                         #report.create_report_url(status_link, res, directory)
                     elif status_link in [301, 302]:
-                        redirect_link = ""
-                        for rh in req.headers:
-                            if "location" in rh or "Location" in rh:
-                                loc = req.headers[rh]
-                                redirect_link = loc if "http" in loc else "{}{}".format(url, loc)
-                                req_loc = s.get(redirect_link, verify=False, allow_redirects=False)
-                                if "/".join(res.split("/")[1:]) == "/".join(loc.split("/")[1:-1]) and len(req_loc.content) != index_len and not "." in loc:
-                                    print(" \033[33m[<>]\033[0m {} redirect to \033[33m{}\033[0m [\033[33mPotential Hidden Directory\033[0m]".format(res, loc))
-                            else:
-                                req_loc = s.get(res, verify=False, allow_redirects=True)
-                                redirect_link = req_loc.url
                         if exclude:
                             filterM.exclude_type(req_p, s, req, res, directory, forbi, get_date(), bp_current, parsing, len_req)
-                        else:               
+                        else:
+                            redirect_link = ""
+                            for rh in req.headers:
+                                if "location" in rh or "Location" in rh:
+                                    loc = req.headers[rh]
+                                    redirect_link = loc if "http" in loc.split("/")[0] else "{}{}".format(url, loc)
+                                    req_loc = s.get(redirect_link, verify=False, allow_redirects=False)
+                                    if "/".join(res.split("/")[1:]) == "/".join(loc.split("/")[1:-1]) and len(req_loc.content) != index_len and not "." in loc:
+                                        print(" \033[33m[<>]\033[0m {} redirect to \033[33m{}\033[0m [\033[33mPotential Hidden Directory\033[0m]".format(res, loc))
+                                else:
+                                    req_loc = s.get(res, verify=False, allow_redirects=True)
+                                    redirect_link = req_loc.url
                             print("{} {} {:<13}{:<10}\033[33m → {}\033[0m {}\r".format(get_date(), LESS, bytes_len, display_res, redirect_link, status_link))
                             if len(req.content) > 0:
                                 parsing.html_recon(res, req, directory)
@@ -589,13 +589,15 @@ class runFuzzing:
                     #pass
                 except Exception:
                     n_error += 1
-                    #traceback.print_exc() #DEBUG
+                    if print_error:
+                        traceback.print_exc() #DEBUG
                     with open(directory + "/errors.txt", "a+") as write_error:
                         write_error.write(res+"\n")
                 q.task_done()
             except Exception:
                 n_error += 1
-                #traceback.print_exc() #DEBUG
+                if print_error:
+                    traceback.print_exc() #DEBUG
                 q.task_done()
             Progress(len_w, thread_count, nLine, page, percentage, tw, bp_current)
 
@@ -1043,10 +1045,11 @@ if __name__ == '__main__':
 
     group = parser.add_argument_group('\033[34m> Request Settings\033[0m')
     group.add_argument("-H", help="Modify header. \033[33mEx: -H \"cookie:test\"\033[0m", required=False, dest="header_", type=str)
-    group.add_argument("-a", help="Choice user-agent. \033[32mDefault: Random\033[0m", dest='user_agent', required=False)
+    group.add_argument("-a", help="Choice user-agent. \033[32mDefault: Random\033[0m", dest='_user_agent', required=False)
     group.add_argument("--auth", help="HTTP authentification. \033[33mEx: --auth admin:admin)\033[0m", required=False, dest="auth")
     group.add_argument("--timesleep", help="To define a timesleep/rate-limit if app is unstable during scan.", required=False, dest="ts", type=float, default=0)
     group.add_argument("--proxy", help="Defined a proxies during scan \033[33mEx: --proxy proxy.lst\033[0m #In progress", required=False, dest="proxy")
+    group.add_argument("--error", help="print errors", required=False, dest="print_error", action='store_true')
 
     group = parser.add_argument_group('\033[34m> Tips\033[0m')
     group.add_argument("-r", help="Recursive dir/files", required=False, dest="recursif", action='store_true')
@@ -1067,7 +1070,7 @@ if __name__ == '__main__':
     wordlist = results.wordlist
     subdomains = results.subdomains
     thread = results.thread
-    u_agent = results.user_agent
+    u_agent = results._user_agent
     recur = results.recursif
     prefix = results.prefix
     output = results.output
@@ -1084,6 +1087,7 @@ if __name__ == '__main__':
     force_first_step = results.force_first_step
     notify = results.notify
     proxy = results.proxy
+    print_error = results.print_error
 
     if len(sys.argv) < 2:
         print("{}URL target is missing, try using -u <url> \n".format(INFO))

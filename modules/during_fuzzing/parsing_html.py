@@ -40,7 +40,7 @@ class parsing_html:
         """
         Check if S3 buckets and path disclosure are in html page
         """
-        path_disclosure = ["file://", "tmp/", "var/www", "/usr/", "var/lib", "srv/www", "srv/data", "var/opt", "file:///", "var/run", "firebase"]
+        path_disclosure = ["file://", "tmp/", "var/www", "/usr/", "var/lib", "srv/www", "srv/data", "var/opt", "file:///", "var/run"]
         s3_keyword = ["S3://", "s3-", "amazonaws", "aws."]
         
         for s3_f in s3_keyword:
@@ -101,18 +101,16 @@ class parsing_html:
 
         url_index = url.split("/")[0:3] if "http" in url else url
         url_index = "/".join(url_index)
+        
         UNINTERESTING_EXTENSIONS = ['css', 'svg', 'png', 'jpeg', 'jpg', 'mp4', 'gif']
+
         UNINTERESTING_JS_FILES = ['bootstrap', 'jquery']
-        """
-        'api:', 'api=', 'apis:', 'apis=', 'token=', 'token:', 'key:', 'key=', 'keys:', 'keys=', 'password=', 'password:', 'blob'
-         => interesting ? false positive ?
-        """
-        INTERESTING_KEY = ['ApiKey', 'appKey', '_public_key', '_TOKEN', '_PASSWORD', '_DATABASE', 
-        'SECRET_KEY', '_secret', 'api_key', 'APPKey', 'apiSettings', 'sourceMappingURL', 'private_key', 'JWT_SECRET',
-        'api_secret_key', 'access_key', 'access_token', 'admin_pass', 'admin_user', 'algolia_admin_key', 'algolia_api_key', 
-        'alias_pass', 'alicloud_access_key', 'amazon_secret_access_key', 'amazonaws', 'ansible_vault_password', 'aos_key',
-        'api_key', 'api_key_secret', 'api_key_sid', 'api_secret', 'api.googlemaps AIza', 'apidocs', 'apikey', 'apiSecret',
-        'app_debug', 'app_id', 'app_key', 'app_log_level', 'app_secret', 'appkey', 'appkeysecret', 'application_key', 
+
+        INTERESTING_KEY = ['_public_key', '_token', '_password', '_database', 'secret_key', '_secret', 'api_key', 'apisettings', 
+        'sourcemappingurl', 'private_key', 'jwt_secret', 'api_secret_key', 'access_key', 'access_token', 'admin_pass', 'admin_user', 
+        'algolia_admin_key', 'algolia_api_key', 'alias_pass', 'alicloud_access_key', 'amazon_secret_access_key', 'amazonaws', 
+        'ansible_vault_password', 'aos_key', 'api_key_secret', 'api_key_sid', 'api_secret', 'api.googlemaps AIza', 'apidocs', 'apikey', 
+        'apiSecret', 'app_debug', 'app_id', 'app_key', 'app_log_level', 'app_secret', 'appkey', 'appkeysecret', 'application_key', 
         'appsecret', 'appspot', 'auth_token', 'authorizationToken', 'authsecret', 'aws_access', 'aws_access_key_id', 'aws_bucket', 'aws_key', 
         'aws_secret', 'aws_secret_key', 'aws_token', 'AWSSecretKey', 'b2_app_key', 'bashrc password', 'bintray_apikey', 'bintray_gpg_password', 
         'bintray_key', 'bintraykey', 'bluemix_api_key', 'bluemix_pass', 'browserstack_access_key', 'bucket_password', 'bucketeer_aws_access_key_id', 
@@ -123,27 +121,30 @@ class parsing_html:
         'datadog_api_key', 'datadog_app_key', 'db_password', 'db_server', 'db_username', 'dbpasswd', 'dbpassword', 'dbuser', 'deploy_password', 'digitalocean_ssh_key_body', 
         'digitalocean_ssh_key_ids', 'docker_hub_password', 'docker_key', 'docker_pass', 'docker_passwd', 'docker_password', 'dockerhub_password', 'dockerhubpassword', 
         'dot-files', 'dotfiles', 'droplet_travis_password', 'dynamoaccesskeyid', 'dynamosecretaccesskey', 'elastica_host', 'elastica_port', 'elasticsearch_password', 
-        'encryption_key', 'encryption_password', 'env.heroku_api_key', 'env.sonatype_password', 'eureka.awssecretkey', 'apex', 'aura', 'firebase']
+        'encryption_key', 'encryption_password', 'env.heroku_api_key', 'env.sonatype_password', 'eureka.awssecretkey', 'apex', 'firebase', 'xoxp', 'hapikey', 'client_credentials',
+        'amplitude', 'getKey', 'appcenter', 'TrackerToken', 'conversationspasskey', 'Passkey', 'accesstoken', 'verifycustomtoken', 'signInWithCustomToken', 'x-pendo-integration-key',
+        'sendgrid_token', 'x-api-token', 'x-api-key', 'branch_secret', 'Idempotency-Key']
 
-        SOCKET_END = ["socket.io", "socketio", "socket", "websocket", "app.module.ts", "ws://", "wss://"]
+        SOCKET_END = ["socket.io", "socketio", "socket", "websocket", "app.module.ts", "ws://", "wss://", "xmpp-websocket"]
+
         text = req.content
         url = req.url
         regex = r'''((https?:)?[/]{1,2}[^'\"> ]{5,})|(\.(get|post|ajax|load)\s*\(\s*['\"](https?:)?[/]{1,2}[^'\"> ]{5,})'''
         if ".js" in url:
             for keyword_match in INTERESTING_KEY:
-                if keyword_match in text.decode('utf-8', errors="ignore"):
+                if keyword_match.lower() in text.decode('utf-8', errors="ignore").lower():
                     try:
                         with open("{}/js.txt".format(directory), 'w+') as js_write:
                             js_link = open("{}/js.txt".format(directory), 'r')
                             if "{}::{}".format(url, keyword_match) not in js_link.read():
-                                print("{}Potentialy keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, url))
+                                print("{}Potential keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, url))
                                 js_write.write("{}::{}\n".format(url, keyword_match))
                             js_link.close()
                     except:
                         traceback.print_exc()
             for socketio_ in SOCKET_END:
                 if socketio_ in text.decode('utf-8', errors="ignore"):
-                    print("{}Potentialy socketio endpoint found \033[33m[{}] \033[0min {}".format(JS, socketio_, url))
+                    print("{}Potential socketio endpoint found \033[33m[{}] \033[0min {}".format(JS, socketio_, url))
         else:
             matches = re.findall(regex, text.decode('utf-8', errors="ignore"))
             for match in matches:
@@ -152,14 +153,14 @@ class parsing_html:
                     req_js = requests.get(match[0], verify=False)
                     #print(match[0]) #DEBUG
                     for keyword_match in INTERESTING_KEY:
-                        if keyword_match in req_js.text:
+                        if keyword_match.lower() in req_js.text.lower():
                             #print("{}Potentialy keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, match[0]))
                             try:
                                 with open("{}/js.txt".format(directory), 'a+') as js_write:
                                     js_link = open("{}/js.txt".format(directory), 'r')
                                     #print(js_link.read())
                                     if "{}::{}".format(match[0], keyword_match) not in js_link.read():
-                                        print("{}Potentialy keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, match[0]))
+                                        print("{}Potential keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, match[0]))
                                         js_write.write("{}::{}\n".format(match[0], keyword_match))
                                     js_link.close()
                             except:
