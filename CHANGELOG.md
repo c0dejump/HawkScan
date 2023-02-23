@@ -1,6 +1,12 @@
 Changelog:
 ----------
 
+- 2.6
+---------
+	Updated: dichawk endpoints
+	New: lightmode option
+---------
+
 - 2.5
 ---------
 	Updated: half of the code has been refactored/reorganized

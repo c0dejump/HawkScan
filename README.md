@@ -108,6 +108,8 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     --exclude EXCLUDE [EXCLUDE ...] Exclude page, response code, response size. (Exemples: --exclude 500,337b)   
     --auto                Automatic threads depending response to website. Max: 30
     --update              For automatic update
+    --lightmode           For a just simple fuzzing 1 request per second & a new session for each request
+
 
 > Wordlist Settings:
     -w WORDLIST           Wordlist used for Fuzzing the desired webite. Default: dichawk.txt     
