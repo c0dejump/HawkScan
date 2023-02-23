@@ -94,6 +94,8 @@ tw, th = terminal_size() # determine terminal size
 
 header_parsed = {}
 
+basic_user_agent = {"User-agent": "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko"}
+
 
 class ThreadManager:
     """
@@ -184,11 +186,11 @@ class filterManager:
                     if "location" in rh or "Location" in rh:
                         loc = req.headers[rh]
                         redirect_link = loc if "http" in loc.split("/")[0] else "{}{}".format(url, loc)
-                        req_loc = s.get(loc, verify=False, allow_redirects=False)
+                        req_loc = s.get(loc, verify=False, allow_redirects=False, headers=basic_user_agent)
                         if "/".join(res.split("/")[1:]) == "/".join(loc.split("/")[1:-1]) and len(req_loc.content) != index_len and not "." in loc:
                             print(" \033[33m[<>]\033[0m {} redirect to \033[33m{}\033[0m [\033[33mPotential Hidden Directory\033[0m]".format(res, loc))
                     else:
-                        req_loc = s.get(res, verify=False, allow_redirects=True)
+                        req_loc = s.get(res, verify=False, allow_redirects=True, headers=basic_user_agent)
                         redirect_link = req_loc.url
                 print("{} {} {:<13}{:<10}\033[33m → {}\033[0m {}\r".format(HOUR, LESS, exclude_bytes, res, redirect_link, req.status_code))
             else:
@@ -225,11 +227,11 @@ class filterManager:
                 if "location" in rh or "Location" in rh:
                     loc = req.headers[rh]
                     redirect_link = loc if "http" in loc.split("/")[0] else "{}{}".format(url, loc)
-                    req_loc = s.get(redirect_link, verify=False, allow_redirects=False)
+                    req_loc = s.get(redirect_link, verify=False, allow_redirects=False, headers=basic_user_agent)
                     if "/".join(res.split("/")[1:]) == "/".join(loc.split("/")[1:-1]) and len(req_loc.content) != index_len and not "." in loc:
                         print(" \033[33m[<>]\033[0m {} redirect to \033[33m{}\033[0m [\033[33mPotential Hidden Directory\033[0m]".format(res, loc))
                 else:
-                    req_loc = s.get(res, verify=False, allow_redirects=True)
+                    req_loc = s.get(res, verify=False, allow_redirects=True, headers=basic_user_agent)
                     redirect_link = req_loc.url
             print("{} {} {:<13}{:<10}\033[33m → {}\033[0m {}\r".format(HOUR, LESS, exclude_bytes, res, redirect_link, req.status_code))
             if js and req_bytes > 0:
@@ -293,7 +295,7 @@ class filterManager:
             ## TODO
             multiple = False if multiple == "0b" else multiple
             if stat == 301 or stat == 302:
-                req = requests.get(req.url, verify=False)
+                req = requests.get(req.url, verify=False, headers=basic_user_agent)
             words = req_p
             for w in words.split("\n"):
                 if w in req.text:
@@ -349,6 +351,158 @@ class runFuzzing:
     functions:
     - tryUrl
     """
+    def light_mode(self, uri, directory, s, forced=False, u_agent=False):
+        filterM = filterManager()
+        parsing = parsing_html()
+
+        percentage = lambda x, y: float(x) / float(y) * 100.00
+
+        waf = False
+        tested_bypass = False
+
+        global bp_current
+        bp_current = 0
+
+        global n_error
+        n_error = 0
+        
+        res = uri
+        page = "/".join(res.split("/")[3:])
+        #print("{} :: {}".format(res.split("/"), "/".join(res.split("/")[3:]))) #DEBUG  
+        try:
+            user_agent_r = random.choice(UserAgent) if type(UserAgent) == list else UserAgent.random
+            user_agent = {'User-agent': u_agent} if u_agent else {'User-agent': user_agent_r} #for a random user-agent
+            try:
+                forbi = False
+
+                req = requests.get(res, verify=False, timeout=10)
+
+                if ts: #if --timesleep option defined
+                    time.sleep(ts)
+                if req == 404:
+                    status_link = req
+                elif req != 404 and req.history:
+                    status_link = [histo.status_code for histo in req.history]
+                else:
+                    status_link = req.status_code
+
+                len_req = len(req.content) if req != 404 else False   
+                bytes_len = "[{}b]".format(len_req)    
+                display_res = res if tw > 110 else page 
+                #print(status_link) #DEBUG status response
+
+                if status_link == 200:
+                    if exclude:
+                        filterM.exclude_type(req_p, s, req, res, directory, forbi, get_date(), bp_current, parsing, len_req)
+                    else:            
+                        if len(req.content) > 0:
+                            html_actions(directory, res, req, parsing)
+                        print("{} {} {:<13}{:<10}".format(get_date(), PLUS, bytes_len, display_res))
+                        output_scan(directory, res, len_req, stats=200) #check backup
+                        create_backup(res, directory, forbi) #add directory for recursif scan
+                elif status_link in [401, 403]:
+                    if exclude:
+                        filterM.exclude_type(req_p, s, req, res, directory, forbi, get_date(), bp_current, parsing, len_req)
+                    else:
+                        two_verify = requests.get(url, verify=False, headers=basic_user_agent)
+                        if "Generated by cloudfront" in req.text and "Request blocked" in req.text and two_verify.status_code in [403, 401]:
+                            print("{} {} Cloudflare protection activated on {}, wait 60s please".format(get_date(), WARNING, req.url))
+                            time_wait(time_i)
+                        if not forced:
+                            forbi = True
+                            print("{} {} {:<13}{:<10} \033[31m{} Forbidden \033[0m".format(get_date(), FORBI, bytes_len, display_res, status_link))
+                        elif not forced and recur:
+                            pass
+                        else:
+                            """print("{} {} {:<13}{:<10} \033[31m{} Forbidden \033[0m".format(get_date(), FORBI, bytes_len, display_res, status_link))
+                            output_scan(directory, res, len_req, stats=403)"""
+                            pass
+                elif status_link == 404:
+                    pass
+                elif status_link == 405:
+                    if exclude:
+                        filterM.exclude_type(req_p, s, req, res, directory, forbi, get_date(), bp_current, parsing, len_req)
+                    else:
+                        print("{} {} {:<13}{:<10} [405]".format(get_date(), INFO, bytes_len, display_res))
+                        if len(req.content) > 0:
+                            html_actions(directory, res, req, parsing)
+                    #report.create_report_url(status_link, res, directory)
+                elif status_link in [301, 302]:
+                    if exclude:
+                        filterM.exclude_type(req_p, s, req, res, directory, forbi, get_date(), bp_current, parsing, len_req)
+                    else:
+                        redirect_link = ""
+                        for rh in req.headers:
+                            if "location" in rh or "Location" in rh:
+                                loc = req.headers[rh]
+                                redirect_link = loc if "http" in loc.split("/")[0] else "{}{}".format(url, loc)
+                                req_loc = requests.get(redirect_link, verify=False, allow_redirects=False, headers=basic_user_agent)
+                                if "/".join(res.split("/")[1:]) == "/".join(loc.split("/")[1:-1]) and len(req_loc.content) != index_len and not "." in loc:
+                                    print(" \033[33m[<>]\033[0m {} redirect to \033[33m{}\033[0m [\033[33mPotential Hidden Directory\033[0m]".format(res, loc))
+                            else:
+                                req_loc = requests.get(res, verify=False, allow_redirects=True, headers=basic_user_agent)
+                                redirect_link = req_loc.url
+                        print("{} {} {:<13}{:<10}\033[33m → {}\033[0m {}\r".format(get_date(), LESS, bytes_len, display_res, redirect_link, status_link))
+                        if len(req.content) > 0:
+                            html_actions(directory, res, req, parsing)
+                        output_scan(directory, res, len_req, stats=301)
+                        #report.create_report_url(status_link, res, directory) #TODO
+                elif status_link == 304:
+                    print("{}\033[33m[+] \033[0m {}\033[33m 304 Not modified \033[0m".format(get_date(), display_res))
+                    if len(req.content) > 0:
+                        html_actions(directory, res, req, parsing)
+                    #report.create_report_url(status_link, res, directory) #TODO                
+                elif status_link in [307, 308]:
+                    pass
+                elif status_link in [400, 500]:
+                    #pass
+                    if exclude:
+                        filterM.exclude_type(req_p, s, req, res, directory, forbi, get_date(), bp_current, parsing, len_req)
+                    else:
+                        if len(req.content) > 0:
+                            html_actions(directory, res, req, parsing)          
+                        print("{} {} {:<13}{:<10} \033[33m{} Server Error\033[0m".format(get_date(), SERV_ERR, bytes_len, display_res, status_link))
+                        output_scan(directory, res, len_req, stats=status_link)
+                elif status_link in [422, 423, 424, 425]:
+                    print("{} {} {} \033[33mError WebDAV\033[0m\r".format(get_date(), LESS, res if tw > 110 else page))
+                    if len(req.content) > 0:
+                        html_actions(directory, res, req, parsing)
+                    #report.create_report_url(status_link, res, directory) #TODO
+                elif status_link == 405:
+                    print("{} {} {}".format(get_date(), PLUS, display_res))
+                    #output_scan(directory, res, stats=405)
+                elif status_link == 503:
+                    req_test_index = requests.get(url, verify=False, headers=basic_user_agent) # take origin page url (index) to check if it's really unavailable
+                    if req_test_index.status_code == 503 and not forced:
+                        #manager.stop_thread() #TODO
+                        print("{}{} Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(get_date(), WARNING))
+                        time_wait(time_i)
+                    else:
+                        pass
+                elif status_link in [429, 522]:
+                    if "Just a moment" in req.text:
+                        print("{} {} Cloudflare protection activated, wait 60s please".format(get_date(), WARNING))
+                        time_wait(time_i)
+                    else:
+                        pass
+            except Timeout:
+                n_error += 1
+                #traceback.print_exc() #DEBUG
+                with open(directory + "/errors.txt", "a+") as write_error:
+                    write_error.write(res+"\n")
+                #pass
+            except Exception:
+                n_error += 1
+                if print_error:
+                    traceback.print_exc() #DEBUG
+                with open(directory + "/errors.txt", "a+") as write_error:
+                    write_error.write(res+"\n")
+        except Exception:
+            n_error += 1
+            if print_error:
+                traceback.print_exc() #DEBUG
+
+
     def tryUrl(self, i, q, threads, manager=False, directory=False, forced=False, u_agent=False, nLine=False):
         """
         tryUrl:
@@ -464,7 +618,7 @@ class runFuzzing:
                             vim_backup(s, url, res, user_agent, exclude)
                             scan_backup(s, url, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
                     elif status_link in [401, 403]:
-                        two_verify = s.get(url, verify=False)
+                        two_verify = s.get(url, verify=False, headers=basic_user_agent)
 
                         if "Generated by cloudfront" in req.text and "Request blocked" in req.text and two_verify.status_code in [403, 401]:
                             print("{} {} Cloudflare protection activated on {}, wait 60s please".format(get_date(), WARNING, req.url))
@@ -523,21 +677,21 @@ class runFuzzing:
                                 if "location" in rh or "Location" in rh:
                                     loc = req.headers[rh]
                                     redirect_link = loc if "http" in loc.split("/")[0] else "{}{}".format(url, loc)
-                                    req_loc = s.get(redirect_link, verify=False, allow_redirects=False)
+                                    req_loc = s.get(redirect_link, verify=False, allow_redirects=False, headers=basic_user_agent)
                                     if "/".join(res.split("/")[1:]) == "/".join(loc.split("/")[1:-1]) and len(req_loc.content) != index_len and not "." in loc:
                                         print(" \033[33m[<>]\033[0m {} redirect to \033[33m{}\033[0m [\033[33mPotential Hidden Directory\033[0m]".format(res, loc))
                                 else:
-                                    req_loc = s.get(res, verify=False, allow_redirects=True)
+                                    req_loc = s.get(res, verify=False, allow_redirects=True, headers=basic_user_agent)
                                     redirect_link = req_loc.url
                             print("{} {} {:<13}{:<10}\033[33m → {}\033[0m {}\r".format(get_date(), LESS, bytes_len, display_res, redirect_link, status_link))
                             if len(req.content) > 0:
-                                parsing.html_recon(res, req, directory)
+                                html_actions(directory, res, req, parsing)
                             output_scan(directory, res, len_req, stats=301)
                             #report.create_report_url(status_link, res, directory) #TODO
                     elif status_link == 304:
                         print("{}\033[33m[+] \033[0m {}\033[33m 304 Not modified \033[0m".format(get_date(), display_res))
                         if len(req.content) > 0:
-                            parsing.html_recon(res, req, directory)
+                            html_actions(directory, res, req, parsing)
                         #report.create_report_url(status_link, res, directory) #TODO                
                     elif status_link in [307, 308]:
                         pass
@@ -560,7 +714,7 @@ class runFuzzing:
                         print("{} {} {}".format(get_date(), PLUS, display_res))
                         #output_scan(directory, res, stats=405)
                     elif status_link == 503:
-                        req_test_index = requests.get(url, verify=False) # take origin page url (index) to check if it's really unavailable
+                        req_test_index = requests.get(url, verify=False, headers=basic_user_agent) # take origin page url (index) to check if it's really unavailable
                         if req_test_index.status_code == 503 and not forced:
                             #manager.stop_thread() #TODO
                             print("{}{} Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(get_date(), WARNING))
@@ -572,7 +726,7 @@ class runFuzzing:
                             print("{} {} Cloudflare protection activated, wait 60s please".format(get_date(), WARNING))
                             time_wait(time_i)
                         else:
-                            req_test_many = s.get(url, verify=False, timeout=10, allow_redirects=False)
+                            req_test_many = s.get(url, verify=False, timeout=10, allow_redirects=False, headers=basic_user_agent)
                             if req_test_many in [429, 522]:
                                 print("{} {} Too many requests, web service seem to be offline".format(get_date(), WARNING))
                                 print("{} {} STOP so many requests, we should wait a little...".format(get_date(), WARNING))
@@ -655,16 +809,14 @@ def status(r, stat, directory, u_agent, thread, manageDir):
             stat = r.status_code
         else:
             print("{} Authentification error".format(LESS))
-            try:
-                continue_error = raw_input("The authentification seems bad, continue ? [y/N]")
-            except:
-                continue_error = input("The authentification seems bad, continue ? [y/N]")
+            continue_error = input("The authentification seems bad, continue ? [y/N]")
             if continue_error not in ["y", "Y"]:
                 sys.exit()
+
     if stat == 200:
         check_words(url, wordlist, directory, u_agent, thread)
     elif stat in [301, 302]:
-        req_red = requests.get(url, verify=False)
+        req_red = requests.get(url, verify=False, headers=basic_user_agent)
         message_type = "Permanently" if stat == 301 else "Temporarily"
         follow = input("{} {} Moved {} → {}\nDo you want follow redirection ? [y/N]".format(PLUS, stat, message_type, req_red.url))
         print("")
@@ -673,30 +825,21 @@ def status(r, stat, directory, u_agent, thread, manageDir):
     elif stat == 304:
         pass
     elif stat == 404:
-        try:
-            not_found = raw_input("{} URL return 404 response / forced ? [y/N]: ".format(LESS))
-        except:
-            not_found = input("{} URL return 404 response / forced ? [y/N]: ".format(LESS))
+        not_found = input("{} URL return 404 response / forced ? [y/N]: ".format(LESS))
         if not_found == "y" or not_found == "Y":
             forced = True
             check_words(url, wordlist, directory, u_agent, thread, forced)
         else:
             sys.exit()
     elif stat in [403, 401]:
-        try:
-            fht = raw_input(FORBI + " URL return {} response / forced ? [y/N]: ".format(stat))
-        except:
-            fht = input(FORBI + " URL return {} response / forced ? [y/N]: ".format(stat))
+        fht = input(FORBI + " URL return {} response / forced ? [y/N]: ".format(stat))
         if fht == "y" or fht == "Y":
             forced = True
             check_words(url, wordlist, directory, u_agent, thread, forced)
         else:
             sys.exit()
     else:
-        try:
-            not_found = raw_input("{} URL return {} response / forced ? [y/N]: ".format(LESS, stat))
-        except:
-            not_found = input("{} URL return {} response / forced ? [y/N]: ".format(LESS, stat))
+        not_found = input("{} URL return {} response / forced ? [y/N]: ".format(LESS, stat))
         if not_found == "y" or not_found == "Y":
             forced = True
             check_words(url, wordlist, directory, u_agent, thread, forced)
@@ -864,16 +1007,15 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
     link_url = []
     hiddend = []
 
-    index_req = requests.get(url, verify=False, allow_redirects=False)
-    htaccess_req = requests.get("{}.htaccess".format(url), verify=False, allow_redirects=False)
+    index_req = requests.get(url, verify=False, allow_redirects=False, headers=basic_user_agent)
+    htaccess_req = requests.get("{}.htaccess".format(url), verify=False, allow_redirects=False, headers=basic_user_agent)
 
     global index_len
     index_len = len(index_req.content)
 
     global htaccess_len
     htaccess_len = len(htaccess_req.content)
-
-
+            
     with open(wordlist, "r") as payload:
         links = payload.read().splitlines()
     state = links[nLine:] if nLine else links # For restart from the last line found in the dico
@@ -930,7 +1072,23 @@ def check_words(url, wordlist, directory, u_agent, thread, forced=False, nLine=F
 def start_scan(subdomains, r, stat, directory, u_agent, thread, manageDir, header_, forbi):
     if subdomains:
         subdomain(subdomains)
-    status(r, stat, directory, u_agent, thread, manageDir)
+    if light_mode:
+        runFuzz = runFuzzing()
+
+        s = requests.session()
+        s.verify=False
+
+        c = 0
+        with open(wordlist, "r") as payload:
+            links = payload.read().splitlines()
+        for l in links:
+            uri = "{}{}".format(url, l)
+            runFuzz.light_mode(uri, directory, s)
+            c+=1
+            sys.stdout.write(" {}/{} - {} \r".format(c, len(links), l))
+            sys.stdout.write("\033[K")
+    else:
+        status(r, stat, directory, u_agent, thread, manageDir)
     scan_error(directory, forbi, filterManager)
     print(LINE)
     try:
@@ -1019,7 +1177,7 @@ def main(url):
             bckp = MINI_B  
         else:
             bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
-    resume_options(url, thread, wordlist, recur, js, exclude, proxy, header=False if header_ == None else header_, backup=False if backup == None else bckp)
+    resume_options(url, thread if not light_mode else 0, wordlist, recur, js, exclude, proxy, header=False if header_ == None else header_, backup=False if backup == None else bckp)
     print(LINE)
     create_structure_scan(r, url, stat, u_agent, thread, subdomains, beforeStart)
 
@@ -1037,6 +1195,7 @@ if __name__ == '__main__':
     group.add_argument("--exclude", help="Exclude page, response code, response size. \033[33mEx: --exclude 500,337b\033[0m", required=False, dest="exclude", nargs="+")
     group.add_argument("--auto", help="Automatic threads depending response to website. Max: 30 \033[33m(In progress...)\033[0m", required=False, dest="auto", action='store_true')
     group.add_argument("--update", help="For automatic update", required=False, dest="update", action='store_true')
+    group.add_argument("--lightmode", help="For a just simple fuzzing 1 request per second & a new session for each request", required=False, dest="light_mode", action='store_true')
 
     group = parser.add_argument_group('\033[34m> Wordlist Settings\033[0m')
     group.add_argument("-w", help="Wordlist used for Fuzzing the desired webite. \033[32mDefault: dichawk.txt\033[0m", dest='wordlist', default="dichawk.txt", required=False)
@@ -1067,6 +1226,7 @@ if __name__ == '__main__':
                                      
     url = results.url
     file_url = results.file_url
+    light_mode = results.light_mode
     wordlist = results.wordlist
     subdomains = results.subdomains
     thread = results.thread

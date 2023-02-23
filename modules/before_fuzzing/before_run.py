@@ -265,7 +265,7 @@ class before_start:
         """
         print("\033[36m Domain backup \033[0m")
         print(LINE)
-        backup_dn_ext = ["zip", "rar", "iso", "tar", "gz", "tgz", "tar.gz", "7z", "jar", "sql.gz", "log"]
+        backup_dn_ext = ["zip", "rar", "iso", "tar", "gz", "tgz", "tar.gz", "7z", "jar", "sql.gz", "log", "bk", "bak", "bck", "old"]
         found_bdn = False
         len_response = 0
         try:
@@ -308,5 +308,5 @@ class before_start:
                     sys.exit()
             else:
                 time.sleep(180)
-        except requests.exceptions.ConnectionError:
+        except:
             pass

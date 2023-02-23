@@ -58,7 +58,7 @@ class parsing_html:
                                     pass
                                 else:
                                     try:
-                                        req_s3 = requests.get(rv, verify=False)
+                                        req_s3 = requests.get(rv, verify=False, headers={'User-agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko'})
                                         if req_s3.status_code == 200:
                                             print("{}[200] Potentialy s3 buckets found: {} in {}".format(S3, rv, res))
                                             read_links.write(rv + "\n")
@@ -150,7 +150,7 @@ class parsing_html:
             for match in matches:
                 #print(match[0]) #DEBUG
                 if not any('{}'.format(ext) in match[0] for ext in UNINTERESTING_EXTENSIONS) and url_index in match[0] and ".js" in match[0]:
-                    req_js = requests.get(match[0], verify=False)
+                    req_js = requests.get(match[0], verify=False, headers={'User-agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko'})
                     #print(match[0]) #DEBUG
                     for keyword_match in INTERESTING_KEY:
                         if keyword_match.lower() in req_js.text.lower():

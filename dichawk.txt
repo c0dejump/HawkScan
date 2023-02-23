@@ -48,6 +48,7 @@ getfile.do
 getenv.jsp
 ;index.jsp
 ../index.js
+havoc.yaotl
 ngsw.json
 index.asp::$DATA
 admin::$INDEX_ALLOCATION/portal
@@ -287,6 +288,7 @@ config.public.php
 public.php/webdav
 public.php
 secure_notes/
+all-groups
 groups.xml
 wp-config.php
 db-config.php
@@ -673,6 +675,7 @@ core/core.services.yml
 core/config/install/core.extension.yml
 core/config/install/
 core/config/
+core/rebuild.php
 config/sync/swiftmailer.transport.yml
 accueil/
 modman
@@ -879,6 +882,8 @@ default/settings.php
 Demo/
 default.settings.php
 default.services.yml
+sites/default/services.yml
+services.yml
 Download/
 Downloads/
 E/
@@ -1120,6 +1125,8 @@ cgi-bin/viewvc.cgi
 cdn-cgi/trace
 cdn-cgi/
 cdn-cgi/rum
+cdn/
+cdn/proxy.html
 advil/
 advisories/
 aeh/
@@ -1231,6 +1238,9 @@ api/debug
 api/.env
 api/snapshots/:key
 api/snapshots/
+api/index.php/v1/config/application
+api/index.php/v1/config/
+api/index.php/v1/config/application?public=true
 api.prod
 testapi/
 aplicacion/
@@ -1876,7 +1886,9 @@ conference/
 conferences/
 configs/
 configuracion/
+configuration.properties
 configuration/
+configuration/configuration.properties
 configure/
 confirmacio/
 connect/
@@ -6723,6 +6735,9 @@ phpmyadmin2017/
 phpmyadmin2018/
 phpmyadmin_bak/index.php
 phpmyadminold/index.php
+phpmyadmin/pma/
+phpmyadmin/admin/
+
 phproad/
 phpstudy.php
 phptest.php
@@ -8182,6 +8197,7 @@ admin/backups/
 .;/admin/config
 admin/config.php
 admin/config
+admin/config/development/logging
 admin/config/media/libraries_ui
 admin/config/media/
 admin/config/services/fastly/config
@@ -8279,6 +8295,8 @@ admin/mysql/
 admin/phpMyAdmin
 admin/phpmyadmin/
 admin/phpMyAdmin/
+admin/phpmyadmin/setup
+admin/phpmyadmin/setup/index.php
 admin/pMA/
 admin/pma/
 admin/pol_log.txt
@@ -9800,6 +9818,8 @@ click
 client
 client_admin
 check_network_status.txt
+policy.xml
+delegates.xml
 ClientAccessPolicy.xml
 clientaccesspolicy.xml
 clientadmin
@@ -11357,6 +11377,7 @@ logs/logs.jsp
 LOGS/
 logs/php7.2-fpm.log
 logs/php8.0-fpm.log
+logs/php_error.log
 logs/error.log
 logs/access.log
 logs/access_log
