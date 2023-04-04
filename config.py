@@ -19,6 +19,9 @@ INFO_MOD = "\033[34m\u251c \033[0m"
 EXT_B = ['.db', '.swp', '.yml', '.xsd', '.xml', '.wml', '.bkp', '.rar', '.zip', '.7z', '.bak', '.bac', '.BAK', '.NEW', '.old', 
             '.bkf', '.bok', '.cgi', '.dat', '.ini', '.log', '.key', '.conf', '.env', '_bak', '_old', '.bak1', '.json', '.lock', 
             '.save', '.atom', '.action', '_backup', '.backup', '.config', '?stats=1', '/authorize/', '.md', '.gz', 
-            '.txt', '~', '%01', "(1)", ".sql.gz"]
+            '.txt', '~', '%01', '(1)', '.sql.gz', '.tgz', 'tar.gz', '.gzip']
 
-MINI_B = ['.bkp', '.bak', '.bac', '.BAK', '.NEW', '.old', '_bak', '_old', '.bak1', '_backup', '.backup', '~']
+MINI_B = ['.bkp', '.bak', '.old', '_bak', '_old', '~', '.bak1', '_backup', '.backup']
+
+
+ARCH = ['.sql.gz', '.tgz', 'tar.gz', '.gzip', '.rar', '.zip', '.7z']

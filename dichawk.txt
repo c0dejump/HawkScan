@@ -929,6 +929,7 @@ application/logs/
 application/logs
 application.ini
 applications.ini
+tox.ini
 modsecurity/modsecurity.conf
 modsecurity.conf
 cblr/
@@ -1011,6 +1012,7 @@ W3SVC/
 W3SVC1/
 W3SVC2/
 W3SVC3/
+waroot/
 WEB-INF/
 WEB-INF/lib/
 WEB-INF/bin/
@@ -1228,6 +1230,7 @@ aol/
 ap/
 apache/
 api/
+api/openapi.json
 api/admin
 api/admin.json
 api/graphql
@@ -3018,6 +3021,7 @@ joyce/
 jp/
 jrun/
 js/
+js/env.js
 scripts/config.js
 scripts/credentials.js
 scripts/secrets.js
@@ -3810,12 +3814,14 @@ photography/
 photos/
 php/
 php/include/
+php/phpmyadmin/
 phpBB2/
 phpbb/
 phpbb/install
 phpMyAdmin/
 phpmyadmin/
 phpMyAdmin/setup
+phpmyadmin/setup/index.php
 phpMyAdmin/setup/index.php
 phpSQLiteAdmin
 phppgadmin/
@@ -4315,6 +4321,7 @@ section/
 sections/
 secure/
 secure/ContactAdministrators!default.jspa
+secure/QueryComponent!Default.jspa
 secured/
 security/
 segon/
@@ -4422,6 +4429,7 @@ silver/
 simba/
 simon/
 simple/
+simple-backup/
 simpsons/
 singer/
 single/
@@ -5350,6 +5358,7 @@ sabredav/addressbookserver.php
 .env.docker.dev
 .env.prod
 .env.prod.local
+.env.production
 .env.production.local
 .env.test.sample
 .eslintcache
@@ -5559,6 +5568,11 @@ admin/phpmyadmin/index.php
 admin/phpmyadmin2/index.php
 admin/pma/index.php
 admin/pma/index.php
+admin/pma/setup/index.php
+admin/../admin
+admin;/
+admin/js/*.js
+admin../admin
 administrator/cache/
 administrator/includes/
 administrator/logs/
@@ -8152,6 +8166,9 @@ Admin.shtml
 admin.shtml
 admin.srf
 admin.woa
+admin.tar.gz
+admin.zip
+admin.gzip
 admin/console/v1/user/auth/getEnvId
 admin/console/v1/user/auth/getToken
 admin/.config
@@ -8204,6 +8221,8 @@ admin/config/services/fastly/config
 admin/config/services/fastly/register
 admin/reports/dblog
 administrator/webconfig.txt.php
+administrator/components/com_joommyadmin/phpmyadmin/
+administrator/components/
 admin/controlpanel
 admin/controlpanel.%EXT%
 admin/controlpanel.htm
@@ -8973,6 +8992,8 @@ apache/logs/access.log
 apache/logs/access_log
 apache/logs/error.log
 apache/logs/error_log
+apache-default/phpmyadmin/
+apache-default/
 apadminred
 apadminred.html
 apc-nrp.php
@@ -9544,6 +9565,7 @@ blog/wp-content/backup-db/
 blog/wp-content/backups/
 blog/wp-login
 blog/wp-login.php
+blog/phpmyadmin/
 blog_admin
 blogadmin
 blogindex/
@@ -10066,6 +10088,7 @@ Cpanel.php
 cpanel.php
 cpanel_file/
 cpbackup-exclude.conf
+excluded.txt
 cpbt.php
 cpg
 cpn.php
@@ -10628,6 +10651,7 @@ forum.tar
 forum.tar.gz
 forum.zip
 forum/admin/
+forum/phpmyadmin/
 forum/install/install.php
 forum_admin
 forum_arc.%EXT%
@@ -12760,6 +12784,8 @@ software
 sohoadmin
 solr/
 solr/admin/
+solr/admin/info/system
+solr/admin/info/system?wt=json
 solutions
 source
 source.php
@@ -13611,6 +13637,7 @@ wp-admin/setup-config.php
 wp-admin/setup-config.php?step=1
 wp-admin/upload_index.php?auth=hash
 wp-admin/upload_index.php
+wp-admin/tools.php
 wp-app.log
 app.log
 localconf.php

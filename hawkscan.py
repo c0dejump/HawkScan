@@ -26,7 +26,7 @@ import signal
 import random
 
 # external modules
-from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK, EXCL, SERV_ERR, BYP, WAF, EXT_B, MINI_B
+from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK, EXCL, SERV_ERR, BYP, WAF, EXT_B, MINI_B, ARCH
 try:
     from Queue import Queue
 except:
@@ -148,7 +148,7 @@ class filterManager:
             self.check_exclude_page(s, req, res, directory, forbi, get_date, bp_current, parsing, size_bytes=len_req)
 
 
-    def  check_multiple(self, s, req, res, directory, forbi, HOUR, bp_current, parsing=False, size_bytes=False):
+    def check_multiple(self, s, req, res, directory, forbi, HOUR, bp_current, parsing=False, size_bytes=False):
         """
         Check_multiple: check multiple exclude, ex:
         --exclude 500,1337b,https://www.exemple.com
@@ -214,6 +214,7 @@ class filterManager:
         elif req_st == req_p:
             pass
         elif req_st in [403, 401]:
+            print("{} {} {:<13}{:<10} ".format(HOUR, FORBI, exclude_bytes, res))
             bp_current += 1
             bypass_forbidden(res)
             bp_current -= 1
@@ -307,7 +308,7 @@ class filterManager:
             #print(req.text)
             #print(perc) #DEBUG percentage
             #print(multiple)
-            if perc >= 80:
+            if perc >= 80 or perc == 78:
                 pass
             elif perc > 50 and perc < 80:
                 print("{} {} {} [Potential exclude page with {}%]".format(HOUR, EXCL, res, perc))
@@ -614,9 +615,9 @@ class runFuzzing:
                                     result = "/".join(spl)
                                     rec_list.append(result)
                             #report.create_report_url(status_link, res, directory) #TODO
-                        if backup != None:
-                            vim_backup(s, url, res, user_agent, exclude)
-                            scan_backup(s, url, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
+                            if backup != None:
+                                vim_backup(s, url, res, user_agent, exclude)
+                                scan_backup(s, url, len_req, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
                     elif status_link in [401, 403]:
                         two_verify = s.get(url, verify=False, headers=basic_user_agent)
 
@@ -655,9 +656,9 @@ class runFuzzing:
                                 """print("{} {} {:<13}{:<10} \033[31m{} Forbidden \033[0m".format(get_date(), FORBI, bytes_len, display_res, status_link))
                                 output_scan(directory, res, len_req, stats=403)"""
                                 pass
-                            if backup != None and backup == []:
+                            if backup != None:
                                 vim_backup(s, url, res, user_agent, exclude)
-                                scan_backup(s, url, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
+                                scan_backup(s, url, len_req, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
                     elif status_link == 404:
                         pass
                     elif status_link == 405:
@@ -733,8 +734,6 @@ class runFuzzing:
                                 time_wait(time_i)
                             else:
                                 pass
-                    if backup:
-                        scan_backup(s, url, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
                 except Timeout:
                     n_error += 1
                     #traceback.print_exc() #DEBUG
@@ -1174,7 +1173,9 @@ def main(url):
     stat = r.status_code
     if backup is not None:
         if len(backup) > 0 and backup[0] == "min":
-            bckp = MINI_B  
+            bckp = MINI_B
+        elif len(backup) > 0 and backup[0] == "arc":
+            bckp = ARCH
         else:
             bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
     resume_options(url, thread if not light_mode else 0, wordlist, recur, js, exclude, proxy, header=False if header_ == None else header_, backup=False if backup == None else bckp)

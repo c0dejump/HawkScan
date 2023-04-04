@@ -117,7 +117,7 @@ class parsing_html:
         'bucketeer_aws_secret_access_key', 'built_branch_deploy_key', 'bx_password', 'cache_driver', 'cache_s3_secret_key', 'cattle_access_key', 
         'cattle_secret_key', 'certificate_password', 'ci_deploy_password', 'client_secret', 'client_zpk_secret_key', 'clojars_password', 'cloud_api_key', 
         'cloud_watch_aws_access_key', 'cloudant_password', 'cloudflare_api_key', 'cloudflare_auth_key', 'cloudinary_api_secret', 'cloudinary_name', 'codecov_token', 
-        'conn.login', 'connectionstring', 'consumer_key', 'consumer_secret', 'credentials', 'cypress_record_key', 'database_password', 'database_schema_test', 
+        'conn.login', 'connectionstring', 'consumer_key', 'consumer_secret', 'cypress_record_key', 'database_password', 'database_schema_test', 
         'datadog_api_key', 'datadog_app_key', 'db_password', 'db_server', 'db_username', 'dbpasswd', 'dbpassword', 'dbuser', 'deploy_password', 'digitalocean_ssh_key_body', 
         'digitalocean_ssh_key_ids', 'docker_hub_password', 'docker_key', 'docker_pass', 'docker_passwd', 'docker_password', 'dockerhub_password', 'dockerhubpassword', 
         'dot-files', 'dotfiles', 'droplet_travis_password', 'dynamoaccesskeyid', 'dynamosecretaccesskey', 'elastica_host', 'elastica_port', 'elasticsearch_password', 

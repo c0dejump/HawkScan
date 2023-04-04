@@ -2,33 +2,33 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK, EXCL, SERV_ERR, BYP, WAF, EXT_B, MINI_B
+from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK, EXCL, SERV_ERR, BYP, WAF, EXT_B, MINI_B, ARCH
 from bs4 import BeautifulSoup
 from modules.output import multiple_outputs
 
 
-def scan_backup(s, url, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date):
+def scan_backup(s, url, len_req, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date):
 
 
     if len(backup) > 0 and backup[0] == "min":
-        bckp = MINI_B  
+        bckp = MINI_B
+    elif len(backup) > 0 and backup[0] == "arc":
+        bckp = ARCH  
     else:
         if len(backup) == 1:
             for bck in backup:
                 bckp = bck.split(",")
         else:
             bckp = EXT_B if backup == [] else [bck.replace(",","") for bck in backup]
-    size_check = 0
+
+    size_check = len_req
 
     other_backup = ["old_", "~", "Copy of "]
     for ob in other_backup:
         size_bckp = prefix_backup(s, url, res, req_p, bp_current, js, header_parsed, exclude, tw, user_agent, directory, forbi, get_date, filterM, parsing, ob)
-        size_check = size_check if size_bckp == None or size_bckp == 0 else size_bckp
 
     for exton in bckp:
         size_bckp = suffix_backup(s, url, res, req_p, bp_current, js, header_parsed, exclude, tw, page, exton, size_check, directory, forbi, get_date, parsing, filterM, authent)
-        size_check = size_check if size_bckp == None or size_bckp == 0 else size_bckp
-
 
 
 def prefix_backup(s, url, res, req_p, bp_current, js, header_parsed, exclude, tw, user_agent, directory, forbi, HOUR, filterM, parsing, ob):
@@ -73,17 +73,20 @@ def suffix_backup(s, url, res, req_p, bp_current, js, header_parsed, exclude, tw
     rep = anti_sl[3:]
     result = rep[-1]
     r_files = d_files + result
+
     if header_parsed:
         req_b = s.get(res_b, allow_redirects=False, verify=False, headers=header_parsed)
     else:
         req_b = s.get(res_b, allow_redirects=False, verify=False, timeout=10, auth=authent)
+
     soup = BeautifulSoup(req_b.text, "html.parser")
     req_b_status = req_b.status_code
+
     size_bytes = len(req_b.content)
     size_bytes_b = "[{}b]".format(size_bytes)
 
     if req_b_status == 200:
-        ranges = range(size_check - 50, size_check + 50) if size_check < 100000 else range(size_check - 1000, size_check + 1000)
+        ranges = range(size_check - 50, size_check + 50) if size_check < 10000 else range(size_check - 1000, size_check + 1000)
         if size_bytes == size_check or size_bytes in ranges:
             #if the number of bytes of the page equal to size_check variable and not bigger than size_check +5 and not smaller than size_check -5
             pass
@@ -93,7 +96,7 @@ def suffix_backup(s, url, res, req_p, bp_current, js, header_parsed, exclude, tw
             if exclude:
                 filterM.exclude_type(req_p, s, req_b, res_b, directory, forbi, HOUR, bp_current, parsing, size_bytes)
             else:
-                print("{} {} {:<13}{:<10}".format(HOUR, PLUS, size_bytes_b, res_b if tw > 120 else page_b))
+                print("{} {} {:<13}{:<10}".format(BACK, PLUS, size_bytes_b, res_b if tw > 120 else page_b))
                 try:
                     with open(r_files, 'w+') as fichier_bak:
                         fichier_bak.write(str(soup))
@@ -101,12 +104,6 @@ def suffix_backup(s, url, res, req_p, bp_current, js, header_parsed, exclude, tw
                 except:
                     pass
             return size_bytes
-        else:
-            if exclude:
-                filterM.exclude_type(req_p, s, req_b, res_b, directory, forbi, HOUR, bp_current, parsing, size_bytes)
-            else:
-                print("{} {} {} {}".format(HOUR, PLUS, size_bytes, res_b))
-                mo.raw_output(directory, res_b, 200, size_bytes)
     elif req_b_status in [404, 406, 429, 503, 502, 500, 400]:
         pass
     elif req_b_status in [301, 302, 303, 307, 308]:
@@ -124,10 +121,12 @@ def suffix_backup(s, url, res, req_p, bp_current, js, header_parsed, exclude, tw
         print("{} {} {} → {}".format(HOUR, LESS, res_b if tw > 120 else page_b, redirect_link))"""
         pass
     elif req_b_status in [403, 401]:
-        if exclude:
-            filterM.exclude_type(req_p, s, req_b, res_b, directory, forbi, HOUR, bp_current, parsing, size_bytes) 
+        ranges = range(size_check - 50, size_check + 50) if size_check < 10000 else range(size_check - 1000, size_check + 1000)
+        if size_bytes == size_check or size_bytes in ranges:
+            #if the number of bytes of the page equal to size_check variable and not bigger than size_check +5 and not smaller than size_check -5
+            pass
         else:
-            print("{} {} {} {}".format(HOUR, FORBI, size_bytes, res_b))
+            print("{} {} [{}] {}".format(HOUR, FORBI, size_bytes, res_b))
             #bypass_forbidden(res_b)
             mo.raw_output(directory, res_b, req_b_status, size_bytes)
             #pass
