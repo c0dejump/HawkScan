@@ -63,6 +63,9 @@ conf.d/mod_evasive.conf
 conf.d/default.conf
 conf.d/evasive.conf
 conf.d/
+custom.d/
+h5bp/
+h5bp/basic.conf
 .jekyll-cache
 .jekyll
 evasive.conf
@@ -215,6 +218,9 @@ ansible/roles/common/tasks/main.yml
 common/db/
 common/db/logging
 cpresources/
+sourceCode.zip
+source.zip
+sources.zip
 openx/
 openx/www/
 openx/www/admin/
@@ -291,6 +297,7 @@ secure_notes/
 all-groups
 groups.xml
 wp-config.php
+wp-config.php_
 db-config.php
 wp-staging-config.php
 wp-local-config.php
@@ -351,6 +358,7 @@ wp-settings.php
 wp-trackback.php
 wp-content/plugins/hello.php
 wp-content/themes/.git/
+wp-content/themes/theme-package/dist/js/main.js
 wp-includes/vars.php
 wp-includes/wp-db.php
 wp-includes/update.php
@@ -636,6 +644,7 @@ scripts/
 env-specific.js
 config/config.js
 assets/
+assets/env.js
 assets/config.js
 assets/config/config.js
 assets/config.json
@@ -984,6 +993,7 @@ page-sitemap.xml
 sitemap_index.xml
 SiteMap/
 sitemap.xml
+sitemap.xml?offset=1
 sitetext-2
 sitetext
 SiteServer/
@@ -999,6 +1009,7 @@ TEST/
 TESTS/
 Technology/
 Test/
+test/webhooks
 Tests/
 Themes/
 Travel/
@@ -1229,7 +1240,12 @@ anything/
 aol/
 ap/
 apache/
+_/api/
+_/api/1.0/
+_/api/1.0/getsalt.json
 api/
+api/geojson
+api/geo
 api/openapi.json
 api/admin
 api/admin.json
@@ -1328,6 +1344,7 @@ aurrera/
 sfsites/aura
 aura
 s/sfsites/aura
+aure/
 austin/
 auth/
 auth/cert/smartcard.xhtml
@@ -1406,6 +1423,7 @@ basketball/
 bass/
 bassoon/
 batch/
+batch/trace.txt
 batman/
 bb/
 bbdd/
@@ -2541,6 +2559,8 @@ fr/
 fr_FR/
 frame/
 framework/
+framework/installation/log/
+framework/installation/
 france/
 francis/
 francois/
@@ -3787,6 +3807,8 @@ personal/
 personales/
 personals/
 Persons.txt
+App_Data/
+App_Data/umbraco.sdf
 App_Data/Persons.txt
 pestana/
 pestanya/
@@ -4984,6 +5006,9 @@ servlet/file/file.jsp
 ubuntu-6/
 uddi/
 ui/
+ui/repos/
+ui/repos/tree/
+ui/repos/tree/General
 uk/
 umesh/
 uncategorized/
@@ -5331,6 +5356,8 @@ sabredav/addressbookserver.php
 .circleci/.firebase.secrets.json
 .circleci/.firebase.secrets.json.enc
 .firebase
+.sonar
+.scannerwork
 .vscode
 .vscode/sftp.json
 .vscode/ftp-sync.json
@@ -5603,6 +5630,7 @@ app/__pycache__/
 app/bootstrap.php.cache
 bootstrap.php.cache
 app/cache/
+web/cache/
 app/config/core.php
 app/config/database.php
 app/storage/
@@ -6380,6 +6408,7 @@ files/search.indexes
 files/tmp/
 files/user.lock
 findbugs/
+fichiers/
 firebase-debug.log
 fluent.conf
 fluent_aggregator.conf
@@ -6869,6 +6898,8 @@ secrets.env
 selenium/
 sendgrid.env
 sensu/
+entrypoint.rb
+entrypoint
 sentry/
 server.js
 server.key
@@ -9235,6 +9266,8 @@ app/config/global.json
 app/config/parameters.ini
 app/config/parameters.yml
 config/parameters.yml
+config/parameters_wamp.yml
+config/parameters_vagrant.yml
 config/secrets.yml
 app/config/routes.cfg
 app/config/schema.yml
@@ -9265,6 +9298,7 @@ app/vendor
 app/vendor-src
 app_admin
 App_Code
+App_code/
 App_Data
 dataFile.txt
 app.php
@@ -9272,6 +9306,9 @@ app.module.ts
 app_dev.php
 app_dev.php/_configurator/final
 app_dev.php/reviews/
+app_dev.php/_profiler/phpinfo
+app_dev.php/_profiler
+app_dev.php/_profiler/open?file=app/config/parameters.yml
 appadmin
 .appcache
 appcache.manifest
@@ -9944,6 +9981,7 @@ config.core
 config.dat
 config.inc
 config.inc.bak
+config.inc.php_bk
 config.inc.old
 config.inc.php
 config.inc.php.txt
@@ -12209,6 +12247,7 @@ pipermail
 piwigo/extensions/UserCollections/template/ZeroClipboard.swf
 piwik
 piwik/
+piwik.js
 pix
 pixel
 PKG-INFO
@@ -12563,6 +12602,8 @@ balancer-manager
 server-status
 server-status/
 server-status?auto
+server-status?full=true
+/server-status?full=true
 client-status
 client-status/
 client.inc
@@ -13260,6 +13301,7 @@ ujadmin
 uk
 umbraco/
 umbraco/webservices/codeEditorSave.asmx
+umbraco/adminreset/useractions/reset
 unattend.txt
 UniversityServlet
 up.php
@@ -13707,6 +13749,7 @@ jwks.json
 .well-known/sshfp
 .well-known/mta-sts.txt
 .well-known/oauth-authorization-server
+.well-known/stellar.toml
 keybase.txt
 pf-ws/authn/flows/
 pf-ws/authn/

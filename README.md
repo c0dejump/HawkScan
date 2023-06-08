@@ -136,7 +136,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     -of OUTPUT_TYPE       Output file format. Available formats: json, csv, txt           
 ```
 
-# Exemples
+# Examples
 
 ```
     //Basic

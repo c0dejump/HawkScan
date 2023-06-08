@@ -20,8 +20,7 @@ class parsing_html:
         Get_links: get all links on webpage during the scan
         """
         #print("{}:{}".format(req, req.url)) #DEBUG
-        req_text = req.text
-        soup = BeautifulSoup(req_text, "html.parser")
+        soup = BeautifulSoup(req.text, "html.parser")
         search = soup.find_all('a')
         if search:
             for s in search:
@@ -41,7 +40,7 @@ class parsing_html:
         Check if S3 buckets and path disclosure are in html page
         """
         path_disclosure = ["file://", "tmp/", "var/www", "/usr/", "var/lib", "srv/www", "srv/data", "var/opt", "file:///", "var/run"]
-        s3_keyword = ["S3://", "s3-", "amazonaws", "aws."]
+        s3_keyword = ["S3://", "s3-", "amazonaws", "aws.", "userPoolId"]
         
         for s3_f in s3_keyword:
             reqtext = req.text.split(" ")
@@ -123,7 +122,7 @@ class parsing_html:
         'dot-files', 'dotfiles', 'droplet_travis_password', 'dynamoaccesskeyid', 'dynamosecretaccesskey', 'elastica_host', 'elastica_port', 'elasticsearch_password', 
         'encryption_key', 'encryption_password', 'env.heroku_api_key', 'env.sonatype_password', 'eureka.awssecretkey', 'apex', 'firebase', 'xoxp', 'hapikey', 'client_credentials',
         'amplitude', 'getKey', 'appcenter', 'TrackerToken', 'conversationspasskey', 'Passkey', 'accesstoken', 'verifycustomtoken', 'signInWithCustomToken', 'x-pendo-integration-key',
-        'sendgrid_token', 'x-api-token', 'x-api-key', 'branch_secret', 'Idempotency-Key']
+        'sendgrid_token', 'x-api-token', 'x-api-key', 'branch_secret', 'Idempotency-Key', 'cognito_config', 'cognito']
 
         SOCKET_END = ["socket.io", "socketio", "socket", "websocket", "app.module.ts", "ws://", "wss://", "xmpp-websocket"]
 
