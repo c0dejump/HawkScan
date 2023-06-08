@@ -4397,6 +4397,8 @@ seven/
 seven7/
 sf/
 geoserver
+geoserver/ows
+geoserver/ows?service=wfs
 shadow/
 shadow1/
 shalom/
@@ -10705,6 +10707,11 @@ free
 freemail
 freshadmin
 frontend_admin/
+frontend_admin.php
+frontend_dev.php/$
+frontend_dev.php/uploads/
+frontend_dev.php/product/
+frontend_dev.php/
 frontend/
 analytics/
 ftp
