@@ -44,6 +44,7 @@ index/
 htmlb
 _clockwork
 __clockwork
+__clockwork/latest
 getfile.do
 getenv.jsp
 ;index.jsp
@@ -132,6 +133,8 @@ _profiler
 _profiler/phpinfo
 framework.php
 blog.sqlite
+sqlite/
+sqlitemanager/
 services.php
 services.yaml
 doctrine.yaml
@@ -297,6 +300,7 @@ secure_notes/
 all-groups
 groups.xml
 wp-config.php
+wp-config.PHP
 wp-config.php_
 db-config.php
 wp-staging-config.php
@@ -649,6 +653,7 @@ assets/config.js
 assets/config/config.js
 assets/config.json
 assets/config/config.json
+assets/env.json
 assets/env-specific.js
 assets/app.js
 assets../
@@ -732,6 +737,7 @@ basic_auth.csv
 config.source
 10-flannel.conf
 webroot
+app/kibana/
 app/webroot/
 app/webroot/files/
 webroot/uploads
@@ -765,6 +771,7 @@ old-versions/
 users/
 users/forgotten_password
 login/
+loginn
 password/
 register/
 profil/
@@ -1135,6 +1142,7 @@ advertising/
 adview/
 viewvc
 cgi-bin/viewvc.cgi
+cgi-bin/webproc
 cdn-cgi/trace
 cdn-cgi/
 cdn-cgi/rum
@@ -1820,6 +1828,7 @@ clear/
 clearpixel/
 click/
 client/
+client/index.html
 cliente/
 clientes/
 clients/
@@ -1832,6 +1841,7 @@ cmd/
 cn/
 cnt/
 cobra/
+cobbler/
 cocacola/
 coco/
 code/
@@ -2521,6 +2531,7 @@ fonts/
 foo/
 foo/master/development
 foobar/
+Foobar-debug.aspx
 food/
 fool/
 foolproof/
@@ -3005,6 +3016,7 @@ jason1/
 jasper/
 java/
 java-sys/
+sys/ui/extend/varkind/custom.jsp
 javascript/
 jazz/
 jdbc/
@@ -5116,6 +5128,10 @@ vendor/
 vendor/composer/
 vendor/composer/installed.json
 vendor/composer/LICENSE
+vendor/laravel/framework/src/Illuminate/
+_ignition/health-check
+_ignition/execute-solution
+_ignition/
 ventana/
 venus/
 ver/
@@ -6782,7 +6798,6 @@ phpmyadmin_bak/index.php
 phpmyadminold/index.php
 phpmyadmin/pma/
 phpmyadmin/admin/
-
 phproad/
 phpstudy.php
 phptest.php
@@ -9065,6 +9080,7 @@ oauth/token
 api/method
 api/users/profiles/
 api/users/profiles/1
+api/v1/nodes
 api/v1/secrets
 api/v1/signshow
 api/v1/account/accounts
@@ -9428,6 +9444,7 @@ awstats.conf
 awstats.pl
 awstats/
 awstats
+awstats/data
 awstats.old/cgi-bin/awstats.pl
 webstats/awstats.pl
 aws-keys
@@ -12545,6 +12562,7 @@ science
 screenshots
 sconnect
 sconnect/
+jquery-file-upload/server/php/
 script/jqueryplugins/dataTables/extras/TableTools/media/swf/ZeroClipboard.swf
 scripts/cgimail.exe
 scripts/ckeditor/ckfinder/core/connector/asp/connector.asp
