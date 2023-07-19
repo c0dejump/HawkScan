@@ -26,7 +26,7 @@ logging.basicConfig(level=logging.INFO, filename="proxy_checker.log", filemode="
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 
-def proxy_checker(i, q, url):
+def proxy_checker(i, q, n, url):
     session = requests.session()
     while True:
         proxie = q.get()
