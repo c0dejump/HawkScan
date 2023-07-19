@@ -16,58 +16,59 @@ except:
     enclosure_queue = Queue.Queue()
 
 
+logging.basicConfig(level=logging.INFO, filename="proxy_checker.log", filemode="a",
+                        format="%(asctime)s - %(levelname)s - %(message)s")
+    proxy_list_file = "path/to/your/proxy_list.txt"
+    checked_proxies = check_proxy(proxy_list_file)
+    logging.info("Checked proxies: %s", checked_proxies)
+
+
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 
-def proxy(i, q, n, url):
+def proxy_checker(i, q, n, url):
     session = requests.session()
-    for l in range(n):
+    while True:
         proxie = q.get()
         try:
-            proxies = {
-                'http': proxie.rstrip(),
-                'https': proxie.rstrip()
-                }
+            proxies = {'http': proxie.rstrip(), 'https': proxie.rstrip()}
             req = session.get(url, verify=False, timeout=10, proxies=proxies)
             list_ips.append(proxie.rstrip())
-        except:
-            #traceback.print_exc()
-            proxies = {
-                'https': '{}'.format(proxie.rstrip())
-                }
-            try:
-                req = session.get(url, verify=False, timeout=10, proxies=proxies)
-                list_ips.append(proxie.rstrip())
-            except:
-                #traceback.print_exc()
-                pass
-        q.task_done()
+        except requests.exceptions.RequestException as e:
+            logging.error("Error while checking proxy: %s", e)
+            handle_proxy_error(proxie)
+        finally:
+            q.task_done()
 
-def check_proxy(proxy_list):
+def handle_proxy_error(proxie):
+    with list_ips_lock:
+        list_ips.remove(proxie.rstrip())
+
+
+def check_proxy(proxy_list, num_threads=10):
     global list_ips
     list_ips = []
-
-    n = 0
 
     url = "https://httpbin.org/ip"
 
     with open(proxy_list, "r") as datas:
-        for data in datas:
-            n += 1
-    print(" Proxy IPs checking, please wait...")
+        proxy_data = [d.strip() for d in datas]
+
+    logging.info("Proxy IPs checking, please wait...")
     try:
-        with open(proxy_list, "r") as datas:
-            for d in datas:
-                enclosure_queue.put(d.rstrip())
-        for i in range(10):
-            worker = Thread(target=proxy, args=(i, enclosure_queue, n, url))
-            worker.setDaemon(True)
-            worker.start()
-        enclosure_queue.join()
+        with Queue.Queue() as enclosure_queue:
+            for data in proxy_data:
+                enclosure_queue.put(data)
+
+            for i in range(num_threads):
+                worker = threading.Thread(target=proxy_checker, args=(i, enclosure_queue, url))
+                worker.setDaemon(True)
+                worker.start()
+
+            enclosure_queue.join()
+
     except KeyboardInterrupt:
-        print(" Canceled by keyboard interrupt (Ctrl-C)")
+        logging.warning("Canceled by keyboard interrupt (Ctrl-C)")
         sys.exit()
-    except Exception:
-        traceback.print_exc()
-    print(list_ips)
-    return(list_ips)
+
+    return list_ips
