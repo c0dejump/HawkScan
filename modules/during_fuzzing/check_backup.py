@@ -85,8 +85,9 @@ def suffix_backup(s, url, res, req_p, bp_current, js, header_parsed, exclude, tw
     size_bytes = len(req_b.content)
     size_bytes_b = "[{}b]".format(size_bytes)
 
+
     if req_b_status == 200:
-        ranges = range(size_check - 50, size_check + 50) if size_check < 10000 else range(size_check - 1000, size_check + 1000)
+        ranges = range(size_check - 60, size_check + 60) if size_check < 10000 else range(size_check - 1000, size_check + 1000)
         if size_bytes == size_check or size_bytes in ranges:
             #if the number of bytes of the page equal to size_check variable and not bigger than size_check +5 and not smaller than size_check -5
             pass
@@ -96,7 +97,7 @@ def suffix_backup(s, url, res, req_p, bp_current, js, header_parsed, exclude, tw
             if exclude:
                 filterM.exclude_type(req_p, s, req_b, res_b, directory, forbi, HOUR, bp_current, parsing, size_bytes)
             else:
-                print("{} {} {:<13}{:<10}".format(BACK, PLUS, size_bytes_b, res_b if tw > 120 else page_b))
+                print("{} {} {:<13}{:<10}".format(HOUR, BACK, size_bytes_b, res_b if tw > 120 else page_b))
                 try:
                     with open(r_files, 'w+') as fichier_bak:
                         fichier_bak.write(str(soup))
@@ -126,10 +127,13 @@ def suffix_backup(s, url, res, req_p, bp_current, js, header_parsed, exclude, tw
             #if the number of bytes of the page equal to size_check variable and not bigger than size_check +5 and not smaller than size_check -5
             pass
         else:
-            print("{} {} [{}] {}".format(HOUR, FORBI, size_bytes, res_b))
-            #bypass_forbidden(res_b)
-            mo.raw_output(directory, res_b, req_b_status, size_bytes)
-            #pass
+            if exclude:
+                filterM.exclude_type(req_p, s, req_b, res_b, directory, forbi, HOUR, bp_current, parsing, size_bytes)
+            else:
+                print("{} {} [{}] {}".format(HOUR, FORBI, size_bytes, res_b))
+                #bypass_forbidden(res_b)
+                mo.raw_output(directory, res_b, req_b_status, size_bytes)
+                #pass
     else:
         if exclude:
             filterM.exclude_type(req_p, s, req_b, res_b, directory, forbi, HOUR, bp_current, parsing, size_bytes)

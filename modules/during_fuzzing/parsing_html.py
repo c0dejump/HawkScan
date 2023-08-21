@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from bs4 import BeautifulSoup
+import warnings
 import requests
 import csv
 import sys, re, os
 from config import S3, JS, WARNING
 import traceback
+from bs4 import MarkupResemblesLocatorWarning
 
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
-
+warnings.filterwarnings('ignore', category=MarkupResemblesLocatorWarning)
 
 class parsing_html:
     """
@@ -40,6 +42,12 @@ class parsing_html:
         Check if S3 buckets and path disclosure are in html page
         """
         path_disclosure = ["file://", "tmp/", "var/www", "/usr/", "var/lib", "srv/www", "srv/data", "var/opt", "file:///", "var/run"]
+        #archive extentions
+        archives = ['db', 'swp', 'yml', 'xsd', 'wml', 'bkp', 'rar', 'zip', '7z', 'bak', 'bac', 'NEW', 
+        'old', 'bkf', 'bok', 'cgi', 'dat', 'ini', 'log', 'key', 'conf', 'env', '_bak', '_old', 'json', 'lock', 
+        'save', 'atom', 'action', '_backup', 'backup', 'config', '/authorize/', 'md', 'gz', 'txt', '%01', 
+        '(1)', 'sql.gz', 'tgz', 'tar.gz', 'gzip', 'war', 'jar', 'cab']
+
         s3_keyword = ["S3://", "s3-", "amazonaws", "aws.", "userPoolId"]
         
         for s3_f in s3_keyword:
@@ -70,6 +78,12 @@ class parsing_html:
             m = re.search(r"{}[a-zA-z/]+".format(pad), req.text)
             if m:
                 print(" {}Possible path disclosure \033[34m{}\033[0m in {}".format(WARNING, m.group(0), res))
+        for arc in archives:
+            #regex
+            a = re.search(r"\.{}$".format(arc), req.text)
+            if a:
+                print(" {}Possible archives \033[34m{}\033[0m in {}".format(WARNING, a.group(0), res))
+
 
 
     def sitemap(self, req, directory):

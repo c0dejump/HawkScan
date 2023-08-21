@@ -193,6 +193,8 @@ class filterManager:
                         req_loc = s.get(res, verify=False, allow_redirects=True, headers=basic_user_agent)
                         redirect_link = req_loc.url
                 print("{} {} {:<13}{:<10}\033[33m → {}\033[0m {}\r".format(HOUR, LESS, exclude_bytes, res, redirect_link, req.status_code))
+            elif req.status_code == 404:
+                pass
             else:
                 print("{} {} {:<13}{:<10}  [{}]".format(HOUR, PLUS, exclude_bytes, res, req.status_code))
             for l_exclude in req_p:
@@ -212,6 +214,8 @@ class filterManager:
         if multiple and req_st in req_p:
             return False
         elif req_st == req_p:
+            pass
+        elif req_st == 404:
             pass
         elif req_st in [403, 401]:
             print("{} {} {:<13}{:<10} ".format(HOUR, FORBI, exclude_bytes, res))
@@ -589,8 +593,11 @@ class runFuzzing:
 
                     bytes_len = "[{}b]".format(len_req)    
 
-                    display_res = res if tw > 110 else page 
-
+                    display_res = res if tw > 110 else page
+                    
+                    if backup != None:
+                        vim_backup(s, url, res, user_agent, exclude)
+                        scan_backup(s, url, len_req, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
                     #print(status_link) #DEBUG status response
                     if status_link == 200:
                         if exclude:
@@ -615,9 +622,6 @@ class runFuzzing:
                                     result = "/".join(spl)
                                     rec_list.append(result)
                             #report.create_report_url(status_link, res, directory) #TODO
-                            if backup != None:
-                                vim_backup(s, url, res, user_agent, exclude)
-                                scan_backup(s, url, len_req, res, js, req_p, bp_current, exclude, backup, header_parsed, user_agent, directory, forbi, filterM, page, tw, parsing, authent, get_date=get_date())
                     elif status_link in [401, 403]:
                         two_verify = s.get(url, verify=False, headers=basic_user_agent)
 

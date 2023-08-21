@@ -22,6 +22,9 @@ admin/resource/
 admin/help
 admin/help.cgi.bak
 admin/WS_FTP.LOG
+admin/content/
+admin/structure/
+admin/people/permissions
 adinfo
 adfs/
 sign-in
@@ -51,6 +54,8 @@ getenv.jsp
 ../index.js
 havoc.yaotl
 ngsw.json
+ngsw-worker.js
+ngsw-config.json
 index.asp::$DATA
 admin::$INDEX_ALLOCATION/portal
 install.properties
@@ -899,6 +904,8 @@ Demo/
 default.settings.php
 default.services.yml
 sites/default/services.yml
+sites/default/settings.yml
+settings.yml
 services.yml
 Download/
 Downloads/
@@ -1991,6 +1998,7 @@ cowboys/
 coyote/
 cp/
 cpanel/
+cpanelwebcall/
 upload_panel
 upload_panel?stats=1
 hubtraffic/
@@ -2373,6 +2381,8 @@ env/
 envia/
 environ/
 environment/
+environment.ts
+environment.prod.ts
 enzyme/
 eprojects/
 erenity/
@@ -2889,6 +2899,9 @@ splunkd/__raw/services/server/info/server-info?output_mode=json
 en-US/splunkd/__raw/services/server/info/server-info?output_mode=json
 splunkd/
 __raw/services/server/info/server-info?output_mode=json
+server/.git
+server/admin
+server/admin/index.php
 server/node_modules/
 server/node_modules/test
 server/node_modules/package.json
@@ -3635,6 +3648,10 @@ nite/
 nl/
 no/
 nobody/
+jsonapi/node
+jsonapi/
+entity/node/
+entity/
 node/
 node/1
 node/1/edit
@@ -5050,6 +5067,8 @@ us/
 usa/
 usage/
 user/
+api/user/user
+user/user
 user-status
 user-status.json
 user1/
@@ -5060,6 +5079,9 @@ api/xyz-service/swagger-ui.html
 users/api/v1/
 users/api/v2/
 api/v2/status.json
+session/token
+rest/session/token
+rest/session/
 rest/api/
 rest/api/1/
 rest/api/2/
@@ -5644,6 +5666,9 @@ apiserver-aggregator.key
 apiserver-client.crt
 app-service.yaml
 app.yaml
+app.settings
+app-config.module
+app-config
 app/__pycache__/
 app/bootstrap.php.cache
 bootstrap.php.cache
@@ -6218,6 +6243,7 @@ config.local.php_old
 config.local.php~
 config.php.bkp
 config.php.new
+config.properties
 config.ru
 config.sub
 config/app.php
@@ -6311,6 +6337,9 @@ dms/dmsdump
 dns.alpha.kubernetes.io
 doc/api/
 docker/
+docker/containers/
+docker/containers/1
+docker/containers/1/1-json.log
 docker.mk
 docker-build_error.log
 docker-build_access.log
@@ -6454,6 +6483,9 @@ google-services.json
 gradle-app.setting
 gradle/
 grafana/
+grafana/logs/
+grafana/logs/error.log
+grafana/logs/access.log
 graphite/
 graphql.js
 graylog/
@@ -9253,10 +9285,12 @@ calendarpay/all
 ping/activity
 home-page/information-bloc
 APP
+angular.json
 app-admin
 configprops
 app.config
 app.manifest
+app.component.html
 manifest-production.json
 ccnet.config
 app.js
@@ -9449,6 +9483,7 @@ awstats.old/cgi-bin/awstats.pl
 webstats/awstats.pl
 aws-keys
 aws-keys.bak
+cognito.yaml
 axis2
 axis1/axis1-admin/
 axis2/axis2-admin/
@@ -9936,6 +9971,9 @@ cms_admin
 cmsadmin
 cmsadmin.php
 cmsadmin/
+cms/cmsadmin
+cms/cmsadmin.php
+cms/cmsadmin/
 cmsample/
 cncat_admin
 cnt
@@ -9956,6 +9994,8 @@ common
 common.inc
 common.xml
 common/config/api.ini
+common/config.php
+common/config.php.new
 common/config/db.ini
 common/queryconfig.action
 community
@@ -10037,6 +10077,7 @@ config.txt
 config.xml
 config.yml
 Config/
+config/config.php.dist
 config/apc.php
 config/app.yml
 config/app_env.yml
@@ -11774,8 +11815,10 @@ navSiteAdmin/
 nb-configuration.xml
 nbactions.xml
 nbproject/
+nbproject/private/
 nbproject/private/private.properties
 nbproject/private/private.xml
+nbproject/private/config.properties
 nbproject/project.properties
 nbproject/project.xml
 ncadmin
@@ -12921,6 +12964,9 @@ ssodad
 SSODAD
 ssp
 simplesamlphp
+simplesaml
+simplesaml/
+tmp/simplesaml
 sspadmin
 sswadmin
 stadmin
@@ -13392,6 +13438,7 @@ user/admin
 user/admin.php
 user/login.%EXT%
 user/login/
+user/login_status
 user_admin
 user_guide
 user_uploads
@@ -20873,7 +20920,6 @@ help_rootview
 hejri_calendar.php
 heike.bmp
 heb_setup.php
-healthnetwww.aam
 heal00fb.aas
 heal00fa.aas
 heal00f9.aas
@@ -21751,6 +21797,7 @@ contentloader1.php
 contentloader.php
 contenthook.php
 contentcache.php
+contentcache/
 content_space.php
 content_css.php
 contador2.php
