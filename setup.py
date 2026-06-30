@@ -30,7 +30,7 @@ setup(
         'wafw00f',
         'python-whois',
         'sockets',
-        'python-engineio==3.14.2',
+        'python-engineio==4.13.2',
         'python-socketio[client]==4.6.0',
         'google',
         'notifypy'
