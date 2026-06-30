@@ -31,7 +31,7 @@ setup(
         'python-whois',
         'sockets',
         'python-engineio==3.14.2',
-        'python-socketio[client]==4.6.0',
+        'python-socketio[client]==5.16.2',
         'google',
         'notifypy'
     ],
