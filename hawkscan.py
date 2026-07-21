@@ -557,7 +557,7 @@ class runFuzzing:
                     threads += 1
                     score_next += 1
                     manager.add_thread(i, threads, manager)
-                #print("{}: {}".format(threading.currentThread().getName() ,thread_score))#DEBUG
+                #print("{}: {}".format(threading.current_thread().getName() ,thread_score))#DEBUG
             try:
                 user_agent_r = random.choice(UserAgent) if type(UserAgent) == list else UserAgent.random
                 user_agent = {'User-agent': u_agent} if u_agent else {'User-agent': user_agent_r} #for a random user-agent
