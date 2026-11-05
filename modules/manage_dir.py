@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
+from config import LINE
 
 class manage_dir:
 

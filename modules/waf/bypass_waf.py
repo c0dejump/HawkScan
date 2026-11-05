@@ -1,17 +1,9 @@
 import requests
 import socket
-import traceback
 from modules.waf.detect_waf import verify_waf
-from config import PLUS, WARNING, INFO, WAF
+from config import WAF
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
-
-def bypass_by_user_agent(req, res):
-	#TODO
-	user_agent_list = {
-	"Googlebot": ""
-	}
-
 
 def bypass_waf(req, res):
 	"""
@@ -55,8 +47,6 @@ def bypass_waf(req, res):
 				for h in headers:
 					print("{}Potential bypass WAF rate limit with option:\033[36m -H \"{}:{}\" \033[0m".format(WAF, h, headers[h]))
 				return headers
-			"""else:
-				bypass_by_user_agent(req, res)"""
 		except:
 			pass
 			#traceback.print_exc()

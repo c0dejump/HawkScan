@@ -1,7 +1,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
-from config import PLUS, WARNING, INFO, LESS, LINE
+from config import PLUS, WARNING, LESS, LINE
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
@@ -34,7 +34,7 @@ class check_cms:
                     return result, v;
                 else:
                     with open(directory + "/cms.txt", "w+") as cms_write:
-                        cms_write.write("This website use {} but nothing version found".format(LESS, result))
+                        cms_write.write("This website use {} but nothing version found".format(result))
                     print(" {} This website use \033[32m{}\033[0m but nothing version found \n".format(PLUS, result))
                     print(LINE)
                     return False, False;

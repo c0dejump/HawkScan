@@ -1,4 +1,5 @@
 import os
+from config import INFO
 
 def auto_update():
     """

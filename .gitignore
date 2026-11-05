@@ -1,0 +1,9 @@
+wordlists/
+sites/*
+report/*.html
+__pycache__/
+*.pyc
+core
+core.*
+.env
+*.log

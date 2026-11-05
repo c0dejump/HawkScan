@@ -1,118 +1,167 @@
+import re
+import difflib
 import requests
-import traceback
 import socket
-from config import PLUS, WARNING, INFO, BYP
+from config import BYP
+from modules.during_fuzzing.calibration import raw_request, rand_token, split_url, waf_block, same_template, other_title
+from modules.output import record_finding
 
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
-def post(res): req_p = requests.post(res, verify=False, allow_redirects=False, timeout=10); return req_p.status_code, "POST", len(req_p.content)
-def put(res): req_pt = requests.put(res, verify=False, allow_redirects=False, timeout=10); return req_pt.status_code, "PUT", len(req_pt.content)
-def patch(res): req_ptch = requests.patch(res, verify=False, allow_redirects=False, timeout=10); return req_ptch.status_code, "PATCH", len(req_ptch.content)
-def options(res): req_o = requests.options(res, verify=False, allow_redirects=False, timeout=10); return req_o.status_code, "OPTIONS", len(req_o.content)
+# Sent all together first (1 request per IP), split only if the combo bypasses
+IP_HEADERS = [
+	"X-Forwarded-For", "X-Originating-IP", "X-Remote-IP", "X-Remote-Addr", "X-Client-IP", "Client-IP", "X-Real-IP",
+	"True-Client-IP", "Cluster-Client-IP", "X-Cluster-Client-IP", "X-ProxyUser-Ip", "X-Custom-IP-Authorization",
+	"X-Forwarded", "Forwarded-For", "Forwarded-For-IP", "X-Forwarder-For", "X-Forwarded-For-Original", "X-Forwarded-By",
+	"X-Original-Forwarded-For", "X-Original-Remote-Addr", "X-Trusted-IP", "Fastly-Client-IP"
+]
+IP_VALUES = ["127.0.0.1", "localhost", "10.0.0.1", "192.168.1.1", "172.16.0.1", "::1", "0.0.0.0", "127.0.0.2", "2130706433", "0x7f000001"]
+
+# {p}: forbidden path, {P}: uppercased (IIS / case insensitive ACL)
+PATH_PAYLOADS = [
+	"{p}/.", "{p}/./", "./{p}/./", "%2e/{p}", "{p}/.;/", ".;/{p}", "{p}..;/", "{p}/;/", "{p};/", "{p};.css",
+	"{p}..%3B/", "{p}/%3B", "{p}.%3B/", "{p}/..;/", "{p}~", "{p}%20", "{p}%09", "{p}%00", "{p}?", "{p}??",
+	"{p}%23", "{p}%3f", "{p}/*", "{p}/*/", "{p}%2f", "{p}/%2e", "{p}/%2e/", "{p}//", "/{p}//", "{p}%252f",
+	"%2f{p}", ";/{p}", "{p}.json", "{P}"
+]
+
+# Not PUT/PATCH: an empty body on a writable resource can overwrite it
+METHODS = ["POST", "OPTIONS"]
+
+index_cache = {}
 
 
-def method(res):
-	""" 
-	Try other method 
-	Ex: OPTIONS /admin
-	"""
-	result_list = []
-	for funct in [post, put, patch, options]:
-		try:
-			result_list.append(funct(res))
-		except:
-			pass
-			#traceback.print_exc()
-			#sys.exit()
-	for rs, type_r, len_req in result_list:
-		if rs not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 502, 307] and len_req != 0:
-			print("{}[{}] Forbidden page {} Bypass with this requests type: {} [{}]".format(BYP, rs, res, type_r, len_req))
+def same_page(a, b):
+	"""Same page, dynamic parts allowed (big pages vary by a few hundred bytes)"""
+	if a.status_code != b.status_code:
+		return False
+	la, lb = len(a.content), len(b.content)
+	if la < 2048 and lb < 2048: # small page: same text (nonce / ids apart), a few bytes can be an admin panel
+		sa, sb = re.sub(rb"\d+", b"", a.content), re.sub(rb"\d+", b"", b.content)
+		m = difflib.SequenceMatcher(None, sa, sb, autojunk=False)
+		return sa == sb or (m.quick_ratio() >= 0.95 and m.ratio() >= 0.95)
+	if other_title(a, b):
+		return False
+	if abs(la - lb) <= max(50, 0.02 * max(la, lb)):
+		return True
+	wa, wb = len(a.content.split()), len(b.content.split())
+	return (wa == wb and wa >= 30) or same_template(a, b)
 
 
-def original_url(s, res, page, url):
-	# Ex: http://lpage.com/admin header="X-Originating-URL": admin
-	header = {
-	"X-Originating-URL": page
-	}
-	req_ou = s.get(res, verify=False, headers=header, allow_redirects=False, timeout=10)
-	if req_ou.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502, 307] and len(req_ou.content) > 0:
-		print("{}[{}] {} Forbidden Bypass with: 'X-Originating-URL: {}'".format(BYP, req_ou.status_code, url+page, page))
+def looks_open(r, original, index, exclude_len):
+	if r is None or not 200 <= r.status_code < 300 or not r.content or waf_block(r):
+		return False
+	if exclude_len and str(len(r.content)) == str(exclude_len):
+		return False
+	if same_page(r, original) or any(same_page(r, i) for i in index):
+		return False
+	return True
 
 
-def IP_authorization(s, res, url, domain, page, exclude_len):
-	# Ex: http://lpage.com/admin header="X-Custom-IP-Authorization": 127.0.0.1
-	headers_type = [
-	"X-Originating-IP", "X-Forwarded", "Forwarded", "Forwarded-For", "Forwarded-For-IP", "X-Forwarder-For", "X-Forwarded-For", "X-Forwarded-For-Original",
-	"X-Forwarded-By", "X-Forwarded-Host", "X-Remote-IP", "X-Remote-Addr", "X-Client-IP", "Client-IP", "Access-Control-Allow-Origin", "Origin",
-	"X-Custom-IP-Authorization", "X-Forwarded-For ", "Host"
-	]
-	
-	try:
-		website_ip = socket.gethostbyname(domain)
-		ips_type  = [website_ip, "127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0", "localhost", "192.168.1.1", "::1","0:0:0:0:0:0:0:1", "127.0.0.2"]
-	except:
-		ips_type  = ["127.0.0.1", "*", "8.8.8.8", "null", "192.168.0.2", "10.0.0.1", "0.0.0.0", "localhost", "192.168.1.1", "::1","0:0:0:0:0:0:0:1", "127.0.0.2"]
-	for h in headers_type:
-		for ip in ips_type:
-			headers = {h : ip}
-			req_ip = s.get(res, verify=False, headers=headers, allow_redirects=False, timeout=10)
-			len_req_ip = len(req_ip.content)
-			ranges = range(len_req_ip - 50, len_req_ip + 50) if len_req_ip < 100000 else range(len_req_ip - 1000, len_req_ip + 1000)
-			if req_ip.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502, 307] and len(req_ip.content) not in ranges and len(req_ip.content) > 0:
-				if exclude_len:
-					if exclude_len != len_req_ip:
-						print("{}[{}] {} Forbidden Bypass with: {}".format(BYP, req_ip.status_code, url+page, headers))
-				else:
-					print("{}[{}] {} Forbidden Bypass with: {}".format(BYP, req_ip.status_code, url+page, headers))
-
-
-def other_bypass(s, url, page, req_url, exclude_len):
-	"""
-	other_bypass: all other known bypass
-	"""
-	payl = [page+"/.", "/"+page+"/", "./"+page+"/./", "%2e/"+page, page+"/.;/", ".;/"+page, page+"..;", page+"/;/", page+"..%3B",
-	page+"/%3B", page+".%3B/", page+"~", page+"/..;/", page+"%20", page+"%09", page+"%00", page+"??", page+"#", page+"/*", page+"/*/"] #http://exemple.com/+page+bypass
-
-	len_req_url = len(req_url.content)
-	ranges = range(len_req_url - 50, len_req_url + 50) if len_req_url < 100000 else range(len_req_url - 1000, len_req_url + 1000)
-	for p in payl:
-		url_b = url + p
-		req_payload = s.get(url_b, verify=False, allow_redirects=False, timeout=10)
-		#print(req_payload.status_code) #DEBUG
-		#print("{}:{}".format(len(req_payload.content), len(req_url.content))) #DEBUG
-		if req_payload.status_code not in [403, 401, 404, 406, 421, 429, 301, 302, 400, 408, 503, 405, 428, 412, 666, 500, 501, 410, 502, 307] and len(req_payload.content) not in ranges and len(req_payload.content) > 0:
-			if exclude_len:
-				if exclude_len != len(req_payload.content):
-					print("{}[{}] Forbidden Bypass with : {} [{}b]".format(BYP, req_payload.status_code, url_b, len(req_payload.content)))
-			else:
-				print("{}[{}] Forbidden Bypass with : {} [{}b]".format(BYP, req_payload.status_code, url_b, len(req_payload.content)))
-
-#@timeit #Debug
-def bypass_forbidden(res, exclude_len=False):
+def bypass_forbidden(res, exclude_len=False, headers=None, auth=None, directory=None):
 	"""
 	Bypass_forbidden: function for try to bypass code response 403/401
+	Each potential bypass is replayed on a random path with the same trick (control):
+	if the random path answers the same, it's a catch-all and not a bypass.
 	"""
 	s = requests.session()
-	res_page = res.split("/")[3:]
-	url_split = res.split("/")[:3]
-	url = "/".join(url_split) + "/"
-	page = "/".join(res_page) if len(res_page) > 1 else "".join(res_page)
-	domain =  "/".join(res.split("/")[:3]) + "/"
-	req_res = s.get(res, verify=False, timeout=10)
-	req_url = s.get(url, verify=False, timeout=10)
-	if req_url.status_code in [403, 401]:
-		original_url(s, res, page, url)
-		IP_authorization(s, res, url, domain, page, exclude_len)
-		method(res)
-		other_bypass(s, url, page, req_url, exclude_len)
-	elif len(req_res.content) in range(len(req_url.content) - 50, len(req_url.content) + 50):
-		pass
-	else:
-		original_url(s, res, page, url)
-		IP_authorization(s, res, url, domain, page, exclude_len)
-		method(res)
-		other_bypass(s, url, page, req_url, exclude_len)
+	s.verify = False
+	root, parent, last, trail, query = split_url(res)
+	p = res[len(root):].rstrip("/")
+	if not p:
+		return
+	ctrl = parent + rand_token(10) # same depth than the forbidden path
+	found = []
+
+	def send(method, url, extra=None):
+		h = dict(headers or {})
+		h.update(extra or {})
+		try:
+			return raw_request(s, method, url, headers=h, auth=auth, timeout=10)
+		except Exception:
+			return None
+
+	original = send("GET", res)
+	if original is None:
+		return
+	if not index_cache.get(root):
+		# home page twice: X-Original-URL ignored = home page, its dynamic part must not look like a bypass
+		index_cache[root] = [i for i in (send("GET", root), send("GET", root)) if i is not None]
+	index = index_cache[root]
+	if not index:
+		return
+	# same resource reachable without any trick: /en/shop/ is 403 but /en/shop is public -> not a bypass
+	known = list(index)
+	for variant in {root + p, root + p + "/"} - {res}:
+		v = send("GET", variant)
+		if v is not None and 200 <= v.status_code < 300 and v.content:
+			known.append(v)
+
+	def attempt(method, url, extra=None, ctrl_url=None, ctrl_extra=None):
+		r = send(method, url, extra)
+		if not looks_open(r, original, known, exclude_len):
+			return None
+		c = send(method, ctrl_url or url, ctrl_extra if ctrl_extra is not None else extra)
+		if c is None or same_page(r, c):
+			return None # catch-all, or no control = no proof
+		return r
+
+	def report(r, how):
+		line = "{}[{}] {} Forbidden Bypass with: {} [{}b]".format(BYP, r.status_code, res, how, len(r.content))
+		print("\033[K" + line)
+		found.append(line)
+		record_finding(directory, "bypass", res, r.status_code, len(r.content), how)
+
+	# IP spoofing headers
+	try:
+		ips = IP_VALUES + [socket.gethostbyname(root.split("/")[2].split(":")[0])]
+	except Exception:
+		ips = IP_VALUES
+	for ip in ips:
+		combo = {h: ip for h in IP_HEADERS}
+		combo["Forwarded"] = "for={}".format(ip if ":" not in ip else '"[{}]"'.format(ip))
+		r = attempt("GET", res, combo, root + ctrl)
+		if r is None:
+			continue
+		single_hit = False
+		for h in combo:
+			r_single = attempt("GET", res, {h: combo[h]}, root + ctrl)
+			if r_single is not None:
+				report(r_single, "-H '{}: {}'".format(h, combo[h]))
+				single_hit = True
+		if not single_hit:
+			report(r, "all IP headers set to {}".format(ip))
+		break
+
+	# Path override headers (IIS / Symfony / Zend...)
+	for h in ["X-Original-URL", "X-Rewrite-URL"]:
+		r = attempt("GET", root, {h: "/" + p}, root, {h: "/" + ctrl})
+		if r is not None:
+			report(r, "GET / -H '{}: /{}'".format(h, p))
+
+	# Other methods
+	for m in METHODS:
+		r = attempt(m, res, ctrl_url=root + ctrl)
+		if r is not None:
+			report(r, "method {}".format(m))
+
+	# Path normalization tricks
+	for payload in PATH_PAYLOADS:
+		url_b = root + payload.format(p=p, P=p.upper())
+		if payload == "{P}" and url_b == res.rstrip("/"):
+			continue
+		r = attempt("GET", url_b, ctrl_url=root + payload.format(p=ctrl, P=ctrl.upper()))
+		if r is not None:
+			report(r, url_b)
+
+	if found and directory:
+		try:
+			with open(directory + "/output/bypass.txt", "a+") as bp:
+				for line in found:
+					bp.write(line.replace(BYP, "") + "\n")
+		except Exception:
+			pass
 
 
 """if __name__ == '__main__':

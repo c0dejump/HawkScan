@@ -3,15 +3,82 @@
 from bs4 import BeautifulSoup
 import warnings
 import requests
-import csv
-import sys, re, os
+import re
+from urllib.parse import urljoin
 from config import S3, JS, WARNING
 import traceback
+import threading
 from bs4 import MarkupResemblesLocatorWarning
+try:
+    from bs4 import XMLParsedAsHTMLWarning
+    warnings.filterwarnings('ignore', category=XMLParsedAsHTMLWarning)
+except ImportError:
+    pass
+from modules.output import record_finding
 
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 warnings.filterwarnings('ignore', category=MarkupResemblesLocatorWarning)
+
+seen_js = set() # each JS file is downloaded & analysed once per run, not on every page that includes it
+seen_js_lock = threading.Lock()
+seen_buckets = set()
+seen_values = set() # (rule, value): the same Google key on 300 pages = 1 finding
+
+S3_RE = re.compile(r"(?:https?:)?//([a-z0-9][a-z0-9.-]{1,61}[a-z0-9])\.s3[.-](?:[a-z0-9-]+\.)?amazonaws\.com"
+                   r"|(?:https?:)?//s3[.-](?:[a-z0-9-]+\.)?amazonaws\.com/([a-z0-9][a-z0-9.-]{1,61}[a-z0-9])"
+                   r"|s3://([a-z0-9][a-z0-9.-]{1,61}[a-z0-9])", re.I)
+
+discover_hook = None # set by hawkscan: paths found in the JS are fuzzed too
+request_headers = {'User-agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko'} # set by hawkscan (UA + -H)
+JS_PATH_RE = re.compile(r"""["'`](/[a-zA-Z0-9_\-.~%/]{2,120}?)(?:\?[^"'`\s]{0,100})?["'`]""")
+STATIC_EXT = (".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico", ".css", ".woff", ".woff2", ".ttf", ".eot", ".otf", ".mp4", ".mp3", ".webm", ".map")
+
+
+BINARY_MAGIC = (b"PK\x03\x04", b"\x1f\x8b", b"7z\xbc\xaf", b"Rar!", b"%PDF", b"BZh", b"\x89PNG", b"GIF8", b"\xff\xd8\xff", b"\x00\x00\x00", b"SQLite format")
+
+
+def is_text(req):
+    """Archives, dumps, images... are downloaded, never parsed (BeautifulSoup / regexes on 10MB of binary)"""
+    ctype = req.headers.get("Content-Type", "").lower()
+    if any(t in ctype for t in ("image/", "audio/", "video/", "font/", "zip", "octet-stream", "pdf", "x-tar", "gzip", "x-7z", "rar", "x-sqlite")):
+        return False
+    head = (req.content or b"")[:8192]
+    return not head.startswith(BINARY_MAGIC) and b"\x00" not in head
+
+
+def extract_paths(text):
+    """API routes and hidden pages referenced in a JS bundle: "/api/v2/admin/users", "/internal/export"..."""
+    if not discover_hook:
+        return
+    for m in JS_PATH_RE.finditer(text):
+        path = m.group(1)
+        if not path.lower().endswith(STATIC_EXT) and "//" not in path:
+            discover_hook(path, "js")
+
+
+# found in JS but public by design (front-end config): reported as "token", not as a secret
+PUBLIC_KEYS = {"AMAZON_URL_1", "AMAZON_URL_2", "AMAZON_URL_3", "google_api", "firebase_db", "azure_storage",
+               "json_web_token", "Authorization", "accessToken", "vtex-key"}
+
+
+def check_bucket(bucket, res, directory):
+    """Only what matters: public listing, or a bucket that doesn't exist anymore (takeover)"""
+    url = "https://s3.amazonaws.com/{}/".format(bucket) if "." in bucket else "https://{}.s3.amazonaws.com/".format(bucket)
+    try:
+        r = requests.get(url, verify=False, timeout=10, allow_redirects=False)
+        endpoint = re.search(r"<Endpoint>([^<]+)</Endpoint>", r.text)
+        if r.status_code in (301, 307) and endpoint: # other region
+            url = "https://{}/".format(endpoint.group(1)) if bucket in endpoint.group(1) else "https://{}/{}/".format(endpoint.group(1), bucket)
+            r = requests.get(url, verify=False, timeout=10, allow_redirects=False)
+    except Exception:
+        return
+    if r.status_code == 200 and "<ListBucketResult" in r.text:
+        print("{}[200] S3 bucket \033[31m{}\033[0m is listable ({}) found in {}".format(S3, bucket, url, res))
+        record_finding(directory, "s3", url, 200, len(r.content), "public listing, bucket referenced in {}".format(res))
+    elif "NoSuchBucket" in r.text:
+        print("{}[404] S3 bucket \033[31m{}\033[0m doesn't exist (takeover ?) found in {}".format(S3, bucket, res))
+        record_finding(directory, "s3", url, r.status_code, len(r.content), "NoSuchBucket: takeover candidate, referenced in {}".format(res))
 
 class parsing_html:
     """
@@ -48,31 +115,14 @@ class parsing_html:
         'save', 'atom', 'action', '_backup', 'backup', 'config', '/authorize/', 'md', 'gz', 'txt', '%01', 
         '(1)', 'sql.gz', 'tgz', 'tar.gz', 'gzip', 'war', 'jar', 'cab']
 
-        s3_keyword = ["S3://", "s3-", "amazonaws", "aws.", "userPoolId"]
-        
-        for s3_f in s3_keyword:
-            reqtext = req.text.split(" ")
-            for req_key in reqtext:
-                req_value = req_key.split('"')
-                for rv in req_value:
-                    if s3_f in rv: #TODO → and "dmoain" in rv
-                        if not os.path.exists(directory + "/s3_links.txt"):
-                            with open(directory + "/s3_links.txt", "a+") as s3_links:
-                                s3_links.write(str(rv+"\n"))
-                        else:
-                            with open(directory + "/s3_links.txt", "r+") as read_links:
-                                if any(rl.strip() == rv.strip() for rl in read_links.readlines()):
-                                    pass
-                                else:
-                                    try:
-                                        req_s3 = requests.get(rv, verify=False, headers={'User-agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko'})
-                                        if req_s3.status_code == 200:
-                                            print("{}[200] Potentialy s3 buckets found: {} in {}".format(S3, rv, res))
-                                            read_links.write(rv + "\n")
-                                    except:
-                                        #print("{} Error with the URL {}".format(S3, rv))
-                                        pass
-                                        #traceback.print_exc()
+        # real bucket names only (not any URL containing "aws."), each bucket checked once
+        for m in S3_RE.finditer(req.text):
+            bucket = (m.group(1) or m.group(2) or m.group(3) or "").lower()
+            with seen_js_lock:
+                if not bucket or bucket in seen_buckets:
+                    continue
+                seen_buckets.add(bucket)
+            check_bucket(bucket, res, directory)
         for pad in path_disclosure:
             #regex
             m = re.search(r"{}[a-zA-z/]+".format(pad), req.text)
@@ -86,38 +136,44 @@ class parsing_html:
 
 
 
-    def sitemap(self, req, directory):
-        """Get sitemap.xml of website"""
-        soup = BeautifulSoup(req.text, "html.parser")
-        with open(directory + '/sitemap.xml', 'w+') as file:
-            file.write(str(soup).replace(' ','\n'))
-            
-
     def get_javascript(self, url, req, directory):
         """search potentialy sensitive keyword in javascript"""
         REGEX_ = {
-            "AMAZON_URL_1":r"[a-z0-9.-]+\.s3-[a-z0-9-]\\.amazonaws\.com",
-            "AMAZON_URL_2":r"[a-z0-9.-]+\.s3-website[.-](eu|ap|us|ca|sa|cn)",
-            "AMAZON_URL_3":r"s3\\.amazonaws\.com/[a-z0-9._-]+",
-            "AMAZON_URL_4":r"s3-[a-z0-9-]+\.amazonaws\\.com/[a-z0-9._-]+",
-            "AMAZON_KEY":r"([^A-Z0-9]|^)(AKIA|A3T|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{12,}",
-            "Authorization":r"^Bearer\s[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$",
-            "accessToken":r"^acesstoken=[0-9]{13,17}",
+            "AMAZON_URL_1":r"[a-z0-9.-]{1,100}\.s3[.-]([a-z0-9-]+\.)?amazonaws\.com",
+            "AMAZON_URL_2":r"[a-z0-9.-]{1,100}\.s3-website[.-](eu|ap|us|ca|sa|cn)",
+            "AMAZON_URL_3":r"s3[.-]([a-z0-9-]+\.)?amazonaws\.com/[a-z0-9._-]+",
+            "AMAZON_KEY":r"\b(AKIA|A3T|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}\b",
+            "Authorization":r"Bearer\s[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}",
+            "accessToken":r"acesstoken=[0-9]{13,17}",
             "vtex-key":r"vtex-api-(appkey|apptoken)",
-            "google_api":r"AIza[0-9A-Za-z-_]{35}",
+            "google_api":r"AIza[0-9A-Za-z\-_]{35}",
+            "google_oauth_secret":r"GOCSPX-[A-Za-z0-9_-]{28}",
             "firebase":r"AAAA[A-Za-z0-9_-]{7}:[A-Za-z0-9_-]{140}",
+            "firebase_db":r"[a-z0-9.-]{1,100}\.firebaseio\.com",
             "paypal_braintree_access_token":r"access_token\$production\$[0-9a-z]{16}\$[0-9a-f]{32}",
-            "github_access_token":r"[a-zA-Z0-9_-]*:[a-zA-Z0-9_\-]+@github\.com*",
-            "json_web_token":r"ey[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$",
-            "SSH_privKey":r"([-]+BEGIN [^\s]+ PRIVATE KEY[-]+[\s]*[^-]*[-]+END [^\s]+ PRIVATE KEY[-]+)",
+            "github_access_token":r"[a-zA-Z0-9_-]{1,100}:[a-zA-Z0-9_\-]{1,100}@github\.com",
+            "github_token":r"\bgh[pousr]_[A-Za-z0-9]{36,255}\b",
+            "github_fine_grained_pat":r"github_pat_[A-Za-z0-9_]{82}",
+            "gitlab_pat":r"glpat-[A-Za-z0-9\-_]{20}",
+            "slack_token":r"xox[baprs]-[0-9A-Za-z-]{10,72}",
+            "slack_webhook":r"https://hooks\.slack\.com/services/T[A-Za-z0-9_]+/B[A-Za-z0-9_]+/[A-Za-z0-9_]+",
+            "stripe_secret":r"\b[rs]k_live_[0-9a-zA-Z]{24,99}\b",
+            "sendgrid":r"SG\.[A-Za-z0-9_\-]{22}\.[A-Za-z0-9_\-]{43}",
+            "shopify_token":r"shp(at|ca|pa|ss)_[a-fA-F0-9]{32}",
+            "npm_token":r"\bnpm_[A-Za-z0-9]{36}\b",
+            "openai_key":r"sk-(proj-|svcacct-|admin-)?[A-Za-z0-9_-]{20,200}T3BlbkFJ[A-Za-z0-9_-]{20,200}",
+            "anthropic_key":r"sk-ant-(api|admin)\d{2}-[A-Za-z0-9_-]{80,200}",
+            "mapbox_secret":r"\bsk\.eyJ[A-Za-z0-9_-]{20,500}\.[A-Za-z0-9_-]{20,500}",
+            "azure_storage":r"[a-z0-9]{3,24}\.blob\.core\.windows\.net",
+            "azure_sas":r"sv=\d{4}-\d{2}-\d{2}&[^\"' ]{0,200}sig=[A-Za-z0-9%/+=]{20,}",
+            "json_web_token":r"\beyJ[A-Za-z0-9_-]{10,2000}\.eyJ[A-Za-z0-9_-]{10,4000}\.[A-Za-z0-9_-]{10,1000}",
+            "SSH_privKey":r"-----BEGIN (RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY( BLOCK)?-----",
         }
 
         url_index = url.split("/")[0:3] if "http" in url else url
         url_index = "/".join(url_index)
         
         UNINTERESTING_EXTENSIONS = ['css', 'svg', 'png', 'jpeg', 'jpg', 'mp4', 'gif']
-
-        UNINTERESTING_JS_FILES = ['bootstrap', 'jquery']
 
         INTERESTING_KEY = ['_public_key', '_token', '_password', '_database', 'secret_key', '_secret', 'api_key', 'apisettings', 
         'sourcemappingurl', 'private_key', 'jwt_secret', 'api_secret_key', 'access_key', 'access_token', 'admin_pass', 'admin_user', 
@@ -144,14 +200,16 @@ class parsing_html:
         url = req.url
         regex = r'''((https?:)?[/]{1,2}[^'\"> ]{5,})|(\.(get|post|ajax|load)\s*\(\s*['\"](https?:)?[/]{1,2}[^'\"> ]{5,})'''
         if ".js" in url:
+            extract_paths(text.decode('utf-8', errors="ignore"))
             for keyword_match in INTERESTING_KEY:
                 if keyword_match.lower() in text.decode('utf-8', errors="ignore").lower():
                     try:
-                        with open("{}/js.txt".format(directory), 'w+') as js_write:
+                        with open("{}/js.txt".format(directory), 'a+') as js_write:
                             js_link = open("{}/js.txt".format(directory), 'r')
                             if "{}::{}".format(url, keyword_match) not in js_link.read():
                                 print("{}Potential keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, url))
                                 js_write.write("{}::{}\n".format(url, keyword_match))
+                                record_finding(directory, "keyword", url, detail=keyword_match)
                             js_link.close()
                     except:
                         traceback.print_exc()
@@ -161,9 +219,18 @@ class parsing_html:
         else:
             matches = re.findall(regex, text.decode('utf-8', errors="ignore"))
             for match in matches:
+                match = (urljoin(url, match[0]),) + tuple(match[1:]) # <script src="/static/app.js"> (relative) too
                 #print(match[0]) #DEBUG
                 if not any('{}'.format(ext) in match[0] for ext in UNINTERESTING_EXTENSIONS) and url_index in match[0] and ".js" in match[0]:
-                    req_js = requests.get(match[0], verify=False, headers={'User-agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko'})
+                    with seen_js_lock:
+                        if match[0] in seen_js:
+                            continue
+                        seen_js.add(match[0])
+                    try:
+                        req_js = requests.get(match[0], verify=False, timeout=10, headers=request_headers) # same host: scan headers (cookies)
+                    except Exception:
+                        continue
+                    extract_paths(req_js.text)
                     #print(match[0]) #DEBUG
                     for keyword_match in INTERESTING_KEY:
                         if keyword_match.lower() in req_js.text.lower():
@@ -175,20 +242,26 @@ class parsing_html:
                                     if "{}::{}".format(match[0], keyword_match) not in js_link.read():
                                         print("{}Potential keyword found \033[33m[{}] \033[0min {}".format(JS, keyword_match, match[0]))
                                         js_write.write("{}::{}\n".format(match[0], keyword_match))
+                                        record_finding(directory, "keyword", match[0], detail=keyword_match)
                                     js_link.close()
                             except:
                                 traceback.print_exc()
 
+        decoded = text[:3000000].decode('utf-8', errors="ignore") # regexes on a huge file = minutes
         for k, v in REGEX_.items():
-            values_found = re.findall(v, text.decode('utf-8', errors="ignore"))
+            values_found = list(dict.fromkeys(m.group(0) for m in re.finditer(v, decoded)))
+            with seen_js_lock:
+                values_found = [x for x in values_found if (k, x) not in seen_values]
+                seen_values.update((k, x) for x in values_found)
             if values_found:
                 for v in values_found:
                     try:
                         with open("{}/js.txt".format(directory), 'a+') as js_write:
                             js_link = open("{}/js.txt".format(directory), 'r')
-                            if "{}::{}::{}".format(k, url, v) not in js_link.read():
-                                print("{}Keyword found \033[33m[{}] \033[0min {} with value \033[32m[{}] \033[0".format(JS, k, url, v))
+                            if "{}::{}::{}".format(url, k, v) not in js_link.read():
+                                print("{}Keyword found \033[33m[{}] \033[0min {} with value \033[32m[{}] \033[0m".format(JS, k, url, v))
                                 js_write.write("{}::{}::{}\n".format(url, k, v))
+                                record_finding(directory, "token" if k in PUBLIC_KEYS else "secret", url, detail="{}: {}".format(k, v))
                             js_link.close()
                     except:
                         traceback.print_exc()

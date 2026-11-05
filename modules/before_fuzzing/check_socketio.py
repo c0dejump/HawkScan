@@ -2,14 +2,9 @@
 #Thanks Jamb0n69 !
 
 import socketio
-import time
-import os, sys
-import traceback
-import argparse
-import json
 
 # External
-from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK
+from config import PLUS, INFO, LESS, LINE
 
 
 socketio_paths = [
@@ -23,7 +18,6 @@ class check_socketio:
     """
 
     sio = socketio.Client(reconnection=False)
-    dynamic_function_number = 0
 
 
 
@@ -38,7 +32,6 @@ class check_socketio:
                 urli = url.replace("www.","")
                 self.connect(urli, path)
             return e
-        return False
 
     def disconnect(self):
         try:

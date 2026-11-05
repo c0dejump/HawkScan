@@ -109,19 +109,26 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
     --auto                Automatic threads depending response to website. Max: 30
     --update              For automatic update
     --lightmode           For a just simple fuzzing 1 request per second & a new session for each request
+    --no-calib            Disable the auto-calibration (soft-404 / wildcard false positives filter)
+    --flood FLOOD         Mute a response seen more than N times on different paths (catch-all / WAF rule / error page). 0 to disable. Default: 5
+    --parallel PARALLEL   With -f: number of websites scanned at the same time (each one with -t threads). Default: 3
+    --resume RUN_DIR      Resume a stopped -f scan (done websites skipped). Ex: --resume sites/_multi_2026-10-29_09-31-21
+    --rate RATE           Max requests per second for a website, all threads included (respect the program rules)
 
 
 > Wordlist Settings:
     -w WORDLIST           Wordlist used for Fuzzing the desired webite. Default: dichawk.txt     
     -b                    Adding prefix/suffix backup extensions during the scan. (Exemples: exemple.com/~ex/, exemple.com/ex.php.bak...) /!\ beware, take more longer
     -p PREFIX             Add prefix in wordlist to scan
+    -e EXTENSIONS         Extensions added to the words without extension, or 'auto' (detected stack). Ex: -e php,bak | -e auto
 
 > Request Settings:             
-    -H HEADER_            Modify header. (Exemple: -H "cookie: test")    
+    -H HEADER_            Add a header, several -H allowed. Ex: -H "Cookie: a=1; b=2" -H "Authorization: Bearer x"
     -a USER_AGENT         Choice user-agent. Default: Random    
     --redirect            For scan with redirect response (301/302)      
     --auth AUTH           HTTP authentification. (Exemples: --auth admin:admin)               
     --timesleep TS        To define a timesleep/rate-limit if app is unstable during scan.
+    --proxy PROXY         Proxy for all requests (Burp...) or a file of proxies. Ex: --proxy http://127.0.0.1:8080
 
 > Tips:            
     -r                    Recursive dir/files      
@@ -134,6 +141,7 @@ Security Tool for Reconnaissance and Information Gathering on a website. (python
 > Export Settings:                    
     -o OUTPUT             Output to site_scan.txt (default in website directory)     
     -of OUTPUT_TYPE       Output file format. Available formats: json, csv, txt           
+    --html                HTML report for -u (always made with -f: one report for all the websites)
 ```
 
 # Examples

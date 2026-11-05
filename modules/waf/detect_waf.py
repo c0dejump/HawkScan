@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import time
 import sys, os
 import requests
-from config import PLUS, WARNING, LESS, LINE, FORBI, BACK, WAF, INFO
-import wafw00f
+from config import WARNING, LESS, LINE, WAF, INFO
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
@@ -683,8 +681,8 @@ def verify_waf(s, req, res, headers, display=True):
         elif "Access Denied" in req_response or "access denied" in req_response or "Something went wrong" in req_response or \
         "we have detected malicious traffic" in req_response or "device from your location is sending large amounts of web requests" in req_response or \
         "Sorry, there have been too many requests in a short time" in req_response or \
-        "Access denied due to a large number of requests" in req_response or "has detected an attack" in req_response or "Your IP has been banned" in req_response and not forced:
-            if req_test.status_code == 401 or req_test.status_code == 403 or req_test.status_code == 430 and not forced:
+        "Access denied due to a large number of requests" in req_response or "has detected an attack" in req_response or "Your IP has been banned" in req_response:
+            if req_test.status_code == 401 or req_test.status_code == 403 or req_test.status_code == 430:
                 if display:
                     print("{}{} Unknown WAF detected : {} ".format(WAF, req_test.status_code, res))
                 return True

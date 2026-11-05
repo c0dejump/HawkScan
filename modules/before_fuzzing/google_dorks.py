@@ -1,38 +1,18 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import requests
-from config import WARNING, INFO, LINE, INFO_MOD, LESS, PLUS
-import time
-import traceback
+from config import WARNING, LINE, INFO_MOD, LESS, PLUS
 from googlesearch import search 
 import json
-import random
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
-
-def timer(length):
-    #timer to wait
-    start = time.time()
-    running = True
-    while running:
-        if time.time() - start >= length:
-            running = False
-        else:
-            sys.stdout.write(""+ str(length - (time.time() - start)) + " secondes...\r")
-            sys.stdout.flush()
-    print("\n")
-  
 
 def query_dork(domain, directory):
     """
     query_dork: function to search google dork
     """
-    key_break = False
-    found = False
-    answer_yes = False
     print("\033[36m Google Dork \033[0m")
     print(LINE)
     if 'www' in domain:

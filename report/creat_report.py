@@ -1,6 +1,4 @@
 from datetime import datetime
-import csv
-import traceback
 
 def create_report(directory, cookie_):
     """
@@ -8,7 +6,6 @@ def create_report(directory, cookie_):
     """
     urls = ""
     waf = ""
-    mails = ""
     nowdate = datetime.now()
     nowdate = "{}-{}-{}".format(nowdate.day, nowdate.month, nowdate.year)
     #directory = "../" + directory#DEBUG
@@ -72,9 +69,9 @@ def create_report(directory, cookie_):
                 <span class="subText" style='color: green;'>This site dosn't seem to use a WAF</span>
             """
         try:
+            gd_link = ""
             with open(directory + "/google_dorks.txt", "r") as google_dork:
-                reader = csv.reader(csvFile)
-                for gd in google_dork:
+                for l in google_dork.read().splitlines():
                     gd_link += """
                         <tr>
                         <td><a href="{}" target="_blank" style="color: white;">{}</a></td>

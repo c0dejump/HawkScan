@@ -1,14 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
-import json
-import sys, re, os
+import sys, re
 import ssl
 import socket
-import traceback
 from requests.exceptions import Timeout
 import time
 # External
-from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, BACK, INFO_MOD
+from config import PLUS, WARNING, INFO, LESS, LINE, FORBI, INFO_MOD
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
@@ -297,7 +295,7 @@ class before_start:
         Test_timeout: just a little function for test if the connection is good or not
         """
         try:
-            req_timeout = requests.get(url, timeout=30, verify=False, headers={'User-agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko'})
+            requests.get(url, timeout=30, verify=False, headers={'User-agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; LCJB; rv:11.0) like Gecko'})
         except Timeout:
             print("{}Service potentialy Unavailable, The site web seem unavailable please wait...\n".format(WARNING))
             if first:

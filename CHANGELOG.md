@@ -1,6 +1,37 @@
 Changelog:
 ----------
 
+- 2.7
+---------
+	New: auto-calibration against soft-404 / wildcard / catch-all (per directory & path shape, reflected path handled), --no-calib to disable
+	New: flood control, a response seen more than 5 times on different paths is muted (--flood N, 0 to disable)
+	New: WAF / bot-manager block pages detected (Akamai, Cloudflare, Imperva, F5 (200!), AWS WAF, Sucuri, ModSecurity, DataDome...) and ignored
+	New: output/calibration.log (what the probes got) to understand a false positive
+	New: multi-site scan (-f) in parallel, one process per website (--parallel N, -t threads each), live findings, non-interactive
+	New: one global HTML report with -f (--html for a single website): highlights, per-site summary, filters, search, CSV / URLs export, dark mode
+	New: --rate N (max requests/s for all threads), --proxy works (Burp or a file of proxies), -e php,aspx / -e auto (stack detected)
+	New: paths found in robots.txt and in the JS bundles (API routes) are fuzzed too (300 max, no logout/delete...)
+	New: backups named like the target (shop.zip, target.sql.gz...)
+	New: --resume sites/_multi_... to continue a stopped -f scan (run.json: urls + options, cookies not saved), one report for the whole run
+	New: payloads sent raw ("/./", "%2e", "..;/" are not normalized by requests anymore)
+	Updated: speed, keep-alive, no more 2 index requests per word (WAF check only on blocking codes), no request without timeout
+	Updated: 403 bypass in background, IP headers grouped then isolated, X-Original-URL/X-Rewrite-URL, new path tricks, catch-all control on each bypass, results in output/bypass.txt
+	Updated: backups tested only around hits, dir -> dir.zip, prefixes in the same directory, vim .swp fixed, binary download
+	Updated: S3: real bucket names only, reported if listable or NoSuchBucket (takeover); public front-end keys (Google API, JWT...) reported as 'public key', not secret
+	Updated: JS secrets regex (github, gitlab, slack, stripe, sendgrid, openai, anthropic, azure SAS...), each JS file analysed once
+	Updated: dichawk endpoints (+700: actuator, graphql/openapi, .env variants, CI/IaC files, VPN/edge appliances, AI/MLOps stacks, SSO metadata, devops tools...), duplicates removed
+	Fixed: -H with cookies ("a=1; b=2" was split in several headers), several -H allowed, home page / JS fetched with the -H headers
+	Fixed: freeze with --js on big files (quadratic regexes), responses capped at 10MB (a 2GB backup isn't loaded in memory), binaries not parsed
+	Fixed: JS linked with a relative path (<script src="/app.js">) was never analysed
+	Fixed: 403 hidden when the root is 403/404 (forced scan): shown now, the calibration removes the generic ones
+	Fixed: 400 on a payload word (traversal, encoded chars) ignored, a key found on every page reported once
+	Fixed: redirect noise (case / slash / http->https / www canonical URL, home page, WordPress guessed page, SSO login with a unique token), report capped per website
+	Fixed: backup false positives: 3+ backup names (suffixes or prefixes) giving the same page, no backup around a CMS page route, prefixes on routes (copy_login), formats on a route (/api/users.json), suffix ignored by the server, home page fallback, route answering any suffix (control), 403 backup names are 403 not backups
+	Fixed: 403 bypass false positives when the page is public without / with the final slash, pages with another <title> are different pages
+	Fixed: crash when the same host is scanned twice in the same minute, bs4 XMLParsedAsHTMLWarning
+	Fixed: recursive scan (was rescanning the root), -H with several headers, resume rescanning everything, errors re-check, 429 words lost
+---------
+
 - 2.6
 ---------
 	Updated: dichawk endpoints
